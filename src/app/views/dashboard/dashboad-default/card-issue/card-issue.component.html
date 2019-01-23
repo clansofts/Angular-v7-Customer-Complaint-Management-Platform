@@ -1,3 +1,70 @@
-<p>
-  card-issue works!
-</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-title mb-3">Card Issue Form</div>
+                <form [formGroup]="formBasic" (ngSubmit)="submit()">
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                placeholder="Enter email">
+                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="phone">Phone</label>
+                            <input class="form-control" id="phone" placeholder="Enter phone">
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="credit">Cradit card number</label>
+                            <input class="form-control" id="credit" placeholder="Card">
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="credit">Website</label>
+                            <input class="form-control" id="credit" placeholder="Web address">
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="picker1">Birth date</label>
+                            <div class="input-group">
+                                <input id="picker1" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+                                    ngbDatepicker #dp="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                                        <i class="icon-regular i-Calendar-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="picker1">Select</label>
+                            <select class="form-control">
+                                <option>Option 1</option>
+                                <option>Option 1</option>
+                                <option>Option 1</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

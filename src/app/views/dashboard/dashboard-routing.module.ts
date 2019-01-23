@@ -13,6 +13,10 @@ const routes: Routes = [
     component: DashboadDefaultComponent,
     children: [
       {
+        path: '',
+        component: AtmDispenseErrorComponent
+      },
+      {
         path: 'atm-dispense-error',
         component: AtmDispenseErrorComponent
       },

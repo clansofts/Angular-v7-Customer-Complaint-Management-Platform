@@ -12,9 +12,14 @@ import { AtmDispenseErrorComponent } from './dashboad-default/atm-dispense-error
 import { CardIssueComponent } from './dashboad-default/card-issue/card-issue.component';
 import { EChannelsErrorComponent } from './dashboad-default/e-channels-error/e-channels-error.component';
 import { ServiceIssueComponent } from './dashboad-default/service-issue/service-issue.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CustomFormsModule,
     SharedComponentsModule,
     NgxEchartsModule,
     NgxDatatableModule,
