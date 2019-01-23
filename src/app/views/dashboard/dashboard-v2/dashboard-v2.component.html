@@ -2,7 +2,7 @@
   <h1>Track Issues</h1>
   <ul>
     <li><a href="">Complaint</a></li>
-    <li>Type</li>
+    <li>Category</li>
   </ul>
 </div>
 <div class="separator-breadcrumb border-top"></div>
@@ -11,6 +11,16 @@
   <div class="col-lg-6 col-md-12">
     <!-- CARD ICON -->
     <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-icon mb-4">
+          <div class="card-body text-center">
+            <i class="i-Folder"></i>
+            <p class="text-muted mt-2 mb-2">All Issues</p>
+            <!-- <p class="text-primary text-24 line-height-1 m-0">1</p> -->
+          </div>
+        </div>
+      </div>
+
       <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-icon mb-4">
           <div class="card-body text-center">
@@ -73,7 +83,7 @@
           <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
           <div class="flex-grow-1">
             <h6 class="m-0">James Obi</h6>
-            <p class="m-0 text-small text-muted">Team: DevOps.</p>
+            <p class="m-0 text-small text-dark">Team: DevOps.</p>
             <p class="m-0 text-small text-muted">Title: UI Engineer.</p>
           </div>
           <div>
@@ -84,7 +94,8 @@
           <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
           <div class="flex-grow-1">
             <h6 class="m-0">Micheal Mark</h6>
-            <p class="m-0 text-small text-muted">Team Member: DevOps.</p>
+            <p class="m-0 text-small text-muted">Team: DevOps.</p>
+            <p class="m-0 text-small text-muted">Title: QA Tester.</p>
           </div>
           <div>
             <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
@@ -101,7 +112,7 @@
         [rows]="products$ | async">
         <ngx-datatable-column name="photo" [maxWidth]="100">
           <ng-template ngx-datatable-header-template>
-            Team Assigned
+            Assigned To
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
             <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
