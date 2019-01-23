@@ -12,7 +12,6 @@ import { AtmDispenseErrorComponent } from './dashboad-default/atm-dispense-error
 import { CardIssueComponent } from './dashboad-default/card-issue/card-issue.component';
 import { EChannelsErrorComponent } from './dashboad-default/e-channels-error/e-channels-error.component';
 import { ServiceIssueComponent } from './dashboad-default/service-issue/service-issue.component';
-import { ComplaintsDashboardRoutingModule } from './dashboad-default/complaints-dashboard-routing.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +20,6 @@ import { ComplaintsDashboardRoutingModule } from './dashboad-default/complaints-
     NgxDatatableModule,
     NgbModule,
     DashboardRoutingModule,
-    ComplaintsDashboardRoutingModule
   ],
   declarations: [
     DashboadDefaultComponent, 
