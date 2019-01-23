@@ -1,0 +1,135 @@
+<div class="breadcrumb">
+  <h1>Track Issues</h1>
+  <ul>
+    <li><a href="">Complaint</a></li>
+    <li>Type</li>
+  </ul>
+</div>
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row">
+  <div class="col-lg-6 col-md-12">
+    <!-- CARD ICON -->
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-icon mb-4">
+          <div class="card-body text-center">
+            <i class="i-Money-2"></i>
+            <p class="text-muted mt-2 mb-2">ATM Dispense Issue</p>
+            <!-- <p class="text-primary text-24 line-height-1 m-0">1</p> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-icon mb-4">
+          <div class="card-body text-center">
+            <i class="i-Credit-Card"></i>
+            <p class="text-muted mt-2 mb-2">Card Issue</p>
+            <!-- <p class="text-primary text-24 line-height-1 m-0">2</p> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-icon mb-4">
+          <div class="card-body text-center">
+            <i class="i-Computer-2"></i>
+            <p class="text-muted mt-2 mb-2">E-Channel</p>
+            <!-- <p class="text-primary text-24 line-height-1 m-0">3</p> -->
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-icon mb-4">
+          <div class="card-body text-center">
+            <i class="i-Share-on-Cloud"></i>
+            <p class="text-muted mt-2 mb-2">Service</p>
+            <!-- <p class="text-primary text-24 line-height-1 m-0">4</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="card-title">Resolution Team</div>
+        <div class="d-flex align-items-center border-bottom-dotted-dim pb-3 mb-3">
+          <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
+          <div class="flex-grow-1">
+            <h6 class="m-0">Biodun Ayodele</h6>
+            <p class="m-0 text-small text-secondary">Team: BizOps</p>
+            <p class="m-0 text-small text-muted">Title: Account Manager</p>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
+          </div>
+        </div>
+        <div class="d-flex align-items-center border-bottom-dotted-dim pb-3 mb-3">
+          <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
+          <div class="flex-grow-1">
+            <h6 class="m-0">James Obi</h6>
+            <p class="m-0 text-small text-muted">Team: DevOps.</p>
+            <p class="m-0 text-small text-muted">Title: UI Engineer.</p>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
+          </div>
+        </div>
+        <div class="d-flex align-items-center border-bottom-dotted-dim pb-3 mb-3">
+          <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
+          <div class="flex-grow-1">
+            <h6 class="m-0">Micheal Mark</h6>
+            <p class="m-0 text-small text-muted">Team Member: DevOps.</p>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="card o-hidden mb-4">
+      <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen" [columnMode]="'force'"
+        [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true" [scrollbarH]="true" [limit]="10"
+        [rows]="products$ | async">
+        <ngx-datatable-column name="photo" [maxWidth]="100">
+          <ng-template ngx-datatable-header-template>
+            Team Assigned
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+            <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="_id">
+          <ng-template ngx-datatable-header-template>
+            Ticket ID
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name" [width]="300">
+          <ng-template ngx-datatable-header-template>
+            Issue
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="category">
+          <ng-template ngx-datatable-header-template>
+            Category
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="subtitle">
+          <ng-template ngx-datatable-header-template>
+            Resolution Status
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+
+
+</div>
