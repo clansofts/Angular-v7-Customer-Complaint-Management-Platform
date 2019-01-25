@@ -108,34 +108,44 @@
   <div class="col-md-12">
     <div class="card o-hidden mb-4">
       <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen" [columnMode]="'force'"
-        [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true" [scrollbarH]="true" [limit]="10"
+        [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true" [scrollbarH]="true" [limit]="15"
         [rows]="products$ | async">
         <ngx-datatable-column name="photo" [maxWidth]="100">
           <ng-template ngx-datatable-header-template>
-            Assigned To
+            Issue
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
             <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="_id">
+        <ngx-datatable-column name="issueid" [width]="300">
           <ng-template ngx-datatable-header-template>
-            Ticket ID
+            Issue ID
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="priority">
+          <ng-template ngx-datatable-header-template>
+            Priority
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="name" [width]="300">
           <ng-template ngx-datatable-header-template>
-            Issue
+            Title
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="assigned">
+          <ng-template ngx-datatable-header-template>
+            Assigned
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="category">
           <ng-template ngx-datatable-header-template>
-            Category
+            Type
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="subtitle">
+        <ngx-datatable-column name="status">
           <ng-template ngx-datatable-header-template>
-            Resolution Status
+            Status
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
