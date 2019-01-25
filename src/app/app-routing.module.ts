@@ -20,6 +20,16 @@ const routes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'admin-rc/v1',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: 'admin-rt/v1',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: AuthLayoutComponent,
     children: [
       {
