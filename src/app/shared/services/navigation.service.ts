@@ -54,8 +54,8 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-3', name: 'Make Complaints', state: '/dashboard/v1', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Track Issue', state: '/dashboard/v2', type: 'link' }
+                { icon: 'i-Clock-3', name: 'Make Complaints', state: '/customer/v1', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Track Issue', state: '/customer/v2', type: 'link' }
             ]
         }
     ];
