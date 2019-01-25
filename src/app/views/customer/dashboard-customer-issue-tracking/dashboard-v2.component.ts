@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard-v2',
@@ -10,7 +11,8 @@ export class DashboardV2Component implements OnInit {
 	products$: any;
 
   constructor(
-		private productService: ProductService
+    private productService: ProductService,
+    private fb: FormBuilder,
 	) { }
 
   ngOnInit() {

@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./atm-dispense-error.component.scss']
 })
 export class AtmDispenseErrorComponent implements OnInit {
-  formBasic: FormGroup;
+  formBuilderGroup: FormGroup;
   loading: boolean;
   radioGroup: FormGroup;
 
@@ -19,20 +19,24 @@ export class AtmDispenseErrorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.buildFormBasic();
+    this.atmDispenseErrorForm();
     this.radioGroup = this.fb.group({
       radio: []
     });
   }
 
-  buildFormBasic() {
-    this.formBasic = this.fb.group({
-      experience: []
+  atmDispenseErrorForm() {
+    this.formBuilderGroup = this.fb.group({
+      experience: [],
+      firstName: [''],
+      lastName: [''],
+      emailAddress: ['']
     });
   }
 
   submit() {
     this.loading = true;
+    console.log(this.formBuilderGroup);
     setTimeout(() => {
       this.loading = false;
       this.toastr.success('Profile updated.', 'Success!', { progressBar: true });

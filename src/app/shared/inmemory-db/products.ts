@@ -27,6 +27,7 @@ export class ProductDB {
           'nulla laboris',
           'pariatur consequat'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/speaker-1.jpg',
         'gallery': [
           './assets/images/products/speaker-1.jpg',
@@ -65,6 +66,7 @@ export class ProductDB {
           'consectetur dolor',
           'est proident'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/speaker-2.jpg',
         'gallery': [
           './assets/images/products/speaker-1.jpg',
@@ -103,6 +105,7 @@ export class ProductDB {
           'magna eu',
           'sint quis'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-2.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -143,6 +146,7 @@ export class ProductDB {
           'ad minim',
           'duis exercitation'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/watch-1.jpg',
         'gallery': [
           './assets/images/products/watch-1.jpg',
@@ -181,6 +185,7 @@ export class ProductDB {
           'excepteur non',
           'aliquip eu'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/watch-2.jpg',
         'gallery': [
           './assets/images/products/watch-1.jpg',
@@ -219,6 +224,7 @@ export class ProductDB {
           'adipisicing exercitation',
           'esse incididunt'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-3.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -259,6 +265,7 @@ export class ProductDB {
           'veniam laboris',
           'nulla sunt'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-4.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -299,6 +306,7 @@ export class ProductDB {
           'incididunt nulla',
           'ullamco qui'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/iphone-2.jpg',
         'gallery': [
           './assets/images/products/iphone-1.jpg',
@@ -336,6 +344,7 @@ export class ProductDB {
           'eiusmod mollit',
           'irure adipisicing'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/iphone-1.jpg',
         'gallery': [
           './assets/images/products/iphone-1.jpg',
@@ -374,6 +383,7 @@ export class ProductDB {
           'eu excepteur',
           'incididunt aute'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-1.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -413,6 +423,7 @@ export class ProductDB {
           'nulla laboris',
           'pariatur consequat'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/speaker-1.jpg',
         'gallery': [
           './assets/images/products/speaker-1.jpg',
@@ -451,6 +462,7 @@ export class ProductDB {
           'consectetur dolor',
           'est proident'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/speaker-2.jpg',
         'gallery': [
           './assets/images/products/speaker-1.jpg',
@@ -489,6 +501,7 @@ export class ProductDB {
           'magna eu',
           'sint quis'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-2.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -529,6 +542,7 @@ export class ProductDB {
           'ad minim',
           'duis exercitation'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/watch-1.jpg',
         'gallery': [
           './assets/images/products/watch-1.jpg',
@@ -567,6 +581,7 @@ export class ProductDB {
           'excepteur non',
           'aliquip eu'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/watch-2.jpg',
         'gallery': [
           './assets/images/products/watch-1.jpg',
@@ -605,6 +620,7 @@ export class ProductDB {
           'adipisicing exercitation',
           'esse incididunt'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-3.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -645,6 +661,7 @@ export class ProductDB {
           'veniam laboris',
           'nulla sunt'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-4.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',
@@ -685,6 +702,7 @@ export class ProductDB {
           'incididunt nulla',
           'ullamco qui'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/iphone-2.jpg',
         'gallery': [
           './assets/images/products/iphone-1.jpg',
@@ -722,6 +740,7 @@ export class ProductDB {
           'eiusmod mollit',
           'irure adipisicing'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/iphone-1.jpg',
         'gallery': [
           './assets/images/products/iphone-1.jpg',
@@ -760,6 +779,7 @@ export class ProductDB {
           'eu excepteur',
           'incididunt aute'
         ],
+        'icon': '<div><span><i class="i-Credit-Card"></i></span></div>',
         'photo': './assets/images/products/headphone-1.jpg',
         'gallery': [
           './assets/images/products/headphone-1.jpg',

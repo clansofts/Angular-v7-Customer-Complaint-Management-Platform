@@ -3,21 +3,21 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title mb-3">ATM Dispense Error Form</div>
-                <form [formGroup]="formBasic" (ngSubmit)="submit()">
+                <form [formGroup]="formBuilderGroup" (ngSubmit)="submit()">
                     <div class="row">
                         <div class="col-md-6 form-group mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                            <input formControlName="firstName" type="text" class="form-control" id="firstName" placeholder="Enter your first name">
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                            <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Enter your last name">
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            <input formControlName="emailName" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                 placeholder="Enter email">
                             <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
