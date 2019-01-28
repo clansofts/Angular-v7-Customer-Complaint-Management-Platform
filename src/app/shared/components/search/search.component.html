@@ -25,10 +25,10 @@
 						<a href="" class="w-40 w-sm-100">
 							<div class="item-title">{{item.name}}</div>
 						</a>
-						<p class="m-0 text-muted text-small w-15 w-sm-100">Gadget</p>
+						<p class="m-0 text-muted text-small w-15 w-sm-100">Category</p>
 						<p class="m-0 text-muted text-small w-15 w-sm-100">
 							{{item?.category | titlecase}}
-							<del class="text-secondary">{{item?.statusn | titlecase}}</del>
+							<del class="text-secondary">{{item?.status | titlecase}}</del>
 						</p>
 						<p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges">
 							<span class="badge badge-outline-{{item?.badge?.color}}">{{item?.badge?.text}}</span>

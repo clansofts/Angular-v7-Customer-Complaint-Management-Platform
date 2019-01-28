@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -9,9 +9,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./atm-dispense-error.component.scss']
 })
 export class AtmDispenseErrorComponent implements OnInit {
-  formBuilderGroup: FormGroup;
+  atmDispenseError: FormGroup;
   loading: boolean;
   radioGroup: FormGroup;
+
+  toggleForm = false;
 
   constructor(
     private fb: FormBuilder,
@@ -19,27 +21,41 @@ export class AtmDispenseErrorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.atmDispenseErrorForm();
+    this.atmDispenseErrorFn();
     this.radioGroup = this.fb.group({
       radio: []
     });
   }
 
-  atmDispenseErrorForm() {
-    this.formBuilderGroup = this.fb.group({
-      experience: [],
-      firstName: [''],
-      lastName: [''],
-      emailAddress: ['']
+  atmDispenseErrorFn() {
+    this.atmDispenseError = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      emailAddress: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      cardNumber: [''],
+      cardVariant: [''],// Automatically fetch cardVariant
+      transDate: [''], // Defaults to today's date
+      transCount: [''],
+      amount: this.fb.group({
+        amount1: [''],
+        amount2: [''],
+        amount3: [''],
+      }),
+      currencyType: [''], // Defaults to Naira
     });
   }
 
   submit() {
     this.loading = true;
-    console.log(this.formBuilderGroup);
+    console.log(this.atmDispenseError);
     setTimeout(() => {
       this.loading = false;
       this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
     }, 3000);
+  }
+
+  testFn() {
+    this.toggleForm = !this.toggleForm;
   }
 }
