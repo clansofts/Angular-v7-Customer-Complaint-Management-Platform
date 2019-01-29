@@ -12,13 +12,29 @@ export class AtmDispenseErrorComponent implements OnInit {
   atmDispenseError: FormGroup;
   loading: boolean;
   radioGroup: FormGroup;
+  public formState: boolean; // Display complaints form as default.
 
-  toggleForm = false;
+  Cards = [{
+    name: 'Master Card',
+    id: '023'
+  },
+  {
+    name: 'Visa Card',
+    id: '013'
+  },
+  {
+    name: 'Naira Master Card',
+    id: '02'
+  },
+  ];
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService
-  ) { }
+  ) {
+    // display details form by default
+    this.formState = true;
+  }
 
   ngOnInit() {
     this.atmDispenseErrorFn();
@@ -27,14 +43,25 @@ export class AtmDispenseErrorComponent implements OnInit {
     });
   }
 
+  // Used to toggle between views
+  next = () => {
+    this.formState = false;
+    console.log(this.formState);
+    return;
+  }
+  previous = () => {
+    this.formState = true;
+    return;
+  }
+
   atmDispenseErrorFn() {
     this.atmDispenseError = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       emailAddress: ['', [Validators.required]],
       phone: ['', [Validators.required]],
-      cardNumber: [''],
-      cardVariant: [''],// Automatically fetch cardVariant
+      cardNumber: ['', Validators.maxLength(4)],
+      cardVariant: ['2'], // Automatically fetch cardVariant
       transDate: [''], // Defaults to today's date
       transCount: [''],
       amount: this.fb.group({
@@ -53,9 +80,5 @@ export class AtmDispenseErrorComponent implements OnInit {
       this.loading = false;
       this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
     }, 3000);
-  }
-
-  testFn() {
-    this.toggleForm = !this.toggleForm;
   }
 }

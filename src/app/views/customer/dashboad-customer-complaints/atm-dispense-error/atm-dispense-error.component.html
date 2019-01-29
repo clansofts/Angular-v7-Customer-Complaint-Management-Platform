@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-body" (click)="testFn()">
+            <div class="card-body">
                 <div class="card-title mb-3">ATM Dispense Error Form</div>
                 <form [formGroup]="atmDispenseError" (ngSubmit)="submit()">
                     <div class="row">
-                        <ng-container *ngIf="!toggleForm else formEnd">
+                        <ng-container *ngIf="formState else complaintsForm">
                             <div class="col-md-6 form-group mb-3">
                                 <label for="firstName">First name</label>
                                 <input formControlName="firstName" type="text" class="form-control" id="firstName"
@@ -22,7 +22,8 @@
                                 <label for="exampleInputEmail1">Email address</label>
                                 <input formControlName="emailAddress" type="email" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp" placeholder="Enter email">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
@@ -31,16 +32,25 @@
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
-                                <label for="credit">Card number</label>
-                                <input formControlName="cardNumber" class="form-control" id="credit" placeholder="Card">
+                                <label for="credit">Card number: last 4 digits</label>
+                                <!-- Mask the card number -->
+                                <input formControlName="cardNumber" class="form-control" id="credit" placeholder="Card number">
+                                <small *ngIf="atmDispenseError.controls.cardNumber.invalid" id="errorMessage" class="form-text text-danger">Enter
+                                    only the last 4 digits.</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card Variant</label>
-                                <input formControlName="cardVariant" class="form-control" id="credit" placeholder="Card Variant">
+                                <select formControlName="cardVariant" class="form-control">
+                                    <option hidden [value]="" disabled selected>select card variant</option>
+                                    <option *ngFor="let card of Cards" [value]='card?.Id'>{{card?.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="button" Class="btn btn-primary btn-rounded m-1" (click)="next()">Continue</button>
                             </div>
                         </ng-container>
-                        <ng-template #formEnd>
+                        <ng-template #complaintsForm>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Transaction Date</label>
                                 <div class="input-group">
@@ -85,10 +95,11 @@
                                     <option>Dollar</option>
                                 </select>
                             </div>
+                            <div class="col-md-12">
+                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+                                <button type="button" Class="btn btn-secondary btn-rounded m-1" (click)="previous()">Previous</button>
+                            </div>
                         </ng-template>
-                        <div class="col-md-12">
-                            <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
-                        </div>
                     </div>
                 </form>
             </div>

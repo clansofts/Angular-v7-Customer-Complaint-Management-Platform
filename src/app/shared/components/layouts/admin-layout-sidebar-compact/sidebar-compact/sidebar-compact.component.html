@@ -5,7 +5,7 @@
         <ul class="navigation-left">
           <li [ngClass]="{active: item.active}"
             (click)="onClickChangeActiveFlag(item)"
-            class="nav-item lvl1" 
+            class="nav-item lvl1 nav-item--custom" 
             *ngFor="let item of nav"
           >
             <div class="nav-item-hold" routerLink="{{item.state}}" (click)="closeChildNav()" *ngIf="item.type === 'link'">
