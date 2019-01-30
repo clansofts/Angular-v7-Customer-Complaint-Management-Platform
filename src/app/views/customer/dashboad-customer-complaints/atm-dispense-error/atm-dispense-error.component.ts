@@ -21,14 +21,17 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   loading: boolean;
   radioGroup: FormGroup;
   public formState: boolean; // Display complaints form as default.
-  transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
-  ATM_used: Array<any> = [{ name: 'Union Bank ATM' }, { name: 'Other Bank ATM' }]; // list of ATM's
-  private _card_Variants = 'cardvariants';
-  private _currencyType = 'currencyTypes';
-  currencyType: Array<any> = [];
+  currencyType: Array<ResourceModel>;
   card_Variants: Array<ResourceModel>;
   private moduleID = 1; // Complaints
   private channelID = 1; // ATM dispense error
+
+  // Is this the best way?
+  transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
+  ATM_used: Array<any> = [{ name: 'Union Bank' }, { name: 'Other Bank' }]; // list of ATM's
+
+  private _card_Variants = 'cardvariants'; // Endpoint.
+  private _currencyType = 'currencyTypes';  // Endpoint
 
   constructor(
     private fb: FormBuilder,
@@ -41,8 +44,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.atmDispenseErrorFn();
-    this.fetchCardVariants(this._card_Variants);
-    this.fetchCurrencyType(this._currencyType);
+    this.fetchCardVariants = this._card_Variants;
+    this.fetchCurrencyType = this._currencyType;
   }
 
   ngOnDestroy() {
@@ -50,8 +53,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Fetch card variants
-  fetchCardVariants(path: string): ResourceModel {
-    return this.utilities.fetch(path)
+  set fetchCardVariants(path: string) {
+    this.utilities.fetch(path)
       .pipe(map((response: any) => {
         this.card_Variants = response;
       }))
@@ -59,8 +62,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Fetch card variants
-  fetchCurrencyType(path: string): ResourceModel {
-    return this.utilities.fetch(path)
+  set fetchCurrencyType(path: string) {
+    this.utilities.fetch(path)
       .pipe(map((response: any) => {
         this.currencyType = response;
       }))
