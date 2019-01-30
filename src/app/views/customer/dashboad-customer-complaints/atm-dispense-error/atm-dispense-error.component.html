@@ -42,8 +42,8 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card Variant</label>
                                 <select formControlName="cardVariant" class="form-control">
-                                    <option hidden [value]="" disabled selected>select card variant</option>
-                                    <option *ngFor="let card of Cards" [value]='card?.Id'>{{card?.name}}</option>
+                                    <option [value]="" disabled selected>Select card variant</option>
+                                    <option *ngFor="let card of card_Variants" [value]='card?.id'>{{card?.name}}</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
@@ -65,10 +65,17 @@
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">ATM</label>
+                                <select class="form-control">
+                                    <option *ngFor="let i of ATM_used" [value]='i'>{{i?.name}}</option>
+                                </select>
+                                <small id="emailHelp" class="form-text text-muted">ATM used: Union Bank or Other Bank.</small>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Single or Multiple Transactions</label>
                                 <select class="form-control">
-                                    <option>Single</option>
-                                    <option>Multiple</option>
+                                    <option *ngFor="let i of transCount">{{i?.name}}</option>
                                 </select>
                             </div>
                             <ng-container formGroupName="amount">
@@ -90,9 +97,9 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Currency Type</label>
-                                <select class="form-control">
-                                    <option>Naira</option>
-                                    <option>Dollar</option>
+                                <select formControlName="currencyType" class="form-control">
+                                    <option [value]="" disabled selected>Select currency</option>
+                                    <option *ngFor="let currency of currencyType" [value]='currency?.id'>{{currency?.name}}</option>
                                 </select>
                             </div>
                             <div class="col-md-12">

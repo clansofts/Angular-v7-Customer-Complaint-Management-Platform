@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { single, map } from 'rxjs/operators';
+import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
-// Interface for card variant
-interface CardsModel {
+// Interface for card variant and currency type.
+interface ResourceModel {
   name: string;
-  id: any;
+  id: number;
 }
 
 @Component({
@@ -14,41 +16,24 @@ interface CardsModel {
   templateUrl: './atm-dispense-error.component.html',
   styleUrls: ['./atm-dispense-error.component.scss']
 })
-export class AtmDispenseErrorComponent implements OnInit {
+export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   atmDispenseError: FormGroup;
   loading: boolean;
   radioGroup: FormGroup;
   public formState: boolean; // Display complaints form as default.
-  card_Variants: Array<CardsModel> = [{
-    name: 'Master Card',
-    id: '023'
-  },
-  {
-    name: 'Visa Card',
-    id: '013'
-  },
-  {
-    name: 'Naira Master Card',
-    id: '02'
-  }];
-
-  Cards = [{
-    name: 'Master Card',
-    id: '023'
-  },
-  {
-    name: 'Visa Card',
-    id: '013'
-  },
-  {
-    name: 'Naira Master Card',
-    id: '02'
-  }
-  ];
+  transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
+  ATM_used: Array<any> = [{ name: 'Union Bank ATM' }, { name: 'Other Bank ATM' }]; // list of ATM's
+  private _card_Variants = 'cardvariants';
+  private _currencyType = 'currencyTypes';
+  currencyType: Array<any> = [];
+  card_Variants: Array<ResourceModel>;
+  private moduleID = 1; // Complaints
+  private channelID = 1; // ATM dispense error
 
   constructor(
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private utilities: UtilitiesService
   ) {
     // display details form by default
     this.formState = true;
@@ -56,22 +41,47 @@ export class AtmDispenseErrorComponent implements OnInit {
 
   ngOnInit() {
     this.atmDispenseErrorFn();
-    this.radioGroup = this.fb.group({
-      radio: []
-    });
+    this.fetchCardVariants(this._card_Variants);
+    this.fetchCurrencyType(this._currencyType);
+  }
+
+  ngOnDestroy() {
+    // subscribtions?
+  }
+
+  // Fetch card variants
+  fetchCardVariants(path: string): ResourceModel {
+    return this.utilities.fetch(path)
+      .pipe(map((response: any) => {
+        this.card_Variants = response;
+      }))
+      .toPromise();
+  }
+
+  // Fetch card variants
+  fetchCurrencyType(path: string): ResourceModel {
+    return this.utilities.fetch(path)
+      .pipe(map((response: any) => {
+        this.currencyType = response;
+      }))
+      .toPromise();
   }
 
   // Used to toggle between views
   next = (): void => {
     this.formState = false;
-    console.log(this.formState);
     return;
   }
   previous = () => {
     this.formState = true;
     return;
   }
+  // Use to toggle single or multiple
+  transCountFn() {
+    alert('clicked');
+  }
 
+  // Reactive form control
   atmDispenseErrorFn(): void {
     this.atmDispenseError = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -100,13 +110,13 @@ export class AtmDispenseErrorComponent implements OnInit {
     }, 3000);
   }
 
-  breadCrumbs(feedback, category): void {
-
+  log_tracking() {
+    return this.utilities.breadCrumbs(this.moduleID, this.channelID)
+      .toPromise().then(response => {
+        console.log(response);
+      });
   }
-
   test() {
-    setTimeout(() => {
-      console.log(this.card_Variants);
-    }, 1000);
+    // console.log('');
   }
 }
