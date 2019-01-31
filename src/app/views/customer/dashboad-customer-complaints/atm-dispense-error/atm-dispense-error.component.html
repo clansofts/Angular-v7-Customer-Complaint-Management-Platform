@@ -3,7 +3,7 @@
         <div class="card mb-4">
             <div class="card-body" (click)="test()">
                 <div class="card-title mb-3">ATM Dispense Error Form</div>
-                <form [formGroup]="atmDispenseErrorForm" (ngSubmit)="submit()">
+                <form [formGroup]="atmDispenseErrorForm" (ngSubmit)="submit(atmDispenseErrorForm)">
                     <div class="row">
                         <ng-container *ngIf="formState else complaintsForm">
                             <div class="col-md-6 form-group mb-3">
@@ -98,7 +98,7 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">ATM used:</label>
-                                <select formControlName="atmError" class="form-control">
+                                <select formControlName="atmUsed" class="form-control">
                                     <option *ngFor="let i of ATM_used" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
                             </div>
@@ -113,7 +113,7 @@
                             <div *ngIf="selected_ATM == 2" class="col-md-6 form-group mb-3">
                                 <label for="picker1">Bank used:</label>
                                 <select formControlName="bankused" class="form-control">
-                                    <option *ngFor="let i of Bank_used" [ngValue]='i'>{{i?.bankNme}}</option>
+                                    <option *ngFor="let i of Bank_used" [ngValue]='i'>{{i?.bankName}}</option>
                                 </select>
                                 <small id="emailHelp" class="form-text text-muted">ATM used: Union Bank or Other Bank.</small>
                             </div>

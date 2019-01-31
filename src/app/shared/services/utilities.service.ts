@@ -67,7 +67,7 @@ export class UtilitiesService {
   }
 
   // ATM list
-  fetch_banksList(): any {
+  banksList(): any {
     const Path = this.baseURL + `otherbanks`;
     return this.http.get<BankModel>(Path);
   }

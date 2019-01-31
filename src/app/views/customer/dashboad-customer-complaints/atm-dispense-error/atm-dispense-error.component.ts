@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, Form, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
+import { ComplaintsService } from '../complaints.service';
 
 @Component({
   selector: 'app-atm-dispense-error',
@@ -11,8 +12,9 @@ import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } f
   styleUrls: ['./atm-dispense-error.component.scss']
 })
 export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
-  private moduleID = 1; // Complaints
-  private channelID = 1; // ATM dispense error
+  private feedbackId = 1; // feedback
+  private categoryId = 1; // category
+  private channelId = 1; // ATM dispense error
 
   atmDispenseErrorForm: FormGroup;
   loading: boolean;
@@ -31,12 +33,13 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   private _card_Variants = 'cardvariants'; // Endpoint.
   private _currencyType = 'currencyTypes';  // Endpoint
   dummystate: boolean;
-  feedbackID: number;
+  feedbackCategory_ID: number;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private utilities: UtilitiesService
+    private utilities: UtilitiesService,
+    private complaintsService: ComplaintsService
   ) {
     // display details form by default
     this.formState = true;
@@ -57,11 +60,11 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     // subscribtions?
   }
 
-  // Register service
+  // Register service by fetching feedback categoryID
   fetch_feedbackID(): Promise<number> {
-    return this.utilities.breadCrumbs(this.moduleID, this.channelID)
+    return this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
-        this.feedbackID = response.id;
+        this.feedbackCategory_ID = response.id;
       });
   }
 
@@ -93,9 +96,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   fetch_BankList(): BankModel {
-    return this.utilities.fetch_banksList()
+    return this.utilities.banksList()
       .toPromise().then((response: BankModel[]) => {
-        console.log(response);
         this.Bank_used = response;
         return this.Bank_used;
       });
@@ -104,8 +106,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   // Used to toggle between views
   set toggleNavigation(n: boolean) {
     this.formState = n;
-    console.log(this.formState);
-    return;
   }
   // Use to toggle single or multiple
   get selectedTransCount() {
@@ -114,9 +114,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // ATM: whether Union Bank or Other
   get selected_ATM() {
-    return this.atmDispenseErrorForm.controls.atmError.value.id;
+    return this.atmDispenseErrorForm.controls.atmUsed.value.id;
   }
-
 
   // Reactive form control
   atmDispenseErrorFn(): void {
@@ -128,7 +127,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       cardNumber: ['', Validators.maxLength(4)],
       cardVariant: ['2'], // Automatically fetch cardVariant
       transDate: [''], // Defaults to today's date
-      atmError: [''],
+      atmUsed: [''],
       transCount: [''],
       amount: this.fb.group({
         amount1: [''],
@@ -136,15 +135,19 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
         amount3: [''],
       }),
       currencyType: [''], // Defaults to Naira
-      feedbackId: [this.feedbackID],
+      feedbackId: [`${this.feedbackCategory_ID}`],
       location: [''], // if unionbank
       bankused: [''] // if other bank
     });
   }
 
-  async submit() {
+  async submit(form: NgForm) {
     this.loading = true;
-    /* Set an await function, breadcrumbs */
+    this.complaintsService.submitComplaint(form.value, this.channelId)
+    .toPromise().then(response => {
+      console.log(response);
+    });
+
     setTimeout(() => {
       this.loading = false;
       this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
@@ -152,7 +155,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    console.log(this.atmDispenseErrorForm.invalid);
+    console.log(this.feedbackCategory_ID);
   }
 
 }
