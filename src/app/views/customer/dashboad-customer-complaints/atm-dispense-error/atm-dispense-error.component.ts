@@ -157,7 +157,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   test() {
-  //  console.log('');
+    //  console.log('');
   }
 
 }

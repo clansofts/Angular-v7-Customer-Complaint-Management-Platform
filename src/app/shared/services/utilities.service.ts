@@ -43,8 +43,6 @@ export class UtilitiesService {
 
   constructor(private http: HttpClient) { }
 
-  /* Is there a way to tie this function to it's return type? Do I need a global interface */
-
   // Fetch resource by endpoint
   fetch(endpoint: string): any {
     return this.http.get<ResourceModel>(this.baseURL + endpoint);
@@ -78,7 +76,15 @@ export class UtilitiesService {
       '-' + date.day;
   }
 
-  /* To speed up the applications, I'll like to schedule resource fetching
-  to a web worker when the application loads.
-  That should be none blocking. To fetch all form resources asynchronously*/
+  // Clear or delete emypty strings from json object
+  del_frmBody(payload: any) {
+    const jsonBody = payload;
+    Object.keys(jsonBody).forEach(function (key) {
+      // If it's not a number of an empty string
+      if (jsonBody[key] === null || jsonBody[key] === undefined || jsonBody[key] === '') {
+        delete jsonBody[key];
+      }
+    });
+    return;
+  }
 }
