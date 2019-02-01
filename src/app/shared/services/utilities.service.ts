@@ -72,6 +72,12 @@ export class UtilitiesService {
     return this.http.get<BankModel>(Path);
   }
 
+  // Date formater
+  formatDate(date: any) {
+    return date.year + '-' + date.month +
+      '-' + date.day;
+  }
+
   /* To speed up the applications, I'll like to schedule resource fetching
   to a web worker when the application loads.
   That should be none blocking. To fetch all form resources asynchronously*/

@@ -45,8 +45,9 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     this.formState = true;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.atmDispenseErrorFn();
+    await this.fetch_feedbackID();
     // These are get and set accessors for currency and card variant list: API.
     this.fetchCardVariants = this._card_Variants;
     this.fetchCurrencyType = this._currencyType;
@@ -135,7 +136,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
         amount3: [''],
       }),
       currencyType: [''], // Defaults to Naira
-      feedbackId: [`${this.feedbackCategory_ID}`],
+      feedbackId: [''],
       location: [''], // if unionbank
       bankused: [''] // if other bank
     });
@@ -143,19 +144,20 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   async submit(form: NgForm) {
     this.loading = true;
+    this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
     this.complaintsService.submitComplaint(form.value, this.channelId)
-    .toPromise().then(response => {
-      console.log(response);
-    });
+      .toPromise().then(response => {
+        console.log(response);
+      });
 
     setTimeout(() => {
       this.loading = false;
-      this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
+      /*  this.toastr.success('Profile updated.', 'Success!', { progressBar: true });*/
     }, 3000);
   }
 
   test() {
-    console.log(this.feedbackCategory_ID);
+  //  console.log('');
   }
 
 }
