@@ -29,7 +29,7 @@ export class ComplaintsService {
       'transactionAmount': form.amount.amount1,
       'transactionAmountTwo': form.amount.amount2,
       'transactionAmountThree': form.amount.amount3,
-      'transactionDate': this.utilities.formatDate(form.transDate), // Format sample: '2019-01-29 09:40:00'
+      'transactionDate': this.utilities.formatDate(form.transDate), // Format sample: '2019-01-29'
       'atmUsed': form.atmUsed.id,
       'cardComplaintType': parseInt(form.cardVariant, 10),
       'complaintDescription': '',
@@ -50,17 +50,18 @@ export class ComplaintsService {
       'isCustomer': '',
       'disappointedService': '',
       'branchIncident': '',
-      'bankNameId': parseInt(form.bankused.bankId, 10), // bank used
-      'sourceId': 1, // fixed web
+      'bankNameId': form.bankused.bankId,
+      'sourceId': 1, // fixed for web
       'unionatmId': form.location.atmId,
       'branchListId': '',
       'serviceProviderId': '',
-      'channelId': channel, // atm dispense error
+      'channelId': channel, // whether atm dispense error, card issue etc
       'feedbackcategoryId': form.feedbackId, // Feedback categoryId
       'cardVariantId': parseInt(form.cardVariant, 10),
       'currencyTypeId': parseInt(form.currencyType, 10),
     };
     this.utilities.del_frmBody(body);
+    console.log(body);
     return this.http.post<any>(Path, body);
   }
 }
