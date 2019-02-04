@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
 
 // Interface ATM list
 export interface ATMModel {
@@ -41,11 +42,18 @@ export interface ATMModel {
 export class UtilitiesService {
   private baseURL = environment.API.BaseURL;
 
+  // Shared Card Variants
+  card_Variants$: Observable<ResourceModel[]>;
+
   constructor(private http: HttpClient) { }
 
   // Fetch resource by endpoint
   fetch(endpoint: string): any {
     return this.http.get<ResourceModel>(this.baseURL + endpoint);
+  }
+
+  set card_VariantsInit(endpoint: string) {
+    this.card_Variants$ = this.http.get<ResourceModel[]>(this.baseURL + endpoint);
   }
 
   // For tracking user flow.
@@ -64,16 +72,28 @@ export class UtilitiesService {
     return this.http.get<ATMModel>(Path);
   }
 
-  // ATM list
+  // Bank list
   banksList(): any {
     const Path = this.baseURL + `otherbanks`;
     return this.http.get<BankModel>(Path);
   }
 
-  // Date formater
+  // Date formater, format: 'yyyy-mm-dd'
   formatDate(date: any) {
     return date.year + '-' + date.month +
       '-' + date.day;
+  }
+
+  // Format date from JavaScript date function
+  get todaysDate() {
+    const today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    if (dd < 10) { dd = 0 + dd; }
+    if (mm < 10) { mm = 0 + mm; }
+    const newDate = yyyy + '/' + mm + '/' + dd;
+    return newDate.toString();
   }
 
   // Clear or delete emypty strings from json object

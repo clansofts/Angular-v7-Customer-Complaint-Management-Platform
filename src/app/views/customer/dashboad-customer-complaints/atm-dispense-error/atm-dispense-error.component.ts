@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, Form, NgForm } from '@
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
-import { ComplaintsService } from '../complaints.service';
+import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 
 @Component({
   selector: 'app-atm-dispense-error',
@@ -47,14 +47,17 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.atmDispenseErrorFn();
-    await this.fetch_feedbackID();
-    // These are get and set accessors for currency and card variant list: API.
-    this.fetchCardVariants = this._card_Variants;
-    this.fetchCurrencyType = this._currencyType;
-    // tslint:disable-next-line:no-unused-expression
-    this.atmLocations;
-    this.fetch_feedbackID();
-    this.fetch_BankList();
+    return Promise.all([
+      await this.fetch_feedbackID(),
+      // These are get and set accessors for currency and card variant list: API.
+      this.fetchCardVariants = this._card_Variants,
+      this.fetchCurrencyType = this._currencyType,
+      // tslint:disable-next-line:no-unused-expression
+      this.atmLocations,
+      this.fetch_feedbackID(),
+      this.fetch_BankList()
+    ]);
+
   }
 
   ngOnDestroy() {
@@ -71,11 +74,11 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Fetch card variants
   set fetchCardVariants(path: string) {
-    this.utilities.fetch(path)
-      .pipe(map((response: any) => {
+    this.utilities.card_VariantsInit = path;
+    this.utilities.card_Variants$
+      .toPromise().then(response => {
         this.card_Variants = response;
-      }))
-      .toPromise();
+      });
   }
 
   // Fetch card variants
@@ -144,8 +147,30 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   async submit(form: NgForm) {
     this.loading = true;
-    this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-    this.complaintsService.submitComplaint(form.value, this.channelId)
+    await this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
+    // Construct Payload Objecy
+    const payloadObject: ComplaintsModel = {
+      title: 1,
+      firstName: form.value.firstName,
+      lastName: form.value.lastName,
+      email: form.value.emailAddress,
+      phoneNo: form.value.phone,
+      lastFourDigit: form.value.cardNumber,
+      transactionType: form.value.transCount.id,
+      transactionAmount: form.value.amount.amount1,
+      transactionAmountTwo: form.value.amount.amount2,
+      transactionAmountThree: form.value.amount.amount3,
+      transactionDate: this.utilities.formatDate(form.value.transDate), // Format sample: '2019-01-29'
+      atmUsed: form.value.atmUsed.id,
+      bankNameId: form.value.bankused.bankId,
+      sourceId: 1, // fixed for web
+      unionatmId: form.value.location.atmId,
+      channelId: this.channelId, // whether atm dispense error, card issue etc
+      feedbackcategoryId: form.value.feedbackId, // Feedback categoryId
+      cardVariantId: parseInt(form.value.cardVariant, 10),
+      currencyTypeId: parseInt(form.value.currencyType, 10),
+    };
+    this.complaintsService.submitComplaint(payloadObject)
       .toPromise().then(response => {
         console.log(response);
       });
