@@ -15,7 +15,6 @@ export class ComplaintsService {
   submitComplaint(payload: ComplaintsModel) {
     const Path = this.baseURL + `issues`;
     this.utilities.del_frmBody(payload);
-    console.log(payload);
     return this.http.post<ComplaintsModel>(Path, payload);
   }
 
