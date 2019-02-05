@@ -62,7 +62,7 @@
 
                             <ng-container [ngSwitch]="selectedMedium">
 
-                                <!-- Union Mobile -->
+                                <!-- Medium is: Union Mobile -->
                                 <ng-container *ngSwitchCase="1">
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Service Type</label>
@@ -146,9 +146,6 @@
                                     <ng-container *ngIf="(selectServiceType == 3)">
                                         Transfer
                                     </ng-container>
-
-
-
                                     <div class="col-md-12">
                                         <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
                                         <button type="button" Class="btn btn-secondary btn-rounded m-1" (click)="toggleNavigation = true">Previous</button>
@@ -165,11 +162,15 @@
 
 
 
-
+                                <!-- Medium is: Online Banking -->
                                 <div *ngSwitchCase="2">'Online Banking</div>
+                                <!-- Medium is: POS/Web -->
                                 <div *ngSwitchCase="3">POS/Web</div>
+                                <!-- Medium is: USSD -->
                                 <div *ngSwitchCase="4">USSD</div>
+                                <!-- Medium is: Card Functionality -->
                                 <div *ngSwitchCase="5">Card Functionality</div>
+                                <!-- Medium is: Mcash -->
                                 <div *ngSwitchCase="6">Mcash</div>
                             </ng-container>
 
