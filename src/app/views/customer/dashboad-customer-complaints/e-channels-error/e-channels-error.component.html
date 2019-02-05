@@ -1,67 +1,179 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-body">
+            <div class="card-body" (click)="test()">
                 <div class="card-title mb-3">E-Channels Complaint Form</div>
-                <form [formGroup]="formBasic" (ngSubmit)="submit()">
+                <form [formGroup]="eChannelsForm" (ngSubmit)="submit(eChannelsForm)">
                     <div class="row">
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                placeholder="Enter email">
-                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="phone">Phone</label>
-                            <input class="form-control" id="phone" placeholder="Enter phone">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="credit">Cradit card number</label>
-                            <input class="form-control" id="credit" placeholder="Card">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="credit">Website</label>
-                            <input class="form-control" id="credit" placeholder="Web address">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="picker1">Birth date</label>
-                            <div class="input-group">
-                                <input id="picker1" class="form-control" placeholder="yyyy-mm-dd" name="dp"
-                                    ngbDatepicker #dp="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
-                                        <i class="icon-regular i-Calendar-4"></i>
-                                    </button>
-                                </div>
+                        <ng-container *ngIf="personalDetails else complaintsForm">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="firstName">First name</label>
+                                <input type="text" formControlName="firstName" class="form-control" id="firstName"
+                                    placeholder="Enter your first name">
                             </div>
-                        </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="picker1">Select</label>
-                            <select class="form-control">
-                                <option>Option 1</option>
-                                <option>Option 1</option>
-                                <option>Option 1</option>
-                            </select>
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="lastName">Last name</label>
+                                <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                                    placeholder="Enter your last name">
+                            </div>
 
-                        <div class="col-md-12">
-                            <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input formControlName="emailAddress" type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="Enter email">
+                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="phone">Phone</label>
+                                <input formControlName="phone" class="form-control" id="phone" placeholder="Enter phone">
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="phone">Alternate Phone number</label>
+                                <input formControlName="altphone" class="form-control" id="phone" placeholder="Enter phone">
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="credit">Card number: last 4 digits</label>
+                                <input formControlName="cardNumber" class="form-control" id="credit" placeholder="Card">
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="credit">Account number</label>
+                                <input formControlName="acctNumber" class="form-control" id="credit" placeholder="Account number">
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">E-Channel</label>
+                                <select formControlName="eChannels" (change)="onChange()" class="form-control">
+                                    <option *ngFor="let i of eChannelMedium" [ngValue]='i'>{{i?.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <button [disabled]='eChannelsForm.invalid' type="button" Class="btn btn-primary btn-rounded m-1"
+                                    (click)="toggleNavigation = false">Continue</button>
+                            </div>
+                        </ng-container>
+
+                        <ng-template #complaintsForm>
+
+                            <ng-container [ngSwitch]="selectedMedium">
+
+                                <!-- Union Mobile -->
+                                <ng-container *ngSwitchCase="1">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Service Type</label>
+                                        <select formControlName="eChannels" class="form-control">
+                                            <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Service Provider:</label>
+                                        <select formControlName="serviceProvider" class="form-control">
+                                            <option *ngFor="let i of serviceList" [ngValue]='i'>{{i?.serviceProvider}}</option>
+                                        </select>
+                                    </div>
+                                    <!-- If service type is Airtime top up -->
+                                    <ng-container *ngIf="(selectServiceType == 1)">
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Currency Type</label>
+                                            <select formControlName="currencyType" class="form-control">
+                                                <option [value]="" disabled selected>Select currency</option>
+                                                <option *ngFor="let currency of currencyType" [value]='currency?.id'>{{currency?.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Single or Multiple Transactions:</label>
+                                            <select formControlName="transCount" class="form-control">
+                                                <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                            formGroupName="amount">
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount</label>
+                                                <input formControlName="amount1" class="form-control" id="credit"
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 2</label>
+                                                <input formControlName="amount2" class="form-control" id="credit"
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 3</label>
+                                                <input formControlName="amount3" class="form-control" id="credit"
+                                                    placeholder="Transaction Amount">
+                                            </div>
+                                        </ng-container>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Transaction Date</label>
+                                            <div class="input-group">
+                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                    placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                                                        <i class="icon-regular i-Calendar-4"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Complaint Description</span>
+                                                </div>
+                                                <textarea formControlName="complaintDescription" class="form-control"
+                                                    aria-label="With textarea"></textarea>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <!-- If Bills Payment -->
+                                    <ng-container *ngIf="(selectServiceType == 2)">
+                                        Bills Payment
+                                    </ng-container>
+                                    <!-- If Transfer -->
+                                    <ng-container *ngIf="(selectServiceType == 3)">
+                                        Transfer
+                                    </ng-container>
+
+
+
+                                    <div class="col-md-12">
+                                        <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+                                        <button type="button" Class="btn btn-secondary btn-rounded m-1" (click)="toggleNavigation = true">Previous</button>
+                                    </div>
+                                </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div *ngSwitchCase="2">'Online Banking</div>
+                                <div *ngSwitchCase="3">POS/Web</div>
+                                <div *ngSwitchCase="4">USSD</div>
+                                <div *ngSwitchCase="5">Card Functionality</div>
+                                <div *ngSwitchCase="6">Mcash</div>
+                            </ng-container>
+
+                        </ng-template>
                     </div>
                 </form>
             </div>

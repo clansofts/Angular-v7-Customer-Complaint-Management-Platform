@@ -36,6 +36,12 @@ export interface ATMModel {
   issue: any;
 }
 
+// Service Provider Model
+export interface ServiceProvider {
+  serviceProvider: string;
+  serviceProviderId: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -106,5 +112,11 @@ export class UtilitiesService {
       }
     });
     return;
+  }
+
+  // Fetch service providers
+  get serviceProviders(): any {
+    const Path = this.baseURL + `serviceproviders`;
+    return this.http.get<ServiceProvider>(Path);
   }
 }

@@ -52,7 +52,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       // These are get and set accessors for currency and card variant list: API.
       this.fetchCardVariants = this._card_Variants,
       this.fetchCurrencyType = this._currencyType,
-      // tslint:disable-next-line:no-unused-expression
       this.atmLocations,
       this.fetch_feedbackID(),
       this.fetch_BankList()

@@ -21,6 +21,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   radioGroup: FormGroup;
   public personalDetails: boolean; // Display complaints form as default.
   card_Variants: Array<ResourceModel>;
+
   // Make me an Enum sama :(
   cardComplaintType: Array<any> = [
     { name: 'Card Issuance', id: 1 },

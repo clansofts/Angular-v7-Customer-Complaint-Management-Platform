@@ -27,11 +27,11 @@ import { CustomFormsModule } from 'ng2-validation';
     DashboardRoutingModule,
   ],
   declarations: [
-    DashboadDefaultComponent, 
-    DashboardV2Component, 
-    AtmDispenseErrorComponent, 
-    CardIssueComponent, 
-    EChannelsErrorComponent, 
+    DashboadDefaultComponent,
+    DashboardV2Component,
+    AtmDispenseErrorComponent,
+    CardIssueComponent,
+    EChannelsErrorComponent,
     ServiceIssueComponent
   ]
 })
