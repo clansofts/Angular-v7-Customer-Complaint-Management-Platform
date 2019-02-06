@@ -128,7 +128,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       emailAddress: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       cardNumber: ['', Validators.maxLength(4)],
-      cardVariant: ['2'], // Automatically fetch cardVariant
+      cardVariant: [''], // Automatically fetch cardVariant
       transDate: [''], // Defaults to today's date
       atmUsed: [''],
       transCount: [''],

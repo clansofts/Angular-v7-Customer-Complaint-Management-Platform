@@ -21,6 +21,8 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   radioGroup: FormGroup;
   public personalDetails: boolean; // Display complaints form as default.
   card_Variants: Array<ResourceModel>;
+  private _card_Variants = 'cardvariants'; // Endpoint.
+  feedbackCategory_ID: number;
 
   // Make me an Enum sama :(
   cardComplaintType: Array<any> = [
@@ -34,8 +36,6 @@ export class CardIssueComponent implements OnInit, OnDestroy {
     { name: 'Card Statement', id: 8 },
     { name: 'Repayment', id: 9 },
     { name: 'Charge Back', id: 10 }]; // list of ATMs
-  private _card_Variants = 'cardvariants'; // Endpoint.
-  feedbackCategory_ID: number;
 
   constructor(
     private fb: FormBuilder,
