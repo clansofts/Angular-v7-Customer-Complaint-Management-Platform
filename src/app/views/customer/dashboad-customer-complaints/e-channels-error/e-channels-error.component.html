@@ -52,7 +52,7 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">E-Channel</label>
-                                <select formControlName="eChannels" (change)="onChange()" class="form-control">
+                                <select formControlName="eMedium" (change)="onChange()" class="form-control">
                                     <option *ngFor="let i of eChannelMedium" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
                             </div>
@@ -147,10 +147,8 @@
                                     <ng-container *ngIf="(selectServiceType == 2)">
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Billers Category</label>
-                                            <select formControlName="billersCategory" class="form-control">
-                                                <option>Option 1</option>
-                                                <option>Option 1</option>
-                                                <option>Option 1</option>
+                                            <select formControlName="billType" class="form-control">
+                                                <option *ngFor="let i of billerType" [value]='i?.id'>{{i?.name}}</option>
                                             </select>
                                         </div>
 
@@ -237,8 +235,8 @@
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
-                                            <label for="phone">Recipients phone number</label>
-                                            <input formControlName="recipientsPhone" class="form-control" id="smartcardnumber"
+                                            <label for="phone">Recipients Account number</label>
+                                            <input formControlName="recipientsAcctNo" class="form-control" id="smartcardnumber"
                                                 placeholder="Recipients phone number">
                                         </div>
 
@@ -326,16 +324,16 @@
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Where did you use your card?</label>
-                                        <select class="form-control">
+                                        <select formControlName="whereCardUsed" class="form-control">
                                             <option *ngFor="let i of POS_Web" [ngValue]='i'>{{i.name}}</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6 form-group mb-3">
+                                    <div *ngIf="card_was_Used == 1" class="col-md-6 form-group mb-3">
                                         <label for="firstName">POS Merchant name</label>
                                         <input formControlName="posMerchantName" type="text" class="form-control" id="firstName"
                                             placeholder="Enter merchant name e.g xyz business limited">
                                     </div>
-                                    <div class="col-md-6 form-group mb-3">
+                                    <div *ngIf="card_was_Used == 2" class="col-md-6 form-group mb-3">
                                         <label for="firstName">Website where card was used?</label>
                                         <input formControlName="websiteURL" type="text" class="form-control" id="firstName"
                                             placeholder="Enter Website URL e.g www.xyz.com">
@@ -367,9 +365,29 @@
                                     </div>
 
                                     <div class="col-md-6 form-group mb-3">
-                                        <label for="credit">Amount</label>
-                                        <input formControlName="amount1" class="form-control" id="" placeholder="Transaction Amount">
+                                        <label for="picker1">Single or Multiple Transactions:</label>
+                                        <select formControlName="transCount" class="form-control">
+                                            <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
                                     </div>
+
+                                    <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                        formGroupName="amount">
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="credit">Amount</label>
+                                            <input formControlName="amount1" class="form-control" id="" placeholder="Transaction Amount">
+                                        </div>
+
+                                        <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                            <label for="credit">Amount 2</label>
+                                            <input formControlName="amount2" class="form-control" id="" placeholder="Transaction Amount">
+                                        </div>
+
+                                        <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                            <label for="credit">Amount 3</label>
+                                            <input formControlName="amount3" class="form-control" id="" placeholder="Transaction Amount">
+                                        </div>
+                                    </ng-container>
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Transaction Date</label>
@@ -409,7 +427,7 @@
                                 <ng-container *ngSwitchCase="6">
                                     Mcash
                                 </ng-container>
-                                
+
                             </ng-container>
 
                             <div class="col-md-12">

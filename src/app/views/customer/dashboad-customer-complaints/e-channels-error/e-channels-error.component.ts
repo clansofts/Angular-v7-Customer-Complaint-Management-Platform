@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { map } from 'rxjs/internal/operators/map';
+import { ComplaintsModel, ComplaintsService } from '../complaints.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-e-channels-error',
@@ -32,7 +34,7 @@ export class EChannelsErrorComponent implements OnInit {
   transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
   POS_Web: Array<any> = [{ name: 'Point-of-sale (POS) ', id: 1 }, { name: 'Website', id: 2 }];
 
-  // Make me an Enum sama :(
+  // Enumerate?
   eChannelMedium: Array<any> = [
     { name: 'Union Mobile', id: 1 },
     { name: 'Online Banking', id: 1 },
@@ -49,10 +51,19 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Transfer', id: 3 }
   ];
 
+  // Dummy Billers Types, API needed
+  billerType: Array<any> = [
+    { name: 'DSTV', id: 1 },
+    { name: 'Electricity', id: 2 },
+    { name: 'GOTV', id: 3 }
+  ];
+
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private utilities: UtilitiesService,
+    private complaintsService: ComplaintsService
   ) {
     // display details form by default
     this.personalDetails = true;
@@ -105,6 +116,11 @@ export class EChannelsErrorComponent implements OnInit {
     return this.eChannelsForm.controls.transCount.value.id;
   }
 
+  // Return selected Point of Card use
+  get card_was_Used() {
+    return this.eChannelsForm.controls.whereCardUsed.value.id;
+  }
+
   // Fetch card variants
   set fetchCurrencyType(path: string) {
     this.utilities.fetch(path)
@@ -144,11 +160,12 @@ export class EChannelsErrorComponent implements OnInit {
         amount3: [''],
       }),
       currencyType: [''],
-      billersCategory: [''],
+      eMedium: [''],
+      billType: [''],
       referenceID: [''],
       smartCardNumber: [''],
       unionMobilePhone: [''],
-      recipientsPhone: [''],
+      recipientsAcctNo: [''],
       recipientsName: [''],
       whereCardUsed: [''],
       posMerchantName: [''],
@@ -156,10 +173,49 @@ export class EChannelsErrorComponent implements OnInit {
     });
   }
 
-  submit(form: NgForm) {
+  async submit(form: NgForm) {
     this.loading = true;
+    await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
+    console.log(form.value);
+    // Construct Payload Objecy
+    const payloadObject: ComplaintsModel = {
+      title: 1,
+      firstName: form.value.firstName,
+      lastName: form.value.lastName,
+      email: form.value.emailAddress,
+      phoneNo: form.value.phone,
+      lastFourDigit: form.value.cardNumber,
+      transactionType: form.value.transCount.id,
+      transactionAmount: form.value.amount.amount1,
+      transactionAmountTwo: form.value.amount.amount2,
+      transactionAmountThree: form.value.amount.amount3,
+      transactionDate: this.utilities.formatDate(form.value.transDate), // Format sample: '2019-01-29'
+      sourceId: 1, // fixed for web
+      channelId: this.channelId, // whether atm dispense error, card issue etc
+      feedbackcategoryId: form.value.feedbackId, // Feedback categoryId
+      cardVariantId: parseInt(form.value.cardVariant, 10),
+      currencyTypeId: parseInt(form.value.currencyType, 10),
+      eChannelMedium: form.value.eMedium,
+      serviceType: form.value.eChannels,
+      billType: form.value.billType,
+      referenceId: form.value.referenceID,
+      smartCardNumber: form.value.smartCardNumber,
+      unionMobile: form.value.unionMobilePhone,
+      recipientAccountNo: form.value.recipientsAcctNo,
+      recipientName: form.value.recipientsName,
+      posMerchantName: form.value.posMerchantName,
+      websiteUsed: form.value.websiteURL,
+      ussdPhoneNo: '',
+      beneficiaryPhoneNo: '',
+      recipientBank: '',
+      merchantCode: '',
+      serviceProviderId: form.value.serviceList.id,
+    };
     setTimeout(() => {
-      console.log(form.value);
+      this.complaintsService.submitComplaint(payloadObject)
+        .toPromise().then(response => {
+          console.log(response);
+        });
       this.loading = false;
       /* this.toastr.success('Profile updated.', 'Success!', { progressBar: true }); */
     }, 3000);
