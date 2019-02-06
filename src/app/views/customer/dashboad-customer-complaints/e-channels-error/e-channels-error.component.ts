@@ -49,6 +49,13 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Transfer', id: 3 }
   ];
 
+  // USSD Service Types
+  ussdServiceType: Array<any> = [
+    { name: 'Airtime Top Up', id: 4 },
+    { name: 'Transfer', id: 5 },
+    { name: 'Usage Issues', id: 6 }
+  ];
+
   // Dummy Billers Types, API needed
   billerType: Array<any> = [
     { name: 'DSTV', id: 1 },
@@ -101,6 +108,10 @@ export class EChannelsErrorComponent implements OnInit {
 
   get selectServiceType() {
     return this.eChannelsForm.controls.eMedium.value.id;
+  }
+
+  get ussd_ServiceType() {
+    return this.eChannelsForm.controls.eChannels.value.id;
   }
 
   // Use to toggle single or multiple
@@ -163,6 +174,8 @@ export class EChannelsErrorComponent implements OnInit {
       whereCardUsed: [''],
       posMerchantName: [''],
       websiteURL: [''],
+      ussdPhoneNo: [''],
+      beneficiaryPhoneNo: [''],
     });
   }
 
@@ -198,8 +211,8 @@ export class EChannelsErrorComponent implements OnInit {
       recipientName: form.value.recipientsName,
       posMerchantName: form.value.posMerchantName,
       websiteUsed: form.value.websiteURL,
-      ussdPhoneNo: '',
-      beneficiaryPhoneNo: '',
+      ussdPhoneNo: form.value.ussdPhoneNo,
+      beneficiaryPhoneNo: form.value.beneficiaryPhoneNo,
       recipientBank: '',
       merchantCode: '',
       serviceProviderId: form.value.serviceProvider.serviceProviderId,
@@ -215,9 +228,7 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   test() {
-    // console.log('Running test');
-    console.log(this.eChannelsForm.value);
-    console.log(this.selectServiceType);
+    console.log('Notice me sempai!');
   }
 
 }
