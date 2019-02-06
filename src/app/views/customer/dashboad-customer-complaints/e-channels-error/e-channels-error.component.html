@@ -52,7 +52,7 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">E-Channel</label>
-                                <select formControlName="eMedium" (change)="onChange()" class="form-control">
+                                <select formControlName="eMedium" class="form-control">
                                     <option *ngFor="let i of eChannelMedium" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
                             </div>
@@ -65,7 +65,7 @@
 
                         <ng-template #complaintsForm>
 
-                            <ng-container [ngSwitch]="selectedMedium">
+                            <ng-container [ngSwitch]="selectServiceType">
 
                                 <!-- If Medium is: Union Mobile -->
                                 <ng-container *ngSwitchCase="1">
@@ -307,15 +307,10 @@
 
                                     </ng-container>
 
-                                    <div class="col-md-12">
-                                        <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
-                                        <button type="button" Class="btn btn-secondary btn-rounded m-1" (click)="toggleNavigation = true">Previous</button>
-                                    </div>
-
                                 </ng-container>
 
                                 <!-- Medium is: Online Banking -->
-                                <div *ngSwitchCase="1">
+                                <div *ngSwitchCase="2">
                                 </div>
 
 

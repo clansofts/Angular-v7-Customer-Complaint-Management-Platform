@@ -15,6 +15,7 @@ export class ComplaintsService {
   submitComplaint(payload: ComplaintsModel) {
     const Path = this.baseURL + `issues`;
     this.utilities.del_frmBody(payload);
+    console.log(payload);
     return this.http.post<ComplaintsModel>(Path, payload);
   }
 
@@ -39,7 +40,7 @@ export interface ComplaintsModel {
   cardComplaintType?: any;
   complaintDescription?: any;
   eChannelMedium?: any;
-  serviceType?: any;
+  serviceType?: number;
   billType?: any;
   referenceId?: any;
   smartCardNumber?: any;
@@ -63,6 +64,6 @@ export interface ComplaintsModel {
   channelId?: number; // whether atm dispense error, card issue etc
   feedbackcategoryId?: number; // Feedback categoryId
   cardVariantId?: number;
-  currencyTypeId?: any;
+  currencyTypeId?: number;
 }
 

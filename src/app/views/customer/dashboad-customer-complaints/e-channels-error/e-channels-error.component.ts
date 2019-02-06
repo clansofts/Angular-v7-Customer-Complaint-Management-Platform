@@ -23,7 +23,6 @@ export class EChannelsErrorComponent implements OnInit {
   loading: boolean;
 
   public personalDetails: boolean; // Display complaints form as default.
-  private selectedMedium: number;
   currencyType: Array<ResourceModel>;
   serviceList: Promise<ServiceProvider>;
   card_Variants: Array<ResourceModel>;
@@ -37,11 +36,10 @@ export class EChannelsErrorComponent implements OnInit {
   // Enumerate?
   eChannelMedium: Array<any> = [
     { name: 'Union Mobile', id: 1 },
-    { name: 'Online Banking', id: 1 },
+    { name: 'Online Banking', id: 2 },
     { name: 'POS/Web', id: 3 },
     { name: 'USSD', id: 4 },
-    { name: 'Card Functionality', id: 5 },
-    { name: 'Mcash', id: 6 }
+    { name: 'Mcash', id: 5 }
   ];
 
   // Service Types
@@ -101,14 +99,8 @@ export class EChannelsErrorComponent implements OnInit {
       });
   }
 
-  // Change view to selected medium
-  onChange() {
-    this.selectedMedium = this.eChannelsForm.controls.eChannels.value.id;
-    return;
-  }
-
   get selectServiceType() {
-    return this.eChannelsForm.controls.eChannels.value.id;
+    return this.eChannelsForm.controls.eMedium.value.id;
   }
 
   // Use to toggle single or multiple
@@ -161,6 +153,7 @@ export class EChannelsErrorComponent implements OnInit {
       }),
       currencyType: [''],
       eMedium: [''],
+      feedbackId: [''],
       billType: [''],
       referenceID: [''],
       smartCardNumber: [''],
@@ -193,10 +186,10 @@ export class EChannelsErrorComponent implements OnInit {
       sourceId: 1, // fixed for web
       channelId: this.channelId, // whether atm dispense error, card issue etc
       feedbackcategoryId: form.value.feedbackId, // Feedback categoryId
-      cardVariantId: parseInt(form.value.cardVariant, 10),
-      currencyTypeId: parseInt(form.value.currencyType, 10),
-      eChannelMedium: form.value.eMedium,
-      serviceType: form.value.eChannels,
+      cardVariantId: form.value.cardVariant,
+      currencyTypeId: form.value.currencyType,
+      eChannelMedium: form.value.eMedium.id,
+      serviceType: form.value.eChannels.id,
       billType: form.value.billType,
       referenceId: form.value.referenceID,
       smartCardNumber: form.value.smartCardNumber,
@@ -209,7 +202,7 @@ export class EChannelsErrorComponent implements OnInit {
       beneficiaryPhoneNo: '',
       recipientBank: '',
       merchantCode: '',
-      serviceProviderId: form.value.serviceList.id,
+      serviceProviderId: form.value.serviceProvider.serviceProviderId,
     };
     setTimeout(() => {
       this.complaintsService.submitComplaint(payloadObject)
@@ -222,7 +215,9 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   test() {
-    console.log('Running test');
+    // console.log('Running test');
+    console.log(this.eChannelsForm.value);
+    console.log(this.selectServiceType);
   }
 
 }
