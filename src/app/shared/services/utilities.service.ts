@@ -103,7 +103,7 @@ export class UtilitiesService {
   }
 
   // Clear or delete emypty strings from json object
-  del_frmBody(payload: any) {
+  trim_frmBody(payload: any) {
     const jsonBody = payload;
     Object.keys(jsonBody).forEach(function (key) {
       // If it's not a number of an empty string

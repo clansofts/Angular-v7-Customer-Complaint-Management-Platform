@@ -125,55 +125,59 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     this.atmDispenseErrorForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
+      middleName: [''],
+      acctNumber: [''],
       emailAddress: ['', [Validators.required]],
       phone: ['', [Validators.required]],
+      altphone: [''],
       cardNumber: ['', Validators.maxLength(4)],
-      cardVariant: [''], // Automatically fetch cardVariant
-      transDate: [''], // Defaults to today's date
-      atmUsed: [''],
       transCount: [''],
       amount: this.fb.group({
         amount1: [''],
         amount2: [''],
         amount3: [''],
       }),
-      currencyType: [''], // Defaults to Naira
+      transDate: [''], // Defaults to today's date
+      atmUsed: [''],
+      cardComplaintType: [''],
+      complaintDescription: [''],
+      channel_ID: [this.channelId],
       feedbackId: [''],
-      location: [''], // if unionbank
-      bankused: [''] // if other bank
+      cardVariant: [''], // Automatically fetch cardVariant
+      currencyType: [''], // Defaults to Naira
+      eMedium: [''],
+      billType: [''],
+      eChannels: [''],
+      referenceID: [''],
+      smartCardNumber: [''],
+      unionMobilePhone: [''],
+      recipientsAcctNo: [''],
+      recipientsName: [''],
+      posMerchantName: [''],
+      websiteURL: [''],
+      ussdPhoneNo: [''],
+      beneficiaryPhoneNo: [''],
+      recipientBank: [''],
+      merchantCode: [''],
+      isCustomer: [''],
+      disappointedService: [''],
+      branchIncident: [''],
+      bankused: [''], // bankNameId: if other bank
+      unionatmId: [''], // if unionbank, then location
+      branchListId: [''],
+      serviceProvider: [''],
+      whereCardUsed: [''], // web or pos
     });
   }
 
   async submit(form: NgForm) {
     this.loading = true;
     await this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-    // Construct Payload Objecy
-    const payloadObject: ComplaintsModel = {
-      title: 1,
-      firstName: form.value.firstName,
-      lastName: form.value.lastName,
-      email: form.value.emailAddress,
-      phoneNo: form.value.phone,
-      lastFourDigit: form.value.cardNumber,
-      transactionType: form.value.transCount.id,
-      transactionAmount: form.value.amount.amount1,
-      transactionAmountTwo: form.value.amount.amount2,
-      transactionAmountThree: form.value.amount.amount3,
-      transactionDate: this.utilities.formatDate(form.value.transDate), // Format sample: '2019-01-29'
-      atmUsed: form.value.atmUsed.id,
-      bankNameId: form.value.bankused.bankId,
-      sourceId: 1, // fixed for web
-      unionatmId: form.value.location.atmId,
-      channelId: this.channelId, // whether atm dispense error, card issue etc
-      feedbackcategoryId: form.value.feedbackId, // Feedback categoryId
-      cardVariantId: parseInt(form.value.cardVariant, 10),
-      currencyTypeId: parseInt(form.value.currencyType, 10),
-    };
+    const payloadObject = new ComplaintsModel(form.value, this.utilities);
     this.complaintsService.submitComplaint(payloadObject)
       .toPromise().then(response => {
         console.log(response);
       });
-
     setTimeout(() => {
       this.loading = false;
       /*  this.toastr.success('Profile updated.', 'Success!', { progressBar: true });*/

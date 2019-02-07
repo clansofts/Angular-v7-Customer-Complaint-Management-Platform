@@ -14,7 +14,7 @@ export class ComplaintsService {
   // Customer complaints
   submitComplaint(payload: ComplaintsModel) {
     const Path = this.baseURL + `issues`;
-    this.utilities.del_frmBody(payload);
+    this.utilities.trim_frmBody(payload);
     console.log(payload);
     return this.http.post<ComplaintsModel>(Path, payload);
   }
@@ -81,10 +81,9 @@ export class ComplaintsModel {
       this.transactionAmountTwo = obj.amount.amount2,
       this.transactionAmountThree = obj.amount.amount3,
       this.transactionDate = Func.formatDate(obj.transDate), // Format'2019-01-29'
-      this.atmUsed = obj.atmUsed,
+      this.atmUsed = obj.atmUsed.id,
       this.cardComplaintType = obj.cardComplaintType,
       this.complaintDescription = obj.complaintDescription,
-      this.sourceId = 1, // fixed for web
       this.channelId = obj.channel_ID,
       this.feedbackcategoryId = obj.feedbackId,
       this.cardVariantId = obj.cardVariant,
@@ -101,8 +100,15 @@ export class ComplaintsModel {
       this.websiteUsed = obj.websiteURL,
       this.ussdPhoneNo = obj.ussdPhoneNo,
       this.beneficiaryPhoneNo = obj.beneficiaryPhoneNo,
-      this.recipientBank = '',
-      this.merchantCode = '',
+      this.recipientBank = obj.recipientBank,
+      this.merchantCode = obj.merchantCode,
+      this.isCustomer = obj.isCustomer, // New
+      this.disappointedService = obj.disappointedService, // New
+      this.branchIncident = obj.branchIncident, // New
+      this.bankNameId = obj.bankused.bankId,
+      this.sourceId = 1,
+      this.unionatmId = obj.unionatmId.atmId,
+      this.branchListId = obj.branchListId,
       this.serviceProviderId = obj.serviceProvider.serviceProviderId;
   }
 }

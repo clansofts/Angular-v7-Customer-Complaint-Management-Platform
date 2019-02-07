@@ -179,6 +179,12 @@ export class EChannelsErrorComponent implements OnInit {
       beneficiaryPhoneNo: [''],
       recipientBank: [''],
       merchantCode: [''],
+      isCustomer: [''],
+      disappointedService: [''],
+      branchIncident: [''],
+      bankused: [''], // bankNameId: if other bank
+      unionatmId: [''],
+      branchListId: [''],
       serviceProvider: [''],
       whereCardUsed: [''], // web or pos
     });
@@ -188,6 +194,7 @@ export class EChannelsErrorComponent implements OnInit {
     this.loading = true;
     await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
     const payloadObject = new ComplaintsModel(form.value, this.utilities);
+    console.log(payloadObject);
     setTimeout(() => {
       this.complaintsService.submitComplaint(payloadObject)
         .toPromise().then(response => {

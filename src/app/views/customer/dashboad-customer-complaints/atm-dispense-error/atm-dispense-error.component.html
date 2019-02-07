@@ -105,7 +105,7 @@
 
                             <div *ngIf="selected_ATM == 1" class="col-md-6 form-group mb-3">
                                 <label for="picker1">Location:</label>
-                                <select formControlName="location" class="form-control">
+                                <select formControlName="unionatmId" class="form-control">
                                     <option *ngFor="let i of ATM_location" [ngValue]='i'>{{i?.location | titlecase}}</option>
                                 </select>
                             </div>
