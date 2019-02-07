@@ -140,7 +140,7 @@ export class EChannelsErrorComponent implements OnInit {
       });
   }
 
-  // Reactive form control
+  // Master Complaints Form
   eChannelsFn(): void {
     this.eChannelsForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -187,9 +187,7 @@ export class EChannelsErrorComponent implements OnInit {
   async submit(form: NgForm) {
     this.loading = true;
     await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-    // Initialize Payload Object
     const payloadObject = new ComplaintsModel(form.value, this.utilities);
-    console.log(payloadObject);
     setTimeout(() => {
       this.complaintsService.submitComplaint(payloadObject)
         .toPromise().then(response => {
@@ -205,53 +203,3 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- const payloadObject: ComplaintsModel = {
-  title: 1,
-  firstName: form.value.firstName,
-  lastName: form.value.lastName,
-  email: form.value.emailAddress,
-  phoneNo: form.value.phone,
-  lastFourDigit: form.value.cardNumber,
-  transactionType: form.value.transCount.id,
-  transactionAmount: form.value.amount.amount1,
-  transactionAmountTwo: form.value.amount.amount2,
-  transactionAmountThree: form.value.amount.amount3,
-  transactionDate: this.utilities.formatDate(form.value.transDate), // Format sample: '2019-01-29'
-  sourceId: 1, // fixed for web
-  channelId: this.channelId, // whether atm dispense error, card issue etc
-  feedbackcategoryId: form.value.feedbackId, // Feedback categoryId
-  cardVariantId: form.value.cardVariant,
-  currencyTypeId: form.value.currencyType,
-  eChannelMedium: form.value.eMedium.id,
-  serviceType: form.value.eChannels.id,
-  billType: form.value.billType,
-  referenceId: form.value.referenceID,
-  smartCardNumber: form.value.smartCardNumber,
-  unionMobile: form.value.unionMobilePhone,
-  recipientAccountNo: form.value.recipientsAcctNo,
-  recipientName: form.value.recipientsName,
-  posMerchantName: form.value.posMerchantName,
-  websiteUsed: form.value.websiteURL,
-  ussdPhoneNo: form.value.ussdPhoneNo,
-  beneficiaryPhoneNo: form.value.beneficiaryPhoneNo,
-  recipientBank: '',
-  merchantCode: '',
-  serviceProviderId: form.value.serviceProvider.serviceProviderId,
-};
-*/
