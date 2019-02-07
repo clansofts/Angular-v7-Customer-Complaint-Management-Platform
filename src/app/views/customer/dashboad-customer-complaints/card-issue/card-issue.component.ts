@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
-import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ResourceModel, ATMModel, BankModel, UtilitiesService, FeedBackModel } from 'src/app/shared/services/utilities.service';
+import { ResourceModel, UtilitiesService, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { map } from 'rxjs/operators';
 
@@ -89,36 +89,55 @@ export class CardIssueComponent implements OnInit, OnDestroy {
     this.cardIssueForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
+      middleName: [''],
+      acctNumber: [''],
       emailAddress: ['', [Validators.required]],
       phone: ['', [Validators.required]],
+      altphone: [''],
       cardNumber: ['', Validators.maxLength(4)],
-      cardVariant: [''],
-      feedbackId: [''],
+      transCount: [''],
+      amount: this.fb.group({
+        amount1: [''],
+        amount2: [''],
+        amount3: [''],
+      }),
       complaintType: [''],
+      transDate: [''], // Defaults to today's date
+      atmUsed: [''],
+      cardComplaintType: [''],
       complaintDescription: [''],
+      channel_ID: [this.channelId],
+      feedbackId: [''],
+      cardVariant: [''], // Automatically fetch cardVariant
+      currencyType: [''], // Defaults to Naira
+      eMedium: [''],
+      billType: [''],
+      eChannels: [''],
+      referenceID: [''],
+      smartCardNumber: [''],
+      unionMobilePhone: [''],
+      recipientsAcctNo: [''],
+      recipientsName: [''],
+      posMerchantName: [''],
+      websiteURL: [''],
+      ussdPhoneNo: [''],
+      beneficiaryPhoneNo: [''],
+      recipientBank: [''],
+      merchantCode: [''],
+      isCustomer: [''],
+      disappointedService: [''],
+      branchIncident: [''],
+      bankused: [''], // bankNameId: if other bank
+      unionatmId: [''], // if unionbank, then location
+      branchListId: [''],
+      serviceProvider: [''],
     });
   }
 
   async submit(form: NgForm) {
     this.loading = true;
     await this.cardIssueForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-    // Construct payload
-    const payloadObject: ComplaintsModel = {
-      title: 1,
-      firstName: form.value.firstName,
-      lastName: form.value.lastName,
-      email: form.value.emailAddress,
-      phoneNo: form.value.phone,
-      lastFourDigit: form.value.cardNumber,
-      transactionDate: this.utilities.todaysDate, // Defaults to today's date
-
-      sourceId: 1, // fixed for web, Abstract this
-      channelId: this.channelId, // whether atm dispense error, card issue etc, Abstract this
-      feedbackcategoryId: form.value.feedbackId, // Feedback categoryId
-      cardVariantId: parseInt(form.value.cardVariant, 10),
-      cardComplaintType: form.value.complaintType.id,
-      complaintDescription: form.value.complaintDescription,
-    };
+    const payloadObject = new ComplaintsModel(form.value, this.utilities);
     this.complaintsService.submitComplaint(payloadObject)
       .toPromise().then(response => {
         console.log(response);
