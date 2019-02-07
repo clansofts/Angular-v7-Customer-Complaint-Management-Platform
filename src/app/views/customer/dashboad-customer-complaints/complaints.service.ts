@@ -20,7 +20,7 @@ export class ComplaintsService {
   }
 
 }
-export interface ComplaintsModel {
+export class ComplaintsModel {
   title: number;
   firstName: string;
   lastName: string;
@@ -65,5 +65,45 @@ export interface ComplaintsModel {
   feedbackcategoryId?: number; // Feedback categoryId
   cardVariantId?: number;
   currencyTypeId?: number;
+
+  constructor(obj?: any, Func?: any) {
+    this.title = 1,
+      this.firstName = obj.firstName,
+      this.lastName = obj.lastName,
+      this.middleName = obj.middleName,
+      this.accountNumber = obj.acctNumber,
+      this.email = obj.emailAddress,
+      this.phoneNo = obj.phone,
+      this.alternatePhone = obj.altphone,
+      this.lastFourDigit = obj.cardNumber,
+      this.transactionType = obj.transCount.id,
+      this.transactionAmount = obj.amount.amount1,
+      this.transactionAmountTwo = obj.amount.amount2,
+      this.transactionAmountThree = obj.amount.amount3,
+      this.transactionDate = Func.formatDate(obj.transDate), // Format'2019-01-29'
+      this.atmUsed = obj.atmUsed,
+      this.cardComplaintType = obj.cardComplaintType,
+      this.complaintDescription = obj.complaintDescription,
+      this.sourceId = 1, // fixed for web
+      this.channelId = obj.channel_ID,
+      this.feedbackcategoryId = obj.feedbackId,
+      this.cardVariantId = obj.cardVariant,
+      this.currencyTypeId = obj.currencyType,
+      this.eChannelMedium = obj.eMedium.id,
+      this.billType = obj.billType,
+      this.serviceType = obj.eChannels.id,
+      this.referenceId = obj.referenceID,
+      this.smartCardNumber = obj.smartCardNumber,
+      this.unionMobile = obj.unionMobilePhone,
+      this.recipientAccountNo = obj.recipientsAcctNo,
+      this.recipientName = obj.recipientsName,
+      this.posMerchantName = obj.posMerchantName,
+      this.websiteUsed = obj.websiteURL,
+      this.ussdPhoneNo = obj.ussdPhoneNo,
+      this.beneficiaryPhoneNo = obj.beneficiaryPhoneNo,
+      this.recipientBank = '',
+      this.merchantCode = '',
+      this.serviceProviderId = obj.serviceProvider.serviceProviderId;
+  }
 }
 
