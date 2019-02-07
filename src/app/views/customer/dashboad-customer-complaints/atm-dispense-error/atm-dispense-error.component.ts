@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CustomValidators } from 'ng2-validation';
 import { FormGroup, FormBuilder, FormControl, Validators, Form, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';

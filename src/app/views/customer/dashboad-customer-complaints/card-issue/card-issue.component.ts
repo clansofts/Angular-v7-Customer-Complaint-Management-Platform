@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CustomValidators } from 'ng2-validation';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResourceModel, UtilitiesService, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-card-issue',
