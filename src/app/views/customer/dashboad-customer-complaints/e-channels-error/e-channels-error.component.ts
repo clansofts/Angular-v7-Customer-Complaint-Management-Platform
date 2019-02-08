@@ -180,6 +180,7 @@ export class EChannelsErrorComponent implements OnInit {
       merchantCode: [''],
       isCustomer: [''],
       disappointedService: [''],
+      suggestionBox: [''],
       branchIncident: [''],
       bankused: [''], // bankNameId: if other bank
       unionatmId: [''],

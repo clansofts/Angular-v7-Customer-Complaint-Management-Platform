@@ -29,6 +29,13 @@ export interface BankModel {
   bankId: number;
 }
 
+// Interface for fetching Branch list.
+export interface BranchModel {
+  branchId: number;
+  branchLocation: string;
+  sortCode: number;
+}
+
 // Interface ATM list
 export interface ATMModel {
   location: string;
@@ -82,6 +89,12 @@ export class UtilitiesService {
   banksList(): any {
     const Path = this.baseURL + `otherbanks`;
     return this.http.get<BankModel>(Path);
+  }
+
+  // Branch list
+  branchList(): any {
+    const Path = this.baseURL + `branchlists`;
+    return this.http.get<BranchModel>(Path);
   }
 
   // Date formater, format: 'yyyy-mm-dd'

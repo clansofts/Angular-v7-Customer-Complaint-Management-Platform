@@ -17,7 +17,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   atmDispenseErrorForm: FormGroup;
   loading: boolean;
-  radioGroup: FormGroup;
   public formState: boolean; // Display complaints form as default.
   currencyType: Array<ResourceModel>;
   card_Variants: Array<ResourceModel>;
@@ -25,13 +24,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   Bank_used: Array<BankModel>; // list of Banks
 
   // Is this the best way?
-  transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
-  ATM_used: Array<any> = [{ name: 'Union Bank', id: 1 }, { name: 'Other Bank', id: 2 }]; // list of ATMs
+  transCount: Array<ResourceModel> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
+  ATM_used: Array<ResourceModel> = [{ name: 'Union Bank', id: 1 }, { name: 'Other Bank', id: 2 }]; // list of ATMs
   /* Enum? Because I should track by Id, and still be able to reference the name */
 
   private _card_Variants = 'cardvariants'; // Endpoint.
   private _currencyType = 'currencyTypes';  // Endpoint
-  dummystate: boolean;
   feedbackCategory_ID: number;
 
   constructor(
@@ -160,6 +158,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       merchantCode: [''],
       isCustomer: [''],
       disappointedService: [''],
+      suggestionBox: [''],
       branchIncident: [''],
       bankused: [''], // bankNameId: if other bank
       unionatmId: [''], // if unionbank, then location

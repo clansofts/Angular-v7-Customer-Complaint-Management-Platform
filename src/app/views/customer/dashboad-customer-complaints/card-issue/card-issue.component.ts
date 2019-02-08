@@ -124,6 +124,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       merchantCode: [''],
       isCustomer: [''],
       disappointedService: [''],
+      suggestionBox: [''],
       branchIncident: [''],
       bankused: [''], // bankNameId: if other bank
       unionatmId: [''], // if unionbank, then location

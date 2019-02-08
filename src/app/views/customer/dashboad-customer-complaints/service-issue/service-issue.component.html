@@ -1,67 +1,112 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-body">
+            <div class="card-body" (click)="test()">
                 <div class="card-title mb-3">Service Complaint Form</div>
-                <form [formGroup]="formBasic" (ngSubmit)="submit()">
+                <form [formGroup]="serviceComplaintForm" (ngSubmit)="submit(serviceComplaintForm)">
                     <div class="row">
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
-                        </div>
+                        <ng-container *ngIf="formState else complaintsForm">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="firstName">First name</label>
+                                <input formControlName="firstName" type="text" class="form-control" id="firstName"
+                                    placeholder="Enter your first name">
+                            </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="lastName">Last name</label>
+                                <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                                    placeholder="Enter your last name">
+                            </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                placeholder="Enter email">
-                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input formControlName="emailAddress" type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="phone">Phone</label>
-                            <input class="form-control" id="phone" placeholder="Enter phone">
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="phone">Phone</label>
+                                <input formControlName="phone" class="form-control" id="phone" placeholder="Enter phone">
+                            </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="credit">Cradit card number</label>
-                            <input class="form-control" id="credit" placeholder="Card">
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="phone">Alternate Phone number</label>
+                                <input formControlName="altphone" class="form-control" id="phone" placeholder="Enter phone">
+                            </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="credit">Website</label>
-                            <input class="form-control" id="credit" placeholder="Web address">
-                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">Are you a Union Bank customer?</label>
+                                <select formControlName="isCustomer" class="form-control">
+                                    <option [value]='1'>Yes</option>
+                                    <option [value]='2'>No</option>
+                                </select>
+                            </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="picker1">Birth date</label>
-                            <div class="input-group">
-                                <input id="picker1" class="form-control" placeholder="yyyy-mm-dd" name="dp"
-                                    ngbDatepicker #dp="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
-                                        <i class="icon-regular i-Calendar-4"></i>
-                                    </button>
+                            <div *ngIf="isCustomerFn == 1" class="col-md-6 form-group mb-3">
+                                <label for="credit">Account number</label>
+                                <input formControlName="acctNumber" class="form-control" id="" placeholder="Account number">
+                            </div>
+
+                            <div class="col-md-12">
+                                <button [disabled]='serviceComplaintForm.invalid' type="button" Class="btn btn-primary btn-rounded m-1"
+                                    (click)="toggleNavigation = false">Continue</button>
+                            </div>
+                        </ng-container>
+                        <ng-template #complaintsForm>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">Which of our services dissapointed you?</label>
+                                <select formControlName="disappointedService" class="form-control">
+                                    <option *ngFor="let i of services" [ngValue]='i'>{{i.branchLocation}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">Branch of incident</label>
+                                <select formControlName="" class="form-control">
+                                    <option selected [ngValue]='0'>N/A</option>
+                                    <option *ngFor="let i of branch_of_Issue" [ngValue]='i'>{{i.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">Date</label>
+                                <div class="input-group">
+                                    <input formControlName="transDate" id="picker1" class="form-control" placeholder="yyyy-mm-dd"
+                                        name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                                            <i class="icon-regular i-Calendar-4"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="picker1">Select</label>
-                            <select class="form-control">
-                                <option>Option 1</option>
-                                <option>Option 1</option>
-                                <option>Option 1</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12">
-                            <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
-                        </div>
+                            <div class="col-md-12 form-group mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Please describe the issue encountered:</span>
+                                    </div>
+                                    <textarea formControlName="complaintDescription" class="form-control" aria-label="With textarea">
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">What would you like us to do?</span>
+                                    </div>
+                                    <textarea formControlName="suggestionBox" class="form-control" aria-label="With textarea">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+                                <button type="button" Class="btn btn-secondary btn-rounded m-1" (click)="toggleNavigation = true">Previous</button>
+                            </div>
+                        </ng-template>
                     </div>
                 </form>
             </div>
