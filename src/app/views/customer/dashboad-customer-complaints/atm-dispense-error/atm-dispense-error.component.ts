@@ -170,16 +170,19 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   async submit(form: NgForm) {
     this.loading = true;
-    await this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
+    await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
     const payloadObject = new ComplaintsModel(form.value, this.utilities);
-    this.complaintsService.submitComplaint(payloadObject)
+    await this.complaintsService.submitComplaint(payloadObject)
       .toPromise().then(response => {
-        console.log(response);
+        if (response) {
+          setTimeout(() => {
+            console.log(response);
+            this.loading = false;
+            this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
+          }, 3000);
+          return;
+        }
       });
-    setTimeout(() => {
-      this.loading = false;
-      /*  this.toastr.success('Profile updated.', 'Success!', { progressBar: true });*/
-    }, 3000);
   }
 
   test() {
