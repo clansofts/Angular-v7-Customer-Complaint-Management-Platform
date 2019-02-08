@@ -103,9 +103,9 @@ export class ComplaintsModel {
       this.beneficiaryPhoneNo = obj && obj.beneficiaryPhoneNo || null;
       this.recipientBank = obj && obj.recipientBank || null;
       this.merchantCode = obj && obj.merchantCode || null;
-      this.isCustomer = obj && obj.isCustomer || null; // New
-      this.disappointedService = obj && obj.disappointedService.id || null, // New
-      this.branchIncident = obj && obj.branchIncident || null; // New
+      this.isCustomer = obj && obj.isCustomer || null;
+      this.disappointedService = obj && obj.disappointedService.id || null,
+      this.branchIncident = obj && obj.branchIncident.serviceProviderId || null;
       this.bankNameId = obj && obj.bankused.bankId || null;
       this.sourceId = 1 || null,
       this.unionatmId = obj && obj.unionatmId.atmId || null;

@@ -143,7 +143,7 @@ export class ServiceIssueComponent implements OnInit {
   }
 
   test() {
-    console.log(this.isCustomerFn);
+    console.log(this.serviceComplaintForm.value);
   }
 
 }

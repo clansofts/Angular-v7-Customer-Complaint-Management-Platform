@@ -39,8 +39,8 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Are you a Union Bank customer?</label>
                                 <select formControlName="isCustomer" class="form-control">
-                                    <option [value]='1'>Yes</option>
-                                    <option [value]='2'>No</option>
+                                    <option [value]=true>Yes</option>
+                                    <option [value]=false>No</option>
                                 </select>
                             </div>
 
@@ -59,15 +59,15 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Which of our services dissapointed you?</label>
                                 <select formControlName="disappointedService" class="form-control">
-                                    <option *ngFor="let i of services" [ngValue]='i'>{{i.branchLocation}}</option>
+                                    <option *ngFor="let i of services" [ngValue]='i'>{{i.name}}</option>
                                 </select>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Branch of incident</label>
-                                <select formControlName="" class="form-control">
+                                <select formControlName="branchIncident" class="form-control">
                                     <option selected [ngValue]='0'>N/A</option>
-                                    <option *ngFor="let i of branch_of_Issue" [ngValue]='i'>{{i.name}}</option>
+                                    <option *ngFor="let i of branch_of_Issue" [ngValue]='i'>{{i.branchLocation}}</option>
                                 </select>
                             </div>
 
