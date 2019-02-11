@@ -97,7 +97,7 @@ export class ServiceIssueComponent implements OnInit {
       middleName: [''],
       acctNumber: [''],
       emailAddress: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phone: [''],
       altphone: [''],
       cardNumber: ['', Validators.maxLength(4)],
       transCount: [''],
