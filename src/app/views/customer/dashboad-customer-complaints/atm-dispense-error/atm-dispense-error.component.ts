@@ -4,6 +4,22 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject } from 'rxjs';
+
+// To be global interface
+interface Alert {
+  type: string;
+  message: string;
+}
+
+// Observable to track ticket status
+const modalState = new BehaviorSubject(false);
+
+const ALERTS: Alert = {
+  type: 'warning',
+  message: 'Form is invalid, please check inputs.',
+};
 
 @Component({
   selector: 'app-atm-dispense-error',
@@ -32,14 +48,21 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   private _currencyType = 'currencyTypes';  // Endpoint
   feedbackCategory_ID: number;
 
+  ticketID: any;
+  alertCards: Alert;
+  alerts: Alert;
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private utilities: UtilitiesService,
-    private complaintsService: ComplaintsService
+    private complaintsService: ComplaintsService,
+    private modalService: NgbModal
   ) {
     // display details form by default
     this.formState = true;
+    this.alerts = ALERTS;
+    this.alertCards = ALERTS;
   }
 
   async ngOnInit() {
@@ -58,6 +81,14 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // subscribtions?
+  }
+
+  // Alerts
+  closeAlert(alert: Alert) {
+
+  }
+  closeAlertCard(alert: Alert) {
+
   }
 
   // Register service by fetching feedback categoryID
@@ -95,6 +126,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Fetch bank list
   fetch_BankList(): BankModel {
     return this.utilities.banksList()
       .toPromise().then((response: BankModel[]) => {
@@ -125,7 +157,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       middleName: [''],
       acctNumber: [''],
       emailAddress: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phone: [''],
       altphone: [''],
       cardNumber: ['', Validators.maxLength(4)],
       transCount: [''],
@@ -136,12 +168,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       }),
       transDate: [''], // Defaults to today's date
       atmUsed: [''],
-      cardComplaintType: [''],
-      complaintDescription: [''],
+      cardComplaintType: ['', [Validators.required]],
+      complaintDescription: ['', [Validators.required]],
       channel_ID: [this.channelId],
       feedbackId: [''],
-      cardVariant: [''], // Automatically fetch cardVariant
-      currencyType: [''], // Defaults to Naira
+      cardVariant: ['', [Validators.required]], // Automatically fetch cardVariant
+      currencyType: ['', [Validators.required]], // Defaults to Naira
       eMedium: [''],
       billType: [''],
       eChannels: [''],
@@ -168,21 +200,56 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Open modal to show ticket
+  open(content) {
+    modalState.subscribe(async state => {
+      if (state === true) {
+        await this.toastr.success('Please wait', 'Generating ticket!', { progressBar: true });
+        setTimeout(() => {
+          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+            .result.then((result) => {
+              console.log(result);
+            }, (reason) => {
+              console.log('Err!', reason);
+            });
+        }, 4000);
+      }
+    });
+  }
+
+  // Submit complaint
   async submit(form: NgForm) {
-    this.loading = true;
-    await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
-    const payloadObject = new ComplaintsModel(form.value, this.utilities);
-    await this.complaintsService.submitComplaint(payloadObject)
-      .toPromise().then(response => {
-        if (response) {
+    if (this.atmDispenseErrorForm.valid) {
+      this.loading = true;
+      await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
+      const payloadObject = new ComplaintsModel(form.value, this.utilities);
+      await this.complaintsService.submitComplaint(payloadObject)
+        .toPromise().then((response: any) => {
           setTimeout(() => {
-            console.log(response);
-            this.loading = false;
-            this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
-          }, 3000);
-          return;
-        }
-      });
+            if (response && response.uid) {
+              this.loading = false;
+              this.ticketID = response.uid;
+              modalState.next(true);
+            }
+          }, 2000);
+        });
+      return;
+    }
+    alert('Form is not valid');
+  }
+
+  // Accessor for form variables
+  get formatName() {
+    const firstName = this.atmDispenseErrorForm.controls.firstName.value;
+    const lastName = this.atmDispenseErrorForm.controls.lastName.value;
+    const fullName = `${firstName} ${lastName}`;
+    return fullName;
+  }
+
+  // Accessor for form variables
+  get email() {
+    const email = this.atmDispenseErrorForm.controls.emailAddress.value;
+    return email;
   }
 
   test() {

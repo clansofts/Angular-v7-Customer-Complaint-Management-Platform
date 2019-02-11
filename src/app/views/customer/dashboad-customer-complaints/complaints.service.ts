@@ -83,7 +83,7 @@ export class ComplaintsModel {
       this.transactionAmountThree = obj && obj.amount.amount3 || null;
       this.transactionDate = obj && obj.transDate && Func.formatDate(obj.transDate) || Func.todaysDate; // Format'2019-01-29'
       this.atmUsed = obj && obj.atmUsed.id || null;
-      this.cardComplaintType = obj && obj.cardComplaintType || null;
+      this.cardComplaintType = obj && obj.cardComplaintType.id || null;
       this.complaintDescription = obj && obj.complaintDescription || null;
       this.channelId = obj && obj.channel_ID || null;
       this.feedbackcategoryId = obj && obj.feedbackId;

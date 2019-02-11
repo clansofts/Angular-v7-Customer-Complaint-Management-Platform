@@ -2,10 +2,14 @@
     <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-body" (click)="test()">
+
                 <div class="card-title mb-3">ATM Dispense Error Form</div>
                 <form [formGroup]="atmDispenseErrorForm" (ngSubmit)="submit(atmDispenseErrorForm)">
+
                     <div class="row">
+
                         <ng-container *ngIf="formState else complaintsForm">
+
                             <div class="col-md-6 form-group mb-3">
                                 <label for="firstName">First name</label>
                                 <input formControlName="firstName" type="text" class="form-control" id="firstName"
@@ -20,22 +24,25 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input formControlName="emailAddress" type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Enter email">
+                                <input formControlName="emailAddress" type="email" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="phone">Phone</label>
-                                <input formControlName="phone" class="form-control" id="phone" placeholder="Enter phone">
+                                <input formControlName="phone" class="form-control" id="phone"
+                                    placeholder="Enter phone">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card number: last 4 digits</label>
                                 <!-- Mask the card number -->
-                                <input formControlName="cardNumber" class="form-control" id="credit" placeholder="Card number">
-                                <small *ngIf="atmDispenseErrorForm.controls.cardNumber.invalid" id="errorMessage" class="form-text text-danger">Enter
+                                <input formControlName="cardNumber" class="form-control" id="credit"
+                                    placeholder="Card number">
+                                <small *ngIf="atmDispenseErrorForm.controls.cardNumber.invalid" id="errorMessage"
+                                    class="form-text text-danger">Enter
                                     only the last 4 digits.</small>
                             </div>
 
@@ -43,21 +50,26 @@
                                 <label for="credit">Card Variant</label>
                                 <select formControlName="cardVariant" class="form-control">
                                     <option [value]="" disabled selected>Select card variant</option>
-                                    <option *ngFor="let card of card_Variants" [value]='card?.id'>{{card?.name}}</option>
+                                    <option *ngFor="let card of card_Variants" [value]='card?.id'>{{card?.name}}
+                                    </option>
                                 </select>
                             </div>
+
                             <div class="col-md-12">
                                 <!-- ngClass button should indicate red when disabled -->
-                                <button [disabled]='atmDispenseErrorForm.invalid' type="button" Class="btn btn-primary btn-rounded m-1"
-                                    (click)="toggleNavigation = false">Continue</button>
+                                <button type="button" Class="btn btn-primary btn-rounded m-1"
+                                    (click)="toggleNavigation = false; open(formModal)">Continue</button>
                             </div>
+
                         </ng-container>
+
                         <ng-template #complaintsForm>
+
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Transaction Date</label>
                                 <div class="input-group">
-                                    <input formControlName="transDate" id="picker1" class="form-control" placeholder="yyyy-mm-dd"
-                                        name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                    <input formControlName="transDate" id="picker1" class="form-control"
+                                        placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
                                     <div class="input-group-append">
                                         <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
                                             <i class="icon-regular i-Calendar-4"></i>
@@ -72,27 +84,37 @@
                                     <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
                             </div>
-                            <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)" formGroupName="amount">
+
+                            <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                formGroupName="amount">
+
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="credit">Amount</label>
-                                    <input formControlName="amount1" class="form-control" id="credit" placeholder="Transaction Amount">
+                                    <input formControlName="amount1" class="form-control" id="credit"
+                                        placeholder="Transaction Amount">
                                 </div>
 
                                 <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                     <label for="credit">Amount 2</label>
-                                    <input formControlName="amount2" class="form-control" id="credit" placeholder="Transaction Amount">
+                                    <input formControlName="amount2" class="form-control" id="credit"
+                                        placeholder="Transaction Amount">
                                 </div>
 
                                 <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                     <label for="credit">Amount 3</label>
-                                    <input formControlName="amount3" class="form-control" id="credit" placeholder="Transaction Amount">
+                                    <input formControlName="amount3" class="form-control" id="credit"
+                                        placeholder="Transaction Amount">
                                 </div>
+
                             </ng-container>
-                            <div class="col-md-6 form-group mb-3" *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)">
+
+                            <div class="col-md-6 form-group mb-3"
+                                *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)">
                                 <label for="picker1">Currency Type</label>
                                 <select formControlName="currencyType" class="form-control">
                                     <option [value]="" disabled selected>Select currency</option>
-                                    <option *ngFor="let currency of currencyType" [value]='currency?.id'>{{currency?.name}}</option>
+                                    <option *ngFor="let currency of currencyType" [value]='currency?.id'>
+                                        {{currency?.name}}</option>
                                 </select>
                             </div>
 
@@ -106,7 +128,8 @@
                             <div *ngIf="selected_ATM == 1" class="col-md-6 form-group mb-3">
                                 <label for="picker1">Location:</label>
                                 <select formControlName="unionatmId" class="form-control">
-                                    <option *ngFor="let i of ATM_location" [ngValue]='i'>{{i?.location | titlecase}}</option>
+                                    <option *ngFor="let i of ATM_location" [ngValue]='i'>{{i?.location | titlecase}}
+                                    </option>
                                 </select>
                             </div>
 
@@ -115,14 +138,50 @@
                                 <select formControlName="bankused" class="form-control">
                                     <option *ngFor="let i of Bank_used" [ngValue]='i'>{{i?.bankName}}</option>
                                 </select>
-                                <small id="emailHelp" class="form-text text-muted">ATM used: Union Bank or Other Bank.</small>
+                                <small id="emailHelp" class="form-text text-muted">ATM used: Union Bank or Other
+                                    Bank.</small>
                             </div>
 
 
                             <div class="col-md-12">
-                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
-                                <button type="button" Class="btn btn-secondary btn-rounded m-1" (click)="toggleNavigation = true">Previous</button>
+                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">
+                                    Submit</btn-loading>
+                                <button type="button" Class="btn btn-secondary btn-rounded m-1"
+                                    (click)="toggleNavigation = true">Previous</button>
                             </div>
+
+                        </ng-template>
+                        <!-- Token Modal -->
+                        <ng-template #formModal let-modal>
+                            <div class="modal-body">
+                                <div class="card card-ecommerce-3 o-hidden">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <img class="card-img-left" src="./assets/images/unionsplash.jpeg" alt="">
+                                        </div>
+                                        <div class="flex-grow-1 p-4">
+                                            <h5 class="m-0 font-weight-bold text-muted">Generated ticket Id</h5>
+                                            <p class="m-0 text-small text-muted">Customer name:
+                                                {{formatName | titlecase}}</p>
+                                            <p class="m-0">Ticket Id: {{ticketID}}</p>
+                                            <p class="text-muted mt-3">An email has been sent to {{email}}
+                                            </p>
+                                            <div class="actions">
+                                                <button (click)="modal.close('Save click')"
+                                                    class="btn btn-sm rounded-circle btn-icon btn-outline-primary">
+                                                    <i class="icon i-Close-Window"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer modal-footer-custom">
+                                <button type="button" class="btn btn-outline-success btn-rounded"
+                                    (click)="modal.close('Save click')">Okay</button>
+                            </div>
+
                         </ng-template>
                     </div>
                 </form>

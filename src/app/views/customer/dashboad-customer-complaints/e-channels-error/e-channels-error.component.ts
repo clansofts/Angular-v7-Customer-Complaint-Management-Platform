@@ -4,6 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { map } from 'rxjs/internal/operators/map';
 import { ComplaintsModel, ComplaintsService } from '../complaints.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject } from 'rxjs';
+
+// Observable to track ticket status
+const modalState = new BehaviorSubject(false);
 
 @Component({
   selector: 'app-e-channels-error',
@@ -26,6 +31,7 @@ export class EChannelsErrorComponent implements OnInit {
   card_Variants: Array<ResourceModel>;
   private _card_Variants = 'cardvariants'; // Endpoint.
   feedbackCategory_ID: number;
+  ticketID: any;
 
   // Transaction count
   transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
@@ -54,7 +60,7 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Usage Issues', id: 6 }
   ];
 
-  // Dummy Billers Types, API needed
+  // Dummy Billers Types, API integration needed
   billerType: Array<any> = [
     { name: 'DSTV', id: 1 },
     { name: 'Electricity', id: 2 },
@@ -66,7 +72,8 @@ export class EChannelsErrorComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private utilities: UtilitiesService,
-    private complaintsService: ComplaintsService
+    private complaintsService: ComplaintsService,
+    private modalService: NgbModal
   ) {
     // display details form by default
     this.personalDetails = true;
@@ -145,9 +152,9 @@ export class EChannelsErrorComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: [''],
+      acctNumber: ['', Validators.maxLength(10)],
       emailAddress: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phone: [''],
       altphone: [''],
       cardNumber: ['', Validators.maxLength(4)],
       transCount: [''],
@@ -164,7 +171,7 @@ export class EChannelsErrorComponent implements OnInit {
       feedbackId: [''],
       cardVariant: [''],
       currencyType: [''],
-      eMedium: [''],
+      eMedium: ['', Validators.required],
       billType: [''],
       eChannels: [''],
       referenceID: [''],
@@ -190,19 +197,56 @@ export class EChannelsErrorComponent implements OnInit {
     });
   }
 
+  // Open modal to show ticket
+  open(content) {
+    modalState.subscribe(async state => {
+      if (state === true) {
+        await this.toastr.success('Please wait', 'Generating ticket!', { progressBar: true });
+        setTimeout(() => {
+          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+            .result.then((result) => {
+              console.log(result);
+            }, (reason) => {
+              console.log('Err!', reason);
+            });
+        }, 4000);
+      }
+    });
+  }
+
   async submit(form: NgForm) {
-    this.loading = true;
-    await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-    const payloadObject = new ComplaintsModel(form.value, this.utilities);
-    console.log(payloadObject);
-    setTimeout(() => {
-      this.complaintsService.submitComplaint(payloadObject)
-        .toPromise().then(response => {
-          console.log(response);
-        });
-      this.loading = false;
-      /* this.toastr.success('Profile updated.', 'Success!', { progressBar: true }); */
-    }, 3000);
+    if (this.eChannelsForm.valid) {
+      this.loading = true;
+      await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
+      const payloadObject = new ComplaintsModel(form.value, this.utilities);
+      setTimeout(() => {
+        this.complaintsService.submitComplaint(payloadObject)
+          .toPromise().then((response: any) => {
+            if (response && response.uid) {
+              this.loading = false;
+              this.ticketID = response.uid;
+              modalState.next(true);
+            }
+          });
+        this.loading = false;
+      }, 3000);
+      return;
+    }
+    alert('Form is not valid');
+  }
+
+  // Accessor for form variables
+  get formatName() {
+    const firstName = this.eChannelsForm.controls.firstName.value;
+    const lastName = this.eChannelsForm.controls.lastName.value;
+    const fullName = `${firstName} ${lastName}`;
+    return fullName;
+  }
+
+  // Accessor for form variables
+  get email() {
+    const email = this.eChannelsForm.controls.emailAddress.value;
+    return email;
   }
 
   test() {

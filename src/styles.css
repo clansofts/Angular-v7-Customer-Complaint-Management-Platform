@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+.modal-footer-custom{
+background-color: #24718e !important;
+}
+.close-custom {
+    color: white !important;
+}

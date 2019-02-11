@@ -4,6 +4,17 @@ import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { ResourceModel, UtilitiesService, BranchModel, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
+import { BehaviorSubject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// To be global interface
+interface Alert {
+  type: string;
+  message: string;
+}
+
+// Observable to track ticket status
+const modalState = new BehaviorSubject(false);
 
 @Component({
   selector: 'app-service-issue',
@@ -20,6 +31,7 @@ export class ServiceIssueComponent implements OnInit {
   public formState: boolean; // Display complaints form as default.
   branch_of_Issue: BranchModel[];
   feedbackCategory_ID: number;
+  ticketID: any;
 
   services: Array<ResourceModel> = [
     { name: 'Staff Atitude', id: 1 },
@@ -36,7 +48,8 @@ export class ServiceIssueComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private utilities: UtilitiesService,
-    private complaintsService: ComplaintsService
+    private complaintsService: ComplaintsService,
+    private modalService: NgbModal
   ) {
     // display details form by default
     this.formState = true;
@@ -115,7 +128,7 @@ export class ServiceIssueComponent implements OnInit {
       beneficiaryPhoneNo: [''],
       recipientBank: [''],
       merchantCode: [''],
-      isCustomer: [''],
+      isCustomer: ['', [Validators.required]],
       disappointedService: [''],
       suggestionBox: [''],
       branchIncident: [''],
@@ -127,19 +140,55 @@ export class ServiceIssueComponent implements OnInit {
     });
   }
 
-  async submit(form: NgForm) {
-    this.loading = true;
-    await this.serviceComplaintForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-    const payloadObject = new ComplaintsModel(form.value, this.utilities);
-    this.complaintsService.submitComplaint(payloadObject)
-      .toPromise().then(response => {
-        console.log(response);
-      });
+  // Open modal to show ticket
+  open(content) {
+    modalState.subscribe(async state => {
+      if (state === true) {
+        await this.toastr.success('Please wait', 'Generating ticket!', { progressBar: true });
+        setTimeout(() => {
+          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+            .result.then((result) => {
+              console.log(result);
+            }, (reason) => {
+              console.log('Err!', reason);
+            });
+        }, 4000);
+      }
+    });
+  }
 
-    setTimeout(() => {
-      this.loading = false;
-      /*  this.toastr.success('Profile updated.', 'Success!', { progressBar: true });*/
-    }, 3000);
+  async submit(form: NgForm) {
+    if (this.serviceComplaintForm.valid) {
+      this.loading = true;
+      await this.serviceComplaintForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
+      const payloadObject = new ComplaintsModel(form.value, this.utilities);
+      this.complaintsService.submitComplaint(payloadObject)
+        .toPromise().then((response: any) => {
+          setTimeout(() => {
+            if (response && response.uid) {
+              this.loading = false;
+              this.ticketID = response.uid;
+              modalState.next(true);
+            } return;
+          }, 2000);
+        });
+      alert('Form is not valid');
+    }
+    alert('Form is not valid');
+  }
+
+  // Accessor for form variables
+  get formatName() {
+    const firstName = this.serviceComplaintForm.controls.firstName.value;
+    const lastName = this.serviceComplaintForm.controls.lastName.value;
+    const fullName = `${firstName} ${lastName}`;
+    return fullName;
+  }
+
+  // Accessor for form variables
+  get email() {
+    const email = this.serviceComplaintForm.controls.emailAddress.value;
+    return email;
   }
 
   test() {
