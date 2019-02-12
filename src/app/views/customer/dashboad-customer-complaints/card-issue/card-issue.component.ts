@@ -148,6 +148,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
+              this.resetForm(this.cardIssueForm);
             }, (reason) => {
               console.log('Err!', reason);
             });
@@ -188,6 +189,11 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   get email() {
     const email = this.cardIssueForm.controls.emailAddress.value;
     return email;
+  }
+
+  // Reset form and variables
+  resetForm(form: any) {
+    form.reset();
   }
 
   test() {

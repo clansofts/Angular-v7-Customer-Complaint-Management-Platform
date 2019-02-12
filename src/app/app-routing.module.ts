@@ -7,11 +7,11 @@ import { BlankLayoutComponent } from './shared/components/layouts/blank-layout/b
 import { AdminLayoutSidebarCompactComponent } from './shared/components/layouts/admin-layout-sidebar-compact/admin-layout-sidebar-compact.component';
 
 const adminRoutes: Routes = [
-    {
-      path: 'customer',
-      loadChildren: './views/customer/dashboard.module#DashboardModule'
-    },
-  ];
+  {
+    path: 'customer',
+    loadChildren: './views/customer/customer.module#CustomerModule'
+  },
+];
 
 const routes: Routes = [
   {
@@ -21,12 +21,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'admin-rc/v1',
+    redirectTo: 'admin-resolution-champion/v1',
     pathMatch: 'full'
   },
   {
     path: '',
-    redirectTo: 'admin-rt/v1',
+    redirectTo: 'admin-resolution-team/v1',
     pathMatch: 'full'
   },
   {

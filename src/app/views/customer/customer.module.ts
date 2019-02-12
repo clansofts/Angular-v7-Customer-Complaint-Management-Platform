@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DashboardRoutingModule } from './dashboard-routing.module';
+import { CustomerRoutingModule } from './customer-routing.module';
 import { DashboadDefaultComponent } from './dashboad-customer-complaints/dashboad-default.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
@@ -24,7 +23,7 @@ import { CustomFormsModule } from 'ng2-validation';
     NgxEchartsModule,
     NgxDatatableModule,
     NgbModule,
-    DashboardRoutingModule,
+    CustomerRoutingModule,
   ],
   declarations: [
     DashboadDefaultComponent,
@@ -35,4 +34,4 @@ import { CustomFormsModule } from 'ng2-validation';
     ServiceIssueComponent
   ]
 })
-export class DashboardModule { }
+export class CustomerModule { }

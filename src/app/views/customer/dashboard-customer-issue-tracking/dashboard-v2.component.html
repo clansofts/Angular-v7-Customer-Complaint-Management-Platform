@@ -2,166 +2,88 @@
   <h1>Track Issues</h1>
   <ul>
     <li><a href="">Complaint</a></li>
-    <li>Category</li>
+    <li>Track by Id</li>
   </ul>
 </div>
 <div class="separator-breadcrumb border-top"></div>
 
+
+
 <div class="row">
-  <div class="col-md-12"> <!-- col-lg-6 was deleted -->
-    <!-- CARD ICON -->
-    <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-icon mb-4">
-          <div class="card-body text-center">
-            <i class="i-Folder"></i>
-            <p class="text-muted mt-2 mb-2">All Issues</p>
-            <!-- <p class="text-primary text-24 line-height-1 m-0">1</p> -->
-          </div>
-        </div>
-      </div>
 
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-icon mb-4">
-          <div class="card-body text-center">
-            <i class="i-Share-on-Cloud"></i>
-            <p class="text-muted mt-2 mb-2">Track By ID</p>
-            <!-- <p class="text-primary text-24 line-height-1 m-0">4</p> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-icon mb-4">
-          <div class="card-body text-center">
-            <i class="i-Money-2"></i>
-            <p class="text-muted mt-2 mb-2">ATM Dispense Issue</p>
-            <!-- <p class="text-primary text-24 line-height-1 m-0">1</p> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-icon mb-4">
-          <div class="card-body text-center">
-            <i class="i-Credit-Card"></i>
-            <p class="text-muted mt-2 mb-2">Card Issue</p>
-            <!-- <p class="text-primary text-24 line-height-1 m-0">2</p> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-icon mb-4">
-          <div class="card-body text-center">
-            <i class="i-Computer-2"></i>
-            <p class="text-muted mt-2 mb-2">E-Channel</p>
-            <!-- <p class="text-primary text-24 line-height-1 m-0">3</p> -->
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-icon mb-4">
-          <div class="card-body text-center">
-            <i class="i-Share-on-Cloud"></i>
-            <p class="text-muted mt-2 mb-2">Service</p>
-            <!-- <p class="text-primary text-24 line-height-1 m-0">4</p> -->
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
- <!--  <div class="col-lg-6 col-md-12">
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="card-title">Resolution Team</div>
-        <div class="d-flex align-items-center border-bottom-dotted-dim pb-3 mb-3">
-          <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
-          <div class="flex-grow-1">
-            <h6 class="m-0">Biodun Ayodele</h6>
-            <p class="m-0 text-small text-secondary">Team: BizOps</p>
-            <p class="m-0 text-small text-muted">Title: Account Manager</p>
-          </div>
-          <div>
-            <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
-          </div>
-        </div>
-        <div class="d-flex align-items-center border-bottom-dotted-dim pb-3 mb-3">
-          <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
-          <div class="flex-grow-1">
-            <h6 class="m-0">James Obi</h6>
-            <p class="m-0 text-small text-dark">Team: DevOps.</p>
-            <p class="m-0 text-small text-muted">Title: UI Engineer.</p>
-          </div>
-          <div>
-            <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
-          </div>
-        </div>
-        <div class="d-flex align-items-center border-bottom-dotted-dim pb-3 mb-3">
-          <img class="avatar-md rounded mr-3" src="./assets/images/faces/f3.jpg" alt="">
-          <div class="flex-grow-1">
-            <h6 class="m-0">Micheal Mark</h6>
-            <p class="m-0 text-small text-muted">Team: DevOps.</p>
-            <p class="m-0 text-small text-muted">Title: QA Tester.</p>
-          </div>
-          <div>
-            <button class="btn btn-outline-primary btn-rounded btn-sm">Send Message</button>
-          </div>
+  <ng-container>
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-body" (click)="test()">
+          <div class="card-title mb-3">Card Issue Form</div>
+          <form>
+            <div class="row">
+              <div class="col-md-6 form-group mb-3">
+                <label>Email address</label>
+                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                  anyone else.</small>
+              </div>
+              <div class="col-md-6 form-group mb-3">
+                <label for="phone">Ticket Id</label>
+                <input class="form-control" id="phone" placeholder="Enter phone">
+              </div>
+              <div class="col-md-12">
+                <button type="button" Class="btn btn-primary btn-rounded m-1">Submit</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </div> -->
+  </ng-container>
 
-  <div class="col-md-12">
-    <div class="card o-hidden mb-4">
-      <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen" [columnMode]="'force'"
-        [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true" [scrollbarH]="true" [limit]="15"
-        [rows]="products$ | async">
-        <ngx-datatable-column name="icon" [maxWidth]="100">
-          <ng-template ngx-datatable-header-template>
-            Issue
-          </ng-template>
-          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-            <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="issueid" [width]="300">
-          <ng-template ngx-datatable-header-template>
-            Issue ID
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="priority">
-          <ng-template ngx-datatable-header-template>
-            Priority
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="name" [width]="300">
-          <ng-template ngx-datatable-header-template>
-            Title
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="assigned">
-          <ng-template ngx-datatable-header-template>
-            Assigned
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="category">
-          <ng-template ngx-datatable-header-template>
-            Type
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="status">
-          <ng-template ngx-datatable-header-template>
-            Status
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
+  <ng-container *ngIf="!bool">
+    <div class="col-md-12">
+      <div class="card o-hidden mb-4">
+        <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen"
+          [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true"
+          [scrollbarH]="true" [limit]="15" [rows]="products$ | async">
+          <ngx-datatable-column name="icon" [maxWidth]="100">
+            <ng-template ngx-datatable-header-template>
+              Issue
+            </ng-template>
+            <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+              <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="issueid" [width]="300">
+            <ng-template ngx-datatable-header-template>
+              Issue ID
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="priority">
+            <ng-template ngx-datatable-header-template>
+              Priority
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="name" [width]="300">
+            <ng-template ngx-datatable-header-template>
+              Title
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="assigned">
+            <ng-template ngx-datatable-header-template>
+              Assigned
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="category">
+            <ng-template ngx-datatable-header-template>
+              Type
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="status">
+            <ng-template ngx-datatable-header-template>
+              Status
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
     </div>
-  </div>
-
-
+  </ng-container>
 </div>

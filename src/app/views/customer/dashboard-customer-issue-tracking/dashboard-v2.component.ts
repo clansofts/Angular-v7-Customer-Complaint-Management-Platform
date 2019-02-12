@@ -8,16 +8,22 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./dashboard-v2.component.scss']
 })
 export class DashboardV2Component implements OnInit {
-	products$: any;
+  products$: any;
+  bool: boolean;
 
   constructor(
     private productService: ProductService,
     private fb: FormBuilder,
-	) { }
+  ) { }
 
   ngOnInit() {
     this.products$ = this.productService.getProducts();
     console.log(this.products$);
+    this.bool = true;
+  }
+
+  test() {
+    this.bool = !this.bool;
   }
 
 }

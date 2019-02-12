@@ -149,6 +149,7 @@ export class ServiceIssueComponent implements OnInit {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
+              this.resetForm(this.serviceComplaintForm);
             }, (reason) => {
               console.log('Err!', reason);
             });
@@ -189,6 +190,11 @@ export class ServiceIssueComponent implements OnInit {
   get email() {
     const email = this.serviceComplaintForm.controls.emailAddress.value;
     return email;
+  }
+
+  // Reset form and variables
+  resetForm(form: any) {
+    form.reset();
   }
 
   test() {

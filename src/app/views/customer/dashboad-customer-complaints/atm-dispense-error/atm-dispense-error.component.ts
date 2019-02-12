@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, Form, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
@@ -38,16 +38,16 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   card_Variants: Array<ResourceModel>;
   ATM_location: Array<ATMModel>; // list of ATMs from API
   Bank_used: Array<BankModel>; // list of Banks
+  feedbackCategory_ID: number;
 
-  // Is this the best way?
+  // Form objects
   transCount: Array<ResourceModel> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
   ATM_used: Array<ResourceModel> = [{ name: 'Union Bank', id: 1 }, { name: 'Other Bank', id: 2 }]; // list of ATMs
-  /* Enum? Because I should track by Id, and still be able to reference the name */
 
   private _card_Variants = 'cardvariants'; // Endpoint.
   private _currencyType = 'currencyTypes';  // Endpoint
-  feedbackCategory_ID: number;
 
+  // Alert and ticket id variables
   ticketID: any;
   alertCards: Alert;
   alerts: Alert;
@@ -87,6 +87,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   closeAlert(alert: Alert) {
 
   }
+
   closeAlertCard(alert: Alert) {
 
   }
@@ -139,6 +140,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   set toggleNavigation(n: boolean) {
     this.formState = n;
   }
+
   // Use to toggle single or multiple
   get selectedTransCount() {
     return this.atmDispenseErrorForm.controls.transCount.value.id;
@@ -168,8 +170,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       }),
       transDate: [''], // Defaults to today's date
       atmUsed: [''],
-      cardComplaintType: ['', [Validators.required]],
-      complaintDescription: ['', [Validators.required]],
+      cardComplaintType: [''],
+      complaintDescription: [''],
       channel_ID: [this.channelId],
       feedbackId: [''],
       cardVariant: ['', [Validators.required]], // Automatically fetch cardVariant
@@ -204,11 +206,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   open(content) {
     modalState.subscribe(async state => {
       if (state === true) {
-        await this.toastr.success('Please wait', 'Generating ticket!', { progressBar: true });
+        await this.toastr.success('Generating ticket', 'Please wait!', { progressBar: true });
         setTimeout(() => {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
+              this.resetForm(this.atmDispenseErrorForm);
             }, (reason) => {
               console.log('Err!', reason);
             });
@@ -250,6 +253,11 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   get email() {
     const email = this.atmDispenseErrorForm.controls.emailAddress.value;
     return email;
+  }
+
+  // Reset form and variables
+  resetForm(form: any) {
+    form.reset();
   }
 
   test() {
