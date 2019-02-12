@@ -218,7 +218,7 @@ export class EChannelsErrorComponent implements OnInit {
             }, (reason) => {
               console.log('Err!', reason);
             });
-        }, 4000);
+        }, 2700);
       }
     });
   }
