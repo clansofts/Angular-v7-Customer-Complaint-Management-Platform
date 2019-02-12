@@ -7,19 +7,8 @@ import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
 
-// To be global interface
-interface Alert {
-  type: string;
-  message: string;
-}
-
 // Observable to track ticket status
 const modalState = new BehaviorSubject(false);
-
-const ALERTS: Alert = {
-  type: 'warning',
-  message: 'Form is invalid, please check inputs.',
-};
 
 @Component({
   selector: 'app-atm-dispense-error',
@@ -27,7 +16,7 @@ const ALERTS: Alert = {
   styleUrls: ['./atm-dispense-error.component.scss']
 })
 export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
-  private feedbackId = 1; // feedback
+  private feedbackId = 1; // feedback-complaints
   private categoryId = 1; // category
   private channelId = 1; // ATM dispense error
 
@@ -49,8 +38,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Alert and ticket id variables
   ticketID: any;
-  alertCards: Alert;
-  alerts: Alert;
 
   constructor(
     private fb: FormBuilder,
@@ -61,8 +48,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   ) {
     // display details form by default
     this.formState = true;
-    this.alerts = ALERTS;
-    this.alertCards = ALERTS;
   }
 
   async ngOnInit() {
@@ -81,15 +66,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // subscribtions?
-  }
-
-  // Alerts
-  closeAlert(alert: Alert) {
-
-  }
-
-  closeAlertCard(alert: Alert) {
-
   }
 
   // Register service by fetching feedback categoryID

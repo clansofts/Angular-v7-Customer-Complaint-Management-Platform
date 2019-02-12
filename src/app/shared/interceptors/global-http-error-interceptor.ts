@@ -19,6 +19,7 @@ export class GlobalHttpErrorInterceptor {
                         // server-side error
                         errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
                     }
+                    alert(errorMessage);
                     console.error(error);
                     return throwError(errorMessage);
                 })
