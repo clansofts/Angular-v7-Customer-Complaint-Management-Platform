@@ -152,7 +152,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
             }, (reason) => {
               console.log('Err!', reason);
             });
-        }, 2700);
+        }, 4500);
       }
     });
   }

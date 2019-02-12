@@ -153,7 +153,7 @@ export class ServiceIssueComponent implements OnInit {
             }, (reason) => {
               console.log('Err!', reason);
             });
-        }, 2700);
+        }, 4500);
       }
     });
   }
