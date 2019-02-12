@@ -29,6 +29,7 @@ export class EChannelsErrorComponent implements OnInit {
   currencyType: Array<ResourceModel>;
   serviceList: Promise<ServiceProvider>;
   card_Variants: Array<ResourceModel>;
+  billTypes: Array<ResourceModel>;
   private _card_Variants = 'cardvariants'; // Endpoint.
   feedbackCategory_ID: number;
   ticketID: any;
@@ -60,13 +61,12 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Usage Issues', id: 6 }
   ];
 
-  // Dummy Billers Types, API integration needed
-  billerType: Array<any> = [
+   // Dummy Billers Types, API integration needed
+   billerType: Array<any> = [
     { name: 'DSTV', id: 1 },
     { name: 'Electricity', id: 2 },
     { name: 'GOTV', id: 3 }
   ];
-
 
   constructor(
     private fb: FormBuilder,
@@ -84,6 +84,7 @@ export class EChannelsErrorComponent implements OnInit {
     return Promise.all([
       this.fetchCurrencyType = this._currencyType,
       this.fetchCardVariants = this._card_Variants,
+      this.billingsType, // getter
       this.serviceProviders(),
     ]);
   }
@@ -129,6 +130,13 @@ export class EChannelsErrorComponent implements OnInit {
     return this.eChannelsForm.controls.whereCardUsed.value.id;
   }
 
+  // Fetch list of billers
+  get billingsType() {
+    return this.utilities.fetchBillTypes.pipe(map((response: ResourceModel[]) => {
+      this.billTypes = response;
+    })).toPromise();
+  }
+
   // Fetch card variants
   set fetchCurrencyType(path: string) {
     this.utilities.fetch(path)
@@ -171,7 +179,7 @@ export class EChannelsErrorComponent implements OnInit {
       feedbackId: [''],
       cardVariant: [''],
       currencyType: [''],
-      eMedium: ['', Validators.required],
+      eMedium: ['', [Validators.required]],
       billType: [''],
       eChannels: [''],
       referenceID: [''],
@@ -250,7 +258,7 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   test() {
-    console.log('Notice me sempai!');
+    console.log(this.billingsType);
   }
 
 }

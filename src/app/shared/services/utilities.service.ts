@@ -97,6 +97,12 @@ export class UtilitiesService {
     return this.http.get<BranchModel>(Path);
   }
 
+  // Types of bills
+  get fetchBillTypes(): any {
+    const Path = this.baseURL + `billtypes`;
+    return this.http.get<ResourceModel>(Path);
+  }
+
   // Date formater, format: 'yyyy-mm-dd'
   formatDate(date: any) {
     return date.year + '-' + date.month +

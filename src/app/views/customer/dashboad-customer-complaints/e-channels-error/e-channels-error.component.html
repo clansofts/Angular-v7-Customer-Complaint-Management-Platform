@@ -58,7 +58,8 @@
                             </div>
 
                             <div class="col-md-12">
-                                <button type="button" Class="btn btn-primary btn-rounded m-1"
+                                <button type="button" [disabled]="!eChannelsForm.controls.eMedium.valid"
+                                    Class="btn btn-primary btn-rounded m-1"
                                     (click)="toggleNavigation = false; open(formModal)">Continue</button>
                             </div>
 
@@ -161,7 +162,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Billers Category</label>
                                             <select formControlName="billType" class="form-control">
-                                                <option *ngFor="let i of billerType" [value]='i?.id'>{{i?.name}}
+                                                <option *ngFor="let i of billTypes" [value]='i?.id'>{{i?.name}}
                                                 </option>
                                             </select>
                                         </div>
@@ -466,7 +467,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Airtime billers</label>
                                             <select class="form-control">
-                                                <option *ngFor="let i of billerType" [ngValue]='i'>{{i?.name}}</option>
+                                                <option *ngFor="let i of billTypes" [ngValue]='i'>{{i?.name}}</option>
                                             </select>
                                         </div>
 
