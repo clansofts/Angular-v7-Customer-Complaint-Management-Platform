@@ -44,6 +44,7 @@
         <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen"
           [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true"
           [scrollbarH]="true" [limit]="15" [rows]="products$">
+
           <ngx-datatable-column name="icon" [maxWidth]="100">
             <ng-template ngx-datatable-header-template>
               Issue
@@ -52,36 +53,37 @@
               <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="issueid" [width]="300">
-            <ng-template ngx-datatable-header-template>
-              Issue ID
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="status">
-            <ng-template ngx-datatable-header-template>
-              Priority
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="customername" [width]="300">
-            <ng-template ngx-datatable-header-template>
-              Title
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="assigned">
-            <ng-template ngx-datatable-header-template>
-              Assigned
-            </ng-template>
-          </ngx-datatable-column>
+
           <ngx-datatable-column name="errortype">
             <ng-template ngx-datatable-header-template>
               Type
             </ng-template>
           </ngx-datatable-column>
+
           <ngx-datatable-column name="status">
             <ng-template ngx-datatable-header-template>
               Status
             </ng-template>
           </ngx-datatable-column>
+
+          <ngx-datatable-column name="customername" [width]="300">
+            <ng-template ngx-datatable-header-template>
+              Name
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="assigned">
+            <ng-template ngx-datatable-header-template>
+              Date
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="status">
+            <ng-template ngx-datatable-header-template>
+              Status
+            </ng-template>
+          </ngx-datatable-column>
+
         </ngx-datatable>
       </div>
     </div>

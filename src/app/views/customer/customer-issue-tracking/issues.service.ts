@@ -4,10 +4,10 @@ import { environment } from 'src/environments/environment';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
 export interface CustomerIssuesModel {
-  issueid: string;
- errortype: string;
- status: string;
- customername: string;
+  errortype: string;
+  status: string;
+  customername: string;
+  date: string;
 }
 
 @Injectable({

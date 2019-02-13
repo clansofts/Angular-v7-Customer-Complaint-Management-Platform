@@ -10,14 +10,9 @@ import { IssuesService, CustomerIssuesModel } from './issues.service';
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesTrackingComponent implements OnInit {
-  private feedbackId = 1; // feedback
-  private categoryId = 1; // category
-  private channelId = 2; // Card issue
-  private _card_Variants = 'cardvariants'; // Endpoint.
 
   public issuesDetails: boolean;
   loading: boolean;
-  bool: boolean; // Temp
   feedbackCategory_ID: number;
 
   issuesTrackingForm: FormGroup;
@@ -26,16 +21,13 @@ export class IssuesTrackingComponent implements OnInit {
 
 
   constructor(
-    private productService: ProductService,
     private fb: FormBuilder,
-    private utilities: UtilitiesService,
     private issuesService: IssuesService
   ) { }
 
   ngOnInit() {
+    // Initialize the reactive form
     this.issuesFn();
-    // this.products$ = this.productService.getProducts();
-    this.bool = true;
   }
 
   // Reactive form control
@@ -46,24 +38,27 @@ export class IssuesTrackingComponent implements OnInit {
     });
   }
 
-  async submit(form: NgForm) {
-    this.loading = true;
-    const body = {
-      email: form.value.emailAddress,
-      uid: form.value.uid
-    };
-    setTimeout(() => {
-      this.issuesService.trackIssue(body).toPromise()
-        .then((response: CustomerIssuesModel) => {
-          this.products$ = response;
-          console.log(this.products$);
-        });
-      this.loading = false;
-    }, 1000);
+  submit(form: NgForm) {
+    if (form.valid) {
+      this.loading = true;
+      const body = { email: form.value.emailAddress, uid: form.value.uid };
+      setTimeout(async () => {
+        await this.issuesService.trackIssue(body).toPromise()
+          .then((response: CustomerIssuesModel) => {
+            this.products$ = response;
+          });
+        this.loading = false;
+      }, 2000);
+      return;
+    }
+    alert('form is invalid');
   }
 
   test() {
-    this.bool = !this.bool;
+    console.log('omae wa mou shindeiru');
+    setTimeout(() => {
+      console.log('NANI');
+    }, 500);
   }
 
 }

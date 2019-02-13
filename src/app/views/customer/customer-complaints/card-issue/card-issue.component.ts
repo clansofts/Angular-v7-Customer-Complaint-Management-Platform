@@ -158,7 +158,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   }
 
   async submit(form: NgForm) {
-    if (this.cardIssueForm.valid) {
+    if (form.valid) {
       this.loading = true;
       await this.cardIssueForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
