@@ -10,7 +10,6 @@
 
 
 <div class="row">
-
   <ng-container>
     <div class="col-md-12">
       <div class="card mb-4">
@@ -39,12 +38,12 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!bool">
+  <ng-container *ngIf="products$">
     <div class="col-md-12">
       <div class="card o-hidden mb-4">
         <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen"
           [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true"
-          [scrollbarH]="true" [limit]="15" [rows]="products$ | async">
+          [scrollbarH]="true" [limit]="15" [rows]="products$">
           <ngx-datatable-column name="icon" [maxWidth]="100">
             <ng-template ngx-datatable-header-template>
               Issue
@@ -58,12 +57,12 @@
               Issue ID
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="priority">
+          <ngx-datatable-column name="status">
             <ng-template ngx-datatable-header-template>
               Priority
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="name" [width]="300">
+          <ngx-datatable-column name="customername" [width]="300">
             <ng-template ngx-datatable-header-template>
               Title
             </ng-template>
@@ -73,7 +72,7 @@
               Assigned
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="category">
+          <ngx-datatable-column name="errortype">
             <ng-template ngx-datatable-header-template>
               Type
             </ng-template>

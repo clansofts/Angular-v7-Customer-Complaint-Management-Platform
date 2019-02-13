@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
-import { IssuesService } from './issues.service';
+import { IssuesService, CustomerIssuesModel } from './issues.service';
 
 @Component({
   selector: 'app-dashboard-v2',
@@ -34,8 +34,7 @@ export class IssuesTrackingComponent implements OnInit {
 
   ngOnInit() {
     this.issuesFn();
-    this.products$ = this.productService.getProducts();
-    console.log(this.products$);
+    // this.products$ = this.productService.getProducts();
     this.bool = true;
   }
 
@@ -55,8 +54,9 @@ export class IssuesTrackingComponent implements OnInit {
     };
     setTimeout(() => {
       this.issuesService.trackIssue(body).toPromise()
-        .then((response: any) => {
-          console.log(response);
+        .then((response: CustomerIssuesModel) => {
+          this.products$ = response;
+          console.log(this.products$);
         });
       this.loading = false;
     }, 1000);
