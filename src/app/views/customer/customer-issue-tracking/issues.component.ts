@@ -4,10 +4,10 @@ import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard-v2',
-  templateUrl: './dashboard-v2.component.html',
-  styleUrls: ['./dashboard-v2.component.scss']
+  templateUrl: './issues.component.html',
+  styleUrls: ['./issues.component.scss']
 })
-export class DashboardV2Component implements OnInit {
+export class IssuesTrackingComponent implements OnInit {
   products$: any;
   bool: boolean;
 

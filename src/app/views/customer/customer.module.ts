@@ -4,7 +4,7 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { DashboadDefaultComponent } from './dashboad-customer-complaints/dashboad-default.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
-import { DashboardV2Component } from './dashboard-customer-issue-tracking/dashboard-v2.component';
+import { IssuesTrackingComponent } from './customer-issue-tracking/issues.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AtmDispenseErrorComponent } from './dashboad-customer-complaints/atm-dispense-error/atm-dispense-error.component';
@@ -27,7 +27,7 @@ import { CustomFormsModule } from 'ng2-validation';
   ],
   declarations: [
     DashboadDefaultComponent,
-    DashboardV2Component,
+    IssuesTrackingComponent,
     AtmDispenseErrorComponent,
     CardIssueComponent,
     EChannelsErrorComponent,

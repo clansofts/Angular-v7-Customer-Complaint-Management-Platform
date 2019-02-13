@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboadDefaultComponent } from './dashboad-customer-complaints/dashboad-default.component';
-import { DashboardV2Component } from './dashboard-customer-issue-tracking/dashboard-v2.component';
+import { IssuesTrackingComponent } from './customer-issue-tracking/issues.component';
 import { AtmDispenseErrorComponent } from './dashboad-customer-complaints/atm-dispense-error/atm-dispense-error.component';
 import { CardIssueComponent } from './dashboad-customer-complaints/card-issue/card-issue.component';
 import { EChannelsErrorComponent } from './dashboad-customer-complaints/e-channels-error/e-channels-error.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'v2',
-    component: DashboardV2Component
+    component: IssuesTrackingComponent
   },
 ];
 
