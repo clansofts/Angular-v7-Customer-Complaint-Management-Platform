@@ -4,6 +4,12 @@
             <div class="card-body" (click)="test()">
 
                 <div class="card-title mb-3">ATM Dispense Error Form</div>
+                <ng-container *ngIf="alert">
+                    <ngb-alert [type]="alert.type" (close)="closeAlert(alerts)">
+                        <strong class="text-capitalize">{{alert.type}}!</strong> {{alert.message}}
+                    </ngb-alert>
+                </ng-container>
+
                 <form [formGroup]="atmDispenseErrorForm" (ngSubmit)="submit(atmDispenseErrorForm)">
 
                     <div class="row">
