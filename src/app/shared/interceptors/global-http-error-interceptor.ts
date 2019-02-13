@@ -9,8 +9,6 @@ export class GlobalHttpErrorInterceptor {
                 retry(1),
                 catchError((error: HttpErrorResponse) => {
 
-                    // Error handling here. https://scotch.io/@vigneshsithirai/angular-6-7-http-client-interceptor-with-error-handling
-
                     let errorMessage = '';
                     if (error.error instanceof ErrorEvent) {
                         // client-side error
