@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
+import { IssuesService } from './issues.service';
 
 @Component({
   selector: 'app-dashboard-v2',
@@ -28,6 +29,7 @@ export class IssuesTrackingComponent implements OnInit {
     private productService: ProductService,
     private fb: FormBuilder,
     private utilities: UtilitiesService,
+    private issuesService: IssuesService
   ) { }
 
   ngOnInit() {
@@ -47,10 +49,17 @@ export class IssuesTrackingComponent implements OnInit {
 
   async submit(form: NgForm) {
     this.loading = true;
+    const body = {
+      email: form.value.emailAddress,
+      uid: form.value.uid
+    };
     setTimeout(() => {
-      console.log(form.value);
+      this.issuesService.trackIssue(body).toPromise()
+        .then((response: any) => {
+          console.log(response);
+        });
       this.loading = false;
-    }, 3000);
+    }, 1000);
   }
 
   test() {

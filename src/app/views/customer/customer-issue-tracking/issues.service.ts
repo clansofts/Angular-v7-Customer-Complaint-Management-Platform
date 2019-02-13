@@ -13,8 +13,8 @@ export class IssuesService {
   constructor(private http: HttpClient, private utilities: UtilitiesService) { }
 
   // Track an issue by the issue ID
-  trackIssue(ticketid) {
-    const Path = this.baseURL + `statusenquries/` + ticketid;
+  trackIssue(body: any) {
+    const Path = this.baseURL + `statusenquries/` + body.ticketid + '?email=' + body.email;
     return this.http.get<any>(Path);
   }
 }
