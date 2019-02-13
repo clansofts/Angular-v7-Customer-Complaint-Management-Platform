@@ -10,15 +10,11 @@ import { IssuesService, CustomerIssuesModel } from './issues.service';
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesTrackingComponent implements OnInit {
-
   public issuesDetails: boolean;
   loading: boolean;
   feedbackCategory_ID: number;
-
   issuesTrackingForm: FormGroup;
-
   products$: any; // Observable of issues
-
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +42,8 @@ export class IssuesTrackingComponent implements OnInit {
         await this.issuesService.trackIssue(body).toPromise()
           .then((response: CustomerIssuesModel) => {
             this.products$ = response;
+            form.reset();
+            console.log(response);
           });
         this.loading = false;
       }, 2000);

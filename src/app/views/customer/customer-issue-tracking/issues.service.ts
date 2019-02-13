@@ -6,7 +6,7 @@ import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 export interface CustomerIssuesModel {
   errortype: string;
   status: string;
-  customername: string;
+  fullname: string;
   date: string;
 }
 
