@@ -221,7 +221,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   open(content) {
     modalState.subscribe(async state => {
       if (state === true) {
-        await this.toastr.success('Generating ticket', 'Please wait!', { progressBar: true });
+        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
         setTimeout(() => {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
@@ -231,7 +231,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
             }, (reason) => {
               console.log('Err!', reason);
             });
-        }, 4500);
+        }, 3500);
       }
     });
   }
