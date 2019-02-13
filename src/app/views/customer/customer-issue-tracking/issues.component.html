@@ -16,20 +16,21 @@
       <div class="card mb-4">
         <div class="card-body" (click)="test()">
           <div class="card-title mb-3">Card Issue Form</div>
-          <form>
+          <form [formGroup]="issuesTrackingForm" (ngSubmit)="submit(issuesTrackingForm)">
             <div class="row">
               <div class="col-md-6 form-group mb-3">
                 <label>Email address</label>
-                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                <input formControlName="emailAddress" type="email" class="form-control" aria-describedby="emailHelp"
+                  placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                   anyone else.</small>
               </div>
               <div class="col-md-6 form-group mb-3">
                 <label for="phone">Ticket Id</label>
-                <input class="form-control" id="phone" placeholder="Enter phone">
+                <input formControlName="uid" class="form-control" id="phone" placeholder="Enter phone">
               </div>
               <div class="col-md-12">
-                <button type="button" Class="btn btn-primary btn-rounded m-1">Submit</button>
+                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
               </div>
             </div>
           </form>
