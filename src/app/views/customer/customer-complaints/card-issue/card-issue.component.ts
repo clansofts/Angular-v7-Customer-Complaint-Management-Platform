@@ -9,6 +9,34 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Observable to track ticket status
 const modalState = new BehaviorSubject(false);
 
+// Local form alert interface
+interface Alert {
+  type: string;
+  message: string;
+}
+
+/* Wondering if NGXS can be utilized here to plan state changes on success and error? */
+const ALERTS: Alert[] = [{
+  type: 'success',
+  message: 'Complaint recieved, A ticket has been sent to your email',
+}, {
+  type: 'info',
+  message: 'This is an info alert',
+}, {
+  type: 'warning',
+  message: 'Cannot submit, form is invalid. please check your inputs and try again',
+}, {
+  type: 'danger',
+  message: 'This is a danger alert',
+}, {
+  type: 'primary',
+  message: 'This is a primary alert',
+}, {
+  type: 'dark',
+  message: 'This is a dark alert',
+}
+];
+
 @Component({
   selector: 'app-card-issue',
   templateUrl: './card-issue.component.html',
@@ -25,7 +53,9 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   loading: boolean;
   card_Variants: Array<ResourceModel>;
   feedbackCategory_ID: number;
+  // Alert and ticket id variables
   ticketID: any;
+  alert: Alert;
 
   // Make Enum type?
   cardComplaintTypes: Array<any> = [
@@ -65,6 +95,11 @@ export class CardIssueComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // subscribtions?
+  }
+
+  // Alert controls
+  closeAlert(alert: Alert) {
+    this.alert = null;
   }
 
   // Register service by fetching feedback categoryID
@@ -149,6 +184,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
             .result.then((result) => {
               console.log(result);
               this.resetForm(this.cardIssueForm);
+              this.alert = ALERTS[0];
             }, (reason) => {
               console.log('Err!', reason);
             });
@@ -175,6 +211,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       return;
     }
     alert('Form is not valid');
+    this.alert = ALERTS[2];
   }
 
   // Accessor for form variables
@@ -194,6 +231,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   // Reset form and variables
   resetForm(form: any) {
     form.reset();
+    modalState.next(null);
   }
 
   test() {

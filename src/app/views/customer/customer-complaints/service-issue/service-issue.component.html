@@ -3,6 +3,13 @@
         <div class="card mb-4">
             <div class="card-body" (click)="test()">
                 <div class="card-title mb-3">Service Complaint Form</div>
+
+                <ng-container *ngIf="alert">
+                    <ngb-alert [type]="alert.type" (close)="closeAlert(alerts)">
+                        <strong class="text-capitalize">{{alert.type}}!</strong> {{alert.message}}
+                    </ngb-alert>
+                </ng-container>
+
                 <form [formGroup]="serviceComplaintForm" (ngSubmit)="submit(serviceComplaintForm)">
                     <div class="row">
                         <ng-container *ngIf="formState else complaintsForm">

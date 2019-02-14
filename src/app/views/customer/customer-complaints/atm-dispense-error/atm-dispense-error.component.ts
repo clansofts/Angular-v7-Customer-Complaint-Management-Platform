@@ -40,7 +40,6 @@ const ALERTS: Alert[] = [{
 }
 ];
 
-
 @Component({
   selector: 'app-atm-dispense-error',
   templateUrl: './atm-dispense-error.component.html',
@@ -50,10 +49,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   private feedbackId = 1; // feedback-complaints
   private categoryId = 1; // category
   private channelId = 1; // ATM dispense error
+  public formState: boolean; // Display complaints form as default.
+  private _card_Variants = 'cardvariants'; // Endpoint.
+  private _currencyType = 'currencyTypes';  // Endpoint
 
   atmDispenseErrorForm: FormGroup;
   loading: boolean;
-  public formState: boolean; // Display complaints form as default.
   currencyType: Array<ResourceModel>;
   card_Variants: Array<ResourceModel>;
   ATM_location: Array<ATMModel>; // list of ATMs from API
@@ -63,9 +64,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   // Form objects
   transCount: Array<ResourceModel> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
   ATM_used: Array<ResourceModel> = [{ name: 'Union Bank', id: 1 }, { name: 'Other Bank', id: 2 }]; // list of ATMs
-
-  private _card_Variants = 'cardvariants'; // Endpoint.
-  private _currencyType = 'currencyTypes';  // Endpoint
 
   // Alert and ticket id variables
   ticketID: any;
@@ -275,10 +273,11 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   // Reset form and variables
   resetForm(form: any) {
     form.reset();
+    modalState.next(null);
   }
 
   test() {
-    //  console.log('');
+    console.log('Cero!');
   }
 
 }

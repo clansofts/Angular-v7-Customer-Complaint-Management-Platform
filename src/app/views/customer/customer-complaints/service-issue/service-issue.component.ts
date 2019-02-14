@@ -7,14 +7,36 @@ import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { BehaviorSubject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-// To be global interface
+// Observable to track ticket status
+const modalState = new BehaviorSubject(false);
+
+// Local form alert interface
 interface Alert {
   type: string;
   message: string;
 }
 
-// Observable to track ticket status
-const modalState = new BehaviorSubject(false);
+/* Wondering if NGXS can be utilized here to plan state changes on success and error? */
+const ALERTS: Alert[] = [{
+  type: 'success',
+  message: 'Complaint recieved, A ticket has been sent to your email',
+}, {
+  type: 'info',
+  message: 'This is an info alert',
+}, {
+  type: 'warning',
+  message: 'Cannot submit, form is invalid. please check your inputs and try again',
+}, {
+  type: 'danger',
+  message: 'This is a danger alert',
+}, {
+  type: 'primary',
+  message: 'This is a primary alert',
+}, {
+  type: 'dark',
+  message: 'This is a dark alert',
+}
+];
 
 @Component({
   selector: 'app-service-issue',
@@ -25,13 +47,16 @@ export class ServiceIssueComponent implements OnInit {
   private feedbackId = 1; // feedback
   private categoryId = 1; // category
   private channelId = 4; // ATM dispense error
+  public formState: boolean; // Display complaints form as default.
 
   loading: boolean;
   serviceComplaintForm: FormGroup;
-  public formState: boolean; // Display complaints form as default.
   branch_of_Issue: BranchModel[];
   feedbackCategory_ID: number;
+
+  // Alert and ticket id variables
   ticketID: any;
+  alert: Alert;
 
   services: Array<ResourceModel> = [
     { name: 'Staff Atitude', id: 1 },
@@ -53,6 +78,8 @@ export class ServiceIssueComponent implements OnInit {
   ) {
     // display details form by default
     this.formState = true;
+    // Alerts
+    this.alert = null;
   }
 
   async ngOnInit() {
@@ -62,6 +89,11 @@ export class ServiceIssueComponent implements OnInit {
       // These are get and set accessors for currency and card variant list: API.
       this.fetch_BranchList()
     ]);
+  }
+
+  // Alert controls
+  closeAlert(alert: Alert) {
+    this.alert = null;
   }
 
   // Register service by fetching feedback categoryID
@@ -150,6 +182,7 @@ export class ServiceIssueComponent implements OnInit {
             .result.then((result) => {
               console.log(result);
               this.resetForm(this.serviceComplaintForm);
+              this.alert = ALERTS[0];
             }, (reason) => {
               console.log('Err!', reason);
             });
@@ -173,9 +206,9 @@ export class ServiceIssueComponent implements OnInit {
             } return;
           }, 2000);
         });
-      alert('Form is not valid');
     }
     alert('Form is not valid');
+    this.alert = ALERTS[2];
   }
 
   // Accessor for form variables
@@ -195,6 +228,7 @@ export class ServiceIssueComponent implements OnInit {
   // Reset form and variables
   resetForm(form: any) {
     form.reset();
+    modalState.next(null);
   }
 
   test() {

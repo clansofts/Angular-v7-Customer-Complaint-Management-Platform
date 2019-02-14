@@ -10,6 +10,34 @@ import { BehaviorSubject } from 'rxjs';
 // Observable to track ticket status
 const modalState = new BehaviorSubject(false);
 
+// Local form alert interface
+interface Alert {
+  type: string;
+  message: string;
+}
+
+/* Wondering if NGXS can be utilized here to plan state changes on success and error? */
+const ALERTS: Alert[] = [{
+  type: 'success',
+  message: 'Complaint recieved, A ticket has been sent to your email',
+}, {
+  type: 'info',
+  message: 'This is an info alert',
+}, {
+  type: 'warning',
+  message: 'Cannot submit, form is invalid. please check your inputs and try again',
+}, {
+  type: 'danger',
+  message: 'This is a danger alert',
+}, {
+  type: 'primary',
+  message: 'This is a primary alert',
+}, {
+  type: 'dark',
+  message: 'This is a dark alert',
+}
+];
+
 @Component({
   selector: 'app-e-channels-error',
   templateUrl: './e-channels-error.component.html',
@@ -19,20 +47,21 @@ export class EChannelsErrorComponent implements OnInit {
   private feedbackId = 1; // feedback
   private categoryId = 1; // category
   private channelId = 3; // E-channels
-
   private _currencyType = 'currencyTypes';  // Endpoint
+  private _card_Variants = 'cardvariants'; // Endpoint.
+  public personalDetails: boolean; // Display complaints form as default.
 
   eChannelsForm: FormGroup;
   loading: boolean;
-
-  public personalDetails: boolean; // Display complaints form as default.
   currencyType: Array<ResourceModel>;
   serviceList: Promise<ServiceProvider>;
   card_Variants: Array<ResourceModel>;
   billTypes: Array<ResourceModel>;
-  private _card_Variants = 'cardvariants'; // Endpoint.
   feedbackCategory_ID: number;
+
+  // Alert and ticket id variables
   ticketID: any;
+  alert: Alert;
 
   // Transaction count
   transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
@@ -61,8 +90,8 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Usage Issues', id: 6 }
   ];
 
-   // Dummy Billers Types, API integration needed
-   billerType: Array<any> = [
+  // Dummy Billers Types, API integration needed
+  billerType: Array<any> = [
     { name: 'DSTV', id: 1 },
     { name: 'Electricity', id: 2 },
     { name: 'GOTV', id: 3 }
@@ -77,6 +106,8 @@ export class EChannelsErrorComponent implements OnInit {
   ) {
     // display details form by default
     this.personalDetails = true;
+    // Alerts
+    this.alert = null;
   }
 
   ngOnInit() {
@@ -87,6 +118,11 @@ export class EChannelsErrorComponent implements OnInit {
       this.billingsType, // getter
       this.serviceProviders(),
     ]);
+  }
+
+  // Alert controls
+  closeAlert(alert: Alert) {
+    this.alert = null;
   }
 
   // Used to toggle between views
@@ -214,6 +250,7 @@ export class EChannelsErrorComponent implements OnInit {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
+              this.alert = ALERTS[0];
               this.resetForm(this.eChannelsForm);
             }, (reason) => {
               console.log('Err!', reason);
@@ -242,6 +279,7 @@ export class EChannelsErrorComponent implements OnInit {
       return;
     }
     alert('Form is not valid');
+    this.alert = ALERTS[2];
   }
 
   // Accessor for form variables
@@ -261,10 +299,11 @@ export class EChannelsErrorComponent implements OnInit {
   // Reset form and variables
   resetForm(form: any) {
     form.reset();
+    modalState.next(null);
   }
 
   test() {
-    console.log(this.billingsType);
+    console.log('Bankai!');
   }
 
 }
