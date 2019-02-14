@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResourceModel, UtilitiesService, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs/internal/Subject';
 
 // Observable to track ticket status
-const modalState = new BehaviorSubject(false);
+const modalState = new Subject();
 
 // Local form alert interface
 interface Alert {
@@ -43,8 +43,8 @@ const ALERTS: Alert[] = [{
   styleUrls: ['./card-issue.component.scss']
 })
 export class CardIssueComponent implements OnInit, OnDestroy {
-  private feedbackId = 1; // feedback
-  private categoryId = 1; // category
+  private feedbackId = 1; // complaint
+  private categoryId = 1; // channel:1, service:2, staff: 3
   private channelId = 2; // Card issue
   private _card_Variants = 'cardvariants'; // Endpoint.
 

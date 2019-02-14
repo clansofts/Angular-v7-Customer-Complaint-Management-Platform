@@ -5,10 +5,10 @@ import { map } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 // Observable to track ticket status
-const modalState = new BehaviorSubject(false);
+const modalState = new Subject();
 
 /* Abstract elements here to a global minterface*/
 
@@ -47,7 +47,7 @@ const ALERTS: Alert[] = [{
 })
 export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   private feedbackId = 1; // feedback-complaints
-  private categoryId = 1; // category
+  private categoryId = 1; // channel:1, service:2, staff: 3
   private channelId = 1; // ATM dispense error
   public formState: boolean; // Display complaints form as default.
   private _card_Variants = 'cardvariants'; // Endpoint.

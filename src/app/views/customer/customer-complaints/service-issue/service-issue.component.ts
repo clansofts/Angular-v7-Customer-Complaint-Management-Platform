@@ -4,11 +4,12 @@ import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { ResourceModel, UtilitiesService, BranchModel, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 
 // Observable to track ticket status
-const modalState = new BehaviorSubject(false);
+const modalState = new Subject<any>();
 
 // Local form alert interface
 interface Alert {
@@ -44,8 +45,8 @@ const ALERTS: Alert[] = [{
   styleUrls: ['./service-issue.component.scss']
 })
 export class ServiceIssueComponent implements OnInit {
-  private feedbackId = 1; // feedback
-  private categoryId = 1; // category
+  private feedbackId = 1; // complaint
+  private categoryId = 2; // channel:1, service:2, staff: 3
   private channelId = 4; // ATM dispense error
   public formState: boolean; // Display complaints form as default.
 
@@ -74,12 +75,15 @@ export class ServiceIssueComponent implements OnInit {
     private toastr: ToastrService,
     private utilities: UtilitiesService,
     private complaintsService: ComplaintsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private errorService: ErrorDialogService
   ) {
     // display details form by default
     this.formState = true;
     // Alerts
     this.alert = null;
+    this.handleErrorFn();
+
   }
 
   async ngOnInit() {
@@ -89,11 +93,6 @@ export class ServiceIssueComponent implements OnInit {
       // These are get and set accessors for currency and card variant list: API.
       this.fetch_BranchList()
     ]);
-  }
-
-  // Alert controls
-  closeAlert(alert: Alert) {
-    this.alert = null;
   }
 
   // Register service by fetching feedback categoryID
@@ -174,23 +173,22 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open modal to show ticket
   open(content) {
-    modalState.pipe()
-      .subscribe(async state => {
-        if (state === true) {
-          await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
-          setTimeout(() => {
-            this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-              .result.then((result) => {
-                console.log(result);
-                this.resetForm(this.serviceComplaintForm);
-                this.alert = ALERTS[0];
-              }, (reason) => {
-                console.log('Err!', reason);
-                this.alert = ALERTS[0];
-              });
-          }, 4500);
-        }
-      });
+    modalState.subscribe(async state => {
+      if (state === true) {
+        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
+        setTimeout(() => {
+          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+            .result.then((result) => {
+              console.log(result);
+              this.resetForm(this.serviceComplaintForm);
+              this.alert = ALERTS[0];
+            }, (reason) => {
+              console.log('Err!', reason);
+              this.alert = ALERTS[0];
+            });
+        }, 4500);
+      }
+    });
   }
 
   async submit(form: NgForm) {
@@ -234,6 +232,24 @@ export class ServiceIssueComponent implements OnInit {
     this.ngOnInit();
     modalState.next(null);
   }
+
+
+  // Open toast dialog
+  openDialog(data): void {
+    this.toastr.error('Network error!', data, { timeOut: 3000 });
+  }
+
+  // Alert controls
+  closeAlert(alert: Alert) {
+    this.alert = null;
+  }
+
+  // Hangle error
+  handleErrorFn() {
+    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
+
+  }
+
 
   test() {
     //console.log();

@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr/toastr/toastr.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorDialogService {
 
-  constructor(private toastr: ToastrService) { }
+  public onErrorObserver = new Subject<any>();
 
-  openDialog(data): void {
-    this.toastr.error('Toastr error!', data, { timeOut: 3000 });
+  constructor() { }
+
+  test() {
+    alert('HAPPY VALENTINE');
   }
 }
