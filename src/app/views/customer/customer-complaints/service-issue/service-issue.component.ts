@@ -236,7 +236,7 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open toast dialog
   openDialog(data): void {
-    this.toastr.error('Network error!', data, { timeOut: 3000 });
+    this.toastr.error(data, 'Network error!');
   }
 
   // Alert controls
@@ -247,7 +247,6 @@ export class ServiceIssueComponent implements OnInit {
   // Hangle error
   handleErrorFn() {
     this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
-
   }
 
 
