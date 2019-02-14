@@ -272,7 +272,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Reset form and variables
   resetForm(form: any) {
-    form.reset();
+    this.ngOnInit();
     modalState.next(null);
   }
 

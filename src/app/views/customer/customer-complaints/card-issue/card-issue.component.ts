@@ -178,7 +178,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   open(content) {
     modalState.subscribe(async state => {
       if (state === true) {
-        await this.toastr.success('Please wait', 'Generating ticket!', { progressBar: true });
+        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
         setTimeout(() => {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
@@ -230,7 +230,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
 
   // Reset form and variables
   resetForm(form: any) {
-    form.reset();
+    this.ngOnInit();
     modalState.next(null);
   }
 

@@ -34,7 +34,7 @@ const ALERTS: Alert[] = [{
   message: 'This is a primary alert',
 }, {
   type: 'dark',
-  message: 'This is a dark alert',
+  message: 'We apologize, Something went wrong somewhere',
 }
 ];
 
@@ -174,21 +174,23 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open modal to show ticket
   open(content) {
-    modalState.subscribe(async state => {
-      if (state === true) {
-        await this.toastr.success('Please wait', 'Generating ticket!', { progressBar: true });
-        setTimeout(() => {
-          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-            .result.then((result) => {
-              console.log(result);
-              this.resetForm(this.serviceComplaintForm);
-              this.alert = ALERTS[0];
-            }, (reason) => {
-              console.log('Err!', reason);
-            });
-        }, 4500);
-      }
-    });
+    modalState.pipe()
+      .subscribe(async state => {
+        if (state === true) {
+          await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
+          setTimeout(() => {
+            this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+              .result.then((result) => {
+                console.log(result);
+                this.resetForm(this.serviceComplaintForm);
+                this.alert = ALERTS[0];
+              }, (reason) => {
+                console.log('Err!', reason);
+                this.alert = ALERTS[0];
+              });
+          }, 4500);
+        }
+      });
   }
 
   async submit(form: NgForm) {
@@ -198,14 +200,16 @@ export class ServiceIssueComponent implements OnInit {
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
       this.complaintsService.submitComplaint(payloadObject)
         .toPromise().then((response: any) => {
+          console.log(response);
           setTimeout(() => {
             if (response && response.uid) {
               this.loading = false;
               this.ticketID = response.uid;
               modalState.next(true);
-            } return;
+            }
           }, 2000);
         });
+      return;
     }
     alert('Form is not valid');
     this.alert = ALERTS[2];
@@ -227,12 +231,13 @@ export class ServiceIssueComponent implements OnInit {
 
   // Reset form and variables
   resetForm(form: any) {
-    form.reset();
+    this.ngOnInit();
     modalState.next(null);
   }
 
   test() {
-    console.log(this.serviceComplaintForm.value);
+    //console.log();
+
   }
 
 }
