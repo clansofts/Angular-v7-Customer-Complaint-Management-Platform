@@ -235,7 +235,7 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open toast dialog
   openDialog(data): void {
-    Promise.resolve(this.toastr.error(data))
+    Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));

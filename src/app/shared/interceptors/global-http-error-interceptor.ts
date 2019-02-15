@@ -24,7 +24,7 @@ export class GlobalHttpErrorInterceptor {
                         errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
                     }
                     console.error(error); // For testing purposes
-                    this.errorEvent.onErrorObserver.next('Network Error: Something went wront');
+                    this.errorEvent.onErrorObserver.next('Something went wront');
                     return throwError(errorMessage);
                 })
             );
