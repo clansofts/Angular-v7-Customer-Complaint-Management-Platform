@@ -6,6 +6,7 @@ import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } f
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
+import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -74,12 +75,14 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private utilities: UtilitiesService,
     private complaintsService: ComplaintsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private errorService: ErrorDialogService
   ) {
     // display details form by default
     this.formState = true;
-    // Alerts
+    // Alerts & init error handler
     this.alert = null;
+    this.handleErrorFn();
   }
 
   async ngOnInit() {
@@ -224,12 +227,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
-              this.resetForm(this.atmDispenseErrorForm);
+              this.resetForm();
               this.alert = ALERTS[0];
             }, (reason) => {
               console.log('Err!', reason);
             });
-        }, 3500);
+        }, 2500);
       }
     });
   }
@@ -271,9 +274,22 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Reset form and variables
-  resetForm(form: any) {
+  resetForm() {
     this.ngOnInit();
     modalState.next(null);
+  }
+
+  // Open toast dialog
+  openDialog(data): void {
+    Promise.resolve(this.toastr.error(data))
+      .then(() => setTimeout(() => {
+        this.loading = false;
+      }, 1000));
+  }
+
+  // Hangle error
+  handleErrorFn() {
+    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
   }
 
   test() {

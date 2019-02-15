@@ -5,6 +5,7 @@ import { ResourceModel, UtilitiesService, FeedBackModel } from 'src/app/shared/s
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs/internal/Subject';
+import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -76,10 +77,14 @@ export class CardIssueComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private utilities: UtilitiesService,
     private complaintsService: ComplaintsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private errorService: ErrorDialogService
   ) {
     // display details form by default
     this.personalDetails = true;
+    // Alerts & init error handler
+    this.alert = null;
+    this.handleErrorFn();
   }
 
   async ngOnInit() {
@@ -183,7 +188,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
-              this.resetForm(this.cardIssueForm);
+              this.resetForm();
               this.alert = ALERTS[0];
             }, (reason) => {
               console.log('Err!', reason);
@@ -229,12 +234,25 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   }
 
   // Reset form and variables
-  resetForm(form: any) {
+  resetForm() {
     this.ngOnInit();
     modalState.next(null);
   }
 
+  // Open toast dialog
+  openDialog(data): void {
+    Promise.resolve(this.toastr.error(data))
+      .then(() => setTimeout(() => {
+        this.loading = false;
+      }, 1000));
+  }
+
+  // Hangle error
+  handleErrorFn() {
+    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
+  }
+
   test() {
-    console.log(this.utilities.todaysDate);
+    console.log('Omae wa shinderu');
   }
 }

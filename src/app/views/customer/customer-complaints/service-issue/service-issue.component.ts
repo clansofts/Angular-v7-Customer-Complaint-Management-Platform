@@ -80,7 +80,7 @@ export class ServiceIssueComponent implements OnInit {
   ) {
     // display details form by default
     this.formState = true;
-    // Alerts
+    // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
 
@@ -175,18 +175,18 @@ export class ServiceIssueComponent implements OnInit {
   open(content) {
     modalState.subscribe(async state => {
       if (state === true) {
-        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
+        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });
         setTimeout(() => {
           this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
             .result.then((result) => {
               console.log(result);
-              this.resetForm(this.serviceComplaintForm);
+              this.resetForm();
               this.alert = ALERTS[0];
             }, (reason) => {
               console.log('Err!', reason);
               this.alert = ALERTS[0];
             });
-        }, 4500);
+        }, 2500);
       }
     });
   }
@@ -228,15 +228,17 @@ export class ServiceIssueComponent implements OnInit {
   }
 
   // Reset form and variables
-  resetForm(form: any) {
+  resetForm() {
     this.ngOnInit();
     modalState.next(null);
   }
 
-
   // Open toast dialog
   openDialog(data): void {
-    this.toastr.error(data, 'Network error!');
+    Promise.resolve(this.toastr.error(data))
+      .then(() => setTimeout(() => {
+        this.loading = false;
+      }, 1000));
   }
 
   // Alert controls
@@ -251,8 +253,7 @@ export class ServiceIssueComponent implements OnInit {
 
 
   test() {
-    //console.log();
-
+    console.log('Kuros');
   }
 
 }

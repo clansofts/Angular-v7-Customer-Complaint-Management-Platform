@@ -9,8 +9,4 @@ export class ErrorDialogService {
   public onErrorObserver = new Subject<any>();
 
   constructor() { }
-
-  test() {
-    alert('HAPPY VALENTINE');
-  }
 }

@@ -6,6 +6,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { ComplaintsModel, ComplaintsService } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
+import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -90,24 +91,19 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Usage Issues', id: 6 }
   ];
 
-  // Dummy Billers Types, API integration needed
-  billerType: Array<any> = [
-    { name: 'DSTV', id: 1 },
-    { name: 'Electricity', id: 2 },
-    { name: 'GOTV', id: 3 }
-  ];
-
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private utilities: UtilitiesService,
     private complaintsService: ComplaintsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private errorService: ErrorDialogService
   ) {
     // display details form by default
     this.personalDetails = true;
-    // Alerts
+    // Alerts & init error handler
     this.alert = null;
+    this.handleErrorFn();
   }
 
   ngOnInit() {
@@ -251,7 +247,7 @@ export class EChannelsErrorComponent implements OnInit {
             .result.then((result) => {
               console.log(result);
               this.alert = ALERTS[0];
-              this.resetForm(this.eChannelsForm);
+              this.resetForm();
             }, (reason) => {
               console.log('Err!', reason);
             });
@@ -297,9 +293,22 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   // Reset form and variables
-  resetForm(form: any) {
+  resetForm() {
     this.ngOnInit();
     modalState.next(null);
+  }
+
+  // Open toast dialog
+  openDialog(data): void {
+    Promise.resolve(this.toastr.error(data))
+      .then(() => setTimeout(() => {
+        this.loading = false;
+      }, 1000));
+  }
+
+  // Hangle error
+  handleErrorFn() {
+    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
   }
 
   test() {
