@@ -7,6 +7,8 @@ import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
+import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
+import { filter } from 'rxjs/internal/operators/filter';
 
 // Observable to track ticket status
 const modalState = new Subject<any>();
@@ -173,22 +175,25 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open modal to show ticket
   open(content) {
-    modalState.subscribe(async state => {
-      if (state === true) {
-        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });
-        setTimeout(() => {
-          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-            .result.then((result) => {
-              console.log(result);
-              this.resetForm();
-              this.alert = ALERTS[0];
-            }, (reason) => {
-              console.log('Err!', reason);
-              this.alert = ALERTS[0];
-            });
-        }, 2500);
-      }
-    });
+    modalState.pipe(
+      filter(val => val === true),
+      distinctUntilChanged())
+      .subscribe(async state => {
+        if (state === true) {
+          await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });
+          setTimeout(() => {
+            this.successModal(content);
+          }, 2500);
+        }
+      });
+  }
+
+  successModal(content): void {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(() => {
+        this.resetForm();
+        this.alert = ALERTS[0];
+      });
   }
 
   async submit(form: NgForm) {
@@ -209,7 +214,7 @@ export class ServiceIssueComponent implements OnInit {
         });
       return;
     }
-    alert('Form is not valid');
+    this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
   }
 
@@ -234,7 +239,7 @@ export class ServiceIssueComponent implements OnInit {
   }
 
   // Open toast dialog
-  openDialog(data): void {
+  errorDialog(data): void {
     Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;
@@ -248,7 +253,10 @@ export class ServiceIssueComponent implements OnInit {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
+    this.errorService.onErrorObserver.pipe(
+      filter(val => val === true),
+      distinctUntilChanged())
+      .subscribe(e => this.errorDialog(e));
   }
 
 

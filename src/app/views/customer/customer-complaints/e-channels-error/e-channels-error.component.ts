@@ -7,6 +7,7 @@ import { ComplaintsModel, ComplaintsService } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -239,21 +240,25 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Open modal to show ticket
   open(content) {
-    modalState.subscribe(async state => {
-      if (state === true) {
-        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
-        setTimeout(() => {
-          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-            .result.then((result) => {
-              console.log(result);
-              this.alert = ALERTS[0];
-              this.resetForm();
-            }, (reason) => {
-              console.log('Err!', reason);
-            });
-        }, 4500);
-      }
-    });
+    modalState.pipe(
+      filter(val => val === true),
+      distinctUntilChanged())
+      .subscribe(async state => {
+        if (state === true) {
+          await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
+          setTimeout(() => {
+            this.successModal(content);
+          }, 4500);
+        }
+      });
+  }
+
+  successModal(content): void {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(() => {
+        this.resetForm();
+        this.alert = ALERTS[0];
+      });
   }
 
   async submit(form: NgForm) {
@@ -274,7 +279,7 @@ export class EChannelsErrorComponent implements OnInit {
       }, 3000);
       return;
     }
-    alert('Form is not valid');
+    this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
   }
 
@@ -299,8 +304,8 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   // Open toast dialog
-  openDialog(data): void {
-    Promise.resolve(this.toastr.error(data, 'Network Error' ))
+  errorDialog(data): void {
+    Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));
@@ -308,7 +313,10 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
+    this.errorService.onErrorObserver.pipe(
+      filter(val => val === true),
+      distinctUntilChanged())
+      .subscribe(e => this.errorDialog(e));
   }
 
   test() {

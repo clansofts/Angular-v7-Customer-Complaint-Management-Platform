@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs/operators';
+import { map, last, distinct, skipUntil, single, filter, take, distinctUntilChanged } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -219,22 +219,25 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Open modal to show ticket
-  open(content) {
-    modalState.subscribe(async state => {
-      if (state === true) {
-        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });
-        setTimeout(() => {
-          this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-            .result.then((result) => {
-              console.log(result);
-              this.resetForm();
-              this.alert = ALERTS[0];
-            }, (reason) => {
-              console.log('Err!', reason);
-            });
-        }, 2500);
-      }
-    });
+  open(content: string): void {
+    modalState.pipe(filter(val => val === true), distinctUntilChanged()).
+      subscribe(async state => {
+        if (state === true) {
+          await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });
+          setTimeout(() => {
+            this.successModal(content);
+          }, 2500);
+        }
+        return;
+      });
+  }
+
+  successModal(content): void {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(() => {
+        this.resetForm();
+        this.alert = ALERTS[0];
+      });
   }
 
   // Submit complaint
@@ -255,7 +258,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
         });
       return;
     }
-    alert('Form is not valid');
+    this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
   }
 
@@ -280,7 +283,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Open toast dialog
-  openDialog(data): void {
+  errorDialog(data): void {
     Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;
@@ -289,11 +292,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.subscribe(e => this.openDialog(e));
+    this.errorService.onErrorObserver.pipe(
+      filter(val => val === true), distinctUntilChanged())
+      .subscribe(e => this.errorDialog(e));
   }
 
   test() {
-    console.log('Cero!');
   }
 
 }
