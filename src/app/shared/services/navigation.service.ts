@@ -68,8 +68,8 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-3', name: 'Complaints Dashboard', state: '/admin/v1', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Open Tickets', state: '/admin/v2', type: 'link' },
+                { icon: 'i-Clock-3', name: 'Complaints', state: '/admin/v1', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Ticket Management', state: '/admin/v2', type: 'link' },
                 { icon: 'i-Clock-3', name: 'Message', state: '/admin/v3', type: 'link' },
                 { icon: 'i-Clock-4', name: 'Archive', state: '/admin/v4', type: 'link' }
             ]

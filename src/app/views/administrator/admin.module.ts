@@ -9,7 +9,6 @@ import { CustomFormsModule } from 'ng2-validation';
 import { DashboardResolutionChampionComponent } from './resolution-champion/complaints-dashboard/dashboard-resolution-champion.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MessageComponent } from './resolution-champion/message/message.component';
-import { OpenTicketsComponent } from './resolution-champion/open-tickets/open-tickets.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +24,6 @@ import { OpenTicketsComponent } from './resolution-champion/open-tickets/open-ti
   declarations: [
     DashboardResolutionChampionComponent,
     MessageComponent,
-    OpenTicketsComponent
   ]
 })
 export class AdminModule { }
