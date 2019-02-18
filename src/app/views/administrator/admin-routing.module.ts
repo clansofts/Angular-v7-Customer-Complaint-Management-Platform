@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     // Open tickets
     path: 'v2',
-    component: OpenTicketsComponent
+    loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
   },
   {
     // Messages
