@@ -6,7 +6,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
-import { DashboardResolutionChampionComponent } from './resolution-champion/_dashboard/dashboard-resolution-champion.component';
+import { DashboardResolutionChampionComponent } from './resolution-champion/complaints-dashboard/dashboard-resolution-champion.component';
+import { AdminRoutingModule } from './admin-routing.module';
+import { MessageComponent } from './resolution-champion/message/message.component';
+import { OpenTicketsComponent } from './resolution-champion/open-tickets/open-tickets.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,9 +20,12 @@ import { DashboardResolutionChampionComponent } from './resolution-champion/_das
     NgxEchartsModule,
     NgxDatatableModule,
     NgbModule,
+    AdminRoutingModule
   ],
   declarations: [
-    DashboardResolutionChampionComponent
+    DashboardResolutionChampionComponent,
+    MessageComponent,
+    OpenTicketsComponent
   ]
 })
 export class AdminModule { }

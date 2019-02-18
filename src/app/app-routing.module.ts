@@ -3,13 +3,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { AuthGaurd } from './shared/services/auth.gaurd';
 import { BlankLayoutComponent } from './shared/components/layouts/blank-layout/blank-layout.component';
-// tslint:disable-next-line:max-line-length
-import { AdminLayoutSidebarCompactComponent } from './shared/components/layouts/admin-layout-sidebar-compact/admin-layout-sidebar-compact.component';
+import {
+  AdminLayoutSidebarCompactComponent
+} from './shared/components/layouts/admin-layout-sidebar-compact/admin-layout-sidebar-compact.component';
 
 const adminRoutes: Routes = [
   {
     path: 'customer',
     loadChildren: './views/customer/customer.module#CustomerModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './views/administrator/admin.module#AdminModule'
   },
 ];
 
@@ -20,13 +25,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: '',
-    redirectTo: 'admin-resolution-champion/v1',
-    pathMatch: 'full'
-  },
-  {
-    path: '',
-    redirectTo: 'admin-resolution-team/v1',
+    path: 'admin',
+    redirectTo: 'admin/v1',
     pathMatch: 'full'
   },
   {

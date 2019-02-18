@@ -9,12 +9,10 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './shared/inmemory-db/inmemory-db.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalHttpErrorInterceptor } from './shared/interceptors/global-http-error-interceptor';
-import { DashboardResolutionChampionComponent } from './views/administrator/resolution-champion/_dashboard/dashboard-resolution-champion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardResolutionChampionComponent
   ],
   imports: [
     BrowserModule,

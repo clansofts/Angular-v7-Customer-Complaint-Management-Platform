@@ -38,12 +38,12 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="products$">
+  <ng-container *ngIf="complaints$">
     <div class="col-md-12">
       <div class="card o-hidden mb-4">
         <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen"
           [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true"
-          [scrollbarH]="true" [limit]="15" [rows]="products$">
+          [scrollbarH]="true" [limit]="15" [rows]="complaints$">
 
           <ngx-datatable-column name="icon" [maxWidth]="100">
             <ng-template ngx-datatable-header-template>

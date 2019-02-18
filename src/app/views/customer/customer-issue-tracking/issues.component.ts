@@ -14,7 +14,7 @@ export class IssuesTrackingComponent implements OnInit {
   loading: boolean;
   feedbackCategory_ID: number;
   issuesTrackingForm: FormGroup;
-  products$: any; // Observable of issues
+  complaints$: any; // Observable of issues
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +41,7 @@ export class IssuesTrackingComponent implements OnInit {
       setTimeout(async () => {
         await this.issuesService.trackIssue(body).toPromise()
           .then((response: CustomerIssuesModel) => {
-            this.products$ = response;
+            this.complaints$ = response;
             form.reset();
             console.log(response);
           });

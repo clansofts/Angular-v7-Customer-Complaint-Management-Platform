@@ -193,7 +193,7 @@ export class EChannelsErrorComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: ['', Validators.maxLength(10)],
+      acctNumber: [''],
       emailAddress: ['', [Validators.required]],
       phone: [''],
       altphone: [''],

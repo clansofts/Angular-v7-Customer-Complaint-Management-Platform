@@ -68,10 +68,10 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-3', name: 'Reports', state: '/customer/v1', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Tickets', state: '/customer/v2', type: 'link' },
-                { icon: 'i-Clock-3', name: 'Message', state: '/customer/v3', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Archive', state: '/customer/v4', type: 'link' }
+                { icon: 'i-Clock-3', name: 'Complaints Dashboard', state: '/admin/v1', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Open Tickets', state: '/admin/v2', type: 'link' },
+                { icon: 'i-Clock-3', name: 'Message', state: '/admin/v3', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Archive', state: '/admin/v4', type: 'link' }
             ]
         }
     ];
@@ -93,7 +93,7 @@ export class NavigationService {
 
 
     // sets iconMenu as default;
-    menuItems = new BehaviorSubject<IMenuItem[]>(this.defaultMenu);
+    menuItems = new BehaviorSubject<IMenuItem[]>(this.admin1);
     // navigation component has subscribed to this Observable
     menuItems$ = this.menuItems.asObservable();
 
