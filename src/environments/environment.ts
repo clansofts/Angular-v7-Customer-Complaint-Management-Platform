@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   API: {
     BaseURL: 'http://172.30.226.87/api/',
+    AuthURL: 'http://172.30.226.87/'
   }
 };
 

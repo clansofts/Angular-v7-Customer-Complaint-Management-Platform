@@ -13,7 +13,11 @@ const adminRoutes: Routes = [
     loadChildren: './views/customer/customer.module#CustomerModule'
   },
   {
-    path: 'admin',
+    path: 'admin-rc',
+    loadChildren: './views/administrator/admin.module#AdminModule'
+  },
+  {
+    path: 'admin-rt',
     loadChildren: './views/administrator/admin.module#AdminModule'
   },
 ];
@@ -25,8 +29,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'admin',
-    redirectTo: 'admin/v1',
+    path: 'customer',
+    redirectTo: 'customer/v1',
+    pathMatch: 'full'
+  },
+  {
+    path: 'admin-rc',
+    redirectTo: 'admin-rc/v1',
     pathMatch: 'full'
   },
   {
