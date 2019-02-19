@@ -5,6 +5,11 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouteConfigLoadStart, ResolveStart, RouteConfigLoadEnd, ResolveEnd } from '@angular/router';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { delay } from 'rxjs/internal/operators/delay';
+import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
+import { ToastrService } from 'ngx-toastr';
+import { LocalStoreService } from 'src/app/shared/services/local-store.service';
+import { Observable, of } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
 
 export interface AuthUserModel {
     access_token: string;
@@ -12,6 +17,24 @@ export interface AuthUserModel {
     expires_in: number;
     Role: string;
 }
+
+// Local form alert interface
+interface Alert {
+    type: string;
+    message: string;
+}
+
+const ALERTS: Alert[] = [{
+    type: 'success',
+    message: 'Complaint recieved, A ticket has been sent to your email',
+}, {
+    type: 'info',
+    message: 'No user found',
+}, {
+    type: 'warning',
+    message: 'Cannot submit, form is invalid. please check your inputs and try again',
+}
+];
 
 @Component({
     selector: 'app-signin',
@@ -23,12 +46,21 @@ export class SigninComponent implements OnInit {
     loading: boolean;
     loadingText: string;
     signinForm: FormGroup;
+    alert: Alert;
+
     constructor(
         private fb: FormBuilder,
         private auth: AuthService,
         private router: Router,
-        private navigationService: NavigationService
-    ) { }
+        private navigationService: NavigationService,
+        private errorService: ErrorDialogService,
+        private toastr: ToastrService,
+        private localstoreService: LocalStoreService
+    ) {
+        // Alerts & init error handler
+        this.alert = null;
+        this.handleErrorFn();
+    }
 
     ngOnInit() {
         this.router.events.subscribe(event => {
@@ -51,41 +83,76 @@ export class SigninComponent implements OnInit {
         });
     }
 
+    set route(url: string) {
+        this.router.navigateByUrl(url);
+    }
+
+    async userRole(user: any) {
+        try {
+            switch (user.Role) {
+
+                // If resolution champion
+                case 'RC':
+                    await this.navigationMenu('admin1');
+                    this.route = '/admin-rc';
+                    break;
+
+                // If resolution team
+                case 'DevOps':
+                    await this.navigationMenu('admin2');
+                    this.route = '/admin-rt';
+                    break;
+            }
+
+        } catch (error) {
+
+            // If not a registered user
+            alert('Cannot find user');
+        }
+    }
+
     signin() {
         this.loading = true;
         this.loadingText = 'Sigining in...';
         this.auth.signin(this.signinForm.value)
-            .pipe(delay(1500))
-            .subscribe((res: AuthUserModel) => {
-                if (res) {
-                    switch (res.Role) {
-                        case 'RC':
-                            this.navigationMenu = 'admin1';
-                            this.route = '/admin-rc';
-                            break;
-                        case 'DevOps':
-                            this.navigationMenu = 'admin2';
-                            this.route = '/admin-rt';
-                            break;
-                    }
-                    this.loading = false;
+            .subscribe(async (response: AuthUserModel) => {
+                if (response) {
+                    // Store the current user object in the browser
+                    this.localstoreService.setItem('currentUser', response);
+                    // role based routing
+                    await this.userRole(response);
                     return;
-                } else {
-                    alert('Login Error!');
-                    this.loading = false;
-                    this.route = '/customer';
                 }
-
+                // Handle form error
+                this.toastr.error('Error!', 'Network Error');
+                // Reset form
+                this.ngOnInit();
             });
     }
 
-    set navigationMenu(usertype: string) {
+    navigationMenu(usertype: string) {
         this.navigationService.publishNavigationChange(usertype);
     }
 
-    set route(url: string) {
-        console.log(url);
-        this.router.navigateByUrl(url);
+    // Http network error
+    errorDialog(data: any): void {
+        Promise.resolve(this.toastr.error(data, 'Login Error'))
+            .then(() => setTimeout(() => {
+                this.loading = false;
+                this.ngOnInit();
+            }, 1000));
+    }
+
+    // Hangle error
+    handleErrorFn() {
+        this.errorService.onErrorObserver.pipe()
+            .subscribe(e => this.errorDialog(e));
+    }
+
+    test() {
+        setTimeout(() => {
+            console.log('Testing 1 2 3');
+        }, 1000);
     }
 
 }

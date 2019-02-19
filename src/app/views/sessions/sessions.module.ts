@@ -8,6 +8,7 @@ import { ForgotComponent } from './forgot/forgot.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     FormsModule,
     ReactiveFormsModule,
     SharedComponentsModule,
-    SessionsRoutingModule
+    SessionsRoutingModule,
+    NgbModule,
   ],
   declarations: [SignupComponent, SigninComponent, ForgotComponent]
 })

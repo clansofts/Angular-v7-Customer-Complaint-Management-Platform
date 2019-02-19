@@ -254,8 +254,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.pipe(
-      filter(val => val === true), distinctUntilChanged())
+    this.errorService.onErrorObserver.pipe()
       .subscribe(e => this.errorDialog(e));
   }
 

@@ -4,15 +4,15 @@ import { DashboardResolutionChampionComponent } from './resolution-champion/comp
 import { MessageComponent } from './resolution-champion/message/message.component';
 const routes: Routes = [
   {
-    path: 'v1', // RC Dashboard
+    path: 'dashboard', // RC Dashboard
     component: DashboardResolutionChampionComponent,
   },
   {
-    path: 'v2', // Open tickets
+    path: 'inbox', // Open tickets
     loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
   },
   {
-    path: 'v3', // Messages
+    path: 'messages', // Messages
     component: MessageComponent
   },
 ];

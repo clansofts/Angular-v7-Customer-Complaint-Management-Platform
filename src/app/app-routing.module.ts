@@ -25,17 +25,17 @@ const adminRoutes: Routes = [
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'customer/v1',
+    redirectTo: 'customer/complaints',
     pathMatch: 'full'
   },
   {
     path: 'customer',
-    redirectTo: 'customer/v1',
+    redirectTo: 'customer/complaints',
     pathMatch: 'full'
   },
   {
     path: 'admin-rc',
-    redirectTo: 'admin-rc/v1',
+    redirectTo: 'admin-rc/dashboard',
     pathMatch: 'full'
   },
   {
@@ -64,10 +64,10 @@ const routes: Routes = [
     canActivate: [AuthGaurd],
     children: adminRoutes
   },
-  /* {
+  {
     path: '**',
     redirectTo: 'others/404'
-  } */
+  }
 ];
 
 @NgModule({

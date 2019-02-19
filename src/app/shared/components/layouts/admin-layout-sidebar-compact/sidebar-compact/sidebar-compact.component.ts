@@ -34,6 +34,7 @@ export class SidebarCompactComponent implements OnInit {
 
     this.navService.menuItems$.subscribe(items => {
       this.nav = items;
+      this.selectItem(items[0]);
       this.setActiveFlag();
     });
   }

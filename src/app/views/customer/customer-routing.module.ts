@@ -9,7 +9,7 @@ import { ServiceIssueComponent } from './customer-complaints/service-issue/servi
 
 const routes: Routes = [
   {
-    path: 'v1',
+    path: 'complaints',
     component: DashboadDefaultComponent,
     children: [
       {
@@ -35,7 +35,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'v2',
+    path: 'issuestracking',
     component: IssuesTrackingComponent
   },
 ];
