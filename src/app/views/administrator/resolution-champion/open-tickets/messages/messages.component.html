@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <!-- EMAIL DETAILS -->
-                        <div class="inbox-details" *ngIf="selected" [perfectScrollbar]="{suppressScrollX: true}">
+                        <!-- <div class="inbox-details" *ngIf="selected" [perfectScrollbar]="{suppressScrollX: true}">
                             <div class="row no-gutters">
                                 <div class="mr-2" style="width: 36px">
                                     <img class="rounded-circle" [src]="selected?.sender?.photo" alt="">
@@ -37,7 +37,7 @@
                             </div>
                             <h4 class="mb-3">{{selected?.subject}}</h4>
                             <div [innerHTML]="selected?.message"></div>
-                        </div>
+                        </div> -->
                         <!-- Intro screen -->
                         <div class="app-inro-circle inbox-intro" *ngIf="!selected">
                             <div class="border rounded-circle big-bubble"
@@ -78,7 +78,7 @@
                 <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
                 <p class="text-muted mb-2">Browse</p>
                 <ul class="inbox-main-nav">
-                    <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Tickets Inbox (2)</a></li>
+                    <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Open Tickets (2)</a></li>
                 </ul>
             </div>
         </div>

@@ -35,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'admin-rc',
-    redirectTo: 'admin-rc/dashboard',
+    redirectTo: 'admin-rc/complaints-dashboard',
     pathMatch: 'full'
   },
   {
