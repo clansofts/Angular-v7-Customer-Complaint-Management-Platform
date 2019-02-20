@@ -62,14 +62,24 @@ export class NavigationService {
 
     admin1: IMenuItem[] = [
         {
+            name: 'Customer Service',
+            description: 'Make a complaint or track an issue.',
+            type: 'dropDown',
+            icon: 'i-Bar-Chart',
+            sub: [
+                { icon: 'i-Clock-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+            ]
+        },
+        {
             name: 'Resolution Champion',
             description: 'Assign issues and track reports.',
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-2', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' },
-                { icon: 'i-Clock-3', name: 'Complaints', state: '/admin-rc/opentickets', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Ticket Management', state: '/admin-rc/messages', type: 'link' }
+                { icon: 'i-Clock-3', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' },
+                { icon: 'i-Clock-3', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Messages', state: '/admin-rc/messages', type: 'link' }
             ]
         }
     ];

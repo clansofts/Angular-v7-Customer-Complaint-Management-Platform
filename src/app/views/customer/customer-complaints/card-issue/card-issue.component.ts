@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs/internal/Subject';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -79,7 +80,8 @@ export class CardIssueComponent implements OnInit, OnDestroy {
     private utilities: UtilitiesService,
     private complaintsService: ComplaintsService,
     private modalService: NgbModal,
-    private errorService: ErrorDialogService
+    private errorService: ErrorDialogService,
+    private navigationService:NavigationService
   ) {
     // display details form by default
     this.personalDetails = true;
@@ -260,5 +262,6 @@ export class CardIssueComponent implements OnInit, OnDestroy {
 
   test() {
     console.log('Omae wa shinderu');
+    this.navigationService.publishNavigationChange('admin1');
   }
 }

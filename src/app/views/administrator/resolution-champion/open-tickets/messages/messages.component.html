@@ -25,19 +25,19 @@
                             </div>
                         </div>
                         <!-- EMAIL DETAILS -->
-                        <!-- <div class="inbox-details" *ngIf="selected" [perfectScrollbar]="{suppressScrollX: true}">
+                        <div class="inbox-details" *ngIf="selected" [perfectScrollbar]="{suppressScrollX: true}">
                             <div class="row no-gutters">
                                 <div class="mr-2" style="width: 36px">
                                     <img class="rounded-circle" [src]="selected?.sender?.photo" alt="">
                                 </div>
                                 <div class="col-xs-12">
-                                    <p class="m-0">{{selected?.sender?.name}}</p>
-                                    <p class="text-12 text-muted">{{selected?.date | date}}</p>
+                                    <p class="m-0">{{selected?.firstName | titlecase}}</p>
+                                    <p class="text-12 text-muted">{{selected?.transactionDate | date: 'dd/MM/yyyy'}}</p>
                                 </div>
                             </div>
                             <h4 class="mb-3">{{selected?.subject}}</h4>
-                            <div [innerHTML]="selected?.message"></div>
-                        </div> -->
+                            <div [innerHTML]="selected?.complaintDescription"></div>
+                        </div>
                         <!-- Intro screen -->
                         <div class="app-inro-circle inbox-intro" *ngIf="!selected">
                             <div class="border rounded-circle big-bubble"
@@ -54,16 +54,21 @@
                     [perfectScrollbar]="{suppressScrollX: true}">
                     <i class="sidebar-close i-Close" appSidebarToggler="inbox-secondary-sidebar"></i>
 
-                    <div class="mail-item" *ngFor="let m of mails$ | async" (click)="select(m)">
+                    <div class="mail-item" *ngFor="let i of Issues$" (click)="select(i)">
                         <div class="avatar">
                             <img src="./assets/images/faces/f3.jpg" alt="">
                         </div>
                         <div class="col-xs-6 details">
-                            <span class="name text-muted">{{m.sender.name}}</span>
-                            <p class="m-0">{{m.subject}}</p>
+                            <span class="name text-muted">{{i.firstName | titlecase}}</span>
+                            <p class="m-0" *ngIf="i.complaintDescription; else usechanneltype">
+                                {{i.complaintDescription | titlecase}}</p>
+                            <ng-template #usechanneltype>
+                                <p class="m-0">{{i?.channelType.channelType | titlecase}}</p>
+                            </ng-template>
+
                         </div>
                         <div class="col-xs-3 date">
-                            <span class="text-muted">{{m.date | date}}</span>
+                            <span class="text-muted">{{i.transactionDate | date: 'dd/MM/yyyy'}}</span>
                         </div>
                     </div>
 
@@ -76,9 +81,13 @@
             <div class="pt-3 pr-3 pb-3">
                 <i class="sidebar-close i-Close" appSidebarToggler="inbox-main-sidebar"></i>
                 <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
-                <p class="text-muted mb-2">Browse</p>
+                <p class="text-muted mb-2" (click)="test()">Browse</p>
                 <ul class="inbox-main-nav">
                     <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Open Tickets (2)</a></li>
+                    <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Resolved Tickets (10)</a></li>
+                    <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Priority (2)</a></li>
+                    <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Rejected</a></li>
+                    <li><a href=""><i class="icon-regular i-Spam-Mail"></i> Pending Tickets (6)</a></li>
                 </ul>
             </div>
         </div>

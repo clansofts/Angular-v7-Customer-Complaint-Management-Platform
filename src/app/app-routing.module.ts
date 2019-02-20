@@ -38,7 +38,7 @@ const routes: Routes = [
     redirectTo: 'admin-rc/complaints-dashboard',
     pathMatch: 'full'
   },
-  {
+   {
     path: '',
     component: AuthLayoutComponent,
     children: [
@@ -64,10 +64,10 @@ const routes: Routes = [
     canActivate: [AuthGaurd],
     children: adminRoutes
   },
-  {
+/*  {
     path: '**',
     redirectTo: 'others/404'
-  }
+  } */
 ];
 
 @NgModule({

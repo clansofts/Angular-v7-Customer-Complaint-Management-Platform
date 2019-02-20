@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-message',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private navService: NavigationService) { }
 
   ngOnInit() {
+    this.navService.publishNavigationChange('admin1');
   }
 
 }
