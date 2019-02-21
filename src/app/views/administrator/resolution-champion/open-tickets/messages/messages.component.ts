@@ -4,11 +4,11 @@ import { Observable, interval } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComposeDialogComponent } from '../compose-dialog/compose-dialog.component';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
-import { IssuesResolutionService } from '../../issues.service';
+import { IssuesResolutionService, Roles } from '../../issues.service';
 import { ComplaintsModel } from 'src/app/views/customer/customer-complaints/complaints.service';
 import { map } from 'rxjs/internal/operators/map';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -27,6 +27,7 @@ export class MessagesComponent implements OnInit {
   loading: boolean;
   radioGroup: FormGroup;
   confirmResut: string;
+  Roles: Roles;
 
   constructor(
     private dl: DataLayerService,
@@ -44,6 +45,7 @@ export class MessagesComponent implements OnInit {
     this.issuesService.initIssues();
     // store all issues in Issues$ variable
     this.allIssues();
+    this.fetchRoles();
 
     this.buildFormBasic();
     this.radioGroup = this.fb.group({
@@ -55,13 +57,24 @@ export class MessagesComponent implements OnInit {
     this.selected = issue;
   }
 
+  /* Have to create two form controls for both form */
   buildFormBasic() {
     this.formBasic = this.fb.group({
-      experience: []
+      roles: [],
+      comment: []
     });
   }
 
-  submit() {
+  fetchRoles() {
+    this.issuesService.roles.toPromise()
+      .then(res => {
+        this.Roles = res;
+      }).then(() => {
+        this.formBasic.controls.roles.setValue(this.Roles[0]);
+      });
+  }
+
+  submit(form: NgForm) {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
@@ -84,20 +97,20 @@ export class MessagesComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-    .result.then((result) => {
-      console.log(result);
-    }, (reason) => {
-      console.log('Err!', reason);
-    });
+      .result.then((result) => {
+        console.log(result);
+      }, (reason) => {
+        console.log('Err!', reason);
+      });
   }
 
   confirm(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
-    .result.then((result) => {
-      this.confirmResut = `Closed with: ${result}`;
-    }, (reason) => {
-      this.confirmResut = `Dismissed with: ${reason}`;
-    });
+      .result.then((result) => {
+        this.confirmResut = `Closed with: ${result}`;
+      }, (reason) => {
+        this.confirmResut = `Dismissed with: ${reason}`;
+      });
   }
 
   get numTickets() {

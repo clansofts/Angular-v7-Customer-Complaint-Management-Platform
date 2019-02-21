@@ -6,6 +6,14 @@ import { distinctUntilChanged, delay } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { interval } from 'rxjs';
 
+export interface Roles {
+  roleId: number,
+  designation: string;
+  team: string;
+  role: string;
+  description: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,5 +48,20 @@ export class IssuesResolutionService {
       .subscribe((issues: ComplaintsModel) => {
         this.issuesSource.next(issues);
       });
+  }
+
+  // Assign an issue to a team
+  assignIssue(form) {
+   
+  }
+
+  // Update an issue 
+  updateIssue() {
+
+  }
+
+  get roles() {
+    const Path = this.baseURL + 'roles';
+    return this.http.get<Roles>(Path);
   }
 }
