@@ -8,10 +8,17 @@ import { ComposeDialogComponent } from './compose-dialog/compose-dialog.componen
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuillModule } from 'ngx-quill';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
+import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CustomFormsModule,
+    SharedComponentsModule,
     NgbModule,
     PerfectScrollbarModule,
     QuillModule,

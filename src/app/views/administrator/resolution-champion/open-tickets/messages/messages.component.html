@@ -28,15 +28,286 @@
                         <div class="inbox-details" *ngIf="selected" [perfectScrollbar]="{suppressScrollX: true}">
                             <div class="row no-gutters">
                                 <div class="mr-2" style="width: 36px">
-                                    <img class="rounded-circle" [src]="selected?.sender?.photo" alt="">
+                                    <!-- <img class="rounded-circle" [src]="selected?.sender?.photo" alt=""> -->
+                                    <img class="rounded-circle" src="./assets/images/faces/f3.jpg" alt="">
                                 </div>
                                 <div class="col-xs-12">
-                                    <p class="m-0">{{selected?.firstName | titlecase}}</p>
+                                    <p class="m-0">{{selected?.firstName | titlecase}}
+                                        {{selected?.lastName | titlecase}}</p>
                                     <p class="text-12 text-muted">{{selected?.transactionDate | date: 'dd/MM/yyyy'}}</p>
                                 </div>
                             </div>
                             <h4 class="mb-3">{{selected?.subject}}</h4>
                             <div [innerHTML]="selected?.complaintDescription"></div>
+                            <div class="border-top mb-5"></div>
+
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="card-title mb-3">Form Inputs Rounded</div>
+                                    <form [formGroup]="formBasic" (ngSubmit)="submit()">
+                                        <div class="row">
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName">First name</label>
+                                                <input type="text" class="form-control form-control-rounded"
+                                                    id="firstName" placeholder="Enter your first name">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="lastName">Last name</label>
+                                                <input type="text" class="form-control form-control-rounded"
+                                                    id="lastName" placeholder="Enter your last name">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <div class="input-group">
+                                                    <input type="email" class="form-control form-control-rounded"
+                                                        id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                        placeholder="Enter email">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">Phone</label>
+                                                <input class="form-control form-control-rounded" id="phone"
+                                                    placeholder="Enter phone">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">Alternate Phone number</label>
+                                                <input class="form-control form-control-rounded" id="phone"
+                                                    placeholder="Enter phone">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Card number: last four digits</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Card">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Account number</label>
+                                                <input class="form-control form-control-rounded" id=""
+                                                    placeholder="Account number">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Are you a Union Bank customer?</label>
+                                                <input class="form-control form-control-rounded" id=""
+                                                    placeholder="Is Union Bank Customer?">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Which of our services dissapointed you?</label>
+                                                <input class="form-control form-control-rounded" id=""
+                                                    placeholder="Which of our services dissapointed you?">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Branch of incident</label>
+                                                <input class="form-control form-control-rounded" id=""
+                                                    placeholder="Branch of incident">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">E-Channel</label>
+                                                <input class="form-control form-control-rounded" id=""
+                                                    placeholder="-Channel">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Card Variant</label>
+                                                <select class="form-control form-control-rounded">
+                                                    <option>Option 1</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 1</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Card Complaint Type</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Card Complaint Type">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Where did you use your card?</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Where did you use your card">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName">POS Merchant name</label>
+                                                <input type="text" class="form-control form-control-rounded"
+                                                    id="firstName"
+                                                    placeholder="Enter merchant name e.g xyz business limited">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">POS Merchant code</label>
+                                                <input class="form-control form-control-rounded" id="merchantCode"
+                                                    placeholder="Enter Merchant code">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName">Website where card was used?</label>
+                                                <input type="text" class="form-control form-control-rounded"
+                                                    id="firstName" placeholder="Enter Website URL e.g www.xyz.com">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">ATM used</label>
+                                                <div class="input-group">
+                                                    <input id="picker1" class="form-control form-control-rounded"
+                                                        placeholder="ATM used">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Bank Used</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Bank Used">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Location</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Location">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Service Type</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Bank Used">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Service Provider</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Bank Used">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">USSD registed phone</label>
+                                                <input class="form-control form-control-rounded" id="phone"
+                                                    placeholder="Enter registered phone number">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">Airtime Beneficiary number</label>
+                                                <input class="form-control form-control-rounded" id="phone"
+                                                    placeholder="phone number">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Airtime billers</label>
+                                                <input class="form-control form-control-rounded" id="phone"
+                                                    placeholder="Airtime billers">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">Union Mobile number</label>
+                                                <input class="form-control form-control-rounded" id="phone"
+                                                    placeholder="Union mobile ID">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="phone">Recipients Account number</label>
+                                                <input class="form-control form-control-rounded" id="smartcardnumber"
+                                                    placeholder="Recipients phone number">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName">Recipients name</label>
+                                                <input type="text" class="form-control form-control-rounded"
+                                                    id="firstName" placeholder="Enter recipients name">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Currency Type</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Bank Used">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="picker1">Transaction Date</label>
+                                                <div class="input-group">
+                                                    <input id="picker1" class="form-control form-control-rounded"
+                                                        placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                        #dp="ngbDatepicker">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-secondary" (click)="dp.toggle()"
+                                                            type="button">
+                                                            <i class="icon-regular i-Calendar-4"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Transaction Count: Single or Multiple</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Transaction Count">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Transaction Amount</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Transaction Count">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Transaction Amount 2</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Transaction Count">
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Transaction Amount 3</label>
+                                                <input class="form-control form-control-rounded" id="credit"
+                                                    placeholder="Transaction Count">
+                                            </div>
+
+                                            <div class="col-md-12 form-group mb-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Please describe the issue
+                                                            encountered:</span>
+                                                    </div>
+                                                    <textarea class="form-control" aria-label="With textarea">
+                                                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 form-group mb-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">What would you like us to
+                                                            do?</span>
+                                                    </div>
+                                                    <textarea class="form-control" aria-label="With textarea">
+                                                    </textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 form-group mb-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Complaint Description</span>
+                                                    </div>
+                                                    <textarea class="form-control"
+                                                        aria-label="With textarea"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">
+                                                    Assign</btn-loading>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="border-top mb-5"></div>
                         </div>
                         <!-- Intro screen -->
                         <div class="app-inro-circle inbox-intro" *ngIf="!selected">
@@ -59,7 +330,8 @@
                             <img src="./assets/images/faces/f3.jpg" alt="">
                         </div>
                         <div class="col-xs-6 details">
-                            <span class="name text-muted">{{i.firstName | titlecase}}</span>
+                            <span class="name text-muted">{{i?.firstName | titlecase}}
+                                {{i?.lastName | titlecase}}</span>
                             <p class="m-0" *ngIf="i.complaintDescription; else usechanneltype">
                                 {{i.complaintDescription | titlecase}}</p>
                             <ng-template #usechanneltype>
@@ -68,7 +340,7 @@
 
                         </div>
                         <div class="col-xs-3 date">
-                            <span class="text-muted">{{i.transactionDate | date: 'dd/MM/yyyy'}}</span>
+                            <span class="text-muted">{{i?.transactionDate | date: 'dd/MM/yyyy'}}</span>
                         </div>
                     </div>
 
@@ -86,7 +358,7 @@
                     <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Open Tickets (2)</a></li>
                     <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Resolved Tickets (10)</a></li>
                     <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Priority (2)</a></li>
-                    <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Rejected</a></li>
+                    <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Closed (5)</a></li>
                     <li><a href=""><i class="icon-regular i-Spam-Mail"></i> Pending Tickets (6)</a></li>
                 </ul>
             </div>
