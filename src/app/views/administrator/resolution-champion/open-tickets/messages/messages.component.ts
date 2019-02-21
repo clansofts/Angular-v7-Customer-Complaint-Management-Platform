@@ -26,6 +26,7 @@ export class MessagesComponent implements OnInit {
   formBasic: FormGroup;
   loading: boolean;
   radioGroup: FormGroup;
+  confirmResut: string;
 
   constructor(
     private dl: DataLayerService,
@@ -64,7 +65,7 @@ export class MessagesComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
-      this.toastr.success('Profile updated.', 'Success!', { progressBar: true });
+      /* this.toastr.success('Profile updated.', 'Success!', { progressBar: true }); */
     }, 3000);
   }
 
@@ -79,6 +80,24 @@ export class MessagesComponent implements OnInit {
 
   openComposeModal() {
     this.modalService.open(ComposeDialogComponent, { size: 'lg', centered: true });
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+    .result.then((result) => {
+      console.log(result);
+    }, (reason) => {
+      console.log('Err!', reason);
+    });
+  }
+
+  confirm(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
+    .result.then((result) => {
+      this.confirmResut = `Closed with: ${result}`;
+    }, (reason) => {
+      this.confirmResut = `Dismissed with: ${reason}`;
+    });
   }
 
   get numTickets() {

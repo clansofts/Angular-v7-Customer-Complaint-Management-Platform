@@ -41,7 +41,7 @@ export class ComplaintsModel {
   complaintDescription?: any;
   eChannelMedium?: any;
   serviceType?: number;
-  billType?: any;
+  billTypeId?: any;
   referenceId?: any;
   smartCardNumber?: any;
   unionMobile?: any;
@@ -90,7 +90,7 @@ export class ComplaintsModel {
       this.cardVariantId = obj && obj.cardVariant || null;
       this.currencyTypeId = obj && obj.currencyType || null;
       this.eChannelMedium = obj && obj.eMedium.id || null;
-      this.billType = obj && obj.billType || null;
+      this.billTypeId = obj && obj.billType.id || null;
       this.serviceType = obj && obj.eChannels.id || null;
       this.referenceId = obj && obj.referenceID || null;
       this.smartCardNumber = obj && obj.smartCardNumber || null;

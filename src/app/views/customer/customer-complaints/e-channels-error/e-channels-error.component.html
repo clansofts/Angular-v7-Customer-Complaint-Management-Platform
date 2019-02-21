@@ -473,7 +473,7 @@
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Airtime billers</label>
-                                            <select class="form-control">
+                                            <select formControlName="billType" class="form-control">
                                                 <option *ngFor="let i of billTypes" [ngValue]='i'>{{i?.name}}</option>
                                             </select>
                                         </div>
