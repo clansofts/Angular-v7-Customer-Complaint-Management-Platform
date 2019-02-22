@@ -54,8 +54,8 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+                { icon: 'i-Speach-Bubble-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
+                { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
             ]
         }
     ];
@@ -65,21 +65,21 @@ export class NavigationService {
             name: 'Customer Service',
             description: 'Make a complaint or track an issue.',
             type: 'dropDown',
-            icon: 'i-Bar-Chart',
+            icon: 'i-Male-21',
             sub: [
-                { icon: 'i-Clock-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+                { icon: 'i-Support', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
+                { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
             ]
         },
         {
             name: 'Resolution Champion',
             description: 'Assign issues and track reports.',
             type: 'dropDown',
-            icon: 'i-Bar-Chart',
+            icon: 'i-Consulting',
             sub: [
-                { icon: 'i-Clock-3', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' },
-                { icon: 'i-Clock-3', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Messages', state: '/admin-rc/messages', type: 'link' }
+                { icon: 'i-Statistic', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' },
+                { icon: 'i-Movie-Ticket', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
+                { icon: 'i-Mail-Add-', name: 'Messages', state: '/admin-rc/messages', type: 'link' }
             ]
         }
     ];
@@ -91,7 +91,7 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-3', name: 'Open Tickets', state: '/customer/v1', type: 'link' },
+                { icon: 'i-Support', name: 'Open Tickets', state: '/customer/v1', type: 'link' },
                 { icon: 'i-Clock-4', name: 'Tickets', state: '/customer/v2', type: 'link' },
                 { icon: 'i-Clock-3', name: 'Message', state: '/customer/v3', type: 'link' },
                 { icon: 'i-Clock-4', name: 'Archive', state: '/customer/v4', type: 'link' }
@@ -101,7 +101,7 @@ export class NavigationService {
 
 
     // sets iconMenu as default;
-    menuItems = new BehaviorSubject<IMenuItem[]>(this.defaultMenu);
+    menuItems = new BehaviorSubject<IMenuItem[]>(null);
     // navigation component has subscribed to this Observable
     menuItems$ = this.menuItems.asObservable();
 

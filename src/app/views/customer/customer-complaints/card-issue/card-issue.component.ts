@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { filter, distinctUntilChanged } from 'rxjs/operators';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { DashboadDefaultComponent } from '../dashboad-default.component';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -81,13 +82,15 @@ export class CardIssueComponent implements OnInit, OnDestroy {
     private complaintsService: ComplaintsService,
     private modalService: NgbModal,
     private errorService: ErrorDialogService,
-    private navigationService:NavigationService
+    private navigationService:NavigationService,
+    private customerComponent: DashboadDefaultComponent
   ) {
     // display details form by default
     this.personalDetails = true;
     // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
+    this.customerComponent.ngOnInit();
   }
 
   async ngOnInit() {

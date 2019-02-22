@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { AdminComponent } from '../../admin.component';
 
 @Component({
   selector: 'app-message',
@@ -8,10 +9,10 @@ import { NavigationService } from 'src/app/shared/services/navigation.service';
 })
 export class MessageComponent implements OnInit {
 
-  constructor(private navService: NavigationService) { }
+  constructor(private admin: AdminComponent) { }
 
   ngOnInit() {
-    this.navService.publishNavigationChange('admin1');
+    this.admin.currentUserRole();
   }
 
 }

@@ -7,9 +7,12 @@ import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { IssuesResolutionService, Roles } from '../../issues.service';
 import { ComplaintsModel } from 'src/app/views/customer/customer-complaints/complaints.service';
 import { map } from 'rxjs/internal/operators/map';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { distinctUntilChanged, delay } from 'rxjs/operators';
+import { FormGroup, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { AdminComponent } from '../../../admin.component';
 
 @Component({
   selector: 'app-messages',
@@ -18,50 +21,55 @@ import { ToastrService } from 'ngx-toastr';
   animations: [SharedAnimations]
 })
 export class MessagesComponent implements OnInit {
-  mails$: Observable<any>;
   Issues$: ComplaintsModel;
-
   selected: any;
-
-  formBasic: FormGroup;
+  issuesAssignmentform: FormGroup;
   loading: boolean;
-  radioGroup: FormGroup;
   confirmResut: string;
   Roles: Roles;
+  assignButton =
+    {
+      name: 'primary',
+      loading: false,
+    };
+  updateButton = [
+    {
+      name: 'primary',
+      loading: false,
+    },
+  ];
 
   constructor(
-    private dl: DataLayerService,
     private modalService: NgbModal,
     private issuesService: IssuesResolutionService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private errorService: ErrorDialogService,
+    private admin: AdminComponent
   ) {
-
+    this.admin.currentUserRole();
   }
 
   ngOnInit() {
-    this.mails$ = this.dl.getMails();
     // Initialize the issues service
     this.issuesService.initIssues();
     // store all issues in Issues$ variable
     this.allIssues();
     this.fetchRoles();
-
     this.buildFormBasic();
-    this.radioGroup = this.fb.group({
-      radio: []
-    });
   }
 
-  select(issue) {
+  select(issue: any) {
     this.selected = issue;
+    this.issuesAssignmentform.controls.issueId.setValue(issue.issueId);
   }
 
   /* Have to create two form controls for both form */
   buildFormBasic() {
-    this.formBasic = this.fb.group({
-      roles: [],
-      comment: []
+    this.issuesAssignmentform = this.fb.group({
+      roles: ['', [Validators.required]],
+      comment: [],
+      issueId: ['', [Validators.required]]
     });
   }
 
@@ -70,15 +78,28 @@ export class MessagesComponent implements OnInit {
       .then(res => {
         this.Roles = res;
       }).then(() => {
-        this.formBasic.controls.roles.setValue(this.Roles[0]);
+        this.issuesAssignmentform.controls.roles.setValue(this.Roles[0]);
       });
   }
 
-  submit(form: NgForm) {
-    this.loading = true;
+  submit() {
+    const form = this.issuesAssignmentform.value;
+    this.assignButton.loading = true;
     setTimeout(() => {
-      this.loading = false;
-      /* this.toastr.success('Profile updated.', 'Success!', { progressBar: true }); */
+      this.issuesService.assignIssue(form)
+        .toPromise()
+        .then((res: any) => {
+          this.assignButton.loading = false;
+          if (res) {
+            this.toastr.success(`Assigned to ${this.issuesAssignmentform.value.roles.description}
+             team.`, 'Success!');
+            delay(1000);
+            this.ngOnInit();
+            return;
+          }
+          // Error
+          this.toastr.error('An error occured while submiting', 'Error!', { closeButton: true });
+        });
     }, 3000);
   }
 
@@ -116,6 +137,14 @@ export class MessagesComponent implements OnInit {
   get numTickets() {
     return;
 
+  }
+
+  showLoading(btn) {
+    btn.loading = true;
+    setTimeout(() => {
+      btn.loading = false;
+      this.toastr.success(`Issue Updated`);
+    }, 3000);
   }
 
   test() {

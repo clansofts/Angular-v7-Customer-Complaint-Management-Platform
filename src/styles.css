@@ -1,8 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
-.modal-footer-custom{
-background-color: #24718e !important;
+.modal-footer-custom {
+background-color: #00aeef !important;
 }
 .close-custom {
     color: white !important;
+}
+
+.modal-header-custom {
+    background-color: #00aeef !important;
+}
+.modal-title-custom {
+    color: white !important;
+}
+.btn-custom {
+    border-color: white !important;
+    color: white !important;
+}
+.btn-custom:hover {
+    border-color: #4CAF50 !important;
+    color: white !important;
+}
+.badge-info-custom1 {
+    background-color: #00aeef !important;
+}
+.badge-info-custom2 {
+    background-color: green !important;
+}
+.badge-info-custom3 {
+    background-color: orange !important;
+}
+.badge-info-custom4 {
+    background-color: rgb(196, 63, 185) !important;
+}
+.inbox-main-sidebar-container {
+    background-color: #f6f6f6 !important;
+    border-radius: 8px !important;
+}
+.inbox-topbar {
+    background-color: white !important;
 }

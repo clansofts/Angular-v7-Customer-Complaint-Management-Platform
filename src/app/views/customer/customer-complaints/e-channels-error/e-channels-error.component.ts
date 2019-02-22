@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { DashboadDefaultComponent } from '../dashboad-default.component';
 
 // Observable to track ticket status
 const modalState = new Subject();
@@ -98,13 +99,15 @@ export class EChannelsErrorComponent implements OnInit {
     private utilities: UtilitiesService,
     private complaintsService: ComplaintsService,
     private modalService: NgbModal,
-    private errorService: ErrorDialogService
+    private errorService: ErrorDialogService,
+    private customerComponent: DashboadDefaultComponent
   ) {
     // display details form by default
     this.personalDetails = true;
     // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
+    this.customerComponent.ngOnInit();
   }
 
   ngOnInit() {

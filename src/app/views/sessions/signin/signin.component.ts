@@ -52,7 +52,6 @@ export class SigninComponent implements OnInit {
         private fb: FormBuilder,
         private auth: AuthService,
         private router: Router,
-        private navigationService: NavigationService,
         private errorService: ErrorDialogService,
         private toastr: ToastrService,
         private localstoreService: LocalStoreService
@@ -93,13 +92,11 @@ export class SigninComponent implements OnInit {
 
                 // If resolution champion
                 case 'RC':
-                    await this.navigationMenu('admin1');
                     this.route = '/admin-rc';
                     break;
 
                 // If resolution team
                 case 'DevOps':
-                    await this.navigationMenu('admin2');
                     this.route = '/admin-rt';
                     break;
             }
@@ -128,10 +125,6 @@ export class SigninComponent implements OnInit {
                 // Reset form
                 this.ngOnInit();
             });
-    }
-
-    navigationMenu(usertype: string) {
-        this.navigationService.publishNavigationChange(usertype);
     }
 
     // Http network error

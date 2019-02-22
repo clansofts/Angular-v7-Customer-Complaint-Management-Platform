@@ -25,7 +25,8 @@
                             </div>
                         </div>
                         <!-- EMAIL DETAILS -->
-                        <div class="inbox-details inbox-details--custom" *ngIf="selected" [perfectScrollbar]="{suppressScrollX: true}">
+                        <div class="inbox-details inbox-details--custom" *ngIf="selected"
+                            [perfectScrollbar]="{suppressScrollX: true}">
                             <div class="row no-gutters">
                                 <div class="mr-2" style="width: 36px">
                                     <!-- <img class="rounded-circle" [src]="selected?.sender?.photo" alt=""> -->
@@ -318,10 +319,10 @@
 
                                             <div class="col-md-12">
                                                 <button type="button" Class="btn btn-primary btn-rounded m-1"
-                                                    (click)="open(modalBasic)">Resolve</button>
+                                                    (click)="open(modalBasic)">Resolve Issue</button>
 
                                                 <button type="button" Class="btn btn-warning btn-rounded m-1"
-                                                    (click)="confirm(modalConfirm)">Close</button>
+                                                    (click)="confirm(modalConfirm)">Close Issue</button>
                                             </div>
                                         </div>
                                     </form>
@@ -352,7 +353,12 @@
                         <div class="col-xs-6 details">
                             <span class="name text-muted">{{i?.firstName | titlecase}}
                                 {{i?.lastName | titlecase}}</span>
-                            <span class="badge badge-info mr-1">{{i?.channelType.channelType | titlecase}}</span>
+                            <span [ngClass]="
+                                {'badge-info-custom1 mr-1': i?.channelType.channelType == 'E-Channel', 
+                                'badge-info-custom2 mr-1': i?.channelType.channelType == 'Card Issue', 
+                                'badge-info-custom3 mr-1': i?.channelType.channelType == 'Service',
+                                'badge-info-custom4 mr-1': i?.channelType.channelType == 'ATM Dispense Error'}"
+                                class="badge badge-info mr-1">{{i?.channelType.channelType | titlecase}}</span>
                             <p class="m-0">Source: {{i?.source | titlecase}}</p>
                         </div>
                         <div class="col-xs-3 date">
@@ -371,11 +377,12 @@
                 <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
                 <p class="text-muted mb-2" (click)="test()">Browse</p>
                 <ul class="inbox-main-nav">
-                    <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Open Tickets (2)</a></li>
-                    <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Resolved Tickets (10)</a></li>
-                    <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Priority (2)</a></li>
-                    <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Closed (5)</a></li>
-                    <li><a href=""><i class="icon-regular i-Spam-Mail"></i> Pending Tickets (6)</a></li>
+                    <li><a href="" class="active"><i class="icon-regular i-Letter-Open"></i> Opened Tickets</a></li>
+                    <li><a href=""><i class="icon-regular i-Mail-2"></i> All Issues</a></li>
+                    <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Resolved Issues (10)</a></li>
+                    <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Priority</a></li>
+                    <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
+                    <li><a href=""><i class="icon-regular i-Clock-4"></i> Pending Tickets</a></li>
                 </ul>
             </div>
         </div>
@@ -385,9 +392,9 @@
 
 
 <ng-template #modalBasic let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Assign to Resolution Team</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <div class="modal-header modal-header-custom">
+        <h4 class="modal-title modal-title-custom" id="modal-basic-title">Assign to Resolution Team</h4>
+        <button type="button" class="close close-custom " aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -395,7 +402,7 @@
         <form>
             <div class="card mb-0">
                 <div class="card-body">
-                    <form [formGroup]="formBasic" (ngSubmit)="submit(formBasic.value)">
+                    <form [formGroup]="issuesAssignmentform">
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Select Team</label>
                             <div class="col-sm-10">
@@ -468,7 +475,10 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button *ngFor="let btn of updateButton" class="btn btn-{{btn.name}} ladda-button"
+                                    [ladda]="btn.loading" (click)="showLoading(btn)">
+                                    Update
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -476,24 +486,29 @@
             </div>
         </form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark btn-rounded"
-            (click)="modal.close('Save click')">Assign</button>
+    <div class="modal-footer modal-footer-custom">
+        <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
+            [loading]="assignButton.loading" loadingText="Loading..." (click)="submit()">
+            Assign To Team
+        </btn-loading>
+        <button type="button" (click)="modal.close('Save click')"
+            class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
     </div>
 </ng-template>
 
 <ng-template #modalConfirm let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-title">Profile deletion</h4>
-        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+    <div class="modal-header modal-header-custom">
+        <h4 class="modal-title" id="modal-title">Close Issue</h4>
+        <button type="button" class="close close-custom " aria-label="Close button" aria-describedby="modal-title"
             (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p><strong>Are you sure you want to delete <span class="text-primary">"John Doe"</span> profile?</strong></p>
-        <p>All information associated to this user profile will be permanently deleted.
-            <span class="text-danger">This operation can not be undone.</span>
+        <p><strong>Are you sure you want to close <span class="text-primary">{{selected?.firstName | titlecase}}
+                    {{selected?.lastName | titlecase}}</span> issue?</strong></p>
+        <p>An email will automatically be sent to this user profile to inform them of the closing.
+            <span class="text-info">This operation can not be undone unless reopened by the user.</span>
         </p>
     </div>
     <div class="modal-footer">

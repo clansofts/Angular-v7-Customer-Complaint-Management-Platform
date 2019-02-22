@@ -9,6 +9,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { DashboardResolutionChampionComponent } from './resolution-champion/complaints-dashboard/dashboard-resolution-champion.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MessageComponent } from './resolution-champion/message/message.component';
+import { AdminComponent } from './admin.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +25,7 @@ import { MessageComponent } from './resolution-champion/message/message.componen
   declarations: [
     DashboardResolutionChampionComponent,
     MessageComponent,
+    AdminComponent,
   ]
 })
 export class AdminModule { }

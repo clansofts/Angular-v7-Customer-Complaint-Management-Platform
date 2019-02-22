@@ -7,11 +7,18 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { interval } from 'rxjs';
 
 export interface Roles {
-  roleId: number,
+  roleId: number;
   designation: string;
   team: string;
   role: string;
   description: string;
+}
+
+export interface Assign {
+  issueId: number;
+  roleId: number;
+  comment: string;
+  response: false;
 }
 
 @Injectable({
@@ -51,8 +58,16 @@ export class IssuesResolutionService {
   }
 
   // Assign an issue to a team
-  assignIssue(form) {
-   
+  assignIssue(form: any) {
+    console.log(form);
+    const Path = this.baseURL + `assigned`;
+    const payload: Assign = {
+      issueId: form.issueId,
+      roleId: form.roles.roleId,
+      comment: form.comment,
+      response: false,
+    };
+    return this.http.post<Assign>(Path, payload);
   }
 
   // Update an issue 

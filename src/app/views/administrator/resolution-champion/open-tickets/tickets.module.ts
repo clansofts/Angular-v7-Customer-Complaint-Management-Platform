@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-
 import { TicketsRoutingModule } from './tickets-routing.module';
 import { MessagesComponent } from './messages/messages.component';
 import { ComposeDialogComponent } from './compose-dialog/compose-dialog.component';
@@ -11,6 +10,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { LaddaModule } from 'angular2-ladda';
 
 @NgModule({
   imports: [
@@ -23,7 +23,8 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     PerfectScrollbarModule,
     QuillModule,
     SharedDirectivesModule,
-    TicketsRoutingModule
+    TicketsRoutingModule,
+    LaddaModule.forRoot({ style: 'expand-left'}),
   ],
   declarations: [MessagesComponent, ComposeDialogComponent],
   entryComponents: [ComposeDialogComponent]
