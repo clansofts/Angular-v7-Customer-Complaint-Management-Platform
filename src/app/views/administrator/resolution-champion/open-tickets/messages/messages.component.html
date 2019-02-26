@@ -342,6 +342,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Side Inbox Bar -->
                 <div appSidebar="inbox-secondary-sidebar" class="inbox-secondary-sidebar"
                     [perfectScrollbar]="{suppressScrollX: true}">
                     <i class="sidebar-close i-Close" appSidebarToggler="inbox-secondary-sidebar"></i>
@@ -362,14 +363,13 @@
                             <p class="m-0">Source: {{i?.source | titlecase}}</p>
                         </div>
                         <div class="col-xs-3 date">
-                            <span class="text-muted">{{i?.transactionDate | date: 'dd/MM/yyyy'}}</span>
+                            <span class="text-muted">{{i?.created_On | date: 'dd/MM/yyyy'}}</span>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-
         <!-- MAIN SIDEBAR -->
         <div appSidebar="inbox-main-sidebar" class="inbox-main-sidebar">
             <div class="pt-3 pr-3 pb-3">
@@ -377,16 +377,24 @@
                 <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
                 <p class="text-muted mb-2" (click)="test()">Browse</p>
                 <ul class="inbox-main-nav">
-                    <li><a href="" class="active"><i class="icon-regular i-Letter-Open"></i> Opened Tickets</a></li>
-                    <li><a href=""><i class="icon-regular i-Mail-2"></i> All Issues</a></li>
-                    <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Resolved Issues (10)</a></li>
-                    <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Priority</a></li>
-                    <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
-                    <li><a href=""><i class="icon-regular i-Clock-4"></i> Pending Tickets</a></li>
+                    <li (click)="allIssues()"><a [ngClass]="{'active': Active == 0}"><i
+                                class="icon-regular i-Mail-2"></i> All Issues</a></li>
+                    <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i
+                                class="icon-regular i-Letter-Open"></i> Open Tickets</a></li>
+                    <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i
+                                class="icon-regular i-Clock-4"></i> Assigned Issues</a></li>
+                    <li (click)="resolvedIssues()"><a [ngClass]="{'active': Active == 5}"><i
+                                class="icon-regular i-Mail-Outbox"></i> Resolved Issues
+                            (10)</a></li>
+                    <li><a [ngClass]="{'active': Active == 6}"><i class="icon-regular i-Mail-Favorite"></i> High
+                            Priority</a></li>
+                    <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i
+                                class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
+                    <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i
+                                class="icon-regular i-Folder-Trash"></i> Dismissed Issues</a></li>
                 </ul>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -506,7 +514,7 @@
     </div>
     <div class="modal-body">
         <p><strong>Are you sure you want to close <span class="text-primary">{{selected?.firstName | titlecase}}
-                    {{selected?.lastName | titlecase}}</span> issue?</strong></p>
+                    {{selected?.lastName | titlecase}}'s</span> issue?</strong></p>
         <p>An email will automatically be sent to this user profile to inform them of the closing.
             <span class="text-info">This operation can not be undone unless reopened by the user.</span>
         </p>

@@ -82,11 +82,9 @@ export class CardIssueComponent implements OnInit, OnDestroy {
     private complaintsService: ComplaintsService,
     private modalService: NgbModal,
     private errorService: ErrorDialogService,
-    private navigationService:NavigationService,
+    private navigationService: NavigationService,
     private customerComponent: DashboadDefaultComponent
   ) {
-    // display details form by default
-    this.personalDetails = true;
     // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
@@ -95,6 +93,8 @@ export class CardIssueComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.cardIssueFn();
+    // display details form by default
+    this.personalDetails = true
     return Promise.all([
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
@@ -264,7 +264,6 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    console.log('Omae wa shinderu');
-    this.navigationService.publishNavigationChange('admin1');
+    console.log('Testing');
   }
 }

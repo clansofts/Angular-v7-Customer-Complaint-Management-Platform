@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 import { IssuesService, CustomerIssuesModel } from './issues.service';
+import { DashboadDefaultComponent } from '../customer-complaints/dashboad-default.component';
 
 @Component({
   selector: 'app-dashboard-v2',
@@ -18,8 +19,12 @@ export class IssuesTrackingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private issuesService: IssuesService
-  ) { }
+    private issuesService: IssuesService,
+    private customerComponent: DashboadDefaultComponent
+  ) {
+    // Initialize module
+    this.customerComponent.ngOnInit();
+  }
 
   ngOnInit() {
     // Initialize the reactive form
@@ -53,10 +58,8 @@ export class IssuesTrackingComponent implements OnInit {
   }
 
   test() {
-    console.log('omae wa mou shindeiru');
-    setTimeout(() => {
-      console.log('NANI');
-    }, 500);
+    console.log('Test');
+    console.log(this.complaints$);
   }
 
 }

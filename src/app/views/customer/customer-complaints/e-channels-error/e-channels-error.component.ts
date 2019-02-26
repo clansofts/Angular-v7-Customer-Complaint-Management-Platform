@@ -102,8 +102,6 @@ export class EChannelsErrorComponent implements OnInit {
     private errorService: ErrorDialogService,
     private customerComponent: DashboadDefaultComponent
   ) {
-    // display details form by default
-    this.personalDetails = true;
     // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
@@ -112,11 +110,13 @@ export class EChannelsErrorComponent implements OnInit {
 
   ngOnInit() {
     this.eChannelsFn();
+    // display details form by default
+    this.personalDetails = true;
     return Promise.all([
       this.fetchCurrencyType = this._currencyType,
       this.fetchCardVariants = this._card_Variants,
       this.billingsType, // getter
-      this.serviceProviders(),
+      this.serviceProviders()
     ]);
   }
 
@@ -321,7 +321,7 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   test() {
-    console.log('Bankai!');
+    console.log('Testing!');
   }
 
 }

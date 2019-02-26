@@ -82,8 +82,6 @@ export class ServiceIssueComponent implements OnInit {
     private errorService: ErrorDialogService,
     private customerComponent: DashboadDefaultComponent
   ) {
-    // display details form by default
-    this.formState = true;
     // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
@@ -93,6 +91,8 @@ export class ServiceIssueComponent implements OnInit {
 
   async ngOnInit() {
     this.serviceComplaintFn();
+    // display details form by default
+    this.formState = true;
     return Promise.all([
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
@@ -262,7 +262,7 @@ export class ServiceIssueComponent implements OnInit {
 
 
   test() {
-    console.log('Kuros');
+    console.log('Testing');
   }
 
 }

@@ -80,8 +80,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     private errorService: ErrorDialogService,
     private customerComponent: DashboadDefaultComponent
   ) {
-    // display details form by default
-    this.formState = true;
     // Alerts & init error handler
     this.alert = null;
     this.handleErrorFn();
@@ -90,6 +88,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.atmDispenseErrorFn();
+    // display details form by default
+    this.formState = true;
     return Promise.all([
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
@@ -99,7 +99,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       this.fetch_feedbackID(),
       this.fetch_BankList()
     ]);
-
   }
 
   ngOnDestroy() {
@@ -300,6 +299,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   test() {
+    console.log('Testing');
   }
 
 }

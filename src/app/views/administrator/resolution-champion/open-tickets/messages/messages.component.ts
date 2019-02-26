@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLayerService } from 'src/app/shared/services/data-layer.service';
-import { Observable, interval } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComposeDialogComponent } from '../compose-dialog/compose-dialog.component';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { IssuesResolutionService, Roles } from '../../issues.service';
 import { ComplaintsModel } from 'src/app/views/customer/customer-complaints/complaints.service';
-import { map } from 'rxjs/internal/operators/map';
-import { distinctUntilChanged, delay } from 'rxjs/operators';
+import { distinctUntilChanged, delay, filter, concatAll } from 'rxjs/operators';
 import { FormGroup, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
-import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { AdminComponent } from '../../../admin.component';
 
 @Component({
@@ -21,12 +18,13 @@ import { AdminComponent } from '../../../admin.component';
   animations: [SharedAnimations]
 })
 export class MessagesComponent implements OnInit {
-  Issues$: ComplaintsModel;
+  Issues$: any;
   selected: any;
   issuesAssignmentform: FormGroup;
   loading: boolean;
   confirmResut: string;
   Roles: Roles;
+  Active: number;
   assignButton =
     {
       name: 'primary',
@@ -62,6 +60,10 @@ export class MessagesComponent implements OnInit {
   select(issue: any) {
     this.selected = issue;
     this.issuesAssignmentform.controls.issueId.setValue(issue.issueId);
+  }
+
+  set setActive(val: number) {
+    this.Active = val;
   }
 
   /* Have to create two form controls for both form */
@@ -105,6 +107,7 @@ export class MessagesComponent implements OnInit {
 
   // get issues from observable
   async allIssues() {
+    this.setActive = 0;
     await this.issuesService.issues$
       .pipe(distinctUntilChanged())
       .subscribe((res: ComplaintsModel) => {
@@ -116,7 +119,7 @@ export class MessagesComponent implements OnInit {
     this.modalService.open(ComposeDialogComponent, { size: 'lg', centered: true });
   }
 
-  open(content) {
+  open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then((result) => {
         console.log(result);
@@ -125,7 +128,7 @@ export class MessagesComponent implements OnInit {
       });
   }
 
-  confirm(content) {
+  confirm(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((result) => {
         this.confirmResut = `Closed with: ${result}`;
@@ -139,7 +142,7 @@ export class MessagesComponent implements OnInit {
 
   }
 
-  showLoading(btn) {
+  showLoading(btn: { loading: boolean; }) {
     btn.loading = true;
     setTimeout(() => {
       btn.loading = false;
@@ -147,9 +150,29 @@ export class MessagesComponent implements OnInit {
     }, 3000);
   }
 
-  test() {
+  // Filter by status
+  async filterBy(code: number) {
+    this.setActive = code;
+    const values = [];
+    const inProgress = await this.issuesService.issues$
+      .pipe(
+        distinctUntilChanged(),
+        concatAll(),
+        filter((issue?: ComplaintsModel) => {
+          return (issue.status !== null);
+        }),
+        filter((issue?: ComplaintsModel) => {
+          return (issue.status.id === code);
+        }),
+      );
+    await inProgress.pipe().subscribe(val => {
+      values.push(val);
+    });
+    this.Issues$ = values;
+  }
+
+  async test() {
     console.log('Running test');
-    console.log('SAMA');
   }
 
 }

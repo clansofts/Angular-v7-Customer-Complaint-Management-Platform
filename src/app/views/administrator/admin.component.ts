@@ -49,7 +49,6 @@ export class AdminComponent implements OnInit {
       // If not a admin user
       console.log('Cannot find user');
       this.navigationMenu(null);
-      this.route = '';
     }
   }
 

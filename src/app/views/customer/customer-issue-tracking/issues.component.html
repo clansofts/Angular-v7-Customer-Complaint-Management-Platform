@@ -14,7 +14,7 @@
     <div class="col-md-12">
       <div class="card mb-4">
         <div class="card-body" (click)="test()">
-          <div class="card-title mb-3">Card Issue Form</div>
+          <div class="card-title mb-3">Track Complaint Form</div>
           <form [formGroup]="issuesTrackingForm" (ngSubmit)="submit(issuesTrackingForm)">
             <div class="row">
               <div class="col-md-6 form-group mb-3">
@@ -47,7 +47,7 @@
 
           <ngx-datatable-column name="icon" [maxWidth]="100">
             <ng-template ngx-datatable-header-template>
-              Issue
+              Response
             </ng-template>
             <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
               <img height="32px" width="32px" style="border-radius: 4px" [src]="value" alt="">
@@ -72,7 +72,7 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="assigned">
+          <ngx-datatable-column name="transactionDate">
             <ng-template ngx-datatable-header-template>
               Date
             </ng-template>
