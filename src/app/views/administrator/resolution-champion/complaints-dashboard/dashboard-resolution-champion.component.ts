@@ -10,10 +10,11 @@ import { AdminComponent } from '../../admin.component';
 export class DashboardResolutionChampionComponent implements OnInit {
 
   constructor(private admin: AdminComponent
-  ) { }
+  ) {
+    this.admin.currentUserRole();
+  }
 
   ngOnInit() {
-    this.admin.currentUserRole();
   }
 
 }

@@ -91,8 +91,8 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Support', name: 'Open Tickets', state: '/customer/v1', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Tickets', state: '/customer/v2', type: 'link' },
+                { icon: 'i-Support', name: 'Dashboard', state: '/customer/v1', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Assigned Issues', state: '/customer/v2', type: 'link' },
                 { icon: 'i-Clock-3', name: 'Message', state: '/customer/v3', type: 'link' },
                 { icon: 'i-Clock-4', name: 'Archive', state: '/customer/v4', type: 'link' }
             ]

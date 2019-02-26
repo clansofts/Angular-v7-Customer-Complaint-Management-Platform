@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
 
   // Route user by role
   roleBasedRouting(user: any) {
-    console.log('Routing user');
+    console.log(`Routing user: ${user}`);
     try {
       switch (user.Role) {
 
@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
           break;
 
         // If resolution team
-        case 'DevOps':
+        case 'RC':
           this.navigationMenu('admin2');
           break;
       }

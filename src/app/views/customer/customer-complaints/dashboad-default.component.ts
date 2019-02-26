@@ -11,10 +11,12 @@ import { Router } from '@angular/router';
 export class DashboadDefaultComponent implements OnInit {
 
     constructor(private navigationService: NavigationService,
-        private localstoreService: LocalStoreService, private router: Router) { }
+        private localstoreService: LocalStoreService, private router: Router) {
+        this.currentUserRole();
+    }
 
     ngOnInit() {
-        this.currentUserRole();
+
     }
 
     // Read local storage
