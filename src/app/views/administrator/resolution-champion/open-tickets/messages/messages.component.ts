@@ -137,9 +137,13 @@ export class MessagesComponent implements OnInit {
       });
   }
 
-  get numTickets() {
-    return;
-
+  fetchResolvedIssues() {
+    this.setActive = (5);
+    this.issuesService.fetchResolved().toPromise()
+      .then((response: ComplaintsModel) => {
+        console.log(response);
+        this.Issues$ = response;
+      });
   }
 
   showLoading(btn: { loading: boolean; }) {
@@ -169,6 +173,18 @@ export class MessagesComponent implements OnInit {
       values.push(val);
     });
     this.Issues$ = values;
+    console.log(this.Issues$)
+  }
+
+  // Close an issue
+  closeIssue() {
+    console.log(this.selected.issueId);
+    try {
+      this.issuesService.closeIssue(this.selected.issueId).subscribe(res => console.log(res));
+      this.selected = null;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async test() {

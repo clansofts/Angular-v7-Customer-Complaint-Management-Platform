@@ -38,13 +38,11 @@ export class IssuesResolutionService {
     return this.http.get<ComplaintsModel>(Path);
   }
 
-  // Initialize the observable with new values everyone 2 mins
+  // Initialize the observable with new values everyone 5 mins
   initIssues() {
     Promise.resolve(this.issues)
       .then(() => {
-        return interval(120000)
-          // tslint:disable-next-line:no-unused-expression
-          .subscribe(() => { this.issues; });
+        return interval(300000);
       });
 
   }
@@ -59,7 +57,6 @@ export class IssuesResolutionService {
 
   // Assign an issue to a team
   assignIssue(form: any) {
-    console.log(form);
     const Path = this.baseURL + `assigned`;
     const payload: Assign = {
       issueId: form.issueId,
@@ -70,13 +67,22 @@ export class IssuesResolutionService {
     return this.http.post<Assign>(Path, payload);
   }
 
-  // Update an issue 
-  updateIssue() {
-
+  // Get Resolved Issues 
+  fetchResolved() {
+    const Path = this.baseURL + `assigned/resolvedissues`;
+    return this.http.get<ComplaintsModel>(Path);
   }
 
   get roles() {
     const Path = this.baseURL + 'roles';
     return this.http.get<Roles>(Path);
+  }
+
+  closeIssue(id: number) {
+    const Path = this.baseURL + 'issues/' + id;
+    const payload: any = {
+      statusId: 3,
+    };
+    return this.http.patch<any>(Path, payload);
   }
 }

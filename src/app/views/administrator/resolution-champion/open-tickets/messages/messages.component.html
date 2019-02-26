@@ -21,7 +21,7 @@
                                 <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i>
                                     Forward</a>
                                 <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i>
-                                    Delete</a>
+                                    Query Status</a>
                             </div>
                         </div>
                         <!-- EMAIL DETAILS -->
@@ -100,7 +100,7 @@
                                                 <label for="picker1">Are you a Union Bank customer?</label>
                                                 <input disabled class="form-control form-control-rounded" id=""
                                                     placeholder="Is Union Bank Customer?"
-                                                    value="{{selected?.isCustomer | titlecase}}">
+                                                    value="{{selected?.isCustomer}}">
                                             </div>
 
                                             <div class="col-md-6 form-group mb-3" *ngIf="selected?.disappointedService">
@@ -318,11 +318,13 @@
                                             </div>
 
                                             <div class="col-md-12">
-                                                <button type="button" Class="btn btn-primary btn-rounded m-1"
-                                                    (click)="open(modalBasic)">Resolve Issue</button>
+                                                <ng-container *ngIf="(selected?.status) && (selected?.status.id == 1)">
+                                                    <button type="button" Class="btn btn-primary btn-rounded m-1"
+                                                        (click)="open(modalBasic)">Assign Issue</button>
 
-                                                <button type="button" Class="btn btn-warning btn-rounded m-1"
-                                                    (click)="confirm(modalConfirm)">Close Issue</button>
+                                                    <button type="button" Class="btn btn-warning btn-rounded m-1"
+                                                        (click)="confirm(modalConfirm)">Close Issue</button>
+                                                </ng-container>
                                             </div>
                                         </div>
                                     </form>
@@ -382,16 +384,18 @@
                     <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i
                                 class="icon-regular i-Letter-Open"></i> Open Tickets</a></li>
                     <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i
-                                class="icon-regular i-Clock-4"></i> Assigned Issues</a></li>
-                    <li (click)="resolvedIssues()"><a [ngClass]="{'active': Active == 5}"><i
-                                class="icon-regular i-Mail-Outbox"></i> Resolved Issues
-                            (10)</a></li>
-                    <li><a [ngClass]="{'active': Active == 6}"><i class="icon-regular i-Mail-Favorite"></i> High
+                                class="icon-regular i-Clock-4"></i> In Progress</a></li>
+                    <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i
+                                class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
+                    <!--   <li><a [ngClass]="{'active': Active == 6}"><i class="icon-regular i-Mail-Favorite"></i> High
                             Priority</a></li>
                     <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i
                                 class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
                     <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i
                                 class="icon-regular i-Folder-Trash"></i> Dismissed Issues</a></li>
+                    <li (click)="fetchResolvedIssues()"><a [ngClass]="{'active': Active == 5}"><i
+                                class="icon-regular i-Mail-Outbox"></i> Archived
+                            (10)</a></li> -->
                 </ul>
             </div>
         </div>
@@ -522,6 +526,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary btn-rounded"
             (click)="modal.dismiss('cancel')">Cancel</button>
-        <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok')">Ok</button>
+        <button type="button" ngbAutofocus class="btn btn-danger btn-rounded"
+            (click)="modal.close('Ok'); closeIssue()">Ok</button>
     </div>
 </ng-template>
