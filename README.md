@@ -3,7 +3,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
 ## Screen-shot
-https://github.com/zimejin/Angular-v7-Customer-Complaint-Management-Platform/blob/master/Screen-shots/preview.png
+![Image](https://github.com/zimejin/Angular-v7-Customer-Complaint-Management-Platform/blob/master/Screen-shots/preview.png?raw=true)
 
 ## Development server
 
