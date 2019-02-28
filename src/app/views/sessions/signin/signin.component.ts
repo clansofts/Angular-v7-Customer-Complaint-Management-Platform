@@ -3,13 +3,10 @@ import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouteConfigLoadStart, ResolveStart, RouteConfigLoadEnd, ResolveEnd } from '@angular/router';
-import { NavigationService } from 'src/app/shared/services/navigation.service';
-import { delay } from 'rxjs/internal/operators/delay';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
-import { Observable, of } from 'rxjs';
-import { TestBed } from '@angular/core/testing';
+import { UserService } from 'src/app/shared/services/user-service.service';
 
 export interface AuthUserModel {
     access_token: string;
@@ -54,7 +51,8 @@ export class SigninComponent implements OnInit {
         private router: Router,
         private errorService: ErrorDialogService,
         private toastr: ToastrService,
-        private localstoreService: LocalStoreService
+        private localstoreService: LocalStoreService,
+        private userService: UserService
     ) {
         // Alerts & init error handler
         this.alert = null;
@@ -82,32 +80,6 @@ export class SigninComponent implements OnInit {
         });
     }
 
-    set route(url: string) {
-        this.router.navigateByUrl(url);
-    }
-
-    async userRole(user: any) {
-        try {
-            switch (user.Role) {
-
-                // If resolution champion
-                case 'RC':
-                    this.route = '/admin-rc';
-                    break;
-
-                // If resolution team
-                case 'DevOps':
-                    this.route = '/admin-rt';
-                    break;
-            }
-
-        } catch (error) {
-
-            // If not a registered user
-            alert('Cannot find user');
-        }
-    }
-
     signin() {
         this.loading = true;
         this.loadingText = 'Sigining in...';
@@ -117,7 +89,12 @@ export class SigninComponent implements OnInit {
                     // Store the current user object in the browser
                     this.localstoreService.setItem('currentUser', response);
                     // role based routing
-                    await this.userRole(response);
+                    try {
+                        await this.userService.userRole(response);
+                    } catch (error) {
+                        console.error(error);
+                        this.toastr.error('Error!', 'Invalid user type');
+                    }
                     return;
                 }
                 // Handle form error

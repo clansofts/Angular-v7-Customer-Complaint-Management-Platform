@@ -91,10 +91,10 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Support', name: 'Dashboard', state: '/customer/v1', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Assigned Issues', state: '/customer/v2', type: 'link' },
-                { icon: 'i-Clock-3', name: 'Message', state: '/customer/v3', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Archive', state: '/customer/v4', type: 'link' }
+                { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
+                { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Archive', state: '', type: 'link' }
             ]
         }
     ];

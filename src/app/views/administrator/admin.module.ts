@@ -10,6 +10,8 @@ import { DashboardResolutionChampionComponent } from './resolution-champion/comp
 import { AdminRoutingModule } from './admin-routing.module';
 import { MessageComponent } from './resolution-champion/message/message.component';
 import { AdminComponent } from './admin.component';
+import { TeamDashboardComponent } from './resolution-team/team-dashboard/team-dashboard.component';
+import { MessageComponentRC } from "./resolution-team/message/MessageComponentRC";
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +28,8 @@ import { AdminComponent } from './admin.component';
     DashboardResolutionChampionComponent,
     MessageComponent,
     AdminComponent,
+    TeamDashboardComponent,
+    MessageComponentRC,
   ]
 })
 export class AdminModule { }

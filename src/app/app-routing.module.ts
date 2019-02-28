@@ -38,6 +38,11 @@ const routes: Routes = [
     redirectTo: 'admin-rc/complaints-dashboard',
     pathMatch: 'full'
   },
+  {
+    path: 'admin-rt',
+    redirectTo: 'admin-rc/team-dashboard',
+    pathMatch: 'full'
+  },
    {
     path: '',
     component: AuthLayoutComponent,

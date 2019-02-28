@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
           break;
 
         // If resolution team
-        case 'RC':
+        case 'RT':
           this.navigationMenu('admin2');
           break;
       }

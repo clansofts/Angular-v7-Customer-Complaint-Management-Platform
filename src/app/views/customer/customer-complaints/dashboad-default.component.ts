@@ -40,7 +40,7 @@ export class DashboadDefaultComponent implements OnInit {
                     break;
 
                 // If resolution team
-                case 'DevOps':
+                case 'RT':
                     this.navigationMenu('admin2');
                     break;
             }
