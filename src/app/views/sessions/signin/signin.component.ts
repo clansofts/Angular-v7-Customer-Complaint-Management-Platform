@@ -83,18 +83,19 @@ export class SigninComponent implements OnInit {
     signin() {
         this.loading = true;
         this.loadingText = 'Sigining in...';
-        this.auth.signin(this.signinForm.value)
-            .subscribe(async (response: AuthUserModel) => {
+        this.auth.signin(this.signinForm.value).toPromise()
+            .then(async (response: AuthUserModel) => {
                 if (response) {
                     // Store the current user object in the browser
-                    this.localstoreService.setItem('currentUser', response);
-                    // role based routing
-                    try {
-                        await this.userService.userRole(response);
-                    } catch (error) {
-                        console.error(error);
-                        this.toastr.error('Error!', 'Invalid user type');
-                    }
+                    Promise.resolve(this.localstoreService.setItem('currentUser', response))
+                        .then(() => {
+                            // role based routing
+                            this.userService.userRole(response);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                            this.toastr.error('Error!', 'Invalid user type');
+                        });
                     return;
                 }
                 // Handle form error

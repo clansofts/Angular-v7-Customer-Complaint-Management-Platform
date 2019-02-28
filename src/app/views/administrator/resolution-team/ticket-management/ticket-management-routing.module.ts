@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MessagesComponent } from './messages/messages.component';
+import { MessagesRTComponent } from './messages/messages.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MessagesComponent
+    component: MessagesRTComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TicketsRoutingModule { }
+export class TicketsManagementRoutingModule { }

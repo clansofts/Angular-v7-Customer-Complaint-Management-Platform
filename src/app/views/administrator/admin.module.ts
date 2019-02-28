@@ -11,7 +11,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { MessageComponent } from './resolution-champion/message/message.component';
 import { AdminComponent } from './admin.component';
 import { TeamDashboardComponent } from './resolution-team/team-dashboard/team-dashboard.component';
-import { MessageComponentRC } from "./resolution-team/message/MessageComponentRC";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageRTComponent } from './resolution-team/message/message.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,14 +23,14 @@ import { MessageComponentRC } from "./resolution-team/message/MessageComponentRC
     NgxEchartsModule,
     NgxDatatableModule,
     NgbModule,
-    AdminRoutingModule
+    AdminRoutingModule,
   ],
   declarations: [
     DashboardResolutionChampionComponent,
     MessageComponent,
     AdminComponent,
     TeamDashboardComponent,
-    MessageComponentRC,
+    MessageRTComponent,
   ]
 })
 export class AdminModule { }

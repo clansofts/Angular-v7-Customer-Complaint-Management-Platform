@@ -1,10 +1,10 @@
-import { TicketsRoutingModule } from './ticket-management-routing.module';
+import { TicketsManagementRoutingModule } from './ticket-management-routing.module';
 
 describe('TicketsRoutingModule', () => {
-  let ticketsRoutingModule: TicketsRoutingModule;
+  let ticketsRoutingModule: TicketsManagementRoutingModule;
 
   beforeEach(() => {
-    ticketsRoutingModule = new TicketsRoutingModule();
+    ticketsRoutingModule = new TicketsManagementRoutingModule();
   });
 
   it('should create an instance', () => {

@@ -11,7 +11,7 @@ export class UserService {
   set route(url: string) {
     this.router.navigateByUrl(url);
   }
-
+  // Route the user to the appropriate dashboard
   async userRole(user: any) {
     switch (user.Role) {
       // If resolution champion

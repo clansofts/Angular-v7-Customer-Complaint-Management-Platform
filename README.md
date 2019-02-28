@@ -5,6 +5,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Screen-shot
 ![Image](https://github.com/zimejin/Angular-v7-Customer-Complaint-Management-Platform/blob/master/Screen-shots/preview.png?raw=true)
 
+## OnBoarding
+![Image](https://github.com/zimejin/Angular-v7-Customer-Complaint-Management-Platform/blob/master/Screen-shots/onboarding.png?raw=true)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

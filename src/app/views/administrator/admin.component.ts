@@ -40,13 +40,14 @@ export class AdminComponent implements OnInit {
           break;
 
         // If resolution team
-        case 'RT':
+        case ('RT'):
+        case ('RTDO'):
           this.navigationMenu('admin2');
           break;
       }
     } catch (error) {
 
-      // If not a admin user
+      // If not an admin user, default to customer
       console.log('Cannot find user');
       this.navigationMenu(null);
     }

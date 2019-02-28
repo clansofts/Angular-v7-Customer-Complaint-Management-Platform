@@ -67,17 +67,19 @@ export class IssuesResolutionService {
     return this.http.post<Assign>(Path, payload);
   }
 
-  // Get Resolved Issues 
+  // Get Resolved Issues
   fetchResolved() {
     const Path = this.baseURL + `assigned/resolvedissues`;
     return this.http.get<ComplaintsModel>(Path);
   }
 
+  // For setting a default role
   get roles() {
     const Path = this.baseURL + 'roles';
     return this.http.get<Roles>(Path);
   }
 
+  // Close an issue
   closeIssue(id: number) {
     const Path = this.baseURL + 'issues/' + id;
     const payload: any = {
