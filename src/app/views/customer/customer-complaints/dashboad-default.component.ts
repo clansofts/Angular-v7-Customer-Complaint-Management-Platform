@@ -28,28 +28,21 @@ export class DashboadDefaultComponent implements OnInit {
         });
     }
 
-    // Route user by role
+    // Control side-menu for each user type
     roleBasedRouting(user: any) {
-        console.log('Routing user');
-        try {
-            switch (user.Role) {
-
-                // If resolution champion
-                case 'RC':
-                    this.navigationMenu('admin1');
-                    break;
-
-                // If resolution team
-                case 'RT':
-                    this.navigationMenu('admin2');
-                    break;
+        console.log(`setting user: ${user}`);
+        if (user) {
+            if (user.Role === 'RC') {
+                this.navigationMenu('admin1');
+                return;
             }
-        } catch (error) {
-
-            // If not a admin user
-            console.log('Cannot find user');
-            this.navigationMenu(null);
+            // If resolution team
+            this.navigationMenu('admin2');
+            return;
         }
+        // If not an admin user, default to customer
+        console.log('Cannot find user');
+        this.navigationMenu(null);
     }
 
     navigationMenu(usertype: string) {

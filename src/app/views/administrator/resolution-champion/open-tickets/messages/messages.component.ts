@@ -62,6 +62,7 @@ export class MessagesComponent implements OnInit {
     this.issuesAssignmentform.controls.issueId.setValue(issue.issueId);
   }
 
+  // For styling the selected element
   set setActive(val: number) {
     this.Active = val;
   }

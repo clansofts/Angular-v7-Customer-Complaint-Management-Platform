@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { ComplaintsModel } from '../../customer/customer-complaints/complaints.service';
 
 export interface AssignedIssuesModel {
   id: number;
@@ -10,6 +11,7 @@ export interface AssignedIssuesModel {
   errortype: string;
   errorDescription: string;
   teamAssigned: string;
+  issue: ComplaintsModel;
 }
 
 @Injectable({
@@ -17,7 +19,6 @@ export interface AssignedIssuesModel {
 })
 export class AssignedService {
   private baseURL = environment.API.BaseURL;
-
   private assignmentSource = new BehaviorSubject<AssignedIssuesModel>(null);
   assignments$ = this.assignmentSource.asObservable();
 

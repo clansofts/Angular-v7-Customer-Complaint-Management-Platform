@@ -12,17 +12,15 @@ export class UserService {
     this.router.navigateByUrl(url);
   }
   // Route the user to the appropriate dashboard
-  async userRole(user: any) {
-    switch (user.Role) {
-      // If resolution champion
-      case 'RC':
+  async userRole(user?: any) {
+    if (user.Role) {
+      if (user.Role === 'RC') {
+        // If resolution champion
         this.route = '/admin-rc';
-        break;
+        return;
+      }
       // If resolution team
-      case 'RT':
-        this.route = '/admin-rt';
-        break;
+      this.route = '/admin-rt';
     }
   }
-
 }
