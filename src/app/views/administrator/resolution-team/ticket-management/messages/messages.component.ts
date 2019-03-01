@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AssignedService, AssignedIssuesModel } from '../../assigned.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-messages',
@@ -22,6 +23,9 @@ export class MessagesRTComponent implements OnInit {
   assignedIssues$: any;
   loading: boolean;
   confirmResut: string;
+  Active: number;
+  comment: string; // RC comment
+  Assignmentform: any;
 
   constructor(
     private admin: AdminComponent,
@@ -29,13 +33,16 @@ export class MessagesRTComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private errorService: ErrorDialogService,
-    private assignedService: AssignedService
+    private assignedService: AssignedService,
+    private fb: FormBuilder,
   ) {
     this.admin.currentUserRole();
   }
 
   ngOnInit() {
     this.mails$ = this.dl.getMails();
+    // Init the form
+    this.buildFormBasic();
 
     // Fetch assigned issued
     this.assignedService.initAssignments();
@@ -45,12 +52,43 @@ export class MessagesRTComponent implements OnInit {
   }
 
   select(i) {
-    console.log(i);
     this.selected = i.issue;
+    this.comment = i.comment;
+  }
+
+  // For styling the selected element
+  set setActive(val: number) {
+    this.Active = val;
+  }
+
+  buildFormBasic() {
+    this.Assignmentform = this.fb.group({
+      roles: ['', [Validators.required]],
+      comment: [],
+      issueId: ['', [Validators.required]]
+    });
   }
 
   openComposeModal() {
     this.modalService.open(ComposeDialogComponent, { size: 'lg', centered: true });
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then((result) => {
+        console.log(result);
+      }, (reason) => {
+        console.log('Err!', reason);
+      });
+  }
+
+  confirm(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then((result) => {
+        this.confirmResut = `Closed with: ${result}`;
+      }, (reason) => {
+        this.confirmResut = `Dismissed with: ${reason}`;
+      });
   }
 
   // get issues from observable
@@ -61,6 +99,15 @@ export class MessagesRTComponent implements OnInit {
       .subscribe((res: AssignedIssuesModel) => {
         this.assignedIssues$ = res;
       });
+  }
+
+  // Filter by
+  async filterBy(code: number) {
+    console.log(code);
+  }
+
+  resolveIssue() {
+
   }
 
   test() {

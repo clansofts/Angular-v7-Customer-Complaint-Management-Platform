@@ -25,6 +25,7 @@ export class MessagesComponent implements OnInit {
   confirmResut: string;
   Roles: Roles;
   Active: number;
+
   assignButton =
     {
       name: 'primary',

@@ -12,6 +12,7 @@ export interface AssignedIssuesModel {
   errorDescription: string;
   teamAssigned: string;
   issue: ComplaintsModel;
+  comment: string;
 }
 
 @Injectable({
@@ -50,7 +51,11 @@ export class AssignedService {
   }
 
   // Assign an issue to a team member
-  assignTo() {
-
+  assignTo(id: number) {
+    const Path = this.baseURL + 'assigned' + id;
+    const payload: any = {
+      statusId: 3,
+    };
+    return this.http.patch<any>(Path, payload);
   }
 }

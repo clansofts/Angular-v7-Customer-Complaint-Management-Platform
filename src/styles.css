@@ -40,3 +40,7 @@ background-color: #00aeef !important;
 .inbox-topbar {
     background-color: white !important;
 }
+.card-custom {
+    overflow-y: scroll !important; 
+    max-height: 500px !important;
+}

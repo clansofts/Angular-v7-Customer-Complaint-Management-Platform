@@ -30,16 +30,16 @@
                   <img class="rounded-circle" src="./assets/images/faces/f3.jpg" alt="">
                 </div>
                 <div class="col-xs-12">
-                  <p class="m-0">{{selected?.firstName | titlecase}}
-                    {{selected?.lastName | titlecase}}</p>
-                  <p class="text-12 text-muted">{{selected?.transactionDate | date: 'dd/MM/yyyy'}}</p>
+                  <p class="m-0">Resolution Champion</p>
+                  <p class="text-12 text-muted">Assigned by the resolution champion</p>
                 </div>
               </div>
+              <p *ngIf="comment"><span><b>Comment: </b></span>{{comment | titlecase}} </p>
               <h4 class="mb-3">{{selected?.subject}}</h4>
-              <div class="card mb-4">
+              <div class="card card-custom mb-4">
                 <div class="card-body">
                   <div class="card-title mb-3">
-                    <span>Complaint Category:</span>
+                    <span>Complaint Details:</span>
                     {{ selected?.channelType?.channelType | titlecase}}
                   </div>
                   <form>
@@ -289,16 +289,19 @@
                       </div>
 
                       <div class="col-md-12">
-                        <ng-container *ngIf="(selected?.status) && (selected?.status.id == 1)">
+                        <ng-container>
                           <button type="button" Class="btn btn-primary btn-rounded m-1"
-                            (click)="open(modalBasic)">Assign Issue</button>
+                            (click)="open(modalBasic)">Accept</button>
 
-                          <button type="button" Class="btn btn-warning btn-rounded m-1"
-                            (click)="confirm(modalConfirm)">Close Issue</button>
+                          <button type="button" Class="btn btn-danger btn-rounded m-1"
+                            (click)="confirm(modalConfirm)">Reject</button>
                         </ng-container>
                       </div>
                     </div>
                   </form>
+                </div>
+                <div class="ps__rail-y" style="top: 0px; right: 0px; height: 764px;">
+                  <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 416px;"></div>
                 </div>
               </div>
               <div class="border-top mb-5"></div>
@@ -325,12 +328,10 @@
             <div class="col-xs-6 details">
               <span class="name text-muted">{{i?.customer}}</span>
               <span [ngClass]="
-                {'badge-info-custom1 mr-1': i?.errortype == 'E-Channel', 
-                'badge-info-custom2 mr-1': i?.errortype == 'Card Issue', 
-                'badge-info-custom3 mr-1': i?.errortype == 'Service',
-                'badge-info-custom4 mr-1': i?.errortype == 'ATM Dispense Error'}"
-                class="badge badge-info mr-1">{{i?.errortype | titlecase}}</span>
-              <p class="m-0">{{i?.teamAssigned}}</p>
+              {'badge-danger mr-1': i?.priority.name === 'Critical',
+                'badge-info-custom2 mr-1': i?.priority.name === 'Normal'}"
+                class="badge badge-info mr-1">{{i?.priority.name | titlecase}}</span>
+              <p class="m-0">{{i?.errorType | titlecase}}</p>
             </div>
             <div class="col-xs-3 date">
               <span class="text-muted">{{i?.created_On | date}}</span>
@@ -348,14 +349,140 @@
         <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
         <p class="text-muted mb-2" (click)="test()">Browse</p>
         <ul class="inbox-main-nav">
-          <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Inbox (2)</a></li>
-          <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Sent</a></li>
-          <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Starred</a></li>
-          <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Trash</a></li>
-          <li><a href=""><i class="icon-regular i-Spam-Mail"></i> Spam</a></li>
+          <li (click)="allIssues()"><a [ngClass]="{'active': Active == 0}" class="active"><i
+                class="icon-regular i-Mail-2"></i> Assigned Issues (2)</a></li>
+          <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i class="icon-regular i-Mail-Outbox"></i>
+              In Progress (4)</a></li>
         </ul>
       </div>
     </div>
 
   </div>
 </div>
+
+<ng-template #modalBasic let-modal>
+  <div class="modal-header modal-header-custom">
+    <h4 class="modal-title modal-title-custom" id="modal-basic-title">Assign to Resolution Team</h4>
+    <button type="button" class="close close-custom " aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="card mb-0">
+        <div class="card-body">
+          <form [formGroup]="Assignmentform">
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Select Team</label>
+              <div class="col-sm-10">
+                <select formControlName="roles" class="form-control">
+                  <option *ngFor="let r of Roles" [ngValue]='r'>{{r?.description}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Comment</label>
+              <div class="col-sm-10">
+                <textarea formControlName="comment" class="form-control" aria-label="With textarea">
+                              </textarea>
+              </div>
+            </div>
+            <fieldset class="form-group">
+              <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Re-Assign Category</legend>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+                      checked>
+                    <label class="form-check-label" for="gridRadios1">
+                      ATM Dispense Error
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                    <label class="form-check-label" for="gridRadios2">
+                      Card Issue
+                    </label>
+                  </div>
+                  <div class="form-check disabled">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3"
+                      disabled>
+                    <label class="form-check-label" for="gridRadios3">
+                      E-Channel
+                    </label>
+                  </div>
+                  <div class="form-check disabled">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3"
+                      disabled>
+                    <label class="form-check-label" for="gridRadios3">
+                      Service
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group row">
+              <div class="col-sm-2">Priority Level</div>
+              <div class="col-sm-10">
+                <label class="switch switch-primary mr-3">
+                  <span>Normal</span>
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+                <label class="switch switch-warning mr-3">
+                  <span>Medium</span>
+                  <input type="checkbox">
+                  <span class="slider"></span>
+                </label>
+                <label class="switch switch-danger mr-3">
+                  <span>High</span>
+                  <input type="checkbox">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button *ngFor="let btn of updateButton" class="btn btn-{{btn.name}} ladda-button" [ladda]="btn.loading"
+                  (click)="showLoading(btn)">
+                  Update
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer modal-footer-custom">
+    <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
+      [loading]="assignButton.loading" loadingText="Loading..." (click)="submit()">
+      Assign To Team
+    </btn-loading>
+    <button type="button" (click)="modal.close('Save click')"
+      class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirm let-modal>
+  <div class="modal-header modal-header-custom">
+    <h4 class="modal-title" id="modal-title">Close Issue</h4>
+    <button type="button" class="close close-custom " aria-label="Close button" aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to close <span class="text-primary">{{selected?.firstName | titlecase}}
+          {{selected?.lastName | titlecase}}'s</span> issue?</strong></p>
+    <p>An email will automatically be sent to this user profile to inform them of the closing.
+      <span class="text-info">This operation can not be undone unless reopened by the user.</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary btn-rounded"
+      (click)="modal.dismiss('cancel')">Cancel</button>
+    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded"
+      (click)="modal.close('Ok'); closeIssue()">Ok</button>
+  </div>
+</ng-template>
