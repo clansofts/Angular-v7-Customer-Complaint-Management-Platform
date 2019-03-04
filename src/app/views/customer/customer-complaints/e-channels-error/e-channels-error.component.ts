@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { map } from 'rxjs/internal/operators/map';
@@ -264,7 +264,7 @@ export class EChannelsErrorComponent implements OnInit {
       });
   }
 
-  async submit(form: NgForm) {
+  async submit(form) {
     if (this.eChannelsForm.valid) {
       this.loading = true;
       await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);

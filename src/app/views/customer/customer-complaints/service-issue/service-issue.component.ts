@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
-import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResourceModel, UtilitiesService, BranchModel, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
@@ -199,7 +199,7 @@ export class ServiceIssueComponent implements OnInit {
       });
   }
 
-  async submit(form: NgForm) {
+  async submit(form) {
     if (this.serviceComplaintForm.valid) {
       this.loading = true;
       await this.serviceComplaintForm.controls.feedbackId.setValue(this.feedbackCategory_ID);

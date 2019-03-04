@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResourceModel, UtilitiesService, FeedBackModel } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
@@ -208,7 +208,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       });
   }
 
-  async submit(form: NgForm) {
+  async submit(form) {
     if (form.valid) {
       this.loading = true;
       await this.cardIssueForm.controls.feedbackId.setValue(this.feedbackCategory_ID);

@@ -39,7 +39,7 @@ export class IssuesTrackingComponent implements OnInit {
     });
   }
 
-  submit(form: NgForm) {
+  submit(form) {
     if (form.valid) {
       this.loading = true;
       const body = { email: form.value.emailAddress, uid: form.value.uid };

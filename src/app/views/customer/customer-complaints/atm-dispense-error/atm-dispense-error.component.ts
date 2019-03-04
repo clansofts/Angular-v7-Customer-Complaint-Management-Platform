@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, last, distinct, skipUntil, single, filter, take, distinctUntilChanged } from 'rxjs/operators';
 import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
@@ -243,7 +243,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Submit complaint
-  async submit(form: NgForm) {
+  async submit(form) {
     if (this.atmDispenseErrorForm.valid) {
       this.loading = true;
       await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
