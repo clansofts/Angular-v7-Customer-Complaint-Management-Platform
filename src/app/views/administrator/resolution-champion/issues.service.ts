@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ComplaintsModel } from '../../customer/customer-complaints/complaints.service';
 import { distinctUntilChanged, delay } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { interval } from 'rxjs';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer'
+  })
+};
 
 export interface Roles {
   roleId: number;
@@ -64,19 +71,19 @@ export class IssuesResolutionService {
       comment: form.comment,
       response: false,
     };
-    return this.http.post<Assign>(Path, payload);
+    return this.http.post<Assign>(Path, payload, httpOptions);
   }
 
   // Get Resolved Issues
   fetchResolved() {
     const Path = this.baseURL + `assigned/resolvedissues`;
-    return this.http.get<ComplaintsModel>(Path);
+    return this.http.get<ComplaintsModel>(Path, httpOptions);
   }
 
   // For setting a default role
   get roles() {
     const Path = this.baseURL + 'roles';
-    return this.http.get<Roles>(Path);
+    return this.http.get<Roles>(Path, httpOptions);
   }
 
   // Close an issue
@@ -85,6 +92,6 @@ export class IssuesResolutionService {
     const payload: any = {
       statusId: 3,
     };
-    return this.http.patch<any>(Path, payload);
+    return this.http.patch<any>(Path, payload, httpOptions);
   }
 }

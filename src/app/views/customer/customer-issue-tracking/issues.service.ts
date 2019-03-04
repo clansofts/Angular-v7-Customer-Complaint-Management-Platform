@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer'
+  })
+};
 
 export interface CustomerIssuesModel {
   errortype: string;
@@ -21,6 +28,6 @@ export class IssuesService {
   // Track an issue by the issue ID
   trackIssue(body: any) {
     const Path = this.baseURL + `statusenquries/` + body.uid + '?email=' + body.email;
-    return this.http.get<CustomerIssuesModel>(Path);
+    return this.http.get<CustomerIssuesModel>(Path, httpOptions);
   }
 }

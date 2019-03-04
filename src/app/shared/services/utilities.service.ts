@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer'
+  })
+};
 
 // Interface ATM list
 export interface ATMModel {
@@ -62,11 +69,11 @@ export class UtilitiesService {
 
   // Fetch resource by endpoint
   fetch(endpoint: string): any {
-    return this.http.get<ResourceModel>(this.baseURL + endpoint);
+    return this.http.get<ResourceModel>(this.baseURL + endpoint, httpOptions);
   }
 
   set card_VariantsInit(endpoint: string) {
-    this.card_Variants$ = this.http.get<ResourceModel[]>(this.baseURL + endpoint);
+    this.card_Variants$ = this.http.get<ResourceModel[]>(this.baseURL + endpoint, httpOptions);
   }
 
   // For tracking user flow.
@@ -76,31 +83,31 @@ export class UtilitiesService {
       'feedbackId': feedback,
       'categoryId': category
     };
-    return this.http.post<FeedBackModel>(Path, body);
+    return this.http.post<FeedBackModel>(Path, body, httpOptions);
   }
 
   // ATM list
   atmList(): any {
     const Path = this.baseURL + `atmlists`;
-    return this.http.get<ATMModel>(Path);
+    return this.http.get<ATMModel>(Path, httpOptions);
   }
 
   // Bank list
   banksList(): any {
     const Path = this.baseURL + `otherbanks`;
-    return this.http.get<BankModel>(Path);
+    return this.http.get<BankModel>(Path, httpOptions);
   }
 
   // Branch list
   branchList(): any {
     const Path = this.baseURL + `branchlists`;
-    return this.http.get<BranchModel>(Path);
+    return this.http.get<BranchModel>(Path, httpOptions);
   }
 
   // Types of bills
   get fetchBillTypes(): any {
     const Path = this.baseURL + `billtypes`;
-    return this.http.get<ResourceModel>(Path);
+    return this.http.get<ResourceModel>(Path, httpOptions);
   }
 
   // Date formater, format: 'yyyy-mm-dd'
@@ -136,6 +143,6 @@ export class UtilitiesService {
   // Fetch service providers
   get serviceProviders(): any {
     const Path = this.baseURL + `serviceproviders`;
-    return this.http.get<ServiceProvider>(Path);
+    return this.http.get<ServiceProvider>(Path, httpOptions);
   }
 }

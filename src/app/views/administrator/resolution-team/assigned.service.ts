@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, interval } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { ComplaintsModel } from '../../customer/customer-complaints/complaints.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer'
+  })
+};
 
 export interface AssignedIssuesModel {
   id: number;
@@ -30,7 +37,7 @@ export class AssignedService {
   // Issues endpoint
   fetchAssignments() {
     const Path = this.baseURL + 'assigned';
-    return this.http.get<AssignedIssuesModel>(Path);
+    return this.http.get<AssignedIssuesModel>(Path, httpOptions);
   }
 
   // Initialize the observable with new values everyone 5 mins
@@ -56,6 +63,6 @@ export class AssignedService {
     const payload: any = {
       statusId: 3,
     };
-    return this.http.patch<any>(Path, payload);
+    return this.http.patch<any>(Path, payload, httpOptions);
   }
 }
