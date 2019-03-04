@@ -3,12 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer'
-  })
-};
+const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
 // Interface ATM list
 export interface ATMModel {

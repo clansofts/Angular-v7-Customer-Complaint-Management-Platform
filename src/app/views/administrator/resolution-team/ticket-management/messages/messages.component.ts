@@ -27,6 +27,31 @@ export class MessagesRTComponent implements OnInit {
   comment: string; // RC comment
   Assignmentform: any;
 
+  assignButton =
+    {
+      name: 'primary',
+      loading: false,
+    };
+  updateButton = [
+    {
+      name: 'primary',
+      loading: false,
+    },
+  ];
+
+  Members = [{
+    name: 'Ayoola',
+    id: 1
+  },
+  {
+    name: 'Chris',
+    id: 2
+  },
+  {
+    name: 'Zim',
+    id: 3
+  }]
+
   constructor(
     private admin: AdminComponent,
     private dl: DataLayerService,
@@ -51,7 +76,7 @@ export class MessagesRTComponent implements OnInit {
     this.allIssues();
   }
 
-  select(i) {
+  select(i: { issue: any; comment: string; }) {
     this.selected = i.issue;
     this.comment = i.comment;
   }
@@ -106,8 +131,12 @@ export class MessagesRTComponent implements OnInit {
     console.log(code);
   }
 
-  resolveIssue() {
+  assignIssue(person) {
+    this.toastr.success(`Issue Assigned To ${person}`, 'Assigned!', { closeButton: true });
+  }
 
+  reject() {
+    this.toastr.warning(`Issue Rejected`, 'Rejected!', { closeButton: true });
   }
 
   test() {

@@ -5,12 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { ComplaintsModel } from '../../customer/customer-complaints/complaints.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer'
-  })
-};
+const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
 export interface AssignedIssuesModel {
   id: number;

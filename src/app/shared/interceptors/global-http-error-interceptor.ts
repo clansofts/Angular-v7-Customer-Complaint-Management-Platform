@@ -22,6 +22,9 @@ export class GlobalHttpErrorInterceptor {
             request = this.addToken(request, currentUser.access_token);
         }
 
+        // For Testing purposes
+        console.log(request);
+
         // Then handle error
         return next.handle(request)
             .pipe(

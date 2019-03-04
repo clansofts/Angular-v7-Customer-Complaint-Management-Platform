@@ -6,12 +6,7 @@ import { distinctUntilChanged, delay } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { interval } from 'rxjs';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer'
-  })
-};
+const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
 export interface Roles {
   roleId: number;

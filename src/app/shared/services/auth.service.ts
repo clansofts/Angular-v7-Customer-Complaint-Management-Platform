@@ -6,13 +6,6 @@ import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer'
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +23,7 @@ export class AuthService {
   }
 
   checkAuth() {
-    this.authenticated = this.store.getItem('demo_login_status');
+  //  this.authenticated = this.store.getItem('demo_login_status');
   }
 
   getuser() {
@@ -42,7 +35,7 @@ export class AuthService {
     const payload = `grant_type=password&username=${credentials.email}&password=${credentials.password}`;
     this.authenticated = true;
     this.store.setItem('demo_login_status', true);
-    return this.http.post<any>(signInURL, payload, httpOptions);
+    return this.http.post<any>(signInURL, payload);
   }
   signout() {
     this.authenticated = false;

@@ -3,12 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer'
-  })
-};
+const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
 @Injectable({
   providedIn: 'root'

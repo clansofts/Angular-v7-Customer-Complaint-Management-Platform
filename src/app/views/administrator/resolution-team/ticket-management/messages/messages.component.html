@@ -362,7 +362,7 @@
 
 <ng-template #modalBasic let-modal>
   <div class="modal-header modal-header-custom">
-    <h4 class="modal-title modal-title-custom" id="modal-basic-title">Assign to Resolution Team</h4>
+    <h4 class="modal-title modal-title-custom" id="modal-basic-title">Assign to Team</h4>
     <button type="button" class="close close-custom " aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -373,10 +373,10 @@
         <div class="card-body">
           <form [formGroup]="Assignmentform">
             <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Select Team</label>
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Select Person</label>
               <div class="col-sm-10">
                 <select formControlName="roles" class="form-control">
-                  <option *ngFor="let r of Roles" [ngValue]='r'>{{r?.description}}</option>
+                  <option *ngFor="let i of Members" [ngValue]='r'>{{i?.name}}</option>
                 </select>
               </div>
             </div>
@@ -387,7 +387,7 @@
                               </textarea>
               </div>
             </div>
-            <fieldset class="form-group">
+            <!-- <fieldset class="form-group">
               <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Re-Assign Category</legend>
                 <div class="col-sm-10">
@@ -448,7 +448,7 @@
                   Update
                 </button>
               </div>
-            </div>
+            </div> -->
           </form>
         </div>
       </div>
@@ -456,10 +456,10 @@
   </div>
   <div class="modal-footer modal-footer-custom">
     <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
-      [loading]="assignButton.loading" loadingText="Loading..." (click)="submit()">
-      Assign To Team
+      [loading]="assignButton.loading" loadingText="Loading..." (click)="assignIssue(Members[0].name)">
+      Assign
     </btn-loading>
-    <button type="button" (click)="modal.close('Save click')"
+    <button type="button" (click)="modal.close('Save click');"
       class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
   </div>
 </ng-template>
@@ -473,16 +473,13 @@
     </button>
   </div>
   <div class="modal-body">
-    <p><strong>Are you sure you want to close <span class="text-primary">{{selected?.firstName | titlecase}}
+    <p><strong>Are you sure you want to reject <span class="text-primary">{{selected?.firstName | titlecase}}
           {{selected?.lastName | titlecase}}'s</span> issue?</strong></p>
-    <p>An email will automatically be sent to this user profile to inform them of the closing.
-      <span class="text-info">This operation can not be undone unless reopened by the user.</span>
-    </p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary btn-rounded"
       (click)="modal.dismiss('cancel')">Cancel</button>
     <button type="button" ngbAutofocus class="btn btn-danger btn-rounded"
-      (click)="modal.close('Ok'); closeIssue()">Ok</button>
+      (click)="modal.close('Ok');  reject()">Ok</button>
   </div>
 </ng-template>

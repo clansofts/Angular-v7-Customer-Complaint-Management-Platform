@@ -77,7 +77,7 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Consulting',
             sub: [
-                { icon: 'i-Statistic', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' },
+                /* { icon: 'i-Statistic', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' }, */
                 { icon: 'i-Movie-Ticket', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
                 { icon: 'i-Mail-Add-', name: 'Messages', state: '/admin-rc/messages', type: 'link' }
             ]
@@ -91,10 +91,10 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' },
+                /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
                 { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Archive', state: '', type: 'link' }
+                { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' }
             ]
         }
     ];
