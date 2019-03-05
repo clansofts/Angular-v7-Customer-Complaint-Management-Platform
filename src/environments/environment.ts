@@ -5,8 +5,14 @@
 export const environment = {
   production: false,
   API: {
+
+    // Local host
     BaseURL: 'http://172.30.226.87/api/',
     AuthURL: 'http://172.30.226.87/'
+
+    // VM Development
+    // BaseURL: 'http://10.65.0.86/api/',
+    // AuthURL: 'http://10.65.0.86/'
   }
 };
 

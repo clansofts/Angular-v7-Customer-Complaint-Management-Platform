@@ -114,8 +114,8 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   }
 
   // Register service by fetching feedback categoryID
-  fetch_feedbackID(): Promise<number> {
-    return this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
+  async fetch_feedbackID(): Promise<number> {
+    return await this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
         this.feedbackCategory_ID = response.id;
       });

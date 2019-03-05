@@ -72,7 +72,7 @@ export class UtilitiesService {
   }
 
   // For tracking user flow.
-  breadCrumbs(feedback, category): any {
+  breadCrumbs(feedback: number, category: number): any {
     const Path = this.baseURL + `feedbackcategories`;
     const body: any = {
       'feedbackId': feedback,

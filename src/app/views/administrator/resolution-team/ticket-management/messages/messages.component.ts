@@ -10,6 +10,8 @@ import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service
 import { AssignedService, AssignedIssuesModel } from '../../assigned.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Validators, FormBuilder } from '@angular/forms';
+import { Emoji, Confirmable, f } from './Emoji';
+
 
 @Component({
   selector: 'app-messages',
@@ -26,6 +28,9 @@ export class MessagesRTComponent implements OnInit {
   Active: number;
   comment: string; // RC comment
   Assignmentform: any;
+
+  @Emoji()
+  flavor = 'vanilla';
 
   assignButton =
     {
@@ -50,7 +55,7 @@ export class MessagesRTComponent implements OnInit {
   {
     name: 'Zim',
     id: 3
-  }]
+  }];
 
   constructor(
     private admin: AdminComponent,
@@ -139,8 +144,9 @@ export class MessagesRTComponent implements OnInit {
     this.toastr.warning(`Issue Rejected`, 'Rejected!', { closeButton: true });
   }
 
+  @f()
   test() {
-    console.log(this.assignedIssues$);
+    console.log(this.flavor);
   }
 
 }

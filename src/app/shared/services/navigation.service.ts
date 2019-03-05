@@ -62,8 +62,8 @@ export class NavigationService {
 
     admin1: IMenuItem[] = [
         {
-            name: 'Customer Service',
-            description: 'Make a complaint or track an issue.',
+            name: 'Admin Service',
+            description: 'Report a complaint or track an issue.',
             type: 'dropDown',
             icon: 'i-Male-21',
             sub: [
@@ -73,13 +73,13 @@ export class NavigationService {
         },
         {
             name: 'Resolution Champion',
-            description: 'Assign issues and track reports.',
+            description: 'Assign issues to resolution team.',
             type: 'dropDown',
             icon: 'i-Consulting',
             sub: [
                 /* { icon: 'i-Statistic', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' }, */
                 { icon: 'i-Movie-Ticket', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
-                { icon: 'i-Mail-Add-', name: 'Messages', state: '/admin-rc/messages', type: 'link' }
+                /* { icon: 'i-Mail-Add-', name: 'Messages', state: '/admin-rc/messages', type: 'link' } */
             ]
         }
     ];
@@ -87,14 +87,14 @@ export class NavigationService {
     admin2: IMenuItem[] = [
         {
             name: 'Resolution Team',
-            description: 'View and monitor customer complaints',
+            description: 'Resolve issues and monitor customer complaints',
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
-                { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' }
+                /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' } */
             ]
         }
     ];

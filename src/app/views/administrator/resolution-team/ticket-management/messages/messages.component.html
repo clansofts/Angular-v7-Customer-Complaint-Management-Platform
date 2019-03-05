@@ -34,7 +34,15 @@
                   <p class="text-12 text-muted">Assigned by the resolution champion</p>
                 </div>
               </div>
-              <p *ngIf="comment"><span><b>Comment: </b></span>{{comment | titlecase}} </p>
+              <ng-container *ngIf="comment">
+                <p>
+                  <span>
+                    <b>Comment:</b>
+                  </span>
+                </p>
+                <p>{{comment | titlecase}}</p>
+              </ng-container>
+
               <h4 class="mb-3">{{selected?.subject}}</h4>
               <div class="card card-custom mb-4">
                 <div class="card-body">
