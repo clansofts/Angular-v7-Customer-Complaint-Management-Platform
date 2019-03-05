@@ -340,6 +340,8 @@
                 'badge-info-custom2 mr-1': i?.priority.name === 'Normal'}"
                 class="badge badge-info mr-1">{{i?.priority.name | titlecase}}</span>
               <p class="m-0">{{i?.errorType | titlecase}}</p>
+              <p _ngcontent-c5="" class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
+                  _ngcontent-c5="" class="badge badge-outline-info">{{i?.status?.name}}</span></p>
             </div>
             <div class="col-xs-3 date">
               <span class="text-muted">{{i?.created_On | date}}</span>
@@ -359,8 +361,6 @@
         <ul class="inbox-main-nav">
           <li (click)="allIssues()"><a [ngClass]="{'active': Active == 0}" class="active"><i
                 class="icon-regular i-Mail-2"></i> Assigned Issues (2)</a></li>
-          <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i class="icon-regular i-Mail-Outbox"></i>
-              In Progress (4)</a></li>
         </ul>
       </div>
     </div>

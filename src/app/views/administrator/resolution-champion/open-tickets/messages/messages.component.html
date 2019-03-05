@@ -362,6 +362,9 @@
                                 'badge-info-custom4 mr-1': i?.channelType.channelType == 'ATM Dispense Error'}"
                                 class="badge badge-info mr-1">{{i?.channelType.channelType | titlecase}}</span>
                             <p class="m-0">Source: {{i?.source | titlecase}}</p>
+                            <p _ngcontent-c5=""
+                                class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
+                                    _ngcontent-c5="" class="badge badge-outline-info">{{i?.status?.name}}</span></p>
                         </div>
                         <div class="col-xs-3 date">
                             <span class="text-muted">{{i?.created_On | date: 'dd/MM/yyyy'}}</span>
@@ -379,24 +382,13 @@
                 <p class="text-muted mb-2" (click)="test()">Browse</p>
                 <ul class="inbox-main-nav">
                     <li (click)="allIssues()"><a [ngClass]="{'active': Active == 0}"><i
-                                class="icon-regular i-Mail-2"></i> All Issues (155)</a></li>
+                                class="icon-regular i-Mail-2"></i> All Issues ({{Count.all}})</a></li>
                     <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i
-                                class="icon-regular i-Letter-Open"></i> Open Tickets (58)</a></li>
+                                class="icon-regular i-Letter-Open"></i> Open Tickets ({{Count.open}})</a></li>
                     <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i
-                                class="icon-regular i-Clock-4"></i> Assigned (14)</a></li>
-                    <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i
-                                class="icon-regular i-Clock-4"></i> In Progress (11)</a></li>
+                                class="icon-regular i-Clock-4"></i> Assigned ({{Count.assigned}})</a></li>
                     <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i
-                                class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
-                    <!--   <li><a [ngClass]="{'active': Active == 6}"><i class="icon-regular i-Mail-Favorite"></i> High
-                            Priority</a></li>
-                    <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i
-                                class="icon-regular i-Folder-Trash"></i> Closed Issues</a></li>
-                    <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i
-                                class="icon-regular i-Folder-Trash"></i> Dismissed Issues</a></li>
-                    <li (click)="fetchResolvedIssues()"><a [ngClass]="{'active': Active == 5}"><i
-                                class="icon-regular i-Mail-Outbox"></i> Archived
-                            (10)</a></li> -->
+                                class="icon-regular i-Folder-Trash"></i> Closed Issues ({{Count.closed}})</a></li>
                 </ul>
             </div>
         </div>

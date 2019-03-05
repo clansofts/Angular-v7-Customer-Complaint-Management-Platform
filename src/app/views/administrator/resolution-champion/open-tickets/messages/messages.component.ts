@@ -25,6 +25,11 @@ export class MessagesComponent implements OnInit {
   confirmResut: string;
   Roles: Roles;
   Active: number;
+  Count: any = {
+    open: 0,
+    closed: 0,
+    assigned: 0,
+  };
 
   assignButton =
     {
@@ -101,7 +106,7 @@ export class MessagesComponent implements OnInit {
             this.ngOnInit();
             return;
           }
-          // Error
+          // Warning
           this.toastr.error('An error occured while submiting', 'Error!', { closeButton: true });
         });
     }, 3000);
@@ -112,8 +117,14 @@ export class MessagesComponent implements OnInit {
     this.setActive = 0;
     await this.issuesService.issues$
       .pipe(distinctUntilChanged())
-      .subscribe((res: ComplaintsModel) => {
-        this.Issues$ = res;
+      .subscribe((result: ComplaintsModel) => {
+        if (result) {
+          this.toastr.info('Ready to go', 'Done!', { closeButton: true });
+          this.Issues$ = result;
+          this.Count.all = this.Issues$.length;
+        }
+      }, error => {
+        this.toastr.error(error, 'An error occured while fetching issues', { closeButton: true });
       });
   }
 
@@ -175,7 +186,22 @@ export class MessagesComponent implements OnInit {
       values.push(val);
     });
     this.Issues$ = values;
-    console.log(this.Issues$)
+    // Count number of items to display
+    this.addCount(code, this.Issues$);
+  }
+
+  addCount(code: any, arr: { length: any; }) {
+    const length = arr.length;
+    switch (code) {
+      case 1:
+        return this.Count.open = length;
+      case 2:
+        return this.Count.assigned = length;
+      case 3:
+        return this.Count.closed = length;
+      case 4:
+        return this.Count.open = length;
+    }
   }
 
   // Close an issue
@@ -191,6 +217,7 @@ export class MessagesComponent implements OnInit {
 
   async test() {
     console.log('Running test');
+    console.log(this.Issues$.length);
   }
 
 }
