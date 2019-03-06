@@ -44,3 +44,6 @@ background-color: #00aeef !important;
     overflow-y: scroll !important; 
     max-height: 500px !important;
 }
+.inbox-main-nav li {
+    cursor: pointer !important;  
+}

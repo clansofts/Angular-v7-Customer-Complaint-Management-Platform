@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { DataLayerService } from 'src/app/shared/services/data-layer.service';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComposeDialogComponent } from '../compose-dialog/compose-dialog.component';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { IssuesResolutionService, Roles } from '../../issues.service';
 import { ComplaintsModel } from 'src/app/views/customer/customer-complaints/complaints.service';
-import { distinctUntilChanged, delay, filter, concatAll } from 'rxjs/operators';
-import { FormGroup, FormBuilder, NgForm, Validators } from '@angular/forms';
+import { distinctUntilChanged, filter, concatAll, timeout, map } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -17,7 +17,7 @@ import { AdminComponent } from '../../../admin.component';
   styleUrls: ['./messages.component.scss'],
   animations: [SharedAnimations]
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, AfterContentInit {
   Issues$: any;
   selected: any;
   issuesAssignmentform: FormGroup;
@@ -25,11 +25,7 @@ export class MessagesComponent implements OnInit {
   confirmResut: string;
   Roles: Roles;
   Active: number;
-  Count: any = {
-    open: 0,
-    closed: 0,
-    assigned: 0,
-  };
+  Count: any = {};
 
   assignButton =
     {
@@ -55,15 +51,27 @@ export class MessagesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Initialize the issues service
-    this.issuesService.initIssues();
-    // store all issues in Issues$ variable
-    this.allIssues();
-    this.fetchRoles();
-    this.buildFormBasic();
+    Promise.all([
+      this.buildForm(),
+      // Initialize the issues service
+      this.issuesService.initIssues(),
+      // store all issues in Issues$ variable
+      this.allIssues(),
+      this.fetchRoles(),
+    ])
+      .then(function () {
+        console.log('application loaded successfully');
+      }).catch(function () {
+        console.log('An error occured while fetching resources');
+      });
+  }
+
+  // Component lifecycle management
+  ngAfterContentInit() {
   }
 
   select(issue: any) {
+    console.log(issue);
     this.selected = issue;
     this.issuesAssignmentform.controls.issueId.setValue(issue.issueId);
   }
@@ -74,7 +82,7 @@ export class MessagesComponent implements OnInit {
   }
 
   /* Have to create two form controls for both form */
-  buildFormBasic() {
+  buildForm() {
     this.issuesAssignmentform = this.fb.group({
       roles: ['', [Validators.required]],
       comment: [],
@@ -97,17 +105,19 @@ export class MessagesComponent implements OnInit {
     setTimeout(() => {
       this.issuesService.assignIssue(form)
         .toPromise()
-        .then((res: any) => {
+        .then(async (res: any) => {
           this.assignButton.loading = false;
           if (res) {
-            this.toastr.success(`Assigned to ${this.issuesAssignmentform.value.roles.description}
+            await this.toastr.success(`Assigned to ${this.issuesAssignmentform.value.roles.description}
              team.`, 'Success!');
-            delay(1000);
             this.ngOnInit();
+            this.modalService.dismissAll();
             return;
           }
           // Warning
           this.toastr.error('An error occured while submiting', 'Error!', { closeButton: true });
+        }, error => {
+          this.toastr.error(error, 'Error!', { closeButton: true });
         });
     }, 3000);
   }
@@ -119,9 +129,11 @@ export class MessagesComponent implements OnInit {
       .pipe(distinctUntilChanged())
       .subscribe((result: ComplaintsModel) => {
         if (result) {
-          this.toastr.info('Ready to go', 'Done!', { closeButton: true });
           this.Issues$ = result;
+          // Total number of issues
           this.Count.all = this.Issues$.length;
+          // Filter by type
+          this.Filter();
         }
       }, error => {
         this.toastr.error(error, 'An error occured while fetching issues', { closeButton: true });
@@ -168,7 +180,7 @@ export class MessagesComponent implements OnInit {
   }
 
   // Filter by status
-  async filterBy(code: number) {
+  async filterBy(code?: number) {
     this.setActive = code;
     const values = [];
     const inProgress = await this.issuesService.issues$
@@ -190,6 +202,17 @@ export class MessagesComponent implements OnInit {
     this.addCount(code, this.Issues$);
   }
 
+  // Filter automatically
+  Filter() {
+    const self = this;
+    const types = [1, 2, 3, 4, 5];
+    types.forEach(function (value) {
+      self.filterBy(value);
+    });
+    // Default
+    this.filterBy(1);
+  }
+
   addCount(code: any, arr: { length: any; }) {
     const length = arr.length;
     switch (code) {
@@ -200,15 +223,17 @@ export class MessagesComponent implements OnInit {
       case 3:
         return this.Count.closed = length;
       case 4:
-        return this.Count.open = length;
+        return this.Count.progress = length;
+      case 5:
+        return this.Count.rejected = length;
     }
   }
 
   // Close an issue
   closeIssue() {
-    console.log(this.selected.issueId);
     try {
-      this.issuesService.closeIssue(this.selected.issueId).subscribe(res => console.log(res));
+      this.issuesService.closeIssue(this.selected.issueId)
+        .subscribe(res => console.log(res));
       this.selected = null;
     } catch (err) {
       console.log(err);
@@ -216,8 +241,9 @@ export class MessagesComponent implements OnInit {
   }
 
   async test() {
+    const self = this;
     console.log('Running test');
-    console.log(this.Issues$.length);
+    /* console.log(this.Issues$); */
   }
 
 }

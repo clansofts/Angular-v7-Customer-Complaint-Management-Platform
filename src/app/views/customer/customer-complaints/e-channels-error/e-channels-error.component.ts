@@ -117,7 +117,11 @@ export class EChannelsErrorComponent implements OnInit {
       this.fetchCardVariants = this._card_Variants,
       this.billingsType, // getter
       this.serviceProviders()
-    ]);
+    ]).then(function () {
+      console.log('application loaded successfully');
+    }).catch(function () {
+      console.log('An error occured while fetching resources');
+    });
   }
 
   // Alert controls

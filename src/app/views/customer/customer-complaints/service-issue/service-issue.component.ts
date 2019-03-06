@@ -97,7 +97,11 @@ export class ServiceIssueComponent implements OnInit {
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
       this.fetch_BranchList()
-    ]);
+    ]).then(function () {
+      console.log('application loaded successfully');
+    }).catch(function () {
+      console.log('An error occured while fetching resources');
+    });
   }
 
   // Register service by fetching feedback categoryID

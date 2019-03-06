@@ -7,6 +7,14 @@ import { ComplaintsModel } from '../../customer/customer-complaints/complaints.s
 
 const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
+export interface Teams {
+  email: string;
+  id: number;
+  name: string;
+  team: null;
+  title: string;
+}
+
 export interface AssignedIssuesModel {
   id: number;
   customer: string;
@@ -15,6 +23,7 @@ export interface AssignedIssuesModel {
   teamAssigned: string;
   issue: ComplaintsModel;
   comment: string;
+  status: any;
 }
 
 @Injectable({
@@ -52,12 +61,21 @@ export class AssignedService {
       });
   }
 
+  // Get team members
+  get teams() {
+    const Path = this.baseURL + 'teams';
+    return this.http.get<Teams>(Path, httpOptions);
+  }
+
   // Assign an issue to a team member
-  assignTo(id: number) {
-    const Path = this.baseURL + 'assigned' + id;
+  assignTo(form?: any) {
+    console.log(form);
+    const Path = this.baseURL + 'teams/assign';
     const payload: any = {
-      statusId: 3,
+      tId: form.teamId.id, // teamId
+      assignId: form.assignId, // assigned issue id
+      message: form.comment,
     };
-    return this.http.patch<any>(Path, payload, httpOptions);
+    return this.http.post<any>(Path, payload, httpOptions);
   }
 }

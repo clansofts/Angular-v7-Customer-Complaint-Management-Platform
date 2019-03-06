@@ -101,7 +101,11 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       this.fetchCardVariants = this._card_Variants,
       // tslint:disable-next-line:no-unused-expression
       this.fetch_feedbackID()
-    ]);
+    ]).then(function () {
+      console.log('application loaded successfully');
+    }).catch(function () {
+      console.log('An error occured while fetching resources');
+    });
   }
 
   ngOnDestroy() {

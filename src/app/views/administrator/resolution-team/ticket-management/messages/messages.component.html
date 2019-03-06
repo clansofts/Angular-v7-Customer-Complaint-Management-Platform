@@ -197,10 +197,10 @@
                       </div>
 
                       <!-- <div class="col-md-6 form-group mb-3" *ngIf="selected?.billType.name">
-                                                <label for="picker1">Airtime billers</label>
-                                                <input disabled class="form-control form-control-rounded" id="phone"
-                                                    placeholder="Airtime billers" value="{{selected?.billType.name}}">
-                                            </div> -->
+<label for="picker1">Airtime billers</label>
+<input disabled class="form-control form-control-rounded" id="phone"
+placeholder="Airtime billers" value="{{selected?.billType.name}}">
+</div> -->
 
                       <div class="col-md-6 form-group mb-3" *ngIf="selected?.unionMobile">
                         <label for="phone">Union Mobile number</label>
@@ -271,7 +271,7 @@
                           </div>
                           <textarea disabled value="{{selected?.complaintDescription}}" class="form-control"
                             aria-label="With textarea">
-                                                        </textarea>
+</textarea>
                         </div>
                       </div>
                       <div class="col-md-12 form-group mb-3" *ngIf="selected?.suggestionBox">
@@ -282,7 +282,7 @@
                           </div>
                           <textarea disabled value="{{selected?.suggestionBox}}" class="form-control"
                             aria-label="With textarea">
-                                                    </textarea>
+</textarea>
                         </div>
                       </div>
 
@@ -296,11 +296,23 @@
                         </div>
                       </div>
 
-                      <div class="col-md-12">
-                        <ng-container>
+                      <div class="col-md-12" [ngSwitch]="selected?.status?.id">
+                        <!-- For Pending Issues -->
+                        <ng-container *ngSwitchCase="2">
                           <button type="button" Class="btn btn-primary btn-rounded m-1"
                             (click)="open(modalBasic)">Accept</button>
-
+                          <button type="button" Class="btn btn-danger btn-rounded m-1"
+                            (click)="confirm(modalConfirm)">Reject</button>
+                        </ng-container>
+                        <!-- For In Progress -->
+                        <ng-container *ngSwitchCase="4">
+                          <button type="button" Class="btn btn-primary btn-rounded m-1"
+                            (click)="isCompleted(modalBasic)">Mark as Completed</button>
+                        </ng-container>
+                        <!-- For Reassigned -->
+                        <ng-container *ngSwitchCase="7">
+                          <button type="button" Class="btn btn-primary btn-rounded m-1"
+                            (click)="open(modalBasic)">Accept</button>
                           <button type="button" Class="btn btn-danger btn-rounded m-1"
                             (click)="confirm(modalConfirm)">Reject</button>
                         </ng-container>
@@ -334,20 +346,17 @@
               <img src="./assets/images/faces/f3.jpg" alt="">
             </div>
             <div class="col-xs-6 details">
-              <span class="name text-muted">{{i?.customer}}</span>
-              <span [ngClass]="
-              {'badge-danger mr-1': i?.priority.name === 'Critical',
-                'badge-info-custom2 mr-1': i?.priority.name === 'Normal'}"
-                class="badge badge-info mr-1">{{i?.priority.name | titlecase}}</span>
+              <span class="name text-muted">{{i?.customer | titlecase}}</span>
+              <span [ngClass]="{'badge-danger mr-1': i?.priority?.name === 'Critical','badge-info-custom2 mr-1': i?.priority?.name === 'Normal'}"
+                class="badge badge-info mr-1">{{i?.priority?.name | titlecase}}</span>
               <p class="m-0">{{i?.errorType | titlecase}}</p>
               <p _ngcontent-c5="" class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
-                  _ngcontent-c5="" class="badge badge-outline-info">{{i?.status?.name}}</span></p>
+                  _ngcontent-c5="" class="badge badge-outline-info">{{i?.issue?.status?.name}}</span></p>
             </div>
             <div class="col-xs-3 date">
               <span class="text-muted">{{i?.created_On | date}}</span>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -359,8 +368,13 @@
         <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
         <p class="text-muted mb-2" (click)="test()">Browse</p>
         <ul class="inbox-main-nav">
-          <li (click)="allIssues()"><a [ngClass]="{'active': Active == 0}" class="active"><i
-                class="icon-regular i-Mail-2"></i> Assigned Issues (2)</a></li>
+          <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 0}"><i class="icon-regular i-Mail-2"></i>
+              Pending ({{Count?.pending}})</a></li>
+          <li (click)="filterBy(7)"><a [ngClass]="{'active': Active == 1}"><i class="icon-regular i-Mail-2"></i>
+              Re-Assigned
+              ({{Count?.reassigned}})</a></li>
+          <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Mail-2">
+              </i> In Progress ({{Count?.progress}})</a></li>
         </ul>
       </div>
     </div>
@@ -383,8 +397,8 @@
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Select Person</label>
               <div class="col-sm-10">
-                <select formControlName="roles" class="form-control">
-                  <option *ngFor="let i of Members" [ngValue]='r'>{{i?.name}}</option>
+                <select formControlName="teamId" class="form-control">
+                  <option *ngFor="let i of teams" [ngValue]='i'>{{i?.name}}</option>
                 </select>
               </div>
             </div>
@@ -392,71 +406,9 @@
               <label for="inputEmail3" class="col-sm-2 col-form-label">Comment</label>
               <div class="col-sm-10">
                 <textarea formControlName="comment" class="form-control" aria-label="With textarea">
-                              </textarea>
+</textarea>
               </div>
             </div>
-            <!-- <fieldset class="form-group">
-              <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0">Re-Assign Category</legend>
-                <div class="col-sm-10">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
-                      checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      ATM Dispense Error
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                    <label class="form-check-label" for="gridRadios2">
-                      Card Issue
-                    </label>
-                  </div>
-                  <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3"
-                      disabled>
-                    <label class="form-check-label" for="gridRadios3">
-                      E-Channel
-                    </label>
-                  </div>
-                  <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3"
-                      disabled>
-                    <label class="form-check-label" for="gridRadios3">
-                      Service
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <div class="form-group row">
-              <div class="col-sm-2">Priority Level</div>
-              <div class="col-sm-10">
-                <label class="switch switch-primary mr-3">
-                  <span>Normal</span>
-                  <input type="checkbox" checked>
-                  <span class="slider"></span>
-                </label>
-                <label class="switch switch-warning mr-3">
-                  <span>Medium</span>
-                  <input type="checkbox">
-                  <span class="slider"></span>
-                </label>
-                <label class="switch switch-danger mr-3">
-                  <span>High</span>
-                  <input type="checkbox">
-                  <span class="slider"></span>
-                </label>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <button *ngFor="let btn of updateButton" class="btn btn-{{btn.name}} ladda-button" [ladda]="btn.loading"
-                  (click)="showLoading(btn)">
-                  Update
-                </button>
-              </div>
-            </div> -->
           </form>
         </div>
       </div>
@@ -464,7 +416,7 @@
   </div>
   <div class="modal-footer modal-footer-custom">
     <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
-      [loading]="assignButton.loading" loadingText="Loading..." (click)="assignIssue(Members[0].name)">
+      [loading]="assignButton.loading" loadingText="Loading..." (click)="assignIssue()">
       Assign
     </btn-loading>
     <button type="button" (click)="modal.close('Save click');"

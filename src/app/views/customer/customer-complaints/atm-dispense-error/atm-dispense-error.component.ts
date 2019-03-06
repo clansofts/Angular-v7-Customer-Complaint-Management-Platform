@@ -98,7 +98,11 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       this.atmLocations,
       this.fetch_feedbackID(),
       this.fetch_BankList()
-    ]);
+    ]).then(function () {
+      console.log('application loaded successfully');
+    }).catch(function () {
+      console.log('An error occured while fetching resources');
+    });
   }
 
   ngOnDestroy() {

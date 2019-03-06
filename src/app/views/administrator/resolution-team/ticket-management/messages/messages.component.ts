@@ -3,14 +3,15 @@ import { AdminComponent } from '../../../admin.component';
 import { DataLayerService } from 'src/app/shared/services/data-layer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/internal/Observable';
-import { ComposeDialogComponent } from '../compose-dialog/compose-dialog.component';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
-import { AssignedService, AssignedIssuesModel } from '../../assigned.service';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.service';
+import { distinctUntilChanged, catchError, concatAll, filter } from 'rxjs/operators';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Emoji, Confirmable, f } from './Emoji';
+import { Emoji } from './Emoji';
+import { IssuesResolutionService } from '../../../resolution-champion/issues.service';
+import { delay } from 'q';
 
 
 @Component({
@@ -28,9 +29,11 @@ export class MessagesRTComponent implements OnInit {
   Active: number;
   comment: string; // RC comment
   Assignmentform: any;
+  teams: Teams;
+  Count: any = {};
 
   @Emoji()
-  flavor = 'vanilla';
+  flavor = 'valhala';
 
   assignButton =
     {
@@ -44,25 +47,11 @@ export class MessagesRTComponent implements OnInit {
     },
   ];
 
-  Members = [{
-    name: 'Ayoola',
-    id: 1
-  },
-  {
-    name: 'Chris',
-    id: 2
-  },
-  {
-    name: 'Zim',
-    id: 3
-  }];
-
   constructor(
     private admin: AdminComponent,
     private dl: DataLayerService,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private errorService: ErrorDialogService,
     private assignedService: AssignedService,
     private fb: FormBuilder,
   ) {
@@ -72,18 +61,115 @@ export class MessagesRTComponent implements OnInit {
   ngOnInit() {
     this.mails$ = this.dl.getMails();
     // Init the form
-    this.buildFormBasic();
+    this.createAssignmentForm();
 
     // Fetch assigned issued
     this.assignedService.initAssignments();
 
     // store all issues in assignedIssues$ variable
-    this.allIssues();
+    this.fetchIssues();
+
+    // get the resolution team members
+    this.fetchTeamMembers();
   }
 
-  select(i: { issue: any; comment: string; }) {
+  // get issues from observable
+  async fetchIssues() {
+    // this.setActive = 0;
+    await this.assignedService.assignments$
+      .pipe(distinctUntilChanged())
+      .subscribe((res?: AssignedIssuesModel) => {
+        if (res) {
+          this.assignedIssues$ = res;
+          delay(1000);
+          this.Filter();
+        }
+      });
+  }
+
+  // Fetch list of team members
+  fetchTeamMembers(): void {
+    this.assignedService.teams.toPromise()
+      .then((result: Teams) => {
+        this.teams = result;
+      });
+  }
+
+  // Submit the issue to the backend
+  assignIssue() {
+    this.assignButton.loading = true;
+    const person = this.Assignmentform.value.teamId.name;
+    setTimeout(() => {
+      this.assignedService.assignTo(this.Assignmentform.value)
+        .toPromise()
+        .then((res) => {
+          console.log(res);
+          this.assignButton.loading = false;
+          this.toastr.success(`Issue Assigned To ${person}`, 'Assigned!', { closeButton: true });
+          delay(5000);
+          this.modalService.dismissAll();
+          // Refresh the observable
+          this.assignedService.initAssignments();
+        })
+        .catch(error => {
+          this.toastr.error(error, 'Error Occured!', { closeButton: true });
+          this.assignButton.loading = false;
+        });
+    }, 3000);
+  }
+
+  async filterBy(code: number) {
+    this.setActive = code;
+    const values = [];
+    const inProgress = await this.assignedService.assignments$
+      .pipe(
+        distinctUntilChanged(),
+        concatAll(),
+        filter((issue?: AssignedIssuesModel) => {
+          return (issue.status !== null);
+        }),
+        filter((issue?: AssignedIssuesModel) => {
+          return (issue.status.id === code);
+        }),
+      );
+    await inProgress.pipe().subscribe(val => {
+      values.push(val);
+    });
+    this.assignedIssues$ = values;
+    // Count number of items to display
+    this.addCount(code, this.assignedIssues$);
+  }
+
+  // Filter automatically
+  Filter() {
+    const self = this;
+    const types = [2, 7, 4];
+    types.forEach(function (value) {
+      self.filterBy(value);
+    });
+  }
+
+  // Filter the respective Counts
+  addCount(code: any, arr: { length: any; }) {
+    const length = arr.length;
+    switch (code) {
+      case 2:
+        return this.Count.pending = length;
+      case 7:
+        return this.Count.reassigned = length;
+      case 4:
+        return this.Count.progress = length;
+    }
+  }
+
+  select(i: { issue: any; comment: string; id: any; }) {
     this.selected = i.issue;
     this.comment = i.comment;
+    this.Assignmentform.setValue({
+      comment: '',
+      assignId: i.id,
+      teamId: ''
+    });
   }
 
   // For styling the selected element
@@ -91,27 +177,20 @@ export class MessagesRTComponent implements OnInit {
     this.Active = val;
   }
 
-  buildFormBasic() {
+  createAssignmentForm() {
     this.Assignmentform = this.fb.group({
-      roles: ['', [Validators.required]],
-      comment: [],
-      issueId: ['', [Validators.required]]
+      assignId: ['', [Validators.required]],
+      comment: '',
+      teamId: ['', [Validators.required]] // team id
     });
   }
 
-  openComposeModal() {
-    this.modalService.open(ComposeDialogComponent, { size: 'lg', centered: true });
-  }
-
+  // Open the modal to accept an issue and assign a team memmber
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then((result) => {
-        console.log(result);
-      }, (reason) => {
-        console.log('Err!', reason);
-      });
   }
 
+  // Open the modal to reject an issue
   confirm(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((result) => {
@@ -121,32 +200,19 @@ export class MessagesRTComponent implements OnInit {
       });
   }
 
-  // get issues from observable
-  async allIssues() {
-    // this.setActive = 0;
-    await this.assignedService.assignments$
-      .pipe(distinctUntilChanged())
-      .subscribe((res: AssignedIssuesModel) => {
-        this.assignedIssues$ = res;
-      });
-  }
-
-  // Filter by
-  async filterBy(code: number) {
-    console.log(code);
-  }
-
-  assignIssue(person) {
-    this.toastr.success(`Issue Assigned To ${person}`, 'Assigned!', { closeButton: true });
-  }
-
+  // When rt-user rejects an issue, change the status to rejected
   reject() {
-    this.toastr.warning(`Issue Rejected`, 'Rejected!', { closeButton: true });
+    setTimeout(() => {
+      this.toastr.warning(`Issue Rejected`, 'Rejected!', { closeButton: true });
+    }, 2000);
   }
 
-  @f()
+
+
   test() {
     console.log(this.flavor);
+    console.log(this.assignedIssues$);
+    this.Filter();
   }
 
 }

@@ -5,9 +5,9 @@ export function Emoji() {
         const getter = () => {
             return val;
         };
-        const setter = (next) => {
+        const setter = (next: any) => {
             console.log('updating flavor...');
-            val = `🍦 ${next} 🍦`;
+            val = `🍦🍦🍦🍦 ${next} 🍦🍦🍦🍦`;
         };
         Object.defineProperty(target, key, {
             get: getter,

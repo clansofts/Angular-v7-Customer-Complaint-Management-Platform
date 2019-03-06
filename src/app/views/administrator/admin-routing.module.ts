@@ -8,6 +8,10 @@ import { MessageRTComponent } from './resolution-team/message/message.component'
 // Resolution Champion
 const routes: Routes = [
   {
+    path: '', // Default
+    loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
+  },
+  {
     path: 'complaints-dashboard', // RC Dashboard
     component: DashboardResolutionChampionComponent,
   },
@@ -22,6 +26,10 @@ const routes: Routes = [
 ];
 
 const routes_rt: Routes = [
+  {
+    path: '', // Default
+    loadChildren: './resolution-team/ticket-management/ticket-management.module#TicketManagementModule',
+  },
   {
     path: 'team-dashboard', // RT Dashboard
     component: TeamDashboardComponent,
