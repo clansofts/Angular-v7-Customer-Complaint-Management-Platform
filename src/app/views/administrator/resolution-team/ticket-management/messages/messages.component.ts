@@ -11,6 +11,7 @@ import { distinctUntilChanged, catchError, concatAll, filter } from 'rxjs/operat
 import { Validators, FormBuilder } from '@angular/forms';
 import { Emoji } from './Emoji';
 import { delay } from 'q';
+import { resolveCname } from 'dns';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { delay } from 'q';
 })
 export class MessagesRTComponent implements OnInit {
   mails$: Observable<any>;
-  selected: any;
+  selected: any = {};
   assignedIssues$: any;
   loading: boolean;
   confirmResut: string;
@@ -164,8 +165,9 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
-  select(i: { issue: any; comment: string; id: any; }) {
+  select(i: { issue: any; issueId: any; comment: string; id: any; }) {
     this.selected = i.issue;
+    this.selected.id = i.id;
     this.comment = i.comment;
     this.Assignmentform.setValue({
       comment: '',
@@ -189,7 +191,7 @@ export class MessagesRTComponent implements OnInit {
 
   // Open the modal to accept an issue and assign a team memmber
   open(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   // Open the modal to reject an issue
@@ -210,14 +212,21 @@ export class MessagesRTComponent implements OnInit {
   }
 
   // Mark an issue as resolved
-  isResolved() {
-    this.assignedService.resolved = this.selected;
+  isResolved(i: any) {
+    this.assignedService.resolved(this.selected.id)
+      .toPromise()
+      .then(res => {
+        if (res) {
+          console.log(res);
+          this.toastr.info(res, 'Info!', { closeButton: true });
+          this.ngOnInit();
+        }
+      });
   }
 
   test() {
     console.log(this.flavor);
     console.log(this.assignedIssues$);
-    this.fetchIssues();
   }
 
 }

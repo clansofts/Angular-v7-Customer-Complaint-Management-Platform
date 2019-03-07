@@ -80,8 +80,10 @@ export class AssignedService {
   }
 
   // Mark as resolved
-  set resolved(i: any) {
-    const print = console.log('Resolved', i);
-    console.log(i.issueId);
+  resolved(i: any) {
+    console.log(i);
+    const Path = this.baseURL + 'assigned/resolved/' + i;
+    const payload: any = {};
+    return this.http.post<any>(Path, payload, httpOptions);
   }
 }

@@ -225,6 +225,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       case 4:
         return this.Count.progress = length;
       case 5:
+        return this.Count.resolved = length;
+      case 6:
         return this.Count.rejected = length;
     }
   }

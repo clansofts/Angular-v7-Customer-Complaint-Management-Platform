@@ -307,7 +307,7 @@ placeholder="Airtime billers" value="{{selected?.billType.name}}">
                         <!-- For In Progress -->
                         <ng-container *ngSwitchCase="4">
                           <button type="button" Class="btn btn-outline-primary btn-rounded m-1"
-                            (click)="isResolved()">Mark as Resolved</button>
+                            (click)="isResolved(selected)">Mark as Resolved</button>
                         </ng-container>
                         <!-- For Reassigned -->
                         <ng-container *ngSwitchCase="7">
