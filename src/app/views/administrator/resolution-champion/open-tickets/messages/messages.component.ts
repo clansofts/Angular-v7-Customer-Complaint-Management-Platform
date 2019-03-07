@@ -73,7 +73,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   select(issue: any) {
     console.log(issue);
     this.selected = issue;
-    this.issuesAssignmentform.controls.issueId.setValue(issue.issueId);
+    this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
   }
 
   // For styling the selected element
@@ -162,8 +162,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       });
   }
 
+  // Get resolved issues for review
   fetchResolvedIssues() {
-    this.setActive = (5);
     this.issuesService.fetchResolved().toPromise()
       .then((response: ComplaintsModel) => {
         console.log(response);
@@ -191,7 +191,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
           return (issue.status !== null);
         }),
         filter((issue?: ComplaintsModel) => {
-          return (issue.status.id === code);
+          return (issue.status.stId === code);
         }),
       );
     await inProgress.pipe().subscribe(val => {
@@ -232,7 +232,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   // Close an issue
   closeIssue() {
     try {
-      this.issuesService.closeIssue(this.selected.issueId)
+      this.issuesService.closeIssue(this.selected.issueid)
         .subscribe(res => console.log(res));
       this.selected = null;
     } catch (err) {
@@ -243,7 +243,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   async test() {
     const self = this;
     console.log('Running test');
-    /* console.log(this.Issues$); */
+    this.fetchResolvedIssues();
   }
 
 }

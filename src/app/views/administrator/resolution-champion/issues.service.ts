@@ -62,7 +62,7 @@ export class IssuesResolutionService {
     const Path = this.baseURL + `assigned`;
     const payload: Assign = {
       issueId: form.issueId,
-      roleId: form.roles.roleId,
+      roleId: form.roles.rId,
       comment: form.comment,
       response: false,
     };
@@ -89,4 +89,5 @@ export class IssuesResolutionService {
     };
     return this.http.patch<any>(Path, payload, httpOptions);
   }
+
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, interval } from 'rxjs';
+import { BehaviorSubject, interval, from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, delay } from 'rxjs/operators';
 import { ComplaintsModel } from '../../customer/customer-complaints/complaints.service';
 
 const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
@@ -45,8 +45,8 @@ export class AssignedService {
   }
 
   // Initialize the observable with new values everyone 5 mins
-  initAssignments() {
-    Promise.resolve(this.issues)
+  async initAssignments() {
+    await Promise.resolve(this.issues)
       .then(() => {
         return interval(300000);
       });
@@ -77,5 +77,11 @@ export class AssignedService {
       message: form.comment,
     };
     return this.http.post<any>(Path, payload, httpOptions);
+  }
+
+  // Mark as resolved
+  set resolved(i: any) {
+    const print = console.log('Resolved', i);
+    console.log(i.issueId);
   }
 }

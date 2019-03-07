@@ -10,7 +10,6 @@ import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.serv
 import { distinctUntilChanged, catchError, concatAll, filter } from 'rxjs/operators';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Emoji } from './Emoji';
-import { IssuesResolutionService } from '../../../resolution-champion/issues.service';
 import { delay } from 'q';
 
 
@@ -58,7 +57,7 @@ export class MessagesRTComponent implements OnInit {
     this.admin.currentUserRole();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.mails$ = this.dl.getMails();
     // Init the form
     this.createAssignmentForm();
@@ -79,11 +78,14 @@ export class MessagesRTComponent implements OnInit {
     await this.assignedService.assignments$
       .pipe(distinctUntilChanged())
       .subscribe((res?: AssignedIssuesModel) => {
+        console.log(res);
         if (res) {
           this.assignedIssues$ = res;
           delay(1000);
           this.Filter();
         }
+      }, error => {
+        console.log(error);
       });
   }
 
@@ -106,7 +108,7 @@ export class MessagesRTComponent implements OnInit {
           console.log(res);
           this.assignButton.loading = false;
           this.toastr.success(`Issue Assigned To ${person}`, 'Assigned!', { closeButton: true });
-          delay(5000);
+          delay(1000);
           this.modalService.dismissAll();
           // Refresh the observable
           this.assignedService.initAssignments();
@@ -115,7 +117,7 @@ export class MessagesRTComponent implements OnInit {
           this.toastr.error(error, 'Error Occured!', { closeButton: true });
           this.assignButton.loading = false;
         });
-    }, 3000);
+    }, 500);
   }
 
   async filterBy(code: number) {
@@ -129,7 +131,7 @@ export class MessagesRTComponent implements OnInit {
           return (issue.status !== null);
         }),
         filter((issue?: AssignedIssuesModel) => {
-          return (issue.status.id === code);
+          return (issue.status.stId === code);
         }),
       );
     await inProgress.pipe().subscribe(val => {
@@ -207,12 +209,15 @@ export class MessagesRTComponent implements OnInit {
     }, 2000);
   }
 
-
+  // Mark an issue as resolved
+  isResolved() {
+    this.assignedService.resolved = this.selected;
+  }
 
   test() {
     console.log(this.flavor);
     console.log(this.assignedIssues$);
-    this.Filter();
+    this.fetchIssues();
   }
 
 }

@@ -17,9 +17,9 @@
               </a>
 
               <div class="d-flex" *ngIf="selected">
-                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply"></i> Reply</a>
-                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Forward</a>
-                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Delete</a>
+                <a href="javascript:;" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply"></i> Reply</a>
+                <a href="javascript:;" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Forward</a>
+                <a href="javascript:;" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Delete</a>
               </div>
             </div>
             <!-- EMAIL DETAILS -->
@@ -296,7 +296,7 @@ placeholder="Airtime billers" value="{{selected?.billType.name}}">
                         </div>
                       </div>
 
-                      <div class="col-md-12" [ngSwitch]="selected?.status?.id">
+                      <div class="col-md-12" [ngSwitch]="selected?.status?.stId">
                         <!-- For Pending Issues -->
                         <ng-container *ngSwitchCase="2">
                           <button type="button" Class="btn btn-primary btn-rounded m-1"
@@ -306,8 +306,8 @@ placeholder="Airtime billers" value="{{selected?.billType.name}}">
                         </ng-container>
                         <!-- For In Progress -->
                         <ng-container *ngSwitchCase="4">
-                          <button type="button" Class="btn btn-primary btn-rounded m-1"
-                            (click)="isCompleted(modalBasic)">Mark as Completed</button>
+                          <button type="button" Class="btn btn-outline-primary btn-rounded m-1"
+                            (click)="isResolved()">Mark as Resolved</button>
                         </ng-container>
                         <!-- For Reassigned -->
                         <ng-container *ngSwitchCase="7">
@@ -347,7 +347,8 @@ placeholder="Airtime billers" value="{{selected?.billType.name}}">
             </div>
             <div class="col-xs-6 details">
               <span class="name text-muted">{{i?.customer | titlecase}}</span>
-              <span [ngClass]="{'badge-danger mr-1': i?.priority?.name === 'Critical','badge-info-custom2 mr-1': i?.priority?.name === 'Normal'}"
+              <span
+                [ngClass]="{'badge-danger mr-1': i?.priority?.name === 'Critical','badge-info-custom2 mr-1': i?.priority?.name === 'Normal'}"
                 class="badge badge-info mr-1">{{i?.priority?.name | titlecase}}</span>
               <p class="m-0">{{i?.errorType | titlecase}}</p>
               <p _ngcontent-c5="" class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
@@ -368,12 +369,12 @@ placeholder="Airtime billers" value="{{selected?.billType.name}}">
         <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
         <p class="text-muted mb-2" (click)="test()">Browse</p>
         <ul class="inbox-main-nav">
-          <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 0}"><i class="icon-regular i-Mail-2"></i>
+          <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 0}"><i class="icon-regular i-Over-Time"></i>
               Pending ({{Count?.pending}})</a></li>
-          <li (click)="filterBy(7)"><a [ngClass]="{'active': Active == 1}"><i class="icon-regular i-Mail-2"></i>
+          <li (click)="filterBy(7)"><a [ngClass]="{'active': Active == 1}"><i class="icon-regular i-Right"></i>
               Re-Assigned
               ({{Count?.reassigned}})</a></li>
-          <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Mail-2">
+          <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Sand-watch-2">
               </i> In Progress ({{Count?.progress}})</a></li>
         </ul>
       </div>

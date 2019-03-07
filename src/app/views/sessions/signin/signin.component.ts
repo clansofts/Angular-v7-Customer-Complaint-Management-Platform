@@ -85,16 +85,13 @@ export class SigninComponent implements OnInit {
         this.loadingText = 'Sigining in...';
         this.auth.signin(this.signinForm.value).toPromise()
             .then(async (response: AuthUserModel) => {
+                console.log(response);
                 if (response) {
                     // Store the current user object in the browser
                     Promise.resolve(this.localstoreService.setItem('currentUser', response))
                         .then(() => {
                             // role based routing
                             this.userService.userRole(response);
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                            this.toastr.error('Error!', 'Invalid user type');
                         });
                     return;
                 }
@@ -102,6 +99,10 @@ export class SigninComponent implements OnInit {
                 this.toastr.error('Error!', 'Network Error');
                 // Reset form
                 this.ngOnInit();
+            })
+            .catch((error) => {
+                console.log(error);
+                this.toastr.error('Error!', 'Invalid user type');
             });
     }
 

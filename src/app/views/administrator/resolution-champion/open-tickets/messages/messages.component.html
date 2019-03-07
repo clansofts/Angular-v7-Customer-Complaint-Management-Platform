@@ -17,11 +17,14 @@
                             </a>
 
                             <div class="d-flex" *ngIf="selected">
-                                <!-- <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply"></i> Reply</a>
-                                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i>
+                                <a href="javascript:;" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply"></i>
+                                    Reply</a>
+                                <a href="javascript:;" class="link-icon mr-3"><i
+                                        class="icon-regular i-Mail-Reply-All"></i>
                                     Forward</a>
-                                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i>
-                                    Query Status</a> -->
+                                <a href="javascript:;" class="link-icon mr-3"><i
+                                        class="icon-regular i-Mail-Reply-All"></i>
+                                    Delete</a>
                             </div>
                         </div>
                         <!-- EMAIL DETAILS -->
@@ -316,22 +319,26 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12" [ngSwitch]="selected?.status?.id">
+                                            <div class="col-md-12" [ngSwitch]="selected?.status?.stId">
                                                 <!-- Open Tickets -->
-                                                <ng-container *ngIf="(selected?.status) && (selected?.status.id == 1)">
+                                                <ng-container
+                                                    *ngIf="(selected?.status) && (selected?.status.stId == 1)">
                                                     <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                         (click)="open(modalBasic)">Assign Issue</button>
                                                     <button type="button" Class="btn btn-warning btn-rounded m-1"
                                                         (click)="confirm(modalConfirm)">Close Issue</button>
                                                 </ng-container>
                                                 <!-- Assigned -->
-                                                <ng-container *ngIf="(selected?.status) && (selected?.status.id == 1)">
+                                                <ng-container
+                                                    *ngIf="(selected?.status) && (selected?.status.stId == 1)">
                                                 </ng-container>
                                                 <!-- In Progress -->
-                                                <ng-container *ngIf="(selected?.status) && (selected?.status.id == 4)">
+                                                <ng-container
+                                                    *ngIf="(selected?.status) && (selected?.status.stId == 4)">
                                                 </ng-container>
                                                 <!-- Rejected Issue -->
-                                                <ng-container *ngIf="(selected?.status) && (selected?.status.id == 5)">
+                                                <ng-container
+                                                    *ngIf="(selected?.status) && (selected?.status.stId == 5)">
                                                     <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                         (click)="open(modalBasic)">Re-Assign Issue</button>
 
@@ -339,7 +346,8 @@
                                                         (click)="confirm(modalConfirm)">Close Issue</button>
                                                 </ng-container>
                                                 <!-- Closed Issues -->
-                                                <ng-container *ngIf="(selected?.status) && (selected?.status.id == 3)">
+                                                <ng-container
+                                                    *ngIf="(selected?.status) && (selected?.status.stId == 3)">
                                                     <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                         (click)="open(modalBasic)">Re-Open Issue</button>
 
@@ -383,7 +391,35 @@
                                 'badge-info-custom3 mr-1': i?.channelType.channelType == 'Service',
                                 'badge-info-custom4 mr-1': i?.channelType.channelType == 'ATM Dispense Error'}"
                                 class="badge badge-info mr-1">{{i?.channelType.channelType | titlecase}}</span>
-                            <p class="m-0">Source: {{i?.source | titlecase}}</p>
+                            <ng-container [ngSwitch]="i?.source">
+                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Web'">
+                                    <p class="m-0">Channel:</p>
+                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
+                                        class="icon-regular i-Internet"></i>
+                                </div>
+                            </ng-container>
+                            <ng-container [ngSwitch]="i?.source">
+                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Mobile'">
+                                    <p class="m-0">Channel:</p>
+                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
+                                        class="icon-regular i-Telephone"></i>
+                                </div>
+                            </ng-container>
+                            <ng-container [ngSwitch]="i?.source">
+                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'USSD'">
+                                    <p class="m-0">Channel:</p>
+                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
+                                        class="icon-regular i-Router-2"></i>
+                                </div>
+                            </ng-container>
+                            <ng-container [ngSwitch]="i?.source">
+                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Mail'">
+                                    <p class="m-0">Channel:</p>
+                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
+                                        class="icon-regular i-Email"></i>
+                                </div>
+                            </ng-container>
+
                             <p _ngcontent-c5=""
                                 class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
                                     _ngcontent-c5="" class="badge badge-outline-info">{{i?.status?.name}}</span></p>
@@ -404,15 +440,17 @@
                 <p class="text-muted mb-2" (click)="test()">Browse</p>
                 <ul class="inbox-main-nav">
                     <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i
-                                class="icon-regular i-Letter-Open"></i> Open Tickets ({{Count.open}})</a></li>
+                                class="icon-regular i-Ticket"></i> Open Tickets ({{Count.open}})</a></li>
                     <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i
-                                class="icon-regular i-Clock-4"></i> Assigned ({{Count.assigned}})</a></li>
+                                class="icon-regular i-Right"></i> Assigned ({{Count.assigned}})</a></li>
                     <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i
-                                class="icon-regular i-Mail-2"></i> In Progress ({{Count.progress}})</a></li>
+                                class="icon-regular i-Sand-watch-2"></i> In Progress ({{Count.progress}})</a></li>
                     <li (click)="filterBy(5)"><a [ngClass]="{'active': Active == 5}"><i
-                                class="icon-regular i-Clock-4"></i> Rejected ({{Count.rejected}})</a></li>
+                                class="icon-regular i-Support"></i> RT Resolved ({{Count.progress}})</a></li>
+                    <li (click)="filterBy(6)"><a [ngClass]="{'active': Active == 6}"><i
+                                class="icon-regular i-Pointer"></i> RT Rejected ({{Count.rejected}})</a></li>
                     <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}">
-                            <i class="icon-regular i-Folder-Trash"></i> Closed Issues ({{Count.closed}})</a></li>
+                            <i class="icon-regular i-Folder-Zip"></i> Completed ({{Count.closed}})</a></li>
                 </ul>
             </div>
         </div>
