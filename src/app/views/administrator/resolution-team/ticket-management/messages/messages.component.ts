@@ -163,6 +163,7 @@ export class MessagesRTComponent implements OnInit {
   }
 
   select(i: { issue: any; issueId: any; comment: string; id: any; }) {
+    console.log(i);
     this.selected = i.issue;
     this.selected.id = i.id;
     this.comment = i.comment;
@@ -176,6 +177,7 @@ export class MessagesRTComponent implements OnInit {
   // For styling the selected element
   set setActive(val: number) {
     this.Active = val;
+    this.selected = null;
   }
 
   createAssignmentForm() {
@@ -204,7 +206,15 @@ export class MessagesRTComponent implements OnInit {
   // When rt-user rejects an issue, change the status to rejected
   reject() {
     setTimeout(() => {
-      this.toastr.warning(`Issue Rejected`, 'Rejected!', { closeButton: true });
+      try {
+        this.assignedService.reject(this.selected.id).toPromise().then(res => {
+          this.toastr.success(`${res}`, 'Issue Rejected!');
+          this.ngOnInit();
+        });
+        this.selected = null;
+      } catch (err) {
+        this.toastr.error(err, 'Error!', { closeButton: true });
+      }
     }, 2000);
   }
 
@@ -223,7 +233,7 @@ export class MessagesRTComponent implements OnInit {
 
   test() {
     console.log(this.flavor);
-    console.log(this.assignedIssues$);
+    console.log(this.selected);
   }
 
 }

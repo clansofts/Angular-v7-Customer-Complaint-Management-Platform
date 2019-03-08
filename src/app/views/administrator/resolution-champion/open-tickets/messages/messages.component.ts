@@ -81,6 +81,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   // For styling the selected element
   set setActive(val: number) {
     this.Active = val;
+    this.selected = null;
   }
 
   /* Have to create two form controls for both form */
@@ -237,10 +238,13 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   closeIssue() {
     try {
       this.issuesService.closeIssue(this.selected.issueid)
-        .subscribe(res => console.log(res));
+        .toPromise().then(res => {
+          this.toastr.success(`${res}`, 'Issue Closed!');
+          this.ngOnInit();
+        });
       this.selected = null;
     } catch (err) {
-      console.log(err);
+      this.toastr.error(err, 'Error!', { closeButton: true });
     }
   }
 

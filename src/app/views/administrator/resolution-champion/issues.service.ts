@@ -110,13 +110,10 @@ export class IssuesResolutionService {
     return this.http.get<Roles>(Path, httpOptions);
   }
 
-  // Close an issue
+  // Mark issue as completed and Close an issue
   closeIssue(id: number) {
-    const Path = this.baseURL + 'issues/' + id;
-    const payload: any = {
-      statusId: 3,
-    };
-    return this.http.patch<any>(Path, payload, httpOptions);
+    const Path = this.baseURL + 'assigned/closeissue/' + id;
+    const payload: any = {};
+    return this.http.post<any>(Path, payload, httpOptions);
   }
-
 }
