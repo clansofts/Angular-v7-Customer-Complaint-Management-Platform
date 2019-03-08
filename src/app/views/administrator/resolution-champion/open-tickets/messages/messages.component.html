@@ -342,7 +342,7 @@
                                                     <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                         (click)="open(modalBasic)">Re-Assign Issue</button>
 
-                                                    <button type="button" Class="btn btn-warning btn-rounded m-1"
+                                                    <button type="button" Class="btn btn-success btn-rounded m-1"
                                                         (click)="confirm(modalConfirm)">Close Issue</button>
                                                 </ng-container>
                                                 <!-- Closed Issues -->
@@ -554,12 +554,22 @@
         </form>
     </div>
     <div class="modal-footer modal-footer-custom">
-        <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
-            [loading]="assignButton.loading" loadingText="Loading..." (click)="submit()">
-            Assign To Team
-        </btn-loading>
-        <button type="button" (click)="modal.close('Save click')"
-            class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
+        <ng-container *ngIf="selected.status.stId == 1">
+            <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
+                [loading]="assignButton.loading" loadingText="Loading..." (click)="submit()">
+                Assign To Team
+            </btn-loading>
+            <button type="button" (click)="modal.close('Save click')"
+                class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
+        </ng-container>
+        <ng-container *ngIf="selected.status.stId == 5">
+            <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
+                [loading]="assignButton.loading" loadingText="Loading..." (click)="reAssignIssue()">
+                Re-Assign To Team
+            </btn-loading>
+            <button type="button" (click)="modal.close('Save click')"
+                class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
+        </ng-container>
     </div>
 </ng-template>
 

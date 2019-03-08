@@ -23,14 +23,22 @@ export interface Assign {
   response: false;
 }
 
+export interface Reassign {
+  asId: number;
+  comment: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class IssuesResolutionService {
   private baseURL = environment.API.BaseURL;
-
+  // Observable of issues
   private issuesSource = new BehaviorSubject<ComplaintsModel>(null);
   issues$ = this.issuesSource.asObservable();
+  // Observable of resolved isssues
+  private resolvedIssuesSource = new BehaviorSubject<ComplaintsModel>(null);
+  resolvedIssues$ = this.resolvedIssuesSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -48,12 +56,21 @@ export class IssuesResolutionService {
       });
 
   }
-  // Fetch all issues
+  // Init: Fetch all issues
   get issues() {
     return this.fetchIssues()
       .pipe(distinctUntilChanged())
       .subscribe((issues: ComplaintsModel) => {
         this.issuesSource.next(issues);
+      });
+  }
+
+  // Init: Fetch all resolved issues
+  get resolved() {
+    return this.fetchResolved()
+      .pipe(distinctUntilChanged())
+      .subscribe((issues: ComplaintsModel) => {
+        this.resolvedIssuesSource.next(issues);
       });
   }
 
@@ -69,9 +86,21 @@ export class IssuesResolutionService {
     return this.http.post<Assign>(Path, payload, httpOptions);
   }
 
+  // Assign an issue to a team
+  reassignIssue(issue, form: any) {
+    console.log(form);
+    console.log(issue);
+    const Path = this.baseURL + `assigned/reassigned`;
+    const payload: Reassign = {
+      asId: issue.id,
+      comment: form.comment,
+    };
+    return this.http.post<Reassign>(Path, payload, httpOptions);
+  }
+
   // Get Resolved Issues
   fetchResolved() {
-    const Path = this.baseURL + `assigned/resolvedissues`;
+    const Path = this.baseURL + `resolution`;
     return this.http.get<ComplaintsModel>(Path, httpOptions);
   }
 

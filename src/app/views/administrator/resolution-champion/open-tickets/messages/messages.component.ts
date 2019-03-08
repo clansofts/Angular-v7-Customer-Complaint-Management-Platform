@@ -58,6 +58,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       // store all issues in Issues$ variable
       this.allIssues(),
       this.fetchRoles(),
+      this.issuesService.resolved
     ])
       .then(function () {
         console.log('application loaded successfully');
@@ -68,6 +69,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
 
   // Component lifecycle management
   ngAfterContentInit() {
+
   }
 
   select(issue: any) {
@@ -205,7 +207,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   // Filter automatically
   Filter() {
     const self = this;
-    const types = [1, 2, 3, 4, 5];
+    const types = [1, 2, 3, 4, 5, 6];
     types.forEach(function (value) {
       self.filterBy(value);
     });
@@ -242,10 +244,35 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     }
   }
 
-  async test() {
-    const self = this;
-    console.log('Running test');
-    this.fetchResolvedIssues();
+  reAssignIssue() {
+    const form = this.issuesAssignmentform.value;
+    this.assignButton.loading = true;
+    setTimeout(() => {
+      this.issuesService.resolvedIssues$.subscribe(async response => {
+        const resolvedIssues = response;
+        const selectedIssue = this.selected;
+        // Check if the 'selected issueId' exist in 'resolved issues array'
+        for (const i in resolvedIssues) {
+          if ((this.selected) && (resolvedIssues[i].issues.issueId === selectedIssue.issueid)) {
+            await this.issuesService.reassignIssue(resolvedIssues[i], form)
+              .toPromise().then((resp: any) => {
+                this.assignButton.loading = false;
+                this.toastr.success(`Re-Assigned to ${this.issuesAssignmentform.value.roles.description}
+             team.`, 'Success!');
+                this.ngOnInit();
+                this.modalService.dismissAll();
+              }, error => {
+                this.toastr.error(error, 'Error!', { closeButton: true });
+              });
+            return;
+          }
+        }
+      });
+    }, 3000);
+  }
+
+  test() {
+    this.reAssignIssue();
   }
 
 }

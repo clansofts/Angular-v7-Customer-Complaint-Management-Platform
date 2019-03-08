@@ -7,12 +7,9 @@ import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.service';
-import { distinctUntilChanged, catchError, concatAll, filter } from 'rxjs/operators';
+import { distinctUntilChanged, catchError, concatAll, filter, delay } from 'rxjs/operators';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Emoji } from './Emoji';
-import { delay } from 'q';
-import { resolveCname } from 'dns';
-
 
 @Component({
   selector: 'app-messages',
