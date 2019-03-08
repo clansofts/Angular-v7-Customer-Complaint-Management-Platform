@@ -2,14 +2,13 @@ import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComposeDialogComponent } from '../compose-dialog/compose-dialog.component';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
-import { IssuesResolutionService, Roles } from '../../issues.service';
+import { IssuesResolutionService, Roles, Assign } from '../../issues.service';
 import { ComplaintsModel } from 'src/app/views/customer/customer-complaints/complaints.service';
 import { distinctUntilChanged, filter, concatAll, timeout, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
-import { from } from 'rxjs';
 import { AssignedService } from '../../../resolution-team/assigned.service';
 
 @Component({
@@ -71,11 +70,14 @@ export class MessagesComponent implements OnInit, AfterContentInit {
 
   // Component lifecycle management
   ngAfterContentInit() {
-    this.assignedService.initAssignments();
+    try {
+      this.assignedService.initAssignments();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   select(issue: any) {
-    console.log(issue);
     this.selected = issue;
     this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
   }
@@ -86,7 +88,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     this.selected = null;
   }
 
-  /* Have to create two form controls for both form */
+  /* Build the reactive form */
   buildForm() {
     this.issuesAssignmentform = this.fb.group({
       roles: ['', [Validators.required]],
@@ -95,12 +97,13 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     });
   }
 
+  // Fetch the available roles for the resolution teams
   fetchRoles() {
     this.issuesService.roles.toPromise()
-      .then(res => {
+      .then((res: Roles) => {
         this.Roles = res;
       }).then(() => {
-        this.issuesAssignmentform.controls.roles.setValue(this.Roles[0]);
+        this.issuesAssignmentform.controls.roles.setValue(this.Roles[0]); // DevOps by default
       });
   }
 
@@ -110,7 +113,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     setTimeout(() => {
       this.issuesService.assignIssue(form)
         .toPromise()
-        .then(async (res: any) => {
+        .then(async (res: Assign) => {
           this.assignButton.loading = false;
           if (res) {
             await this.toastr.success(`Assigned to ${this.issuesAssignmentform.value.roles.description}
@@ -250,7 +253,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     }
   }
 
-  // Reassignment method, This only works for resolved issues
+  // Reassignment method, This works for resolved and rejected issues
   reAssignIssue() {
     const form = this.issuesAssignmentform.value;
     this.assignButton.loading = true;
@@ -273,7 +276,6 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   }
 
   async reassign(arr: any, selected: any, forms: any) {
-    console.log(arr);
     for (const i in arr) {
       if ((this.selected) && (arr[i].issues.issueId === selected.issueid)) {
         await this.issuesService.reassignIssue(arr[i], forms)

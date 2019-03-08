@@ -69,7 +69,6 @@ export class AssignedService {
 
   // Assign an issue to a team member
   assignTo(form?: any) {
-    console.log(form);
     const Path = this.baseURL + 'teams/assign';
     const payload: any = {
       tId: form.teamId.id, // teamId

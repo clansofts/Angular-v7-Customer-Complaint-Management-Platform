@@ -76,7 +76,6 @@ export class MessagesRTComponent implements OnInit {
     await this.assignedService.assignments$
       .pipe(distinctUntilChanged())
       .subscribe((res?: AssignedIssuesModel) => {
-        console.log(res);
         if (res) {
           this.assignedIssues$ = res;
           delay(1000);
@@ -103,7 +102,6 @@ export class MessagesRTComponent implements OnInit {
       this.assignedService.assignTo(this.Assignmentform.value)
         .toPromise()
         .then((res) => {
-          console.log(res);
           this.assignButton.loading = false;
           this.toastr.success(`Issue Assigned To ${person}`, 'Assigned!', { closeButton: true });
           delay(1000);
@@ -163,7 +161,6 @@ export class MessagesRTComponent implements OnInit {
   }
 
   select(i: { issue: any; issueId: any; comment: string; id: any; }) {
-    console.log(i);
     this.selected = i.issue;
     this.selected.id = i.id;
     this.comment = i.comment;
@@ -215,7 +212,7 @@ export class MessagesRTComponent implements OnInit {
       } catch (err) {
         this.toastr.error(err, 'Error!', { closeButton: true });
       }
-    }, 2000);
+    }, 500);
   }
 
   // Mark an issue as resolved
@@ -224,16 +221,17 @@ export class MessagesRTComponent implements OnInit {
       .toPromise()
       .then(res => {
         if (res) {
-          console.log(res);
           this.toastr.info(res, 'Info!', { closeButton: true });
           this.ngOnInit();
         }
+      })
+      .catch(error => {
+        this.toastr.error(error, 'Error!', { closeButton: true });
       });
   }
 
   test() {
     console.log(this.flavor);
-    console.log(this.selected);
   }
 
 }
