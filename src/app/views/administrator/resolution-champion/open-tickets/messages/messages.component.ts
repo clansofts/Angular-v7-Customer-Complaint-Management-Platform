@@ -248,6 +248,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     }
   }
 
+  // Reassignment method, This only works for resolved issues
   reAssignIssue() {
     const form = this.issuesAssignmentform.value;
     this.assignButton.loading = true;
@@ -272,11 +273,11 @@ export class MessagesComponent implements OnInit, AfterContentInit {
           }
         }
       });
-    }, 3000);
+    }, 1000);
   }
 
   test() {
-    this.reAssignIssue();
+    console.log(this.selected);
   }
 
 }

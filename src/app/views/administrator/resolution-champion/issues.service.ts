@@ -87,9 +87,7 @@ export class IssuesResolutionService {
   }
 
   // Assign an issue to a team
-  reassignIssue(issue, form: any) {
-    console.log(form);
-    console.log(issue);
+  reassignIssue(issue: { id: number; }, form: any) {
     const Path = this.baseURL + `assigned/reassigned`;
     const payload: Reassign = {
       asId: issue.id,

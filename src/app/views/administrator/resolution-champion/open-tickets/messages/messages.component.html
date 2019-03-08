@@ -336,9 +336,9 @@
                                                 <ng-container
                                                     *ngIf="(selected?.status) && (selected?.status.stId == 4)">
                                                 </ng-container>
-                                                <!-- Rejected Issue -->
+                                                <!-- If Resolved or Rejected Issue -->
                                                 <ng-container
-                                                    *ngIf="(selected?.status) && (selected?.status.stId == 5)">
+                                                    *ngIf="(selected?.status) && (selected?.status.stId == 5) || (selected?.status.stId == 6)">
                                                     <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                         (click)="open(modalBasic)">Re-Assign Issue</button>
 
@@ -562,7 +562,7 @@
             <button type="button" (click)="modal.close('Save click')"
                 class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
         </ng-container>
-        <ng-container *ngIf="selected.status.stId == 5">
+        <ng-container *ngIf="(selected.status.stId == 5) || (selected.status.stId == 6)">
             <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
                 [loading]="assignButton.loading" loadingText="Loading..." (click)="reAssignIssue()">
                 Re-Assign To Team
