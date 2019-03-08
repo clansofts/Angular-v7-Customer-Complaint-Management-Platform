@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
 import { from } from 'rxjs';
+import { AssignedService } from '../../../resolution-team/assigned.service';
 
 @Component({
   selector: 'app-messages',
@@ -45,7 +46,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private errorService: ErrorDialogService,
-    private admin: AdminComponent
+    private admin: AdminComponent,
+    private assignedService: AssignedService
   ) {
     this.admin.currentUserRole();
   }
@@ -69,7 +71,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
 
   // Component lifecycle management
   ngAfterContentInit() {
-
+    this.assignedService.initAssignments();
   }
 
   select(issue: any) {
@@ -253,27 +255,40 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     const form = this.issuesAssignmentform.value;
     this.assignButton.loading = true;
     setTimeout(() => {
+      if (this.selected.status.stId === 6) {
+        this.assignedService.assignments$.subscribe(response => {
+          const resolvedIssues = response;
+          const selectedIssue = this.selected;
+          this.reassign(resolvedIssues, selectedIssue, form);
+        });
+        return;
+      }
       this.issuesService.resolvedIssues$.subscribe(async response => {
         const resolvedIssues = response;
         const selectedIssue = this.selected;
         // Check if the 'selected issueId' exist in 'resolved issues array'
-        for (const i in resolvedIssues) {
-          if ((this.selected) && (resolvedIssues[i].issues.issueId === selectedIssue.issueid)) {
-            await this.issuesService.reassignIssue(resolvedIssues[i], form)
-              .toPromise().then((resp: any) => {
-                this.assignButton.loading = false;
-                this.toastr.success(`Re-Assigned to ${this.issuesAssignmentform.value.roles.description}
-             team.`, 'Success!');
-                this.ngOnInit();
-                this.modalService.dismissAll();
-              }, error => {
-                this.toastr.error(error, 'Error!', { closeButton: true });
-              });
-            return;
-          }
-        }
+        this.reassign(resolvedIssues, selectedIssue, form);
       });
     }, 1000);
+  }
+
+  async reassign(arr: any, selected: any, forms: any) {
+    console.log(arr);
+    for (const i in arr) {
+      if ((this.selected) && (arr[i].issues.issueId === selected.issueid)) {
+        await this.issuesService.reassignIssue(arr[i], forms)
+          .toPromise().then((resp: any) => {
+            this.assignButton.loading = false;
+            this.toastr.success(`Re-Assigned to ${this.issuesAssignmentform.value.roles.description}
+         team.`, 'Success!');
+            this.ngOnInit();
+            this.modalService.dismissAll();
+          }, error => {
+            this.toastr.error(error, 'Error!', { closeButton: true });
+          });
+        return;
+      }
+    }
   }
 
   test() {
