@@ -145,8 +145,8 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   // Register service by fetching feedback categoryID
-  fetch_feedbackID(): Promise<number> {
-    return this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
+  async fetch_feedbackID(): Promise<number> {
+    return await this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
         this.feedbackCategory_ID = response.id;
       });
@@ -189,7 +189,7 @@ export class EChannelsErrorComponent implements OnInit {
   // Populate service providers
   serviceProviders(): ServiceProvider {
     return this.utilities.serviceProviders.toPromise()
-      .then(response => {
+      .then((response: Promise<ServiceProvider>) => {
         this.serviceList = response;
       });
   }
@@ -246,7 +246,7 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   // Open modal to show ticket
-  open(content) {
+  open(content: any) {
     modalState.pipe(
       filter(val => val === true),
       distinctUntilChanged())
@@ -260,7 +260,7 @@ export class EChannelsErrorComponent implements OnInit {
       });
   }
 
-  successModal(content): void {
+  successModal(content: any): void {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
         this.resetForm();
@@ -268,7 +268,7 @@ export class EChannelsErrorComponent implements OnInit {
       });
   }
 
-  async submit(form) {
+  async submit(form: { value: any; }) {
     if (this.eChannelsForm.valid) {
       this.loading = true;
       await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
@@ -311,7 +311,7 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   // Open toast dialog
-  errorDialog(data): void {
+  errorDialog(data: string): void {
     Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;

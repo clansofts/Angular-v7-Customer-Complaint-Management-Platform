@@ -204,7 +204,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       });
   }
 
-  successModal(content): void {
+  successModal(content: string): void {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
         this.resetForm();
@@ -212,7 +212,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       });
   }
 
-  async submit(form) {
+  async submit(form: { valid: any; value: any; }) {
     if (form.valid) {
       this.loading = true;
       await this.cardIssueForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
@@ -254,7 +254,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   }
 
   // Open toast dialog
-  errorDialog(data): void {
+  errorDialog(data: string): void {
     Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;

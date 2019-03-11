@@ -74,52 +74,67 @@
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
-                                <label for="picker1">Branch of incident</label>
-                                <select formControlName="branchIncident" class="form-control">
-                                    <option selected [ngValue]='0'>N/A</option>
-                                    <option *ngFor="let i of branch_of_Issue" [ngValue]='i'>{{i.branchLocation}}
-                                    </option>
+                                <label for="picker1">Select</label>
+                                <select class="form-control">
+                                    <option>Option 1</option>
+                                    <option>Option 1</option>
+                                    <option>Option 1</option>
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="picker1">Date</label>
-                                <div class="input-group">
-                                    <input formControlName="transDate" id="picker1" class="form-control"
-                                        placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
-                                            <i class="icon-regular i-Calendar-4"></i>
-                                        </button>
-                                    </div>
+                            <ng-container *ngIf="expression">
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="picker1">Branch of incident</label>
+                                    <select formControlName="branchIncident" class="form-control">
+                                        <option selected [ngValue]='0'>N/A</option>
+                                        <option *ngFor="let i of branch_of_Issue" [ngValue]='i'>{{i.branchLocation}}
+                                        </option>
+                                    </select>
                                 </div>
-                            </div>
 
-                            <div class="col-md-12 form-group mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Please describe the issue encountered:</span>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="picker1">Date</label>
+                                    <div class="input-group">
+                                        <input formControlName="transDate" id="picker1" class="form-control"
+                                            placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                                                <i class="icon-regular i-Calendar-4"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <textarea formControlName="complaintDescription" class="form-control"
-                                        aria-label="With textarea">
+                                </div>
+
+                                <div class="col-md-12 form-group mb-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Please describe the issue encountered:</span>
+                                        </div>
+                                        <textarea formControlName="complaintDescription" class="form-control"
+                                            aria-label="With textarea">
                                         </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">What would you like us to do?</span>
                                     </div>
-                                    <textarea formControlName="suggestionBox" class="form-control"
-                                        aria-label="With textarea">
-                                    </textarea>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
-                                <button type="button" Class="btn btn-secondary btn-rounded m-1"
-                                    (click)="toggleNavigation = true">Previous</button>
-                            </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">What would you like us to do?</span>
+                                        </div>
+                                        <textarea formControlName="suggestionBox" class="form-control"
+                                            aria-label="With textarea">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit
+                                    </btn-loading>
+                                    <button type="button" Class="btn btn-secondary btn-rounded m-1"
+                                        (click)="toggleNavigation = true">Previous</button>
+                                </div>
+                            </ng-container>
+
+
+
                         </ng-template>
                         <!-- Token Modal -->
                         <ng-template #formModal let-modal>
