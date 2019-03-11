@@ -238,7 +238,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       });
   }
 
-  successModal(content): void {
+  successModal(content: string): void {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
         this.resetForm();
@@ -247,7 +247,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Submit complaint
-  async submit(form) {
+  async submit(form: { value: any; }) {
     if (this.atmDispenseErrorForm.valid) {
       this.loading = true;
       await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
@@ -289,7 +289,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Open toast dialog
-  errorDialog(data): void {
+  errorDialog(data: string): void {
     Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;
