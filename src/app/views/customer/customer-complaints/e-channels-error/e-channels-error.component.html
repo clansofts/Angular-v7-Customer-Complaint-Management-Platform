@@ -95,7 +95,7 @@
                                     </div>
 
                                     <!-- Under Union, If service type is Airtime top up -->
-                                    <ng-container *ngIf="(selectServiceType == 1)">
+                                    <ng-container *ngIf="(innerType == 1)">
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Currency Type</label>
                                             <select formControlName="currencyType" class="form-control">
@@ -164,7 +164,7 @@
                                     </ng-container>
 
                                     <!-- If Bills Payment -->
-                                    <ng-container *ngIf="(selectServiceType == 2)">
+                                    <ng-container *ngIf="(innerType == 2)">
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Billers Category</label>
@@ -254,7 +254,7 @@
                                     </ng-container>
 
                                     <!-- If Transfer -->
-                                    <ng-container *ngIf="(selectServiceType == 3)">
+                                    <ng-container *ngIf="(innerType == 3)">
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="phone">Union Mobile number</label>
@@ -344,8 +344,8 @@
                                 </ng-container>
 
                                 <!-- Medium is: Online Banking -->
-                                <div *ngSwitchCase="2">
-                                </div>
+                                <ng-container *ngSwitchCase="2">
+                                </ng-container>
 
 
                                 <!-- Medium is: POS/Web -->

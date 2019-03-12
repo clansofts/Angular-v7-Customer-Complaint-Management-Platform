@@ -108,20 +108,21 @@ export class EChannelsErrorComponent implements OnInit {
     this.customerComponent.ngOnInit();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.eChannelsFn();
     // display details form by default
     this.personalDetails = true;
-    return Promise.all([
-      this.fetchCurrencyType = this._currencyType,
-      this.fetchCardVariants = this._card_Variants,
-      this.billingsType, // getter
-      this.serviceProviders()
-    ]).then(function () {
+    try {
+      await Promise.all([
+        this.fetchCurrencyType = this._currencyType,
+        this.fetchCardVariants = this._card_Variants,
+        this.billingsType,
+        this.serviceProviders()
+      ]);
       console.log('application loaded successfully');
-    }).catch(function () {
+    } catch (e) {
       console.log('An error occured while fetching resources');
-    });
+    }
   }
 
   // Alert controls
@@ -152,8 +153,14 @@ export class EChannelsErrorComponent implements OnInit {
       });
   }
 
+  // Main mechnism for controlling the channel type toggle
   get selectServiceType() {
     return this.eChannelsForm.controls.eMedium.value.id;
+  }
+
+  // Inner Mechanism for controlling the selected service tyoe
+  get innerType() {
+    return this.eChannelsForm.controls.eChannel.value.id;
   }
 
   get ussd_ServiceType() {
