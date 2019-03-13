@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ResourceModel, UtilitiesService, FeedBackModel } from 'src/app/shared/services/utilities.service';
+import { ResourceModel, UtilitiesService, FeedBackModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs/internal/Subject';
@@ -46,34 +46,25 @@ const ALERTS: Alert[] = [{
   templateUrl: './card-issue.component.html',
   styleUrls: ['./card-issue.component.scss']
 })
-export class CardIssueComponent implements OnInit, OnDestroy {
+export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   private feedbackId = 1; // complaint
   private categoryId = 1; // channel:1, service:2, staff: 3
   private channelId = 2; // Card issue
   private _card_Variants = 'cardvariants'; // Endpoint.
-
+  private complaintCategoryHolder: Array<ComplaintCategory>; // Holds the various complaint types/categories
   public personalDetails: boolean; // Display complaints form as default.
+
   cardIssueForm: FormGroup;
   loading: boolean;
   card_Variants: Array<ResourceModel>;
   feedbackCategory_ID: number;
+
   // Alert and ticket id variables
   ticketID: any;
   alert: Alert;
 
   // Make Enum type?
-  cardComplaintTypes: Array<any> = [
-    { name: 'Card Issuance', id: 1 },
-    { name: 'Card Activation', id: 2 },
-    { name: 'Bill Address', id: 3 },
-    { name: 'Card Limit', id: 4 },
-    { name: 'Card Functionality', id: 5 },
-    { name: 'MasterCard Secure Code', id: 6 },
-    { name: 'One Time Password "OTP" ', id: 7 },
-    { name: 'Card Statement', id: 8 },
-    { name: 'Repayment', id: 9 },
-    { name: 'Charge Back', id: 10 }]; // list of ATMs
-
+  cardComplaintTypes: Array<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -94,18 +85,22 @@ export class CardIssueComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.cardIssueFn();
     // display details form by default
-    this.personalDetails = true
+    this.personalDetails = true;
     return Promise.all([
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
       this.fetchCardVariants = this._card_Variants,
-      // tslint:disable-next-line:no-unused-expression
-      this.fetch_feedbackID()
+      this.fetch_feedbackID(),
+      // Mutate complaint category holder, wish for more functional code.
+      this.complaintCategory()
     ]).then(function () {
       console.log('application loaded successfully');
     }).catch(function () {
       console.log('An error occured while fetching resources');
     });
+  }
+
+  ngAfterContentInit() {
   }
 
   ngOnDestroy() {
@@ -119,7 +114,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
 
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
-    return await this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
+    return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
         this.feedbackCategory_ID = response.id;
       });
@@ -186,6 +181,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       unionatmId: [''], // if unionbank, then location
       branchListId: [''],
       serviceProvider: [''],
+      errorCategory: [''],
     });
   }
 
@@ -219,6 +215,7 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
       this.complaintsService.submitComplaint(payloadObject)
         .toPromise().then((response: any) => {
+          console.log(response);
           setTimeout(() => {
             if (response && response.uid) {
               this.loading = false;
@@ -267,7 +264,24 @@ export class CardIssueComponent implements OnInit, OnDestroy {
       .subscribe(e => this.errorDialog(e));
   }
 
+  // Fetch complaint category
+  complaintCategory(): void {
+    this.utilities.fetch_Category(2).toPromise()
+      .then(response => {
+        this.complaintCategoryHolder = response;
+      });
+  }
+
+  fetchErrorType(): void {
+    const category: ComplaintCategory = this.cardIssueForm.controls.errorCategory.value;
+    this.utilities.fetch_ErrorType(category.id).toPromise()
+      .then((response: ErrorTypes[]) => {
+        this.cardComplaintTypes = response;
+      });
+  }
+
   test() {
     console.log('Testing');
+
   }
 }

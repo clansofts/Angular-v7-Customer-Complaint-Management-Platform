@@ -68,10 +68,11 @@ export class ComplaintsModel {
   cardVariantId?: number;
   currencyTypeId?: number;
   suggestionBox?: string;
+  issueSubCatId?: number;
 
   constructor(obj?: any, Func?: any) {
     this.title = 1,
-      this.firstName = obj && obj.firstName || null;
+    this.firstName = obj && obj.firstName || null;
     this.lastName = obj && obj.lastName || null;
     this.middleName = obj && obj.middleName || null;
     this.accountNumber = obj && obj.acctNumber || null;
@@ -107,13 +108,14 @@ export class ComplaintsModel {
     this.merchantCode = obj && obj.merchantCode || null;
     this.isCustomer = obj && obj.isCustomer || null;
     this.disappointedService = obj && obj.disappointedService.id || null,
-      this.branchIncident = obj && obj.branchIncident.serviceProviderId || null;
+    this.branchIncident = obj && obj.branchIncident.serviceProviderId || null;
     this.bankNameId = obj && obj.bankused.bankId || null;
     this.sourceId = 1 || null,
-      this.unionatmId = obj && obj.unionatmId.atmId || null;
+    this.unionatmId = obj && obj.unionatmId.atmId || null;
     this.branchListId = obj && obj.branchListId || null;
     this.serviceProviderId = obj && obj.serviceProvider.serviceProviderId || null;
     this.suggestionBox = obj && obj.suggestionBox;
+    this.issueSubCatId = obj && obj.errorType.id;
   }
 }
 

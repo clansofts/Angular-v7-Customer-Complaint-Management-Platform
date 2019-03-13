@@ -49,7 +49,7 @@ export class NavigationService {
 
     defaultMenu: IMenuItem[] = [
         {
-            name: 'Customer Service',
+            name: 'Self Service',
             description: 'Make a complaint or track an issue.',
             type: 'dropDown',
             icon: 'i-Bar-Chart',
@@ -99,6 +99,19 @@ export class NavigationService {
         }
     ];
 
+    admin3: IMenuItem[] = [
+        {
+            name: 'Customer Service',
+            description: 'Make complaints and track issues',
+            type: 'dropDown',
+            icon: 'i-Bar-Chart',
+            sub: [
+                { icon: 'i-Speach-Bubble-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
+                { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+            ]
+        }
+    ];
+
 
     // sets iconMenu as default;
     menuItems = new BehaviorSubject<IMenuItem[]>(null);
@@ -114,6 +127,9 @@ export class NavigationService {
                 break;
             case 'admin2':
                 this.menuItems.next(this.admin2);
+                break;
+            case 'admin3':
+                this.menuItems.next(this.admin3);
                 break;
             default:
                 this.menuItems.next(this.defaultMenu);

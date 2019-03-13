@@ -11,6 +11,7 @@ export interface ATMModel {
   atmId: number;
   issue: any;
 }
+
 // logging Model
 export interface FeedBackModel {
   id: number;
@@ -19,6 +20,7 @@ export interface FeedBackModel {
   feedbackId: number;
   feedback: string;
 }
+
 // Interface for card variant and currency type.
 export interface ResourceModel {
   name: string;
@@ -51,6 +53,23 @@ export interface ServiceProvider {
   serviceProviderId: number;
 }
 
+// Complaint Category Model
+export interface ComplaintCategory {
+  category: string;
+  channelType: any;
+  escMail: null;
+  escPersonel: null;
+  id: number;
+}
+
+export interface ErrorTypes {
+  cbncode: string;
+  id: number;
+  issueCategory: any;
+  name: string;
+  sla: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -72,7 +91,7 @@ export class UtilitiesService {
   }
 
   // For tracking user flow.
-  breadCrumbs(feedback: number, category: number): any {
+  sendFeedback(feedback: number, category: number): any {
     const Path = this.baseURL + `feedbackcategories`;
     const body: any = {
       'feedbackId': feedback,
@@ -139,5 +158,17 @@ export class UtilitiesService {
   get serviceProviders(): any {
     const Path = this.baseURL + `serviceproviders`;
     return this.http.get<ServiceProvider>(Path, httpOptions);
+  }
+
+  // Fetch the categories for each complaint
+  fetch_Category(code: number) {
+    const Path = `http://10.65.0.86/api/issuecategories?ctid=${code}`;
+    return this.http.get<Array<ComplaintCategory>>(Path, httpOptions);
+  }
+
+  // Fetch the error type for each category
+  fetch_ErrorType(code: number) {
+    const Path = `http://10.65.0.86/api/issuecategories/sub?ctid=${code}`;
+    return this.http.get<Array<ErrorTypes>>(Path, httpOptions);
   }
 }

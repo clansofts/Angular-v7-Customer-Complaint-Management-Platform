@@ -82,20 +82,43 @@
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Service Type</label>
                                         <select formControlName="eChannels" class="form-control">
+                                            <option disabled selected> Please select service type </option>
                                             <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">Service Provider:</label>
-                                        <select formControlName="serviceProvider" class="form-control">
-                                            <option *ngFor="let i of serviceList" [ngValue]='i'>{{i?.serviceProvider}}
+                                        <label for="picker1">E-Channel Error Category</label>
+                                        <select formControlName="errorCategory" class="form-control"
+                                            (change)="fetchErrorType()">
+                                            <option disabled selected> Please select one option </option>
+                                            <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
+                                                {{ i?.category | titlecase }}
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">E-Channel Complaint Type:</label>
+                                        <select formControlName="errorType" class="form-control">
+                                            <option disabled selected> Please select an error type </option>
+                                            <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
+
+
 
                                     <!-- Under Union, If service type is Airtime top up -->
-                                    <ng-container *ngIf="(innerType == 1)">
+                                    <ng-container *ngIf="(complaintType == 1)">
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Service Provider:</label>
+                                            <select formControlName="serviceProvider" class="form-control">
+                                                <option *ngFor="let i of serviceList" [ngValue]='i'>
+                                                    {{i?.serviceProvider}}
+                                                </option>
+                                            </select>
+                                        </div>
+
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Currency Type</label>
                                             <select formControlName="currencyType" class="form-control">
@@ -164,7 +187,7 @@
                                     </ng-container>
 
                                     <!-- If Bills Payment -->
-                                    <ng-container *ngIf="(innerType == 2)">
+                                    <ng-container *ngIf="(complaintType == 2)">
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Billers Category</label>
@@ -254,7 +277,7 @@
                                     </ng-container>
 
                                     <!-- If Transfer -->
-                                    <ng-container *ngIf="(innerType == 3)">
+                                    <ng-container *ngIf="(complaintType == 3)">
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="phone">Union Mobile number</label>
@@ -343,9 +366,307 @@
 
                                 </ng-container>
 
+
                                 <!-- Medium is: Online Banking -->
                                 <ng-container *ngSwitchCase="2">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Service Type</label>
+                                        <select formControlName="eChannels" class="form-control">
+                                            <option disabled selected> Please select service type </option>
+                                            <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">E-Channel Error Category</label>
+                                        <select formControlName="errorCategory" class="form-control"
+                                            (change)="fetchErrorType()">
+                                            <option disabled selected> Please select one option </option>
+                                            <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
+                                                {{ i?.category | titlecase }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">E-Channel Complaint Type:</label>
+                                        <select formControlName="errorType" class="form-control">
+                                            <option disabled selected> Please select an error type </option>
+                                            <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Under Union, If service type is Airtime top up -->
+                                    <ng-container *ngIf="(complaintType == 1)">
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Service Provider:</label>
+                                            <select formControlName="serviceProvider" class="form-control">
+                                                <option *ngFor="let i of serviceList" [ngValue]='i'>
+                                                    {{i?.serviceProvider}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Currency Type</label>
+                                            <select formControlName="currencyType" class="form-control">
+                                                <option [value]="" disabled selected>Select currency</option>
+                                                <option *ngFor="let currency of currencyType" [value]='currency?.id'>
+                                                    {{currency?.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Single or Multiple Transactions:</label>
+                                            <select formControlName="transCount" class="form-control">
+                                                <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                            formGroupName="amount">
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount</label>
+                                                <input formControlName="amount1" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 2</label>
+                                                <input formControlName="amount2" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 3</label>
+                                                <input formControlName="amount3" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                        </ng-container>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Transaction Date</label>
+                                            <div class="input-group">
+                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                    placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                    #dp="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-secondary" (click)="dp.toggle()"
+                                                        type="button">
+                                                        <i class="icon-regular i-Calendar-4"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Complaint Description</span>
+                                                </div>
+                                                <textarea formControlName="complaintDescription" class="form-control"
+                                                    aria-label="With textarea">
+                                                </textarea>
+                                            </div>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <!-- If Bills Payment -->
+                                    <ng-container *ngIf="(complaintType == 2)">
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Billers Category</label>
+                                            <select formControlName="billType" class="form-control">
+                                                <option *ngFor="let i of billTypes" [value]='i?.id'>{{i?.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="phone">ReferenceID</label>
+                                            <input formControlName="referenceID" class="form-control" id="referenceid"
+                                                placeholder="Reference ID">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="phone">Smart Card Number</label>
+                                            <input formControlName="smartCardNumber" class="form-control"
+                                                id="smartcardnumber" placeholder="Smart Card Number">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Currency Type</label>
+                                            <select formControlName="currencyType" class="form-control">
+                                                <option [value]="" disabled selected>Select currency</option>
+                                                <option *ngFor="let currency of currencyType" [value]='currency?.id'>
+                                                    {{currency?.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Single or Multiple Transactions:</label>
+                                            <select formControlName="transCount" class="form-control">
+                                                <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                            formGroupName="amount">
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount</label>
+                                                <input formControlName="amount1" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 2</label>
+                                                <input formControlName="amount2" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 3</label>
+                                                <input formControlName="amount3" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                        </ng-container>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Transaction Date</label>
+                                            <div class="input-group">
+                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                    placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                    #dp="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-secondary" (click)="dp.toggle()"
+                                                        type="button">
+                                                        <i class="icon-regular i-Calendar-4"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Complaint Description</span>
+                                                </div>
+                                                <textarea formControlName="complaintDescription" class="form-control"
+                                                    aria-label="With textarea">
+                                                </textarea>
+                                            </div>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <!-- If Transfer -->
+                                    <ng-container *ngIf="(complaintType == 3)">
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="phone">Union Mobile number</label>
+                                            <input formControlName="unionMobilePhone" class="form-control" id="phone"
+                                                placeholder="Union mobile ID">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="phone">Recipients Account number</label>
+                                            <input formControlName="recipientsAcctNo" class="form-control"
+                                                id="smartcardnumber" placeholder="Recipients phone number">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="firstName">Recipients name</label>
+                                            <input formControlName="recipientsName" type="text" class="form-control"
+                                                id="firstName" placeholder="Enter recipients name">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Currency Type</label>
+                                            <select formControlName="currencyType" class="form-control">
+                                                <option [value]="" disabled selected>Select currency</option>
+                                                <option *ngFor="let currency of currencyType" [value]='currency?.id'>
+                                                    {{currency?.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Single or Multiple Transactions:</label>
+                                            <select formControlName="transCount" class="form-control">
+                                                <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                            formGroupName="amount">
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount</label>
+                                                <input formControlName="amount1" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 2</label>
+                                                <input formControlName="amount2" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                            <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                                <label for="credit">Amount 3</label>
+                                                <input formControlName="amount3" class="form-control" id=""
+                                                    placeholder="Transaction Amount">
+                                            </div>
+
+                                        </ng-container>
+
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="picker1">Transaction Date</label>
+                                            <div class="input-group">
+                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                    placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                    #dp="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-secondary" (click)="dp.toggle()"
+                                                        type="button">
+                                                        <i class="icon-regular i-Calendar-4"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Complaint Description</span>
+                                                </div>
+                                                <textarea formControlName="complaintDescription" class="form-control"
+                                                    aria-label="With textarea">
+                                                </textarea>
+                                            </div>
+                                        </div>
+
+                                    </ng-container>
+
                                 </ng-container>
+
+
+
+
+
+
+
+
+
+
+
 
 
                                 <!-- Medium is: POS/Web -->
@@ -458,7 +779,7 @@
                                         </select>
                                     </div>
                                     <!-- If under USSD: Airtime Top Up -->
-                                    <ng-container *ngIf="ussd_ServiceType == 4">
+                                    <ng-container *ngIf="ussd_ComplaintType == 4">
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="phone">USSD registed phone</label>
                                             <input formControlName="ussdPhoneNo" class="form-control" id="phone"
@@ -536,7 +857,7 @@
                                     </ng-container>
 
                                     <!-- If under USSD: Transfer -->
-                                    <ng-container *ngIf="ussd_ServiceType == 5">
+                                    <ng-container *ngIf="ussd_ComplaintType == 5">
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="phone">Union Mobile number</label>
@@ -624,7 +945,7 @@
                                     </ng-container>
 
                                     <!-- If under USSD: Usage Issues -->
-                                    <ng-container *ngIf="ussd_ServiceType == 6">
+                                    <ng-container *ngIf="ussd_ComplaintType == 6">
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="phone">USSD registed phone</label>

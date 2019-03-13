@@ -47,3 +47,14 @@ background-color: #00aeef !important;
 .inbox-main-nav li {
     cursor: pointer !important;  
 }
+.sidebar-left-secondary {
+    background-color: #00aeef !important;
+    color: white;
+    box-shadow: 0 15px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+}
+.nav-icon {
+    color: white !important;
+}
+.item-name {
+    color: white !important;
+}

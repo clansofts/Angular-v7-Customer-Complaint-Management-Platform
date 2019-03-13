@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel } from 'src/app/shared/services/utilities.service';
+import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
 import { map } from 'rxjs/internal/operators/map';
 import { ComplaintsModel, ComplaintsService } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -63,8 +63,10 @@ export class EChannelsErrorComponent implements OnInit {
   feedbackCategory_ID: number;
 
   // Alert and ticket id variables
-  ticketID: any;
   alert: Alert;
+  ticketID: any;
+  ComplaintTypes: ErrorTypes[];
+  complaintCategoryHolder: ComplaintCategory[];
 
   // Transaction count
   transCount: Array<any> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
@@ -117,12 +119,14 @@ export class EChannelsErrorComponent implements OnInit {
         this.fetchCurrencyType = this._currencyType,
         this.fetchCardVariants = this._card_Variants,
         this.billingsType,
-        this.serviceProviders()
+        this.serviceProviders(),
+        this.complaintCategory()
       ]);
       console.log('application loaded successfully');
     } catch (e) {
       console.log('An error occured while fetching resources');
     }
+    this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id);
   }
 
   // Alert controls
@@ -147,7 +151,7 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
-    return await this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
+    return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
         this.feedbackCategory_ID = response.id;
       });
@@ -159,11 +163,11 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   // Inner Mechanism for controlling the selected service tyoe
-  get innerType() {
-    return this.eChannelsForm.controls.eChannel.value.id;
+  get complaintType() {
+    return this.eChannelsForm.controls.eChannels.value.id;
   }
 
-  get ussd_ServiceType() {
+  get ussd_ComplaintType() {
     return this.eChannelsForm.controls.eChannels.value.id;
   }
 
@@ -249,6 +253,8 @@ export class EChannelsErrorComponent implements OnInit {
       branchListId: [''],
       serviceProvider: [''],
       whereCardUsed: [''], // web or pos
+      errorCategory: [''],
+      errorType: ['']
     });
   }
 
@@ -329,6 +335,22 @@ export class EChannelsErrorComponent implements OnInit {
   handleErrorFn() {
     this.errorService.onErrorObserver.pipe()
       .subscribe(e => this.errorDialog(e));
+  }
+
+  // Fetch complaint category
+  complaintCategory(): void {
+    this.utilities.fetch_Category(3).toPromise()
+      .then(response => {
+        this.complaintCategoryHolder = response;
+      });
+  }
+
+  fetchErrorType(): void {
+    const category: ComplaintCategory = this.eChannelsForm.controls.errorCategory.value;
+    this.utilities.fetch_ErrorType(category.id).toPromise()
+      .then((response: ErrorTypes[]) => {
+        this.ComplaintTypes = response;
+      });
   }
 
   test() {

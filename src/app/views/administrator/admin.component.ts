@@ -39,6 +39,10 @@ export class AdminComponent implements OnInit {
         this.navigationMenu('admin1');
         return;
       }
+      if (user.Role === 'CS') {
+        this.navigationMenu('admin3');
+        return;
+      }
       // If resolution team
       this.navigationMenu('admin2');
       return;

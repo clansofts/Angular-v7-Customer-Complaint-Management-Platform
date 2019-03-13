@@ -145,6 +145,8 @@ export class MessagesRTComponent implements OnInit {
     types.forEach(function (value) {
       self.filterBy(value);
     });
+    // Default
+    this.filterBy(2);
   }
 
   // Filter the respective Counts

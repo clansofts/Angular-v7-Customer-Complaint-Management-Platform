@@ -68,21 +68,23 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Which of our services dissapointed you?</label>
-                                <select formControlName="disappointedService" class="form-control">
-                                    <option *ngFor="let i of services" [ngValue]='i'>{{i.name}}</option>
+                                <select formControlName="errorCategory" class="form-control"
+                                    (change)="fetchErrorType()">
+                                    <option disabled selected> Please select one option </option>
+                                    <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
+                                        {{ i?.category | titlecase }}
+                                    </option>
                                 </select>
                             </div>
-
                             <div class="col-md-6 form-group mb-3">
-                                <label for="picker1">Select</label>
-                                <select class="form-control">
-                                    <option>Option 1</option>
-                                    <option>Option 1</option>
-                                    <option>Option 1</option>
+                                <label for="picker1">Service Complaint Type:</label>
+                                <select formControlName="errorType" class="form-control">
+                                    <option disabled selected> Please select an error type </option>
+                                    <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
                             </div>
 
-                            <ng-container *ngIf="expression">
+                            <ng-container *ngIf="ComplaintTypes">
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="picker1">Branch of incident</label>
                                     <select formControlName="branchIncident" class="form-control">

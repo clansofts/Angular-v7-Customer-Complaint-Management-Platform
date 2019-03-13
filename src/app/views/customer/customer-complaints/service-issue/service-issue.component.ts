@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ResourceModel, UtilitiesService, BranchModel, FeedBackModel } from 'src/app/shared/services/utilities.service';
+import { ResourceModel, UtilitiesService, BranchModel, FeedBackModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -57,6 +57,8 @@ export class ServiceIssueComponent implements OnInit {
   serviceComplaintForm: FormGroup;
   branch_of_Issue: BranchModel[];
   feedbackCategory_ID: number;
+  ComplaintTypes: ErrorTypes[];
+  complaintCategoryHolder: ComplaintCategory[];
 
   // Alert and ticket id variables
   ticketID: any;
@@ -96,7 +98,8 @@ export class ServiceIssueComponent implements OnInit {
     return Promise.all([
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
-      this.fetch_BranchList()
+      this.fetch_BranchList(),
+      this.complaintCategory()
     ]).then(function () {
       console.log('application loaded successfully');
     }).catch(function () {
@@ -106,7 +109,7 @@ export class ServiceIssueComponent implements OnInit {
 
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
-    return await this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
+    return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
         this.feedbackCategory_ID = response.id;
       });
@@ -177,6 +180,8 @@ export class ServiceIssueComponent implements OnInit {
       branchListId: [''],
       serviceProvider: [''],
       whereCardUsed: [''], // web or pos
+      errorCategory: [''],
+      errorType: ['']
     });
   }
 
@@ -262,6 +267,22 @@ export class ServiceIssueComponent implements OnInit {
   handleErrorFn() {
     this.errorService.onErrorObserver.pipe()
       .subscribe(e => this.errorDialog(e));
+  }
+
+  // Fetch complaint category
+  complaintCategory(): void {
+    this.utilities.fetch_Category(4).toPromise()
+      .then(response => {
+        this.complaintCategoryHolder = response;
+      });
+  }
+
+  fetchErrorType(): void {
+    const category: ComplaintCategory = this.serviceComplaintForm.controls.errorCategory.value;
+    this.utilities.fetch_ErrorType(category.id).toPromise()
+      .then((response: ErrorTypes[]) => {
+        this.ComplaintTypes = response;
+      });
   }
 
 

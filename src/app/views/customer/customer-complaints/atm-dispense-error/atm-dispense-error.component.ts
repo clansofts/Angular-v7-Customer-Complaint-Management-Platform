@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, last, distinct, skipUntil, single, filter, take, distinctUntilChanged } from 'rxjs/operators';
-import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel } from 'src/app/shared/services/utilities.service';
+import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -70,6 +70,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   // Alert and ticket id variables
   ticketID: any;
   alert: Alert;
+  ComplaintTypes: ErrorTypes[];
+  complaintCategoryHolder: ComplaintCategory[];
 
   constructor(
     private fb: FormBuilder,
@@ -97,7 +99,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       this.fetchCurrencyType = this._currencyType,
       this.atmLocations,
       this.fetch_feedbackID(),
-      this.fetch_BankList()
+      this.fetch_BankList(),
+      this.complaintCategory()
     ]).then(function () {
       console.log('application loaded successfully');
     }).catch(function () {
@@ -116,7 +119,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Register service by fetching feedback categoryID
   fetch_feedbackID(): Promise<number> {
-    return this.utilities.breadCrumbs(this.feedbackId, this.categoryId)
+    return this.utilities.sendFeedback(this.feedbackId, this.categoryId)
       .toPromise().then((response: FeedBackModel) => {
         this.feedbackCategory_ID = response.id;
       });
@@ -221,6 +224,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       branchListId: [''],
       serviceProvider: [''],
       whereCardUsed: [''], // web or pos
+      errorCategory: [''],
+      errorType: ['']
     });
   }
 
@@ -300,6 +305,22 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   handleErrorFn() {
     this.errorService.onErrorObserver.pipe()
       .subscribe(e => this.errorDialog(e));
+  }
+
+  // Fetch complaint category
+  complaintCategory(): void {
+    this.utilities.fetch_Category(1).toPromise()
+      .then(response => {
+        this.complaintCategoryHolder = response;
+      });
+  }
+
+  fetchErrorType(): void {
+    const category: ComplaintCategory = this.atmDispenseErrorForm.controls.errorCategory.value;
+    this.utilities.fetch_ErrorType(category.id).toPromise()
+      .then((response: ErrorTypes[]) => {
+        this.ComplaintTypes = response;
+      });
   }
 
   test() {
