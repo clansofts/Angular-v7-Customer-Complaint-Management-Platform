@@ -117,15 +117,24 @@
                 </div>
             </div> -->
 
-        <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end">
+        <div (click)="test()" ngbDropdown [placement]="'bottom-right'" class="user col align-self-end">
             <img src="./assets/images/faces/f3.jpg" id="userDropdown" ngbDropdownToggle alt="">
 
             <div ngbDropdownMenu aria-labelledby="userDropdown">
                 <div class="dropdown-header" *ngIf="!authStatus">
-                    <i class="i-Lock-User mr-1" ></i> Admin Log In
+                    <i class="i-Lock-User mr-1"></i> Admin Log In
                 </div>
-                <!-- <button class="dropdown-item">Account settings</button>
-                <button class="dropdown-item">Billing history</button> -->
+                <ng-container *ngIf="roleUser == 'RT'">
+                    <button class="dropdown-item">Account settings</button>
+                    <button class="dropdown-item">User Management</button>
+                    <button class="dropdown-item">Complaint history</button>
+                </ng-container>
+                <ng-container *ngIf="roleUser == 'RC'">
+                    <button class="dropdown-item">Account settings</button>
+                    <button class="dropdown-item">User Management</button>
+                    <button class="dropdown-item">Complaint history</button>
+                </ng-container>
+
                 <button *ngIf="!authStatus" class="dropdown-item" (click)="signout()">Sign In</button>
                 <button *ngIf="authStatus" class="dropdown-item" (click)="signout()">Sign Out</button>
             </div>

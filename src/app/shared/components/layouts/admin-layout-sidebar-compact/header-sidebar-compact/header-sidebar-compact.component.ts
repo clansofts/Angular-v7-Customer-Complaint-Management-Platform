@@ -3,6 +3,7 @@ import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { SearchService } from 'src/app/shared/services/search.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
+import { UserService } from 'src/app/shared/services/user-service.service';
 
 @Component({
   selector: 'app-header-sidebar-compact',
@@ -16,7 +17,8 @@ export class HeaderSidebarCompactComponent implements OnInit {
     private navService: NavigationService,
     public searchService: SearchService,
     private auth: AuthService,
-    private localStorage: LocalStoreService
+    private localStorage: LocalStoreService,
+    private userService: UserService
   ) {
     this.notifications = [
       {
@@ -82,11 +84,17 @@ export class HeaderSidebarCompactComponent implements OnInit {
     return state;
   }
 
+  // Get user role
+  get roleUser() {
+    const role = this.userService.loggedInUser;
+    return role;
+  }
+
   signout() {
     this.auth.signout();
   }
 
   test() {
-    console.log(this.authStatus);
+    console.log(this.roleUser);
   }
 }

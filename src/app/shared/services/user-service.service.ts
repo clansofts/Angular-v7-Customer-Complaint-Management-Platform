@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStoreService } from './local-store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private localStorage: LocalStoreService) { }
 
   set route(url: string) {
     this.router.navigateByUrl(url);
@@ -22,5 +23,14 @@ export class UserService {
       // If resolution team
       this.route = '/admin-rt';
     }
+  }
+
+  // Get logged in user role
+  get loggedInUser() {
+    const user: any = this.localStorage.getItem('currentUser');
+    if (user) {
+      return user.Role;
+    }
+    return null;
   }
 }
