@@ -10,7 +10,7 @@ import { ServiceIssueComponent } from './customer-complaints/service-issue/servi
 const routes: Routes = [
   {
     path: 'complaints',
-    component: AtmDispenseErrorComponent, // DashboadDefaultComponent,
+    component: DashboadDefaultComponent,
     children: [
       {
         path: '',

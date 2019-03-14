@@ -52,7 +52,7 @@ export class NavigationService {
             name: 'Self Service',
             description: 'Make a complaint or track an issue.',
             type: 'dropDown',
-            icon: 'i-Bar-Chart',
+            icon: 'i-Business-Mens',
             sub: [
                 { icon: 'i-Speach-Bubble-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
                 { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
@@ -89,7 +89,7 @@ export class NavigationService {
             name: 'Resolution Team',
             description: 'Resolve issues and monitor customer complaints',
             type: 'dropDown',
-            icon: 'i-Bar-Chart',
+            icon: 'i-Conference',
             sub: [
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
@@ -104,7 +104,7 @@ export class NavigationService {
             name: 'Customer Service',
             description: 'Make complaints and track issues',
             type: 'dropDown',
-            icon: 'i-Bar-Chart',
+            icon: 'i-Consulting',
             sub: [
                 { icon: 'i-Speach-Bubble-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
                 { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },

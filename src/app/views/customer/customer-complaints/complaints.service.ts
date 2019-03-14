@@ -114,8 +114,8 @@ export class ComplaintsModel {
     this.unionatmId = obj && obj.unionatmId.atmId || null;
     this.branchListId = obj && obj.branchListId || null;
     this.serviceProviderId = obj && obj.serviceProvider.serviceProviderId || null;
-    this.suggestionBox = obj && obj.suggestionBox;
-    this.issueSubCatId = obj && obj.errorType.id;
+    this.suggestionBox = obj && obj.suggestionBox || null;
+    this.issueSubCatId = obj && obj.errorType.id || null;
   }
 }
 

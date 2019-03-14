@@ -52,15 +52,25 @@
                                     placeholder="Account number">
                             </div>
 
-                            <div class="col-md-6 form-group mb-3">
+                            <!-- <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">E-Channel</label>
                                 <select formControlName="eMedium" class="form-control">
                                     <option *ngFor="let i of eChannelMedium" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
+                            </div> -->
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">Channel Category</label>
+                                <select formControlName="errorCategory" class="form-control"
+                                    (change)="fetchErrorType()">
+                                    <option disabled selected> Please select one option </option>
+                                    <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
+                                        {{ i?.category | titlecase }}
+                                    </option>
+                                </select>
                             </div>
 
                             <div class="col-md-12">
-                                <button type="button" [disabled]="!eChannelsForm.controls.eMedium.valid"
+                                <button type="button" [disabled]="!eChannelsForm.controls.errorCategory.valid"
                                     Class="btn btn-primary btn-rounded m-1"
                                     (click)="toggleNavigation = false; open(formModal)">Continue</button>
                             </div>
@@ -75,15 +85,7 @@
                                 <ng-container *ngSwitchCase="1">
 
                                     <!-- <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">Service Type</label>
-                                        <select formControlName="eChannels" class="form-control">
-                                            <option disabled selected> Please select service type </option>
-                                            <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
-                                        </select>
-                                    </div> -->
-
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">E-Channel Error Category</label>
+                                        <label for="picker1">Channel Category</label>
                                         <select formControlName="errorCategory" class="form-control"
                                             (change)="fetchErrorType()">
                                             <option disabled selected> Please select one option </option>
@@ -91,15 +93,21 @@
                                                 {{ i?.category | titlecase }}
                                             </option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">E-Channel Complaint Type:</label>
+                                        <label for="picker1">Complaint Type:</label>
                                         <select formControlName="errorType" class="form-control">
                                             <option disabled selected> Please select an error type </option>
                                             <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
                                         </select>
                                     </div>
-
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Service Type</label>
+                                        <select formControlName="eChannels" class="form-control">
+                                            <option disabled selected> Please select service type </option>
+                                            <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
 
 
                                     <!-- Under Union, If service type is Airtime top up -->
@@ -365,15 +373,7 @@
                                 <!-- Medium is: Online Banking -->
                                 <ng-container *ngSwitchCase="2">
                                     <!-- <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">Service Type</label>
-                                        <select formControlName="eChannels" class="form-control">
-                                            <option disabled selected> Please select service type </option>
-                                            <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
-                                        </select>
-                                    </div> -->
-
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">E-Channel Error Category</label>
+                                        <label for="picker1">Channel Category</label>
                                         <select formControlName="errorCategory" class="form-control"
                                             (change)="fetchErrorType()">
                                             <option disabled selected> Please select one option </option>
@@ -381,12 +381,20 @@
                                                 {{ i?.category | titlecase }}
                                             </option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">E-Channel Complaint Type:</label>
+                                        <label for="picker1">Complaint Type:</label>
                                         <select formControlName="errorType" class="form-control">
                                             <option disabled selected> Please select an error type </option>
                                             <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Service Type</label>
+                                        <select formControlName="eChannels" class="form-control">
+                                            <option disabled selected> Please select service type </option>
+                                            <option *ngFor="let i of serviceType" [ngValue]='i'>{{i?.name}}</option>
                                         </select>
                                     </div>
 
@@ -654,6 +662,13 @@
 
                                 <!-- Medium is: POS/Web -->
                                 <ng-container *ngSwitchCase="3">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Complaint Type:</label>
+                                        <select formControlName="errorType" class="form-control">
+                                            <option disabled selected> Please select an error type </option>
+                                            <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Where did you use your card?</label>
@@ -755,6 +770,13 @@
 
                                 <!-- Medium is: USSD -->
                                 <ng-container *ngSwitchCase="4">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Complaint Type:</label>
+                                        <select formControlName="errorType" class="form-control">
+                                            <option disabled selected> Please select an error type </option>
+                                            <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Service Type</label>
                                         <select formControlName="eChannels" class="form-control">
@@ -968,6 +990,13 @@
                                 </ng-container>
                                 <!-- Medium is: Mcash -->
                                 <ng-container *ngSwitchCase="5">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="picker1">Complaint Type:</label>
+                                        <select formControlName="errorType" class="form-control">
+                                            <option disabled selected> Please select an error type </option>
+                                            <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
+                                        </select>
+                                    </div>
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="firstName">POS Merchant name</label>

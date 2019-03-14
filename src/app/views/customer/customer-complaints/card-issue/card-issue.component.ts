@@ -153,7 +153,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       }),
       transDate: [''], // Defaults to today's date
       atmUsed: [''],
-      cardComplaintType: ['', [Validators.required]],
+      cardComplaintType: [''],
       complaintDescription: ['', [Validators.required]],
       channel_ID: [this.channelId],
       feedbackId: [''],
@@ -181,7 +181,8 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       unionatmId: [''], // if unionbank, then location
       branchListId: [''],
       serviceProvider: [''],
-      errorCategory: [''],
+      errorCategory: ['', [Validators.required]],
+      errorType: ['']
     });
   }
 

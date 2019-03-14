@@ -58,3 +58,9 @@ background-color: #00aeef !important;
 .item-name {
     color: white !important;
 }
+a.open {
+    background: #049eea !important;
+}
+a:hover {
+    background: #1b8fe4 !important;
+}

@@ -159,7 +159,7 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Main mechnism for controlling the channel type toggle
   get selectServiceType() {
-    return this.eChannelsForm.controls.eMedium.value.id;
+    return this.eChannelsForm.controls.errorCategory.value.id;
   }
 
   // Inner Mechanism for controlling the selected service tyoe
