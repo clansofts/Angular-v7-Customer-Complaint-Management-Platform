@@ -35,15 +35,15 @@ const routes: Routes = [
   },
   {
     path: 'admin-rc',
-    redirectTo: 'admin-rc/complaints-dashboard',
+    redirectTo: 'admin-rc/opentickets',
     pathMatch: 'full'
   },
   {
     path: 'admin-rt',
-    redirectTo: 'admin-rc/team-dashboard',
+    redirectTo: 'admin-rt/ticket-resolution',
     pathMatch: 'full'
   },
-   {
+  {
     path: '',
     component: AuthLayoutComponent,
     children: [
@@ -69,7 +69,7 @@ const routes: Routes = [
     canActivate: [AuthGaurd],
     children: adminRoutes
   },
- {
+  {
     path: '**',
     redirectTo: ''
     /* redirectTo: 'others/404' */
