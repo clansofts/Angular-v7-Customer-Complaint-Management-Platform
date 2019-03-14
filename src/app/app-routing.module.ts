@@ -71,8 +71,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: ''
-    /* redirectTo: 'others/404' */
+    redirectTo: 'others/404'
   }
 ];
 

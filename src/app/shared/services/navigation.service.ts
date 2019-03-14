@@ -108,6 +108,7 @@ export class NavigationService {
             sub: [
                 { icon: 'i-Speach-Bubble-3', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
                 { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+                { icon: 'i-Eye', name: 'View Issues', state: '/customer/viewissues', type: 'link' },
             ]
         }
     ];
