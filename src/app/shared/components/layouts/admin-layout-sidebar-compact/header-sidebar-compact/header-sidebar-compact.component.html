@@ -121,12 +121,13 @@
             <img src="./assets/images/faces/f3.jpg" id="userDropdown" ngbDropdownToggle alt="">
 
             <div ngbDropdownMenu aria-labelledby="userDropdown">
-                <div class="dropdown-header">
-                    <i class="i-Lock-User mr-1"></i> Sign in as admin
+                <div class="dropdown-header" *ngIf="!authStatus">
+                    <i class="i-Lock-User mr-1" ></i> Admin Log In
                 </div>
                 <!-- <button class="dropdown-item">Account settings</button>
                 <button class="dropdown-item">Billing history</button> -->
-                <button class="dropdown-item" (click)="signout()">Log In</button>
+                <button *ngIf="!authStatus" class="dropdown-item" (click)="signout()">Sign In</button>
+                <button *ngIf="authStatus" class="dropdown-item" (click)="signout()">Sign Out</button>
             </div>
         </div>
 

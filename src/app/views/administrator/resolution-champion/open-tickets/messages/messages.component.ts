@@ -66,6 +66,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       }).catch(function () {
         console.log('An error occured while fetching resources');
       });
+    this.selected = null;
   }
 
   // Component lifecycle management

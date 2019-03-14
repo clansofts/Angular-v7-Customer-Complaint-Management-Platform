@@ -68,6 +68,8 @@ export class MessagesRTComponent implements OnInit {
 
     // get the resolution team members
     this.fetchTeamMembers();
+
+    this.selected = null;
   }
 
   // get issues from observable

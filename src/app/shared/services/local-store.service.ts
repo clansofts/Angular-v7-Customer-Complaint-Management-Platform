@@ -8,13 +8,13 @@ export class LocalStoreService {
   private ls = window.localStorage;
   constructor() { }
 
-  public setItem(key, value) {
+  public setItem(key: any, value: any) {
     value = JSON.stringify(value);
     this.ls.setItem(key, value);
     return true;
   }
 
-  public getItem(key) {
+  public getItem(key: string) {
     const value = this.ls.getItem(key);
     try {
       return JSON.parse(value);

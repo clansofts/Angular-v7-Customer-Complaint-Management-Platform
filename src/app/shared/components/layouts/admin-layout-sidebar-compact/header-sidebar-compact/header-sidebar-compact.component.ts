@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { SearchService } from 'src/app/shared/services/search.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { LocalStoreService } from 'src/app/shared/services/local-store.service';
 
 @Component({
   selector: 'app-header-sidebar-compact',
@@ -14,7 +15,8 @@ export class HeaderSidebarCompactComponent implements OnInit {
   constructor(
     private navService: NavigationService,
     public searchService: SearchService,
-    private auth: AuthService
+    private auth: AuthService,
+    private localStorage: LocalStoreService
   ) {
     this.notifications = [
       {
@@ -63,7 +65,10 @@ export class HeaderSidebarCompactComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // tslint:disable-next-line:no-unused-expression
+    this.authStatus;
+  }
 
   toggelSidebar() {
     const state = this.navService.sidebarState;
@@ -71,7 +76,17 @@ export class HeaderSidebarCompactComponent implements OnInit {
     state.childnavOpen = !state.childnavOpen;
   }
 
+  // Get authentication status
+  get authStatus(): boolean {
+    const state = this.localStorage.getItem('demo_login_status');
+    return state;
+  }
+
   signout() {
     this.auth.signout();
+  }
+
+  test() {
+    console.log(this.authStatus);
   }
 }
