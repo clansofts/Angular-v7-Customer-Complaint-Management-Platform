@@ -32,6 +32,9 @@
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
+                                <small
+                                    *ngIf="eChannelsForm.controls.emailAddress.invalid  && eChannelsForm.controls.emailAddress.dirty"
+                                    id="errorMessage" class="form-text text-danger">Invalid email format</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
@@ -48,8 +51,10 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Account number</label>
-                                <input type="number" formControlName="acctNumber" class="form-control" id=""
+                                <input formControlName="acctNumber" maxlength="10" class="form-control" id=""
                                     placeholder="Account number">
+                                <small *ngIf="eChannelsForm.controls.acctNumber.invalid" id="errorMessage"
+                                    class="form-text text-danger">Error, Only ten digits required.</small>
                             </div>
 
                             <!-- <div class="col-md-6 form-group mb-3">
@@ -59,7 +64,7 @@
                                 </select>
                             </div> -->
                             <div class="col-md-6 form-group mb-3">
-                                <label for="picker1">Channel Category</label>
+                                <label for="picker1">Channel Used</label>
                                 <select formControlName="errorCategory" class="form-control"
                                     (change)="fetchErrorType()">
                                     <option disabled selected> Please select one option </option>
@@ -143,19 +148,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -233,19 +238,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -284,8 +289,8 @@
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label>Union Mobile number</label>
-                                            <input type="number" formControlName="unionMobilePhone" class="form-control" id="phone"
-                                                placeholder="Union mobile ID">
+                                            <input type="number" formControlName="unionMobilePhone" class="form-control"
+                                                id="phone" placeholder="Union mobile ID">
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
@@ -321,19 +326,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -372,16 +377,6 @@
 
                                 <!-- Medium is: Online Banking -->
                                 <ng-container *ngSwitchCase="2">
-                                    <!-- <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">Channel Category</label>
-                                        <select formControlName="errorCategory" class="form-control"
-                                            (change)="fetchErrorType()">
-                                            <option disabled selected> Please select one option </option>
-                                            <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
-                                                {{ i?.category | titlecase }}
-                                            </option>
-                                        </select>
-                                    </div> -->
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Complaint Type:</label>
                                         <select formControlName="errorType" class="form-control">
@@ -432,19 +427,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -523,19 +518,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -574,8 +569,8 @@
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label>Union Mobile number</label>
-                                            <input type="number" formControlName="unionMobilePhone" class="form-control" id="phone"
-                                                placeholder="Union mobile ID">
+                                            <input type="number" formControlName="unionMobilePhone" class="form-control"
+                                                id="phone" placeholder="Union mobile ID">
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
@@ -612,19 +607,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -724,19 +719,19 @@
                                         formGroupName="amount">
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="credit">Amount</label>
-                                            <input formControlName="amount1" class="form-control" id=""
+                                            <input type="number" formControlName="amount1" class="form-control" id=""
                                                 placeholder="Transaction Amount">
                                         </div>
 
                                         <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                             <label for="credit">Amount 2</label>
-                                            <input formControlName="amount2" class="form-control" id=""
+                                            <input type="number" formControlName="amount2" class="form-control" id=""
                                                 placeholder="Transaction Amount">
                                         </div>
 
                                         <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                             <label for="credit">Amount 3</label>
-                                            <input formControlName="amount3" class="form-control" id=""
+                                            <input type="number" formControlName="amount3" class="form-control" id=""
                                                 placeholder="Transaction Amount">
                                         </div>
 
@@ -787,14 +782,14 @@
                                     <ng-container *ngIf="ussd_ComplaintType == 4">
                                         <div class="col-md-6 form-group mb-3">
                                             <label>USSD registed phone</label>
-                                            <input type="number" formControlName="ussdPhoneNo" class="form-control" id="phone"
-                                                placeholder="Enter registered phone number">
+                                            <input type="number" formControlName="ussdPhoneNo" class="form-control"
+                                                id="phone" placeholder="Enter registered phone number">
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label>Airtime Beneficiary number</label>
-                                            <input type="number" formControlName="beneficiaryPhoneNo" class="form-control" id="phone"
-                                                placeholder="Enter phone number">
+                                            <input type="number" formControlName="beneficiaryPhoneNo"
+                                                class="form-control" id="phone" placeholder="Enter phone number">
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
@@ -816,19 +811,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -866,8 +861,8 @@
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label>Union Mobile number</label>
-                                            <input type="number" formControlName="unionMobilePhone" class="form-control" id="phone"
-                                                placeholder="Union mobile ID">
+                                            <input type="number" formControlName="unionMobilePhone" class="form-control"
+                                                id="phone" placeholder="Union mobile ID">
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
@@ -903,19 +898,19 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input formControlName="amount1" class="form-control" id=""
+                                                <input type="number" formControlName="amount1" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input formControlName="amount2" class="form-control" id=""
+                                                <input type="number" formControlName="amount2" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input formControlName="amount3" class="form-control" id=""
+                                                <input type="number" formControlName="amount3" class="form-control" id=""
                                                     placeholder="Transaction Amount">
                                             </div>
 
@@ -954,8 +949,8 @@
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label>USSD registed phone</label>
-                                            <input type="number" formControlName="ussdPhoneNo" class="form-control" id="phone"
-                                                placeholder="Enter registered phone number">
+                                            <input type="number" formControlName="ussdPhoneNo" class="form-control"
+                                                id="phone" placeholder="Enter registered phone number">
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
@@ -1006,14 +1001,14 @@
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label>POS Merchant code</label>
-                                        <input type="number" formControlName="merchantCode" class="form-control" id="merchantCode"
-                                            placeholder="Enter Merchant code">
+                                        <input type="number" formControlName="merchantCode" class="form-control"
+                                            id="merchantCode" placeholder="Enter Merchant code">
                                     </div>
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label>USSD registed phone</label>
-                                        <input type="number" formControlName="ussdPhoneNo" class="form-control" id="phone"
-                                            placeholder="Enter registered phone number">
+                                        <input type="number" formControlName="ussdPhoneNo" class="form-control"
+                                            id="phone" placeholder="Enter registered phone number">
                                     </div>
 
                                     <div class="col-md-6 form-group mb-3">
@@ -1037,19 +1032,19 @@
 
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="credit">Amount</label>
-                                            <input formControlName="amount1" class="form-control" id=""
+                                            <input type="number" formControlName="amount1" class="form-control" id=""
                                                 placeholder="Transaction Amount">
                                         </div>
 
                                         <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                             <label for="credit">Amount 2</label>
-                                            <input formControlName="amount2" class="form-control" id=""
+                                            <input type="number" formControlName="amount2" class="form-control" id=""
                                                 placeholder="Transaction Amount">
                                         </div>
 
                                         <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                             <label for="credit">Amount 3</label>
-                                            <input formControlName="amount3" class="form-control" id=""
+                                            <input type="number" formControlName="amount3" class="form-control" id=""
                                                 placeholder="Transaction Amount">
                                         </div>
 

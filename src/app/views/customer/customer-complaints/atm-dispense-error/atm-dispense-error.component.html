@@ -35,6 +35,9 @@
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
+                                <small
+                                    *ngIf="atmDispenseErrorForm.controls.emailAddress.invalid  && atmDispenseErrorForm.controls.emailAddress.dirty"
+                                    id="errorMessage" class="form-text text-danger mt-2">Invalid email format</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
@@ -46,11 +49,13 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card number: last 4 digits</label>
                                 <!-- Mask the card number -->
-                                <input type="number" formControlName="cardNumber" class="form-control" id="credit"
+                                <input formControlName="cardNumber" class="form-control" id="credit"
                                     placeholder="Card number">
-                                <small *ngIf="atmDispenseErrorForm.controls.cardNumber.invalid" id="errorMessage"
-                                    class="form-text text-danger">Enter
-                                    only the last 4 digits.</small>
+                                <small
+                                    *ngIf="atmDispenseErrorForm.controls.cardNumber.invalid && atmDispenseErrorForm.controls.cardNumber.dirty"
+                                    id="errorMessage" class="form-text text-danger mt-2">
+                                    Error: Maximum length is 4, Ensure you enter only numbers
+                                </small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
@@ -114,19 +119,19 @@
 
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="credit">Amount</label>
-                                    <input formControlName="amount1" class="form-control" id="credit"
+                                    <input type="number" formControlName="amount1" class="form-control" id="credit"
                                         placeholder="Transaction Amount">
                                 </div>
 
                                 <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                     <label for="credit">Amount 2</label>
-                                    <input formControlName="amount2" class="form-control" id="credit"
+                                    <input type="number" formControlName="amount2" class="form-control" id="credit"
                                         placeholder="Transaction Amount">
                                 </div>
 
                                 <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                     <label for="credit">Amount 3</label>
-                                    <input formControlName="amount3" class="form-control" id="credit"
+                                    <input type="number" formControlName="amount3" class="form-control" id="credit"
                                         placeholder="Transaction Amount">
                                 </div>
 

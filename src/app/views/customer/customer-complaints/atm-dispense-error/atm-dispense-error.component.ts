@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { map, last, distinct, skipUntil, single, filter, take, distinctUntilChanged } from 'rxjs/operators';
-import { UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
+import { map, filter, distinctUntilChanged } from 'rxjs/operators';
+import {
+  UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel,
+  ComplaintCategory, ErrorTypes
+} from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -183,10 +186,10 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       lastName: ['', [Validators.required]],
       middleName: [''],
       acctNumber: [''],
-      emailAddress: ['', [Validators.required]],
-      phone: [''],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.maxLength(12)],
       altphone: [''],
-      cardNumber: ['', Validators.maxLength(4)],
+      cardNumber: ['', [Validators.required, Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
       amount: this.fb.group({
         amount1: [''],

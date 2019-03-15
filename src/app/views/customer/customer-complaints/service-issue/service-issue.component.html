@@ -31,6 +31,10 @@
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
+                                <small
+                                    *ngIf="serviceComplaintForm.controls.emailAddress.invalid  && serviceComplaintForm.controls.emailAddress.dirty"
+                                    id="errorMessage" class="form-text text-danger">Invalid email format</small>
+
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
