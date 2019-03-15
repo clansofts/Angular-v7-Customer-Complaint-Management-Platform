@@ -126,7 +126,11 @@ export class EChannelsErrorComponent implements OnInit {
     } catch (e) {
       console.log('An error occured while fetching resources');
     }
-    this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id);
+    try {
+     this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id); 
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // Alert controls
@@ -159,7 +163,11 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Main mechnism for controlling the channel type toggle
   get selectServiceType() {
-    return this.eChannelsForm.controls.errorCategory.value.id;
+    try {
+      return this.eChannelsForm.controls.errorCategory.value.id;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Inner Mechanism for controlling the selected service tyoe
@@ -215,7 +223,7 @@ export class EChannelsErrorComponent implements OnInit {
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: [''],
       altphone: [''],
-      cardNumber: ['', Validators.maxLength(4)],
+      cardNumber: ['', Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
       transCount: [''],
       amount: this.fb.group({
         amount1: [''],
@@ -339,10 +347,14 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Fetch complaint category
   complaintCategory(): void {
-    this.utilities.fetch_Category(3).toPromise()
+    try {
+     this.utilities.fetch_Category(3).toPromise()
       .then(response => {
         this.complaintCategoryHolder = response;
       });
+    } catch (eror) {
+
+    }
   }
 
   fetchErrorType(): void {

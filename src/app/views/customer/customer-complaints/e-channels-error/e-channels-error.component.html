@@ -682,7 +682,12 @@
                                         <label for="firstName">Website where card was used?</label>
                                         <input formControlName="websiteURL" type="text" class="form-control"
                                             id="firstName" placeholder="Enter Website URL e.g www.xyz.com">
-                                    </div>
+                                            <small
+                                            *ngIf="eChannelsForm.controls.websiteURL.invalid && eChannelsForm.controls.websiteURL.dirty"
+                                            id="errorMessage" class="form-text text-danger mt-2">
+                                            Error: Please check your input.
+                                        </small>
+                                        </div>
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="credit">Card Variant</label>
