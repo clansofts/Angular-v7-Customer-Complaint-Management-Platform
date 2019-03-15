@@ -38,14 +38,14 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="phone">Phone</label>
-                                <input formControlName="phone" class="form-control" id="phone"
+                                <input type="number" formControlName="phone" class="form-control" id="phone"
                                     placeholder="Enter phone">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card number: last 4 digits</label>
                                 <!-- Mask the card number -->
-                                <input formControlName="cardNumber" class="form-control" id="credit"
+                                <input type="number" formControlName="cardNumber" class="form-control" id="credit"
                                     placeholder="Card number">
                                 <small *ngIf="cardIssueForm.controls.cardNumber.invalid" id="errorMessage"
                                     class="form-text text-danger">Enter
