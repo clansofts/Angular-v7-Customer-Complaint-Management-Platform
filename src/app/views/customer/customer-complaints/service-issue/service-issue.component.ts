@@ -60,6 +60,9 @@ export class ServiceIssueComponent implements OnInit {
   ComplaintTypes: ErrorTypes[];
   complaintCategoryHolder: ComplaintCategory[];
 
+  // Form objects
+  transCount: Array<ResourceModel> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
+
   // Alert and ticket id variables
   ticketID: any;
   alert: Alert;
@@ -124,6 +127,11 @@ export class ServiceIssueComponent implements OnInit {
     return this.serviceComplaintForm.controls.isCustomer.value;
   }
 
+  // Use to toggle single or multiple
+  get selectedTransCount() {
+    return this.serviceComplaintForm.controls.transCount.value.id;
+  }
+
   fetch_BranchList(): BranchModel {
     return this.utilities.branchList()
       .toPromise().then((response: BranchModel[]) => {
@@ -138,7 +146,7 @@ export class ServiceIssueComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: [''],
+      acctNumber: ['', Validators.maxLength(10)],
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: [''],
       altphone: [''],

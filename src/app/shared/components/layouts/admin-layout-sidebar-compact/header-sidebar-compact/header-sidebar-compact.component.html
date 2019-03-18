@@ -81,11 +81,11 @@
                 </div>
             </div> -->
     
-            <div ngbDropdown [placement]="'bottom-right'">
+            <!-- <div ngbDropdown [placement]="'bottom-right'">
                 <div class="badge-top-container">
                     <span class="badge badge-primary">{{notifications?.length}}</span>
                     <i ngbDropdownToggle class="i-Bell text-muted header-icon" role="button"></i>
-                </div>
+                </div> -->
                 <!-- <div ngbDropdownMenu class="notification-dropdown" perfectScrollbar>
                     <div class="dropdown-item d-flex" *ngFor="let item of notifications" [routerLink]="[item.link]">
                         <div class="notification-icon">
@@ -101,9 +101,9 @@
                             <p class="text-small text-muted m-0">{{item.text | excerpt:30}}</p>
                         </div>
                     </div>
-                </div> -->
+                </div> 
             </div>
-    
+    -->
             <!-- <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end">
                 <img src="./assets/images/faces/1.jpg" id="userDropdown" ngbDropdownToggle alt="">
     
@@ -125,14 +125,14 @@
                     <i class="i-Lock-User mr-1"></i> Admin Log In
                 </div>
                 <ng-container *ngIf="roleUser == 'RT'">
-                    <button class="dropdown-item">Account settings</button>
+                    <!-- <button class="dropdown-item">Account settings</button>
                     <button class="dropdown-item">User Management</button>
-                    <button class="dropdown-item">Complaint history</button>
+                    <button class="dropdown-item">Complaint history</button> -->
                 </ng-container>
                 <ng-container *ngIf="roleUser == 'RC'">
-                    <button class="dropdown-item">Account settings</button>
+                    <!-- <button class="dropdown-item">Account settings</button>
                     <button class="dropdown-item">User Management</button>
-                    <button class="dropdown-item">Complaint history</button>
+                    <button class="dropdown-item">Complaint history</button> -->
                 </ng-container>
 
                 <button *ngIf="!authStatus" class="dropdown-item" (click)="signout()">Sign In</button>

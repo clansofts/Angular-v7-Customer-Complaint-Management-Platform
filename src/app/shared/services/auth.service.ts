@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   checkAuth() {
-    //  this.authenticated = this.store.getItem('demo_login_status');
+    //  this.authenticated = this.store.getItem('login_status');
   }
 
   getuser() {
@@ -36,13 +36,13 @@ export class AuthService {
     const signInURL = this.baseURL + 'token';
     const payload = `grant_type=password&username=${credentials.email}&password=${credentials.password}`;
     this.authenticated = true;
-    this.store.setItem('demo_login_status', true);
+    this.store.setItem('login_status', true);
     return this.http.post<any>(signInURL, payload, httpOptions);
   }
   signout() {
     this.authenticated = false;
     this.store.clear();
-    this.store.setItem('demo_login_status', false);
+    this.store.setItem('login_status', false);
     this.router.navigateByUrl('/sessions/signin');
   }
 }

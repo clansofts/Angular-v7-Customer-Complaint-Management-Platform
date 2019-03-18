@@ -127,7 +127,7 @@ export class EChannelsErrorComponent implements OnInit {
       console.log('An error occured while fetching resources');
     }
     try {
-     this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id); 
+      this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id);
     } catch (error) {
       console.log(error)
     }
@@ -223,7 +223,7 @@ export class EChannelsErrorComponent implements OnInit {
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: [''],
       altphone: [''],
-      cardNumber: ['', Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
+      cardNumber: ['', [Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
       amount: this.fb.group({
         amount1: [''],
@@ -261,7 +261,7 @@ export class EChannelsErrorComponent implements OnInit {
       branchListId: [''],
       serviceProvider: [''],
       whereCardUsed: [''], // web or pos
-      errorCategory: [''],
+      errorCategory: ['', [Validators.required]],
       errorType: ['']
     });
   }
@@ -348,10 +348,10 @@ export class EChannelsErrorComponent implements OnInit {
   // Fetch complaint category
   complaintCategory(): void {
     try {
-     this.utilities.fetch_Category(3).toPromise()
-      .then(response => {
-        this.complaintCategoryHolder = response;
-      });
+      this.utilities.fetch_Category(3).toPromise()
+        .then(response => {
+          this.complaintCategoryHolder = response;
+        });
     } catch (eror) {
 
     }

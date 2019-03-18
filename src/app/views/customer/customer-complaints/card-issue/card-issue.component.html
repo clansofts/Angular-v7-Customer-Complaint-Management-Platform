@@ -47,9 +47,17 @@
                                 <!-- Mask the card number -->
                                 <input type="number" formControlName="cardNumber" class="form-control" id="credit"
                                     placeholder="Card number">
-                                <small *ngIf="cardIssueForm.controls.cardNumber.invalid" id="errorMessage"
+                                <small *ngIf="(cardIssueForm.controls.cardNumber.invalid)" id="errorMessage"
                                     class="form-text text-danger">Enter
                                     only the last 4 digits.</small>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="credit">Account number</label>
+                                <input formControlName="acctNumber" maxlength="10" class="form-control" id=""
+                                    placeholder="Account number">
+                                <small *ngIf="cardIssueForm.controls.acctNumber.invalid" id="errorMessage"
+                                    class="form-text text-danger">Error, Only ten digits required.</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
@@ -95,6 +103,17 @@
                                     </div>
                                     <textarea formControlName="complaintDescription" class="form-control"
                                         aria-label="With textarea"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 form-group mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">What would you like us to do?</span>
+                                    </div>
+                                    <textarea formControlName="suggestionBox" class="form-control"
+                                        aria-label="With textarea">
+                                </textarea>
                                 </div>
                             </div>
 

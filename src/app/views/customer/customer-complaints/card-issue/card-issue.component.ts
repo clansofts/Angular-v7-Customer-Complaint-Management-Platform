@@ -84,8 +84,8 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   async ngOnInit() {
     this.cardIssueFn(),
-    // display details form by default
-    this.personalDetails = true;
+      // display details form by default
+      this.personalDetails = true;
     return Promise.all([
       await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
@@ -115,22 +115,26 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
     try {
-     return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
-      .toPromise().then((response: FeedBackModel) => {
-        this.feedbackCategory_ID = response.id;
-      });
-    } catch(error) {
-      console.log(error);
+      return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
+        .toPromise().then((response: FeedBackModel) => {
+          this.feedbackCategory_ID = response.id;
+        });
+    } catch (error) {
+      console.log('Cannot Fetch Feedback Id:', error);
     }
   }
 
   // Fetch card variants
   set fetchCardVariants(path: string) {
-    this.utilities.card_VariantsInit = path;
-    this.utilities.card_Variants$
-      .toPromise().then(response => {
-        this.card_Variants = response;
-      });
+    try {
+      this.utilities.card_VariantsInit = path;
+      this.utilities.card_Variants$
+        .toPromise().then(response => {
+          this.card_Variants = response;
+        });
+    } catch (error) {
+      console.log('Cannot Fetch Card Variant', error);
+    }
   }
 
   // Used to toggle between views
@@ -140,58 +144,54 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Reactive form control
   cardIssueFn(): void {
-    try {
-      this.cardIssueForm = this.fb.group({
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
-        middleName: [''],
-        acctNumber: [''],
-        emailAddress: ['', [Validators.required, Validators.email]],
-        phone: ['', [Validators.required]],
-        altphone: [''],
-        cardNumber: ['', Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
-        transCount: [''],
-        amount: this.fb.group({
-          amount1: [''],
-          amount2: [''],
-          amount3: [''],
-        }),
-        transDate: [''], // Defaults to today's date
-        atmUsed: [''],
-        cardComplaintType: [''],
-        complaintDescription: ['', [Validators.required]],
-        channel_ID: [this.channelId],
-        feedbackId: [''],
-        cardVariant: ['', [Validators.required]], // Automatically fetch cardVariant
-        currencyType: [''], // Defaults to Naira
-        eMedium: [''],
-        billType: [''],
-        eChannels: [''],
-        referenceID: [''],
-        smartCardNumber: [''],
-        unionMobilePhone: [''],
-        recipientsAcctNo: [''],
-        recipientsName: [''],
-        posMerchantName: [''],
-        websiteURL: [''],
-        ussdPhoneNo: [''],
-        beneficiaryPhoneNo: [''],
-        recipientBank: [''],
-        merchantCode: [''],
-        isCustomer: [''],
-        disappointedService: [''],
-        suggestionBox: [''],
-        branchIncident: [''],
-        bankused: [''], // bankNameId: if other bank
-        unionatmId: [''], // if unionbank, then location
-        branchListId: [''],
-        serviceProvider: [''],
-        errorCategory: ['', [Validators.required]],
-        errorType: ['']
-      });
-    } catch(error) {
-      console.log(error);
-    }
+    this.cardIssueForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      middleName: [''],
+      acctNumber: ['', Validators.maxLength(10)],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required]],
+      altphone: [''],
+      cardNumber: ['', [Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]],
+      transCount: [''],
+      amount: this.fb.group({
+        amount1: [''],
+        amount2: [''],
+        amount3: [''],
+      }),
+      transDate: [''], // Defaults to today's date
+      atmUsed: [''],
+      cardComplaintType: [''],
+      complaintDescription: ['', [Validators.required]],
+      channel_ID: [this.channelId],
+      feedbackId: [''],
+      cardVariant: ['', [Validators.required]], // Automatically fetch cardVariant
+      currencyType: [''], // Defaults to Naira
+      eMedium: [''],
+      billType: [''],
+      eChannels: [''],
+      referenceID: [''],
+      smartCardNumber: [''],
+      unionMobilePhone: [''],
+      recipientsAcctNo: [''],
+      recipientsName: [''],
+      posMerchantName: [''],
+      websiteURL: [''],
+      ussdPhoneNo: [''],
+      beneficiaryPhoneNo: [''],
+      recipientBank: [''],
+      merchantCode: [''],
+      isCustomer: [''],
+      disappointedService: [''],
+      suggestionBox: [''],
+      branchIncident: [''],
+      bankused: [''], // bankNameId: if other bank
+      unionatmId: [''], // if unionbank, then location
+      branchListId: [''],
+      serviceProvider: [''],
+      errorCategory: ['', [Validators.required]],
+      errorType: ['']
+    });
   }
 
   // Open modal to show ticket
@@ -242,10 +242,10 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   // Accessor for form variables
   get formatName() {
     try {
-     const firstName = this.cardIssueForm.controls.firstName.value;
-    const lastName = this.cardIssueForm.controls.lastName.value;
-    const fullName = `${firstName} ${lastName}`;
-    return fullName;
+      const firstName = this.cardIssueForm.controls.firstName.value;
+      const lastName = this.cardIssueForm.controls.lastName.value;
+      const fullName = `${firstName} ${lastName}`;
+      return fullName;
     } catch (error) {
       console.log(error);
     }
@@ -284,10 +284,10 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   // Fetch complaint category
   complaintCategory(): void {
     try {
-     this.utilities.fetch_Category(2).toPromise()
-      .then(response => {
-        this.complaintCategoryHolder = response;
-      });
+      this.utilities.fetch_Category(2).toPromise()
+        .then(response => {
+          this.complaintCategoryHolder = response;
+        });
     } catch (error) {
       console.log(error);
     }
@@ -296,10 +296,10 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   fetchErrorType(): void {
     try {
       const category: ComplaintCategory = this.cardIssueForm.controls.errorCategory.value;
-    this.utilities.fetch_ErrorType(category.id).toPromise()
-      .then((response: ErrorTypes[]) => {
-        this.cardComplaintTypes = response;
-      });
+      this.utilities.fetch_ErrorType(category.id).toPromise()
+        .then((response: ErrorTypes[]) => {
+          this.cardComplaintTypes = response;
+        });
     } catch (error) {
       console.log(error);
     }

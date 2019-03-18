@@ -59,6 +59,14 @@
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
+                                <label for="credit">Account number</label>
+                                <input formControlName="acctNumber" maxlength="10" class="form-control" id=""
+                                    placeholder="Account number">
+                                <small *ngIf="atmDispenseErrorForm.controls.acctNumber.invalid" id="errorMessage"
+                                    class="form-text text-danger">Error, Only ten digits required.</small>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card Variant</label>
                                 <select formControlName="cardVariant" class="form-control">
                                     <option [value]="" disabled selected>Select card variant</option>
@@ -169,6 +177,27 @@
                                 </select>
                                 <small id="emailHelp" class="form-text text-muted">ATM used: Union Bank or Other
                                     Bank.</small>
+                            </div>
+
+                            <div class="col-md-12 form-group mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Please describe the issue encountered:</span>
+                                    </div>
+                                    <textarea formControlName="complaintDescription" class="form-control"
+                                        aria-label="With textarea">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">What would you like us to do?</span>
+                                    </div>
+                                    <textarea formControlName="suggestionBox" class="form-control"
+                                        aria-label="With textarea">
+                                </textarea>
+                                </div>
                             </div>
 
 

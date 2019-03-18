@@ -99,6 +99,36 @@
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
+                                    <label for="picker1">Single or Multiple Transactions:</label>
+                                    <select formControlName="transCount" class="form-control">
+                                        <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
+                                    </select>
+                                </div>
+
+                                <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                    formGroupName="amount">
+
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="credit">Amount</label>
+                                        <input type="number" formControlName="amount1" class="form-control" id="credit"
+                                            placeholder="Transaction Amount">
+                                    </div>
+
+                                    <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                        <label for="credit">Amount 2</label>
+                                        <input type="number" formControlName="amount2" class="form-control" id="credit"
+                                            placeholder="Transaction Amount">
+                                    </div>
+
+                                    <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                        <label for="credit">Amount 3</label>
+                                        <input type="number" formControlName="amount3" class="form-control" id="credit"
+                                            placeholder="Transaction Amount">
+                                    </div>
+
+                                </ng-container>
+
+                                <div class="col-md-6 form-group mb-3">
                                     <label for="picker1">Date</label>
                                     <div class="input-group">
                                         <input formControlName="transDate" id="picker1" class="form-control"

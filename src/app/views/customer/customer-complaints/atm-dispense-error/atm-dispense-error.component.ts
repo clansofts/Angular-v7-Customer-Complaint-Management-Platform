@@ -185,7 +185,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: [''],
+      acctNumber: ['', Validators.maxLength(10)],
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.maxLength(12)],
       altphone: [''],

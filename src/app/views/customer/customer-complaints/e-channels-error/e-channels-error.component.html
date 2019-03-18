@@ -56,13 +56,6 @@
                                 <small *ngIf="eChannelsForm.controls.acctNumber.invalid" id="errorMessage"
                                     class="form-text text-danger">Error, Only ten digits required.</small>
                             </div>
-
-                            <!-- <div class="col-md-6 form-group mb-3">
-                                <label for="picker1">E-Channel</label>
-                                <select formControlName="eMedium" class="form-control">
-                                    <option *ngFor="let i of eChannelMedium" [ngValue]='i'>{{i?.name}}</option>
-                                </select>
-                            </div> -->
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Channel Used</label>
                                 <select formControlName="errorCategory" class="form-control"
@@ -88,17 +81,6 @@
 
                                 <!-- If Medium is: Union Mobile -->
                                 <ng-container *ngSwitchCase="1">
-
-                                    <!-- <div class="col-md-6 form-group mb-3">
-                                        <label for="picker1">Channel Category</label>
-                                        <select formControlName="errorCategory" class="form-control"
-                                            (change)="fetchErrorType()">
-                                            <option disabled selected> Please select one option </option>
-                                            <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
-                                                {{ i?.category | titlecase }}
-                                            </option>
-                                        </select>
-                                    </div> -->
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Complaint Type:</label>
                                         <select formControlName="errorType" class="form-control">
@@ -148,20 +130,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -189,6 +171,17 @@
                                                 <textarea formControlName="complaintDescription" class="form-control"
                                                     aria-label="With textarea">
                                                 </textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
                                             </div>
                                         </div>
 
@@ -238,20 +231,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -281,7 +274,16 @@
                                                 </textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
+                                            </div>
+                                        </div>
                                     </ng-container>
 
                                     <!-- If Transfer -->
@@ -326,20 +328,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -369,7 +371,16 @@
                                                 </textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
+                                            </div>
+                                        </div>
                                     </ng-container>
 
                                 </ng-container>
@@ -427,20 +438,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -470,7 +481,16 @@
                                                 </textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
+                                            </div>
+                                        </div>
                                     </ng-container>
 
                                     <!-- If Bills Payment -->
@@ -518,20 +538,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -561,7 +581,16 @@
                                                 </textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
+                                            </div>
+                                        </div>
                                     </ng-container>
 
                                     <!-- If Transfer -->
@@ -607,20 +636,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -650,7 +679,16 @@
                                                 </textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
+                                            </div>
+                                        </div>
                                     </ng-container>
 
                                 </ng-container>
@@ -682,12 +720,12 @@
                                         <label for="firstName">Website where card was used?</label>
                                         <input formControlName="websiteURL" type="text" class="form-control"
                                             id="firstName" placeholder="Enter Website URL e.g www.xyz.com">
-                                            <small
+                                        <small
                                             *ngIf="eChannelsForm.controls.websiteURL.invalid && eChannelsForm.controls.websiteURL.dirty"
                                             id="errorMessage" class="form-text text-danger mt-2">
                                             Error: Please check your input.
                                         </small>
-                                        </div>
+                                    </div>
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="credit">Card Variant</label>
@@ -703,6 +741,7 @@
                                         <input type="number" formControlName="cardNumber" class="form-control" id=""
                                             placeholder="Card">
                                     </div>
+                                    
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Currency Type</label>
@@ -766,6 +805,17 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-12 form-group mb-3">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">What would you like us to do?</span>
+                                            </div>
+                                            <textarea formControlName="suggestionBox" class="form-control"
+                                                aria-label="With textarea">
+                                        </textarea>
+                                        </div>
+                                    </div>
+
                                 </ng-container>
 
                                 <!-- Medium is: USSD -->
@@ -816,20 +866,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -857,6 +907,17 @@
                                                 <textarea formControlName="complaintDescription" class="form-control"
                                                     aria-label="With textarea">
                                                 </textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
                                             </div>
                                         </div>
                                     </ng-container>
@@ -903,20 +964,20 @@
 
                                             <div class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount</label>
-                                                <input type="number" formControlName="amount1" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount1" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 2</label>
-                                                <input type="number" formControlName="amount2" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount2" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                             <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
                                                 <label for="credit">Amount 3</label>
-                                                <input type="number" formControlName="amount3" class="form-control" id=""
-                                                    placeholder="Transaction Amount">
+                                                <input type="number" formControlName="amount3" class="form-control"
+                                                    id="" placeholder="Transaction Amount">
                                             </div>
 
                                         </ng-container>
@@ -944,6 +1005,17 @@
                                                 <textarea formControlName="complaintDescription" class="form-control"
                                                     aria-label="With textarea">
                                                 </textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
                                             </div>
                                         </div>
 
@@ -983,7 +1055,16 @@
                                                 </textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12 form-group mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">What would you like us to do?</span>
+                                                </div>
+                                                <textarea formControlName="suggestionBox" class="form-control"
+                                                    aria-label="With textarea">
+                                            </textarea>
+                                            </div>
+                                        </div>
                                     </ng-container>
 
 
@@ -1078,7 +1159,16 @@
                                             </textarea>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-12 form-group mb-3">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">What would you like us to do?</span>
+                                            </div>
+                                            <textarea formControlName="suggestionBox" class="form-control"
+                                                aria-label="With textarea">
+                                        </textarea>
+                                        </div>
+                                    </div>
                                 </ng-container>
 
                             </ng-container>
