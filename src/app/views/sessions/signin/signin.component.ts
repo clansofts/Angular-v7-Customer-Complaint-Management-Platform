@@ -83,7 +83,7 @@ export class SigninComponent implements OnInit {
     signin() {
         this.loading = true;
         this.loadingText = 'Sigining in...';
-        this.auth.signin(this.signinForm.value).toPromise()
+        this.auth.signin(this.signinForm.value)
             .then(async (response: AuthUserModel) => {
                 console.log(response);
                 if (response) {

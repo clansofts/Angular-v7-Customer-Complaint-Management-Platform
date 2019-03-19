@@ -70,7 +70,7 @@
                                 </select>
                                 <small
                                     *ngIf="serviceComplaintForm.controls.isCustomer.status === 'INVALID' && errorSubmit === true"
-                                    id="emailHelp" class="form-text text-danger">There's an error here.</small>
+                                    id="emailHelp" class="form-text text-danger">Please select an option.</small>
                             </div>
 
                             <div *ngIf="isCustomerFn === 'true'" class="col-md-6 form-group mb-3">
@@ -134,9 +134,9 @@
 
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="picker1">Single or Multiple Transactions:</label>
-                                    <select formControlName="transCount" [ngClass]="{'error':serviceComplaintForm.controls.transDate.status === 'INVALID' 
-                                    && errorSubmit === true || serviceComplaintForm.controls.transDate.status === 'INVALID' 
-                                    && serviceComplaintForm.controls.transDate.dirty}" class="form-control">
+                                    <select formControlName="transCount" [ngClass]="{'error':serviceComplaintForm.controls.transCount.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.transCount.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.transCount.dirty}" class="form-control">
                                         <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
                                     </select>
                                     <small id="emailHelp" class="form-text text-muted">If complaint is of a

@@ -32,13 +32,19 @@ export class AuthService {
     return of({});
   }
 
-  signin(credentials: any) {
+  async signin(credentials: any) {
     const signInURL = this.baseURL + 'token';
     const payload = `grant_type=password&username=${credentials.email}&password=${credentials.password}`;
-    this.authenticated = true;
-    this.store.setItem('login_status', true);
-    return this.http.post<any>(signInURL, payload, httpOptions);
+    try {
+      const response = await this.http.post<any>(signInURL, payload, httpOptions).toPromise();
+      this.authenticated = true;
+      this.store.setItem('login_status', true);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
+
   signout() {
     this.authenticated = false;
     this.store.clear();

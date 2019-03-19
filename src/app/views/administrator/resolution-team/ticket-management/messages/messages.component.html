@@ -6,8 +6,7 @@
       <div appSidebarContainer class="inbox-secondary-sidebar-container box-shadow-1">
         <div appSidebarContent>
           <div class="inbox-secondary-sidebar-content position-relative" style="min-height: 500px">
-            <div class="inbox-topbar box-shadow-1 pl-3" [perfectScrollbar]="{suppressScrollY: true}">
-              <!-- <span class="d-sm-none">Test</span> -->
+            <!-- <div class="inbox-topbar box-shadow-1 pl-3" [perfectScrollbar]="{suppressScrollY: true}">
               <a appSidebarToggler="inbox-main-sidebar" class="link-icon d-md-none">
                 <i class="icon-regular i-Arrow-Turn-Left"></i>
               </a>
@@ -21,7 +20,7 @@
                 <a href="javascript:;" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Forward</a>
                 <a href="javascript:;" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Delete</a>
               </div>
-            </div>
+            </div> -->
             <!-- EMAIL DETAILS -->
             <div class="inbox-details inbox-details--custom" *ngIf="selected"
               [perfectScrollbar]="{suppressScrollX: true}">
@@ -195,13 +194,7 @@
                         <input disabled class="form-control form-control-rounded" id="phone" placeholder="phone number"
                           value="{{selected?.beneficiaryPhoneNo}}">
                       </div>
-
-                      <!-- <div class="col-md-6 form-group mb-3" *ngIf="selected?.billType.name">
-<label for="picker1">Airtime billers</label>
-<input disabled class="form-control form-control-rounded" id="phone"
-placeholder="Airtime billers" value="{{selected?.billType.name}}">
-</div> -->
-
+                      
                       <div class="col-md-6 form-group mb-3" *ngIf="selected?.unionMobile">
                         <label for="phone">Union Mobile number</label>
                         <input disabled class="form-control form-control-rounded" id="phone"

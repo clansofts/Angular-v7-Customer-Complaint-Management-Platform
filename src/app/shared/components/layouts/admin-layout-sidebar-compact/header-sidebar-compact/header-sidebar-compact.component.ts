@@ -80,7 +80,7 @@ export class HeaderSidebarCompactComponent implements OnInit {
 
   // Get authentication status
   get authStatus(): boolean {
-    const state = this.localStorage.getItem('demo_login_status');
+    const state = this.localStorage.getItem('login_status');
     return state;
   }
 
