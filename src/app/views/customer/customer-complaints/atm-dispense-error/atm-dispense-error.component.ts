@@ -204,7 +204,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       channel_ID: [this.channelId],
       feedbackId: [''],
       cardVariant: ['', [Validators.required]], // Automatically fetch cardVariant
-      currencyType: ['', [Validators.required]], // Defaults to Naira
+      currencyType: [''], // UX: Defaults to Naira
       eMedium: [''],
       billType: [''],
       eChannels: [''],
