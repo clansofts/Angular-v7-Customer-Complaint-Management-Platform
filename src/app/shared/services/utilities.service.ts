@@ -171,4 +171,16 @@ export class UtilitiesService {
     const Path = `http://10.65.0.86/api/issuecategories/sub?ctid=${code}`;
     return this.http.get<Array<ErrorTypes>>(Path, httpOptions);
   }
+
+  // Find invalid form controls, used for form validation
+  findInvalidControls(form: any) {
+    const invalid = [];
+    const controls = form.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
+  }
 }

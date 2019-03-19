@@ -75,6 +75,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   alert: Alert;
   ComplaintTypes: ErrorTypes[];
   complaintCategoryHolder: ComplaintCategory[];
+  errorSubmit: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -185,9 +186,9 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: ['', Validators.maxLength(10)],
+      acctNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
       emailAddress: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.maxLength(12)],
+      phone: ['', [Validators.maxLength(15), Validators.pattern(new RegExp(/^[0-9\+]*$/))]],
       altphone: [''],
       cardNumber: ['', [Validators.required, Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
@@ -258,6 +259,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   async submit(form: { value: any; }) {
     if (this.atmDispenseErrorForm.valid) {
       this.loading = true;
+      this.errorSubmit = false;
       await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
       await this.complaintsService.submitComplaint(payloadObject)
@@ -274,6 +276,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
+    this.errorSubmit = true;
   }
 
   // Accessor for form variables
@@ -327,7 +330,9 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    console.log('Testing');
+    console.log('Running Test');
+    console.log(this.atmDispenseErrorForm);
+    console.log(this.utilities.findInvalidControls(this.atmDispenseErrorForm));
   }
 
 }

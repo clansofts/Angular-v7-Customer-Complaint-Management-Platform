@@ -16,19 +16,22 @@
                         <ng-container *ngIf="personalDetails else complaintsForm">
                             <div class="col-md-6 form-group mb-3">
                                 <label for="firstName">First name</label>
-                                <input type="text" formControlName="firstName" class="form-control" id="firstName"
-                                    placeholder="Enter your first name">
+                                <input type="text" formControlName="firstName"
+                                    [ngClass]="{'error':eChannelsForm.controls.firstName.status === 'INVALID' && eChannelsForm.controls.firstName.dirty}"
+                                    class="form-control" id="firstName" placeholder="Enter your first name">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="lastName">Last name</label>
-                                <input formControlName="lastName" type="text" class="form-control" id="lastName"
-                                    placeholder="Enter your last name">
+                                <input formControlName="lastName" type="text"
+                                    [ngClass]="{'error':eChannelsForm.controls.lastName.status === 'INVALID' && eChannelsForm.controls.lastName.dirty}"
+                                    class="form-control" id="lastName" placeholder="Enter your last name">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="exampleInputEmail1">Email address</label>
                                 <input formControlName="emailAddress" type="email" class="form-control"
+                                    [ngClass]="{'error':eChannelsForm.controls.emailAddress.status === 'INVALID' && eChannelsForm.controls.emailAddress.dirty}"
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
@@ -51,15 +54,21 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Account number</label>
-                                <input formControlName="acctNumber" maxlength="10" class="form-control" id=""
-                                    placeholder="Account number">
-                                <small *ngIf="eChannelsForm.controls.acctNumber.invalid" id="errorMessage"
-                                    class="form-text text-danger">Error, Only ten digits required.</small>
+                                <input formControlName="acctNumber" maxlength="10"
+                                    [ngClass]="{'error':eChannelsForm.controls.acctNumber.status === 'INVALID' 
+                                    && eChannelsForm.controls.acctNumber.dirty}"
+                                    class="form-control" id="" placeholder="Account number">
+                                <small
+                                    *ngIf="eChannelsForm.controls.acctNumber.invalid && eChannelsForm.controls.acctNumber.touched"
+                                    id="errorMessage" class="form-text text-danger">Error, Enter only ten numeric digits
+                                    required.</small>
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Channel Used</label>
-                                <select formControlName="errorCategory" class="form-control"
-                                    (change)="fetchErrorType()">
+                                <select formControlName="errorCategory"
+                                    [ngClass]="{'error':eChannelsForm.controls.errorCategory.status === 'INVALID' 
+                                    && eChannelsForm.controls.errorCategory.dirty}"
+                                    class="form-control" (change)="fetchErrorType()">
                                     <option disabled selected> Please select one option </option>
                                     <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
                                         {{ i?.category | titlecase }}
@@ -151,7 +160,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -252,7 +261,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -349,7 +358,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -459,7 +468,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -559,7 +568,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -657,7 +666,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -741,7 +750,7 @@
                                         <input type="number" formControlName="cardNumber" class="form-control" id=""
                                             placeholder="Card">
                                     </div>
-                                    
+
 
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Currency Type</label>
@@ -784,8 +793,10 @@
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Transaction Date</label>
                                         <div class="input-group">
-                                            <input formControlName="transDate" id="picker1" class="form-control"
-                                                placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                            <input formControlName="transDate" readonly id="picker1"
+                                                [ngClass]="{'error':eChannelsForm.controls.transDate.status === 'INVALID' && eChannelsForm.controls.firstName.dirty}"
+                                                class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                #dp="ngbDatepicker">
                                             <div class="input-group-append">
                                                 <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
                                                     <i class="icon-regular i-Calendar-4"></i>
@@ -887,7 +898,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -985,7 +996,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -1033,7 +1044,7 @@
                                         <div class="col-md-6 form-group mb-3">
                                             <label for="picker1">Transaction Date</label>
                                             <div class="input-group">
-                                                <input formControlName="transDate" id="picker1" class="form-control"
+                                                <input formControlName="transDate" readonly id="picker1" class="form-control"
                                                     placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                                                     #dp="ngbDatepicker">
                                                 <div class="input-group-append">
@@ -1139,8 +1150,10 @@
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Transaction Date</label>
                                         <div class="input-group">
-                                            <input formControlName="transDate" id="picker1" class="form-control"
-                                                placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                            <input formControlName="transDate" readonly id="picker1"
+                                                [ngClass]="{'error':eChannelsForm.controls.transDate.status === 'INVALID' && eChannelsForm.controls.firstName.dirty}"
+                                                class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                #dp="ngbDatepicker">
                                             <div class="input-group-append">
                                                 <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
                                                     <i class="icon-regular i-Calendar-4"></i>

@@ -15,19 +15,25 @@
                         <ng-container *ngIf="formState else complaintsForm">
                             <div class="col-md-6 form-group mb-3">
                                 <label for="firstName">First name</label>
-                                <input formControlName="firstName" type="text" class="form-control" id="firstName"
-                                    placeholder="Enter your first name">
+                                <input formControlName="firstName" type="text" [ngClass]="{'error':serviceComplaintForm.controls.firstName.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.firstName.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.firstName.dirty}" class="form-control"
+                                    id="firstName" placeholder="Enter your first name">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="lastName">Last name</label>
-                                <input formControlName="lastName" type="text" class="form-control" id="lastName"
-                                    placeholder="Enter your last name">
+                                <input formControlName="lastName" type="text" [ngClass]="{'error':serviceComplaintForm.controls.lastName.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.lastName.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.lastName.dirty}" class="form-control"
+                                    id="lastName" placeholder="Enter your last name">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input formControlName="emailAddress" type="email" class="form-control"
+                                <input formControlName="emailAddress" type="email" [ngClass]="{'error':serviceComplaintForm.controls.emailAddress.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.emailAddress.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.emailAddress.dirty}" class="form-control"
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
@@ -39,14 +45,21 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="phone">Phone</label>
-                                <input type="number" formControlName="phone" class="form-control" id="phone"
+                                <input type="number" formControlName="phone" [ngClass]="{'error':serviceComplaintForm.controls.phone.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.phone.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.phone.dirty}" class="form-control" id="phone"
                                     placeholder="Enter phone">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="phone">Alternate Phone number</label>
-                                <input type="number" formControlName="altphone" class="form-control" id="phone"
+                                <input type="number" formControlName="altphone" [ngClass]="{'error':serviceComplaintForm.controls.altphone.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.altphone.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.altphone.dirty}" class="form-control" id="phone"
                                     placeholder="Enter phone">
+                                <small
+                                    *ngIf="serviceComplaintForm.controls.altphone.status === 'INVALID' && errorSubmit === true"
+                                    id="emailHelp" class="form-text text-danger">There's an error here.</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
@@ -55,12 +68,21 @@
                                     <option [value]=true>Yes</option>
                                     <option [value]=false>No</option>
                                 </select>
+                                <small
+                                    *ngIf="serviceComplaintForm.controls.isCustomer.status === 'INVALID' && errorSubmit === true"
+                                    id="emailHelp" class="form-text text-danger">There's an error here.</small>
                             </div>
 
-                            <div *ngIf="isCustomerFn == 1" class="col-md-6 form-group mb-3">
+                            <div *ngIf="isCustomerFn === 'true'" class="col-md-6 form-group mb-3">
                                 <label for="credit">Account number</label>
-                                <input type="number" formControlName="acctNumber" class="form-control" id=""
+                                <input formControlName="acctNumber" [ngClass]="{'error':serviceComplaintForm.controls.acctNumber.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.acctNumber.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.acctNumber.dirty}" class="form-control" id=""
                                     placeholder="Account number">
+                                <small
+                                    *ngIf="serviceComplaintForm.controls.acctNumber.status === 'INVALID' && errorSubmit === true 
+                                || serviceComplaintForm.controls.acctNumber.status === 'INVALID' && serviceComplaintForm.controls.acctNumber.touched"
+                                    id="emailHelp" class="form-text text-error">Enter only nuban account number.</small>
                             </div>
 
                             <div class="col-md-12">
@@ -72,37 +94,55 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Which of our services dissapointed you?</label>
-                                <select formControlName="errorCategory" class="form-control"
+                                <select formControlName="errorCategory" [ngClass]="{'error':serviceComplaintForm.controls.errorCategory.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.errorCategory.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.errorCategory.dirty}" class="form-control"
                                     (change)="fetchErrorType()">
                                     <option disabled selected> Please select one option </option>
                                     <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
                                         {{ i?.category | titlecase }}
                                     </option>
                                 </select>
+                                <small *ngIf="serviceComplaintForm.controls.errorCategory.status === 'INVALID'"
+                                    id="emailHelp" class="form-text text-danger">There's an error here.</small>
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Service Complaint Type:</label>
-                                <select formControlName="errorType" class="form-control">
+                                <select formControlName="errorType" [ngClass]="{'error':serviceComplaintForm.controls.errorType.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.errorType.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.errorType.dirty}" class="form-control">
                                     <option disabled selected> Please select an error type </option>
                                     <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
+                                <small *ngIf="serviceComplaintForm.controls.errorType.status === 'INVALID'"
+                                    id="emailHelp" class="form-text text-danger">There's an error here.</small>
                             </div>
 
                             <ng-container *ngIf="ComplaintTypes">
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="picker1">Branch of incident</label>
-                                    <select formControlName="branchIncident" class="form-control">
+                                    <select formControlName="branchIncident" [ngClass]="{'error':serviceComplaintForm.controls.branchIncident.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.branchIncident.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.branchIncident.dirty}" class="form-control">
                                         <option selected [ngValue]='0'>N/A</option>
                                         <option *ngFor="let i of branch_of_Issue" [ngValue]='i'>{{i.branchLocation}}
                                         </option>
                                     </select>
+                                    <small *ngIf="serviceComplaintForm.controls.branchIncident.status === 'INVALID'"
+                                        id="emailHelp" class="form-text text-danger">There's an error here.</small>
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="picker1">Single or Multiple Transactions:</label>
-                                    <select formControlName="transCount" class="form-control">
+                                    <select formControlName="transCount" [ngClass]="{'error':serviceComplaintForm.controls.transDate.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.transDate.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.transDate.dirty}" class="form-control">
                                         <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
                                     </select>
+                                    <small id="emailHelp" class="form-text text-muted">If complaint is of a
+                                        transactional matter</small>
+                                    <small *ngIf="serviceComplaintForm.controls.transCount.status === 'INVALID'"
+                                        id="emailHelp" class="form-text text-danger">There's an error here.</small>
                                 </div>
 
                                 <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
@@ -131,7 +171,9 @@
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="picker1">Date</label>
                                     <div class="input-group">
-                                        <input formControlName="transDate" id="picker1" class="form-control"
+                                        <input formControlName="transDate" readonly id="picker1" [ngClass]="{'error':serviceComplaintForm.controls.transDate.status === 'INVALID' 
+                                    && errorSubmit === true || serviceComplaintForm.controls.transDate.status === 'INVALID' 
+                                    && serviceComplaintForm.controls.transDate.dirty}" class="form-control"
                                             placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
                                         <div class="input-group-append">
                                             <button class="btn btn-secondary" (click)="dp.toggle()" type="button">

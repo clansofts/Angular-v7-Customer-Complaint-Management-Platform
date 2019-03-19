@@ -65,6 +65,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Make Enum type?
   cardComplaintTypes: Array<any>;
+  errorSubmit: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -148,11 +149,11 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: ['', Validators.maxLength(10)],
+      acctNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
       emailAddress: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
+      phone: ['', [Validators.maxLength(15), Validators.pattern(new RegExp(/^[0-9\+]*$/))]],
       altphone: [''],
-      cardNumber: ['', [Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]],
+      cardNumber: ['', [Validators.required, Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
       amount: this.fb.group({
         amount1: [''],
@@ -220,6 +221,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   async submit(form: { valid: any; value: any; }) {
     if (form.valid) {
       this.loading = true;
+      this.errorSubmit = false;
       await this.cardIssueForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
       this.complaintsService.submitComplaint(payloadObject)
@@ -237,6 +239,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
+    this.errorSubmit = true;
   }
 
   // Accessor for form variables

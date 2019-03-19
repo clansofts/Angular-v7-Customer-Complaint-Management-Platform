@@ -5,7 +5,7 @@ import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel, Compla
 import { map } from 'rxjs/internal/operators/map';
 import { ComplaintsModel, ComplaintsService } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { Subject, from } from 'rxjs';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { filter, distinctUntilChanged } from 'rxjs/operators';
 import { DashboadDefaultComponent } from '../dashboad-default.component';
@@ -94,6 +94,7 @@ export class EChannelsErrorComponent implements OnInit {
     { name: 'Transfer', id: 5 },
     { name: 'Usage Issues', id: 6 }
   ];
+  errorSubmit: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -219,9 +220,9 @@ export class EChannelsErrorComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: ['', Validators.maxLength(10)],
+      acctNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
       emailAddress: ['', [Validators.required, Validators.email]],
-      phone: [''],
+      phone: ['', Validators.pattern(new RegExp(/^[0-9\+]*$/))],
       altphone: [''],
       cardNumber: ['', [Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
@@ -230,7 +231,7 @@ export class EChannelsErrorComponent implements OnInit {
         amount2: [''],
         amount3: [''],
       }),
-      transDate: [''], // Defaults to today's date
+      transDate: ['', [Validators.required]], // Defaults to today's date
       atmUsed: [''],
       cardComplaintType: [''],
       complaintDescription: [''],
@@ -238,7 +239,7 @@ export class EChannelsErrorComponent implements OnInit {
       feedbackId: [''],
       cardVariant: [''],
       currencyType: [''],
-      eMedium: ['', [Validators.required]],
+      eMedium: [''],
       billType: [''],
       eChannels: [''],
       referenceID: [''],
@@ -292,6 +293,7 @@ export class EChannelsErrorComponent implements OnInit {
   async submit(form: { value: any; }) {
     if (this.eChannelsForm.valid) {
       this.loading = true;
+      this.errorSubmit = false;
       await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
       setTimeout(() => {
@@ -302,6 +304,8 @@ export class EChannelsErrorComponent implements OnInit {
               this.ticketID = response.uid;
               modalState.next(true);
             }
+          }).catch((error) => {
+            this.toastr.error('Error!', error);
           });
         this.loading = false;
       }, 3000);
@@ -309,6 +313,7 @@ export class EChannelsErrorComponent implements OnInit {
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
+    this.errorSubmit = true;
   }
 
   // Accessor for form variables
@@ -366,7 +371,9 @@ export class EChannelsErrorComponent implements OnInit {
   }
 
   test() {
-    console.log('Testing!');
+    console.log('Running Test');
+    console.log(this.eChannelsForm);
+    console.log(this.utilities.findInvalidControls(this.eChannelsForm));
   }
 
 }

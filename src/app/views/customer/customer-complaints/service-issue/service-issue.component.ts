@@ -77,6 +77,7 @@ export class ServiceIssueComponent implements OnInit {
     { name: 'Excess Charges', id: 1 },
     { name: 'Fraud', id: 1 },
     { name: 'Others', id: 1 }];
+  errorSubmit: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -146,7 +147,7 @@ export class ServiceIssueComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: [''],
-      acctNumber: ['', Validators.maxLength(10)],
+      acctNumber: ['', [Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: [''],
       altphone: [''],
@@ -218,6 +219,7 @@ export class ServiceIssueComponent implements OnInit {
 
   async submit(form: { value: any; }) {
     if (this.serviceComplaintForm.valid) {
+      this.errorSubmit = false;
       this.loading = true;
       await this.serviceComplaintForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
       const payloadObject = new ComplaintsModel(form.value, this.utilities);
@@ -236,6 +238,7 @@ export class ServiceIssueComponent implements OnInit {
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
+    this.errorSubmit = true;
   }
 
   // Accessor for form variables
@@ -296,6 +299,8 @@ export class ServiceIssueComponent implements OnInit {
 
   test() {
     console.log('Testing');
+    console.log(this.isCustomerFn);
+    
   }
 
 }

@@ -64,3 +64,6 @@ a.open {
 a:hover {
     background: #1b8fe4 !important;
 }
+.error {
+    border-color: red !important;
+}

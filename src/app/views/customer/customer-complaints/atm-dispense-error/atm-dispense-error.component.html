@@ -19,19 +19,25 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="firstName">First name</label>
-                                <input formControlName="firstName" type="text" class="form-control" id="firstName"
-                                    placeholder="Enter your first name">
+                                <input formControlName="firstName" type="text" [ngClass]="{'error':atmDispenseErrorForm.controls.firstName.status === 'INVALID' 
+                                    && errorSubmit === true || atmDispenseErrorForm.controls.firstName.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.firstName.dirty}" class="form-control"
+                                    id="firstName" placeholder="Enter your first name">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="lastName">Last name</label>
-                                <input formControlName="lastName" type="text" class="form-control" id="lastName"
-                                    placeholder="Enter your last name">
+                                <input formControlName="lastName" type="text"
+                                    [ngClass]="{'error':atmDispenseErrorForm.controls.lastName.status === 'INVALID' 
+                                    && errorSubmit === true || atmDispenseErrorForm.controls.lastName.dirty && atmDispenseErrorForm.controls.lastName.status === 'INVALID'}"
+                                    class="form-control" id="lastName" placeholder="Enter your last name">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input formControlName="emailAddress" type="email" class="form-control"
+                                <input formControlName="emailAddress" type="email" [ngClass]="{'error':atmDispenseErrorForm.controls.emailAddress.status === 'INVALID' 
+                                    && errorSubmit === true || atmDispenseErrorForm.controls.emailAddress.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.emailAddress.dirty}" class="form-control"
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
@@ -42,15 +48,19 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="phone">Phone</label>
-                                <input type="number" formControlName="phone" class="form-control" id="phone"
-                                    placeholder="Enter phone">
+                                <input formControlName="phone"
+                                    [ngClass]="{'error':atmDispenseErrorForm.controls.phone.status === 'INVALID' && errorSubmit === true 
+                                    || atmDispenseErrorForm.controls.phone.status === 'INVALID' && atmDispenseErrorForm.controls.phone.dirty}"
+                                    class="form-control" id="phone" placeholder="Enter phone">
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card number: last 4 digits</label>
                                 <!-- Mask the card number -->
-                                <input formControlName="cardNumber" class="form-control" id="credit"
-                                    placeholder="Card number">
+                                <input formControlName="cardNumber" [ngClass]="{'error':atmDispenseErrorForm.controls.cardNumber.status === 'INVALID' 
+                                    && errorSubmit === true || atmDispenseErrorForm.controls.cardNumber.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.cardNumber.dirty}" class="form-control"
+                                    id="credit" placeholder="Card number">
                                 <small
                                     *ngIf="atmDispenseErrorForm.controls.cardNumber.invalid && atmDispenseErrorForm.controls.cardNumber.dirty"
                                     id="errorMessage" class="form-text text-danger mt-2">
@@ -60,15 +70,21 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Account number</label>
-                                <input formControlName="acctNumber" maxlength="10" class="form-control" id=""
-                                    placeholder="Account number">
-                                <small *ngIf="atmDispenseErrorForm.controls.acctNumber.invalid" id="errorMessage"
-                                    class="form-text text-danger">Error, Only ten digits required.</small>
+                                <input formControlName="acctNumber" maxlength="10"
+                                    [ngClass]="{'error':atmDispenseErrorForm.controls.acctNumber.status === 'INVALID' && errorSubmit === true 
+                                    || atmDispenseErrorForm.controls.acctNumber.status === 'INVALID' && atmDispenseErrorForm.controls.acctNumber.dirty}"
+                                    class="form-control" id="" placeholder="Account number">
+                                <small
+                                    *ngIf="atmDispenseErrorForm.controls.acctNumber.invalid && atmDispenseErrorForm.controls.acctNumber.touched"
+                                    id="errorMessage" class="form-text text-danger">Error, Enter only ten numeric digits
+                                    required.</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="credit">Card Variant</label>
-                                <select formControlName="cardVariant" class="form-control">
+                                <select formControlName="cardVariant" [ngClass]="{'error':atmDispenseErrorForm.controls.cardVariant.status === 'INVALID' 
+                                    && errorSubmit === false || atmDispenseErrorForm.controls.cardVariant.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.cardVariant.dirty}" class="form-control">
                                     <option [value]="" disabled selected>Select card variant</option>
                                     <option *ngFor="let card of card_Variants" [value]='card?.id'>{{card?.name}}
                                     </option>
@@ -86,7 +102,9 @@
                             <!-- Componentize? -->
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">ATM Dispense Error Category</label>
-                                <select formControlName="errorCategory" class="form-control"
+                                <select formControlName="errorCategory" [ngClass]="{'error':atmDispenseErrorForm.controls.errorCategory.status === 'INVALID' 
+                                    && errorSubmit === false || atmDispenseErrorForm.controls.errorCategory.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.errorCategory.dirty}" class="form-control"
                                     (change)="fetchErrorType()">
                                     <option disabled selected> Please select one option </option>
                                     <option *ngFor="let i of complaintCategoryHolder" [ngValue]='i'>
@@ -96,7 +114,9 @@
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">ATM Dispense Complaint Type:</label>
-                                <select formControlName="errorType" class="form-control">
+                                <select formControlName="errorType" [ngClass]="{'error':atmDispenseErrorForm.controls.errorType.status === 'INVALID' 
+                                    && errorSubmit === false || atmDispenseErrorForm.controls.errorType.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.errorType.dirty}" class="form-control">
                                     <option disabled selected> Please select an error type </option>
                                     <option *ngFor="let i of ComplaintTypes" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
@@ -105,8 +125,10 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">Transaction Date</label>
                                 <div class="input-group">
-                                    <input formControlName="transDate" id="picker1" class="form-control"
-                                        placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                                    <input formControlName="transDate" readonly id="picker1"
+                                        [ngClass]="{'error':atmDispenseErrorForm.controls.transDate.status === 'INVALID' && errorSubmit === false || atmDispenseErrorForm.controls.transDate.status === 'INVALID' && atmDispenseErrorForm.controls.transDate.dirty}"
+                                        class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                        #dp="ngbDatepicker">
                                     <div class="input-group-append">
                                         <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
                                             <i class="icon-regular i-Calendar-4"></i>
@@ -148,7 +170,9 @@
                             <div class="col-md-6 form-group mb-3"
                                 *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)">
                                 <label for="picker1">Currency Type</label>
-                                <select formControlName="currencyType" class="form-control">
+                                <select formControlName="currencyType" [ngClass]="{'error':atmDispenseErrorForm.controls.currencyType.status === 'INVALID' && errorSubmit === true 
+                                    || atmDispenseErrorForm.controls.currencyType.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.currencyType.dirty}" class="form-control">
                                     <option [value]="" disabled selected>Select currency</option>
                                     <option *ngFor="let currency of currencyType" [value]='currency?.id'>
                                         {{currency?.name}}</option>
