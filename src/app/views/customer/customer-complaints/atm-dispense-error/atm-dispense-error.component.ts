@@ -271,6 +271,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
               modalState.next(true);
             }
           }, 2000);
+        }, err => {
+          this.toastr.error(err, 'Error!', { closeButton: true });
         });
       return;
     }

@@ -233,6 +233,8 @@ export class ServiceIssueComponent implements OnInit {
               modalState.next(true);
             }
           }, 2000);
+        }, err => {
+          this.toastr.error(err, 'Error!', { closeButton: true });
         });
       return;
     }
@@ -300,7 +302,7 @@ export class ServiceIssueComponent implements OnInit {
   test() {
     console.log('Testing');
     console.log(this.isCustomerFn);
-    
+
   }
 
 }

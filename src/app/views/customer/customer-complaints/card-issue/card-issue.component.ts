@@ -234,6 +234,8 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
               modalState.next(true);
             }
           }, 2000);
+        }, err => {
+          this.toastr.error(err, 'Error!', { closeButton: true });
         });
       return;
     }
@@ -272,6 +274,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Open toast dialog
   errorDialog(data: string): void {
+    console.log(data);
     Promise.resolve(this.toastr.error(data, 'Network Error'))
       .then(() => setTimeout(() => {
         this.loading = false;

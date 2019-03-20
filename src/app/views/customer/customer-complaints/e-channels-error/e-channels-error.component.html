@@ -860,9 +860,11 @@
                                         </div>
 
                                         <div class="col-md-6 form-group mb-3">
-                                            <label for="picker1">Airtime billers</label>
-                                            <select formControlName="billType" class="form-control">
-                                                <option *ngFor="let i of billTypes" [ngValue]='i'>{{i?.name}}</option>
+                                            <label for="picker1">Service Provider:</label>
+                                            <select formControlName="serviceProvider" class="form-control">
+                                                <option *ngFor="let i of serviceList" [ngValue]='i'>
+                                                    {{i?.serviceProvider}}
+                                                </option>
                                             </select>
                                         </div>
 
