@@ -303,7 +303,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Network Error'))
+    Promise.resolve(this.toastr.error(data, 'Network Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));

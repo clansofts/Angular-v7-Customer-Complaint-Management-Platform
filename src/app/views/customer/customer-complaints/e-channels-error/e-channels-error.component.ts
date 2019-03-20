@@ -305,7 +305,7 @@ export class EChannelsErrorComponent implements OnInit {
               modalState.next(true);
             }
           }).catch((error) => {
-            this.toastr.error('Error!', error);
+            this.toastr.error('Error!', error, { closeButton: true });
           });
         this.loading = false;
       }, 3000);
@@ -338,7 +338,7 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Network Error'))
+    Promise.resolve(this.toastr.error(data, 'Network Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));
