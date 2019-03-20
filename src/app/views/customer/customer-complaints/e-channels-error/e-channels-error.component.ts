@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
+import {
+  UtilitiesService, ResourceModel, ServiceProvider, FeedBackModel,
+  ComplaintCategory, ErrorTypes
+} from 'src/app/shared/services/utilities.service';
 import { map } from 'rxjs/internal/operators/map';
 import { ComplaintsModel, ComplaintsService } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -130,7 +133,7 @@ export class EChannelsErrorComponent implements OnInit {
     try {
       this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 

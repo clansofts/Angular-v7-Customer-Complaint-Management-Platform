@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CustomValidators } from 'ng2-validation';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ResourceModel, UtilitiesService, BranchModel, FeedBackModel, ComplaintCategory, ErrorTypes } from 'src/app/shared/services/utilities.service';
+import {
+  ResourceModel, UtilitiesService, BranchModel,
+  FeedBackModel, ComplaintCategory, ErrorTypes
+} from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
