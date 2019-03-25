@@ -103,7 +103,7 @@ export class ServiceIssueComponent implements OnInit {
     // display details form by default
     this.formState = true;
     return Promise.all([
-      await this.fetch_feedbackID(),
+      //   await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
       this.fetch_BranchList(),
       this.complaintCategory()
@@ -116,10 +116,12 @@ export class ServiceIssueComponent implements OnInit {
 
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
-    return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
-      .toPromise().then((response: FeedBackModel) => {
-        this.feedbackCategory_ID = response.id;
-      });
+    return await this.utilities
+      .sendFeedback(this.feedbackId, this.categoryId)
+      .toPromise()
+      .then((response: FeedBackModel) => {
+        return response.id;
+      })
   }
 
   // Used to toggle between views
@@ -164,7 +166,7 @@ export class ServiceIssueComponent implements OnInit {
       transDate: [''], // Defaults to today's date
       atmUsed: [''],
       cardComplaintType: [''],
-      complaintDescription: [''],
+      complaintDescription: ['', Validators.required],
       channel_ID: [this.channelId],
       feedbackId: [''],
       cardVariant: [''], // Automatically fetch cardVariant
@@ -186,7 +188,7 @@ export class ServiceIssueComponent implements OnInit {
       isCustomer: ['', [Validators.required]],
       disappointedService: [''],
       suggestionBox: [''],
-      branchIncident: [''],
+      branchIncident: ['', [Validators.required]],
       bankused: [''], // bankNameId: if other bank
       unionatmId: [''], // if unionbank, then location
       branchListId: [''],
@@ -224,21 +226,22 @@ export class ServiceIssueComponent implements OnInit {
     if (this.serviceComplaintForm.valid) {
       this.errorSubmit = false;
       this.loading = true;
-      await this.serviceComplaintForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-      const payloadObject = new ComplaintsModel(form.value, this.utilities);
-      this.complaintsService.submitComplaint(payloadObject)
-        .toPromise().then((response: any) => {
-          console.log(response);
-          setTimeout(() => {
-            if (response && response.uid) {
-              this.loading = false;
-              this.ticketID = response.uid;
-              modalState.next(true);
-            }
-          }, 2000);
-        }, err => {
-          this.toastr.error(err, 'Error!', { closeButton: true });
-        });
+      try {
+        // Register category feedback id at the backend
+        const feedbackid = await this.fetch_feedbackID()
+        await this.serviceComplaintForm.controls.feedbackId.setValue(feedbackid);
+
+        // Handle form submition
+        const payloadObject = new ComplaintsModel(form.value, this.utilities);
+        await this.complaintsService.submitComplaint(payloadObject).toPromise()
+          .then((response: any) => {
+            this.loading = false;
+            this.ticketID = response.uid;
+            modalState.next(true);
+          })
+      } catch (err) {
+        this.toastr.error(err, 'Error!', { closeButton: true });
+      }
       return;
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
@@ -268,7 +271,7 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Network Error', { closeButton: true }))
+    Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));
@@ -304,8 +307,6 @@ export class ServiceIssueComponent implements OnInit {
 
   test() {
     console.log('Testing');
-    console.log(this.isCustomerFn);
-
   }
 
 }

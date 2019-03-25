@@ -237,7 +237,7 @@ export class EChannelsErrorComponent implements OnInit {
       transDate: ['', [Validators.required]], // Defaults to today's date
       atmUsed: [''],
       cardComplaintType: [''],
-      complaintDescription: [''],
+      complaintDescription: ['', Validators.required],
       channel_ID: [this.channelId],
       feedbackId: [''],
       cardVariant: [''],
@@ -341,7 +341,7 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Network Error', { closeButton: true }))
+    Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));

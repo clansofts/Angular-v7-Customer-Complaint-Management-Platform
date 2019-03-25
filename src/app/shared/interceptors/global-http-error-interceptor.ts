@@ -39,7 +39,7 @@ export class GlobalHttpErrorInterceptor {
                         // server-side error
                         errorMessage = `Error ${error.error.message}`;
                     }
-                    console.error(error); // For testing purposes
+                    console.log(error); // For testing purposes
                     this.errorEvent.onErrorObserver.next(errorMessage);
                     return throwError(errorMessage);
                 })

@@ -74,7 +74,8 @@
                                     [ngClass]="{'error':atmDispenseErrorForm.controls.acctNumber.status === 'INVALID' && errorSubmit === true 
                                     || atmDispenseErrorForm.controls.acctNumber.status === 'INVALID' && atmDispenseErrorForm.controls.acctNumber.touched}"
                                     class="form-control" id="" placeholder="Account number">
-                                    <small class="form-text text-muted">Only Union Bank account numbers are required.</small>
+                                <small class="form-text text-muted">Only Union Bank account numbers are
+                                    required.</small>
                                 <small
                                     *ngIf="atmDispenseErrorForm.controls.acctNumber.invalid && atmDispenseErrorForm.controls.acctNumber.touched"
                                     id="errorMessage" class="form-text text-danger">Error, Enter only ten numeric digits
@@ -189,14 +190,18 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="picker1">ATM used:</label>
-                                <select formControlName="atmUsed" class="form-control">
+                                <select formControlName="atmUsed" [ngClass]="{'error':atmDispenseErrorForm.controls.atmUsed.status === 'INVALID' && errorSubmit === true 
+                                || atmDispenseErrorForm.controls.atmUsed.status === 'INVALID' 
+                                && atmDispenseErrorForm.controls.atmUsed.touched}" class="form-control">
                                     <option *ngFor="let i of ATM_used" [ngValue]='i'>{{i?.name}}</option>
                                 </select>
                             </div>
 
                             <div *ngIf="selected_ATM == 1" class="col-md-6 form-group mb-3">
                                 <label for="picker1">Location:</label>
-                                <select formControlName="unionatmId" class="form-control">
+                                <select formControlName="unionatmId" [ngClass]="{'error':atmDispenseErrorForm.controls.unionatmId.status === 'INVALID' && errorSubmit === true 
+                                || atmDispenseErrorForm.controls.unionatmId.status === 'INVALID' 
+                                && atmDispenseErrorForm.controls.unionatmId.touched}" class="form-control">
                                     <option *ngFor="let i of ATM_location" [ngValue]='i'>{{i?.location | titlecase}}
                                     </option>
                                 </select>
@@ -216,8 +221,10 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Please describe the issue encountered:</span>
                                     </div>
-                                    <textarea formControlName="complaintDescription" class="form-control"
-                                        aria-label="With textarea">
+                                    <textarea formControlName="complaintDescription" [ngClass]="{'error':atmDispenseErrorForm.controls.complaintDescription.status === 'INVALID' && errorSubmit === true 
+                                    || atmDispenseErrorForm.controls.complaintDescription.status === 'INVALID' 
+                                    && atmDispenseErrorForm.controls.complaintDescription.touched}"
+                                        class="form-control" aria-label="With textarea">
                                     </textarea>
                                 </div>
                             </div>
