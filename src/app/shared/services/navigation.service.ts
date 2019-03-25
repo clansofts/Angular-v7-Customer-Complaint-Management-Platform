@@ -86,10 +86,33 @@ export class NavigationService {
 
     admin2: IMenuItem[] = [
         {
+            name: 'Admin Service',
+            description: 'Report a complaint or track an issue.',
+            type: 'dropDown',
+            icon: 'i-Male-21',
+            sub: [
+                { icon: 'i-Support', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
+                { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+            ]
+        },
+        {
             name: 'Resolution Team',
             description: 'Resolve issues and monitor customer complaints',
             type: 'dropDown',
-            icon: 'i-Conference',
+            icon: 'i-Check',
+            sub: [
+                /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
+                { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
+                /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
+                { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' } */
+            ]
+        }
+        ,
+        {
+            name: 'Resolution Team',
+            description: 'Create new team members',
+            type: 'dropDown',
+            icon: 'i-Add-User',
             sub: [
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
