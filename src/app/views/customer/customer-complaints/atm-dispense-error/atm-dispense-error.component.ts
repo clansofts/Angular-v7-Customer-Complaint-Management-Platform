@@ -122,11 +122,13 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   // Register service by fetching feedback categoryID
-  fetch_feedbackID(): Promise<number> {
-    return this.utilities.sendFeedback(this.feedbackId, this.categoryId)
-      .toPromise().then((response: FeedBackModel) => {
-        this.feedbackCategory_ID = response.id;
-      });
+  async fetch_feedbackID(): Promise<number> {
+    return await this.utilities
+      .sendFeedback(this.feedbackId, this.categoryId)
+      .toPromise()
+      .then((response: FeedBackModel) => {
+        return response.id;
+      })
   }
 
   // Fetch card variants
@@ -260,20 +262,19 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     if (this.atmDispenseErrorForm.valid) {
       this.loading = true;
       this.errorSubmit = false;
-      await (this.atmDispenseErrorForm.controls.feedbackId.setValue(this.feedbackCategory_ID));
-      const payloadObject = new ComplaintsModel(form.value, this.utilities);
-      await this.complaintsService.submitComplaint(payloadObject)
-        .toPromise().then((response: any) => {
-          setTimeout(() => {
-            if (response && response.uid) {
-              this.loading = false;
-              this.ticketID = response.uid;
-              modalState.next(true);
-            }
-          }, 2000);
-        }, err => {
-          this.toastr.error(err, 'Error!', { closeButton: true });
-        });
+      try {
+        // Register category feedback id at the backend
+        const feedbackid = await this.fetch_feedbackID()
+        await this.atmDispenseErrorForm.controls.feedbackId.setValue(feedbackid);
+        const payloadObject = new ComplaintsModel(form.value, this.utilities);
+        await this.complaintsService.submitComplaint(payloadObject).toPromise()
+          .then((response: any) => {
+            this.loading = false;
+            this.ticketID = response.uid;
+          });
+      } catch (err) {
+        this.toastr.error(err, 'Error!', { closeButton: true });
+      }
       return;
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
