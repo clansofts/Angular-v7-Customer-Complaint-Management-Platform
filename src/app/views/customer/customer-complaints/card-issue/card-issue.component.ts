@@ -57,8 +57,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   cardIssueForm: FormGroup;
   loading: boolean;
   card_Variants: Array<ResourceModel>;
-  feedbackCategory_ID: number;
-
+  
   // Alert and ticket id variables
   ticketID: any;
   alert: Alert;
@@ -115,14 +114,12 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
-    try {
-      return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
-        .toPromise().then((response: FeedBackModel) => {
-          this.feedbackCategory_ID = response.id;
-        });
-    } catch (error) {
-      console.log('Cannot Fetch Feedback Id:', error);
-    }
+    return await this.utilities
+      .sendFeedback(this.feedbackId, this.categoryId)
+      .toPromise()
+      .then((response: FeedBackModel) => {
+        return response.id;
+      })
   }
 
   // Fetch card variants
@@ -222,21 +219,20 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
     if (form.valid) {
       this.loading = true;
       this.errorSubmit = false;
-      await this.cardIssueForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-      const payloadObject = new ComplaintsModel(form.value, this.utilities);
-      this.complaintsService.submitComplaint(payloadObject)
-        .toPromise().then((response: any) => {
-          console.log(response);
-          setTimeout(() => {
-            if (response && response.uid) {
-              this.loading = false;
-              this.ticketID = response.uid;
-              modalState.next(true);
-            }
-          }, 2000);
-        }, err => {
-          this.toastr.error(err, 'Error!', { closeButton: true });
-        });
+      try {
+        // Register category feedback id at the backend
+        const feedbackid = await this.fetch_feedbackID();
+        await this.cardIssueForm.controls.feedbackId.setValue(feedbackid);
+        const payloadObject = new ComplaintsModel(form.value, this.utilities);
+        this.complaintsService.submitComplaint(payloadObject).toPromise()
+          .then((response: any) => {
+            this.loading = false;
+            this.ticketID = response.uid;
+            modalState.next(true);
+          });
+      } catch (err) {
+        this.toastr.error(err, 'Error!', { closeButton: true });
+      }
       return;
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });

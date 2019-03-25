@@ -59,7 +59,6 @@ export class ServiceIssueComponent implements OnInit {
   loading: boolean;
   serviceComplaintForm: FormGroup;
   branch_of_Issue: BranchModel[];
-  feedbackCategory_ID: number;
   ComplaintTypes: ErrorTypes[];
   complaintCategoryHolder: ComplaintCategory[];
 

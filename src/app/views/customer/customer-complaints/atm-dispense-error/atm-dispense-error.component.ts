@@ -64,7 +64,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   card_Variants: Array<ResourceModel>;
   ATM_location: Array<ATMModel>; // list of ATMs from API
   Bank_used: Array<BankModel>; // list of Banks
-  feedbackCategory_ID: number;
 
   // Form objects
   transCount: Array<ResourceModel> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];

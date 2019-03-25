@@ -63,7 +63,6 @@ export class EChannelsErrorComponent implements OnInit {
   serviceList: Promise<ServiceProvider>;
   card_Variants: Array<ResourceModel>;
   billTypes: Array<ResourceModel>;
-  feedbackCategory_ID: number;
 
   // Alert and ticket id variables
   alert: Alert;
@@ -159,10 +158,12 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Register service by fetching feedback categoryID
   async fetch_feedbackID(): Promise<number> {
-    return await this.utilities.sendFeedback(this.feedbackId, this.categoryId)
-      .toPromise().then((response: FeedBackModel) => {
-        this.feedbackCategory_ID = response.id;
-      });
+    return await this.utilities
+      .sendFeedback(this.feedbackId, this.categoryId)
+      .toPromise()
+      .then((response: FeedBackModel) => {
+        return response.id;
+      })
   }
 
   // Main mechnism for controlling the channel type toggle
@@ -297,21 +298,22 @@ export class EChannelsErrorComponent implements OnInit {
     if (this.eChannelsForm.valid) {
       this.loading = true;
       this.errorSubmit = false;
-      await this.eChannelsForm.controls.feedbackId.setValue(this.feedbackCategory_ID);
-      const payloadObject = new ComplaintsModel(form.value, this.utilities);
-      setTimeout(() => {
-        this.complaintsService.submitComplaint(payloadObject)
-          .toPromise().then((response: any) => {
+      try {
+        // Register category feedback id at the backend
+        const feedbackid = await this.fetch_feedbackID()
+        await this.eChannelsForm.controls.feedbackId.setValue(feedbackid);
+        const payloadObject = new ComplaintsModel(form.value, this.utilities);
+        await this.complaintsService.submitComplaint(payloadObject).toPromise()
+          .then((response: any) => {
             if (response && response.uid) {
               this.loading = false;
               this.ticketID = response.uid;
               modalState.next(true);
             }
-          }).catch((error) => {
-            this.toastr.error('Error!', error, { closeButton: true });
-          });
-        this.loading = false;
-      }, 3000);
+          })
+      } catch (err) {
+        this.toastr.error(err, 'Error!', { closeButton: true });
+      }
       return;
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
