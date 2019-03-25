@@ -194,7 +194,7 @@
                         <input disabled class="form-control form-control-rounded" id="phone" placeholder="phone number"
                           value="{{selected?.beneficiaryPhoneNo}}">
                       </div>
-                      
+
                       <div class="col-md-6 form-group mb-3" *ngIf="selected?.unionMobile">
                         <label for="phone">Union Mobile number</label>
                         <input disabled class="form-control form-control-rounded" id="phone"
@@ -400,7 +400,7 @@
               <label for="inputEmail3" class="col-sm-2 col-form-label">Comment</label>
               <div class="col-sm-10">
                 <textarea formControlName="comment" class="form-control" aria-label="With textarea">
-</textarea>
+                </textarea>
               </div>
             </div>
           </form>
@@ -429,6 +429,13 @@
   <div class="modal-body">
     <p><strong>Are you sure you want to reject <span class="text-primary">{{selected?.firstName | titlecase}}
           {{selected?.lastName | titlecase}}'s</span> issue?</strong></p>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Comment</label>
+      <div class="col-sm-10">
+        <textarea #rejectMessage class="form-control" aria-label="With textarea">
+        </textarea>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary btn-rounded"

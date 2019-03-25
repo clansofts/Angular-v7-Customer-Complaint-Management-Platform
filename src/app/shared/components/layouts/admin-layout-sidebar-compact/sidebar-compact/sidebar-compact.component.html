@@ -41,14 +41,14 @@
   <ul class="childNav" appDropdown>
     <li *ngFor="let item of parentItem?.sub" appDropdownLink class="nav-item">
 
-      <a routerLink="{{item.state}}" *ngIf="item.type === 'link'" class="" [ngClass]="{open: item.active}"
+      <a routerLink="{{item.state}}" *ngIf="item.type === 'link'" class="a-custom" [ngClass]="{open: item.active}"
         routerLinkActive="open">
         <i *ngIf="item.icon" [class]="'nav-icon '+ item.icon "></i>
         <span class="item-name lvl1">{{item.name}}</span>
       </a>
 
       <div *ngIf="item.type === 'dropDown'">
-        <a appDropdownToggle [ngClass]="{open: item.active}" routerLinkActive="open">
+        <a appDropdownToggle [ngClass]="{open: item.active}" routerLinkActive="open" class="a-custom">
           <i *ngIf="item.icon" [class]="'nav-icon '+ item.icon "></i>
           <span class="item-name">{{item.name}}</span>
           <i class="dd-arrow i-Arrow-Down"></i>

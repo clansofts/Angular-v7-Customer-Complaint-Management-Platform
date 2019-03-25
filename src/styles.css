@@ -58,10 +58,11 @@ background-color: #00aeef !important;
 .item-name {
     color: white !important;
 }
-a.open {
+/* Sidebar item color */
+.a-custom.open {
     background: #049eea !important;
 }
-a:hover {
+.a-custom:hover {
     background: #1b8fe4 !important;
 }
 .error {
