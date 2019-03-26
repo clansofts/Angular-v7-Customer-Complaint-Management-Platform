@@ -19,14 +19,19 @@
             <div class="row">
               <div class="col-md-6 form-group mb-3">
                 <label>Email address</label>
-                <input formControlName="emailAddress" type="email" class="form-control" aria-describedby="emailHelp"
-                  placeholder="Enter email">
+                <input formControlName="emailAddress" [ngClass]="{'error':issuesTrackingForm.controls.emailAddress.status === 'INVALID' && errorSubmit === true 
+                || issuesTrackingForm.controls.emailAddress.status === 'INVALID'
+                 && issuesTrackingForm.controls.emailAddress.dirty}" type="email" class="form-control"
+                  aria-describedby="emailHelp" placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                   anyone else.</small>
               </div>
               <div class="col-md-6 form-group mb-3">
                 <label for="phone">Ticket Id</label>
-                <input formControlName="uid" class="form-control" id="ticketid" placeholder="Enter ticket id">
+                <input formControlName="uid" [ngClass]="{'error':issuesTrackingForm.controls.uid.status === 'INVALID' && errorSubmit === true 
+                || issuesTrackingForm.controls.uid.status === 'INVALID'
+                 && issuesTrackingForm.controls.uid.dirty}" class="form-control" id="ticketid"
+                  placeholder="Enter ticket id">
               </div>
               <div class="col-md-12">
                 <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>

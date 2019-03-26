@@ -12,20 +12,22 @@
   <div class="col-lg-8 col-md-12">
     <h4>Create New Team Member</h4>
     <p>Enter the Union Bank username and email address of the new user.</p>
-    <div class="card mb-5">
-      <div class="card-body">
-        <div class="row row-xs">
-          <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Enter your username">
-          </div>
-          <div class="col-md-4 mt-3 mt-md-0">
-            <input type="password" class="form-control" placeholder="Enter your password">
-          </div>
-          <div class="col-md-4 mt-3 mt-md-0">
-            <button class="btn btn-primary btn-block">Add User</button>
+    <form [formGroup]="teamCreationForm" (ngSubmit)="submit(teamCreationForm)">
+      <div class="card mb-5">
+        <div class="card-body">
+          <div class="row row-xs">
+            <div class="col-md-4">
+              <input type="text" autocomplete="username" formControlName="username" class="form-control" placeholder="Enter your username">
+            </div>
+            <div class="col-md-4 mt-3 mt-md-0">
+              <input type="password" autocomplete="new-password" class="form-control" placeholder="Enter your password">
+            </div>
+            <div class="col-md-4 mt-3 mt-md-0">
+              <button type="submit" class="btn btn-primary btn-block">Add User</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>

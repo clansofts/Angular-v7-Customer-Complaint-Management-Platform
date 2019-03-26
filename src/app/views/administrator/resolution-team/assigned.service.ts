@@ -92,4 +92,13 @@ export class AssignedService {
     const payload: any = {};
     return this.http.post<any>(Path, payload, httpOptions);
   }
+
+  // Create a new Team member
+  createUser(username: any) {
+    const Path = this.baseURL + 'teams';
+    const payload: any = {
+      username: username
+    };
+    return this.http.post<any>(Path, payload, httpOptions);
+  }
 }
