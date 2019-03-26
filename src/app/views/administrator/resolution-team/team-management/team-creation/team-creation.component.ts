@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminComponent } from '../../../admin.component';
 
 @Component({
   selector: 'app-team-creation',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamCreationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private admin: AdminComponent) {
+    this.admin.currentUserRole();
+  }
 
   ngOnInit() {
   }

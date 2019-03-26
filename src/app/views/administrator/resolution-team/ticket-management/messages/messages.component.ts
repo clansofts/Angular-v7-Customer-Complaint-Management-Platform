@@ -10,6 +10,7 @@ import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.serv
 import { distinctUntilChanged, catchError, concatAll, filter, delay } from 'rxjs/operators';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Emoji } from './Emoji';
+import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
 @Component({
   selector: 'app-messages',
@@ -50,6 +51,7 @@ export class MessagesRTComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private assignedService: AssignedService,
+    private utilityService: UtilitiesService,
     private fb: FormBuilder,
   ) {
     this.admin.currentUserRole();
@@ -74,12 +76,13 @@ export class MessagesRTComponent implements OnInit {
 
   // get issues from observable
   async fetchIssues() {
-    // this.setActive = 0;
     await this.assignedService.assignments$
       .pipe(distinctUntilChanged())
       .subscribe((res?: AssignedIssuesModel) => {
         if (res) {
           this.assignedIssues$ = res;
+          // Dynamic sorting
+          this.utilityService.sortBy(this.assignedIssues$, 'created_On');
           delay(1000);
           this.Filter();
         }

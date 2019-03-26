@@ -115,7 +115,7 @@ export class NavigationService {
             icon: 'i-Conference',
             sub: [
                 { icon: 'i-Add-User', name: 'Add Team Member', state: '/admin-rt/add-user', type: 'link' },
-                { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' },
+               /*  { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' }, */
             ]
         }
     ];
