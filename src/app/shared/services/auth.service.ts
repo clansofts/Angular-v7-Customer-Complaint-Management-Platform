@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   async signin(credentials: any) {
+    await this.store.clear();
     const signInURL = this.baseURL + 'token';
     const payload = `grant_type=password&username=${credentials.email}&password=${credentials.password}`;
     try {

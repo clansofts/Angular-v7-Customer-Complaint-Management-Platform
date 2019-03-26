@@ -85,7 +85,6 @@ export class SigninComponent implements OnInit {
         this.loadingText = 'Sigining in...';
         this.auth.signin(this.signinForm.value)
             .then(async (response: AuthUserModel) => {
-                console.log(response);
                 if (response) {
                     // Store the current user object in the browser
                     Promise.resolve(this.localstoreService.setItem('currentUser', response))
@@ -102,7 +101,7 @@ export class SigninComponent implements OnInit {
             })
             .catch((error) => {
                 console.log(error);
-                this.toastr.error('Error!', 'Invalid user type');
+                this.toastr.error(`Invalid User Type`, 'Error!');
             });
     }
 
