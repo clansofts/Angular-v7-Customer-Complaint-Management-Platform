@@ -102,7 +102,6 @@ export class ServiceIssueComponent implements OnInit {
     // display details form by default
     this.formState = true;
     return Promise.all([
-      //   await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
       this.fetch_BranchList(),
       this.complaintCategory()

@@ -152,7 +152,6 @@ export class EChannelsErrorComponent implements OnInit {
     this.utilities.card_Variants$
       .toPromise().then(response => {
         this.card_Variants = response;
-        this.fetch_feedbackID();
       });
   }
 
@@ -377,8 +376,6 @@ export class EChannelsErrorComponent implements OnInit {
 
   test() {
     console.log('Running Test');
-    console.log(this.eChannelsForm);
-    console.log(this.utilities.findInvalidControls(this.eChannelsForm));
   }
 
 }

@@ -57,7 +57,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   cardIssueForm: FormGroup;
   loading: boolean;
   card_Variants: Array<ResourceModel>;
-  
+
   // Alert and ticket id variables
   ticketID: any;
   alert: Alert;
@@ -87,11 +87,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       // display details form by default
       this.personalDetails = true;
     return Promise.all([
-      await this.fetch_feedbackID(),
-      // These are get and set accessors for currency and card variant list: API.
       this.fetchCardVariants = this._card_Variants,
-      this.fetch_feedbackID(),
-      // Mutate complaint category holder, wish for more functional code.
       this.complaintCategory()
     ]).then(function () {
       console.log('application loaded successfully');

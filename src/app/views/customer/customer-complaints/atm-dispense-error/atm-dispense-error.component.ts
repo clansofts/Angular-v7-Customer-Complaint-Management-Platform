@@ -96,12 +96,10 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     // display details form by default
     this.formState = true;
     return Promise.all([
-      await this.fetch_feedbackID(),
       // These are get and set accessors for currency and card variant list: API.
       this.fetchCardVariants = this._card_Variants,
       this.fetchCurrencyType = this._currencyType,
       this.atmLocations,
-      this.fetch_feedbackID(),
       this.fetch_BankList(),
       this.complaintCategory()
     ]).then(function () {
@@ -333,8 +331,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   test() {
     console.log('Running Test');
-    console.log(this.atmDispenseErrorForm);
-    console.log(this.utilities.findInvalidControls(this.atmDispenseErrorForm));
   }
 
 }
