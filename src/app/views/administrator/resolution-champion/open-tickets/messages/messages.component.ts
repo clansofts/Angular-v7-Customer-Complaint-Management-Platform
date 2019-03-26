@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
 import { AssignedService } from '../../../resolution-team/assigned.service';
+import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
 @Component({
   selector: 'app-messages',
@@ -46,7 +47,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     private toastr: ToastrService,
     private errorService: ErrorDialogService,
     private admin: AdminComponent,
-    private assignedService: AssignedService
+    private assignedService: AssignedService,
+    private utilityService: UtilitiesService
   ) {
     this.admin.currentUserRole();
   }
@@ -141,6 +143,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       .subscribe((result: ComplaintsModel) => {
         if (result) {
           this.Issues$ = result;
+          // Dynamic sorting
+          this.utilityService.sortBy(this.Issues$, 'created_On');
           // Total number of issues
           this.Count.all = this.Issues$.length;
           // Filter by type
@@ -297,7 +301,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   }
 
   test() {
-    console.log(this.selected);
+    console.log(this.Issues$);
   }
 
 }

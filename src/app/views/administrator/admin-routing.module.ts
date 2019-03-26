@@ -5,42 +5,62 @@ import { MessageComponent } from './resolution-champion/message/message.componen
 import { AdminComponent } from './admin.component';
 import { TeamDashboardComponent } from './resolution-team/team-dashboard/team-dashboard.component';
 import { MessageRTComponent } from './resolution-team/message/message.component';
+import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
+import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
 // Resolution Champion
 const routes: Routes = [
   {
-    path: '', // Default
+    // Default
+    path: '',
     loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
   },
   {
-    path: 'complaints-dashboard', // RC Dashboard
+    // RC Dashboard
+    path: 'complaints-dashboard',
     component: DashboardResolutionChampionComponent,
   },
   {
-    path: 'opentickets', // Open tickets
+    // Open tickets
+    path: 'opentickets',
     loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
   },
   {
-    path: 'messages', // Messages
+    // Messages
+    path: 'messages',
     component: MessageComponent
   },
 ];
 
 const routes_rt: Routes = [
   {
-    path: '', // Default
+    // Default
+    path: '',
     loadChildren: './resolution-team/ticket-management/ticket-management.module#TicketManagementModule',
   },
   {
-    path: 'team-dashboard', // RT Dashboard
+    // RT Dashboard
+    path: 'team-dashboard',
     component: TeamDashboardComponent,
   },
   {
-    path: 'ticket-resolution', // Assigned tickets
+    // Assigned tickets
+    path: 'ticket-resolution',
     loadChildren: './resolution-team/ticket-management/ticket-management.module#TicketManagementModule',
   },
   {
-    path: 'complaint-messages', // Messages
+    // Messages
+    path: 'complaint-messages',
     component: MessageRTComponent
+  },
+  {
+    // Team Management
+    path: 'add-user',
+    component: TeamCreationComponent,
+  },
+  {
+    // Team Management
+    path: 'remove-user',
+    component: RemoveUserComponent,
   },
 ];
 @NgModule({

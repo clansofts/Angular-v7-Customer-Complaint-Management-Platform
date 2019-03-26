@@ -243,7 +243,7 @@
                                                 <div class="input-group">
                                                     <input id="picker1" disabled
                                                         class="form-control form-control-rounded"
-                                                        placeholder="yyyy-mm-dd" value="{{selected?.transactionDate}}">
+                                                        placeholder="yyyy-mm-dd" value="{{selected?.transactionDate | date: 'dd/MM/yyyy'}}">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-secondary" type="button">
                                                             <i class="icon-regular i-Calendar-4"></i>
@@ -345,14 +345,14 @@
                                                         (click)="confirm(modalConfirm)">Close Issue</button>
                                                 </ng-container>
                                                 <!-- Closed Issues -->
-                                                <ng-container
+                                                <!-- <ng-container
                                                     *ngIf="(selected?.status) && (selected?.status.stId == 3)">
                                                     <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                         (click)="open(modalBasic)">Re-Open Issue</button>
 
                                                     <button type="button" Class="btn btn-warning btn-rounded m-1"
                                                         (click)="confirm(modalConfirm)">Move To Archive</button>
-                                                </ng-container>
+                                                </ng-container> -->
                                             </div>
                                         </div>
                                     </form>

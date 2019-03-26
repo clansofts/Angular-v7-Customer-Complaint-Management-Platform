@@ -109,15 +109,13 @@ export class NavigationService {
         }
         ,
         {
-            name: 'Resolution Team',
-            description: 'Create new team members',
+            name: 'Team Management',
+            description: 'Add or remove team members',
             type: 'dropDown',
-            icon: 'i-Add-User',
+            icon: 'i-Conference',
             sub: [
-                /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
-                { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
-                /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' } */
+                { icon: 'i-Add-User', name: 'Add Team Member', state: '/admin-rt/add-user', type: 'link' },
+                { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' },
             ]
         }
     ];

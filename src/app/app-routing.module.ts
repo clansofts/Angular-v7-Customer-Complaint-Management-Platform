@@ -69,10 +69,10 @@ const routes: Routes = [
     canActivate: [AuthGaurd],
     children: adminRoutes
   },
-  {
+  /* {
     path: '**',
     redirectTo: 'others/404'
-  }
+  } */
 ];
 
 @NgModule({
