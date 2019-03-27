@@ -39,6 +39,15 @@
                                     <p class="text-12 text-muted">{{selected?.transactionDate | date: 'dd/MM/yyyy'}}</p>
                                 </div>
                             </div>
+                            <div _ngcontent-c6="" class="border-top mb-4"></div>
+                            <ng-container *ngIf="comment">
+                                <p>
+                                    <span>
+                                        <i class="icon-regular i-Support" style="padding: 3px;"></i>
+                                        <b>: {{comment | titlecase}}</b>
+                                    </span>
+                                </p>
+                            </ng-container>
                             <h4 class="mb-3">{{selected?.subject}}</h4>
                             <div class="card mb-4">
                                 <div class="card-body">
@@ -243,7 +252,8 @@
                                                 <div class="input-group">
                                                     <input id="picker1" disabled
                                                         class="form-control form-control-rounded"
-                                                        placeholder="yyyy-mm-dd" value="{{selected?.transactionDate | date: 'dd/MM/yyyy'}}">
+                                                        placeholder="yyyy-mm-dd"
+                                                        value="{{selected?.transactionDate | date: 'dd/MM/yyyy'}}">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-secondary" type="button">
                                                             <i class="icon-regular i-Calendar-4"></i>

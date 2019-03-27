@@ -33,13 +33,14 @@
                   <p class="text-12 text-muted">Assigned by the resolution champion</p>
                 </div>
               </div>
+              <div _ngcontent-c6="" class="border-top mb-4"></div>
               <ng-container *ngIf="comment">
                 <p>
                   <span>
-                    <b>Comment:</b>
+                    <i class="icon-regular i-Support" style="padding: 3px;"></i>
+                    <b>: {{comment | titlecase}}</b>
                   </span>
                 </p>
-                <p>{{comment | titlecase}}</p>
               </ng-container>
 
               <h4 class="mb-3">{{selected?.subject}}</h4>

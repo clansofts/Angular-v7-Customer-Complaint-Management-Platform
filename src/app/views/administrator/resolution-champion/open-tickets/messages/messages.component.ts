@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
-import { AssignedService } from '../../../resolution-team/assigned.service';
+import { AssignedService, AssignedIssuesModel } from '../../../resolution-team/assigned.service';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
 @Component({
@@ -27,6 +27,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   Roles: Roles;
   Active: number;
   Count: any = {};
+  comment: string;
 
   assignButton =
     {
@@ -83,6 +84,27 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   select(issue: any) {
     this.selected = issue;
     this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
+    // Get comment from selectedIssue by checking the assigned table if comment exist
+    this.AssignedIssuesTable(this.selected.issueid);
+  }
+
+  // Function to get comment from selectedIssue from the assigned issues table
+  AssignedIssuesTable(id: number): void {
+    this.comment = null;
+    this.assignedService.assignments$
+      .pipe(
+        concatAll(),
+        filter((item?: any) => {
+          return (item.issue.issueId === id);
+        }))
+      .subscribe((response: any) => {
+        return this.Comment = (response.comment);
+      })
+  }
+
+  // Set Comment
+  set Comment(comment: any) {
+    if (comment) this.comment = comment;
   }
 
   // For styling the selected element
