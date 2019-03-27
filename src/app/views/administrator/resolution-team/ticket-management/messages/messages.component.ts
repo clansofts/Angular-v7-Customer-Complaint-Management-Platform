@@ -208,10 +208,10 @@ export class MessagesRTComponent implements OnInit {
   }
 
   // When rt-user rejects an issue, change the status to rejected
-  reject() {
+  reject(comment: string) {
     setTimeout(() => {
       try {
-        this.assignedService.reject(this.selected.id).toPromise().then(res => {
+        this.assignedService.reject(this.selected.id, comment).toPromise().then(res => {
           this.toastr.success(`${res}`, 'Issue Rejected!');
           this.ngOnInit();
         });

@@ -15,7 +15,7 @@ describe('WizardComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WizardComponent);
-    component = fixture.componentInstance;
+    component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
   });
 

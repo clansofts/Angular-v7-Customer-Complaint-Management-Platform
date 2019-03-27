@@ -15,7 +15,7 @@ describe('CustomizerComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomizerComponent);
-    component = fixture.componentInstance;
+    component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
   });
 

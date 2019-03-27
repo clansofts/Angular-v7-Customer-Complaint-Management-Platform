@@ -87,9 +87,12 @@ export class AssignedService {
   }
 
   // Reject an issue
-  reject(i: any) {
-    const Path = this.baseURL + 'assigned/rejected/' + i;
-    const payload: any = {};
+  reject(i: any, comment: string) {
+    const Path = this.baseURL + 'assigned/rejected';
+    const payload: any = {
+      asId: i,
+      comment: comment
+    };
     return this.http.post<any>(Path, payload, httpOptions);
   }
 
