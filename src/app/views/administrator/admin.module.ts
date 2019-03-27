@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageRTComponent } from './resolution-team/message/message.component';
 import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
+import { LaddaModule } from 'angular2-ladda';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +27,7 @@ import { RemoveUserComponent } from './resolution-team/team-management/remove-us
     NgxDatatableModule,
     NgbModule,
     AdminRoutingModule,
+    LaddaModule
   ],
   declarations: [
     DashboardResolutionChampionComponent,

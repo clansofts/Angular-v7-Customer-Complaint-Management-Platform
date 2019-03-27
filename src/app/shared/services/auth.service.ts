@@ -33,10 +33,14 @@ export class AuthService {
   }
 
   async signin(credentials: any) {
-    await this.store.clear();
+    // Clear local storage
     const signInURL = this.baseURL + 'token';
     const payload = `grant_type=password&username=${credentials.email}&password=${credentials.password}`;
     try {
+      if (this.store.getItem('currentUser') !== null) {
+        console.log('Clearing local storage');
+        await this.store.clear();
+      };
       const response = await this.http.post<any>(signInURL, payload, httpOptions).toPromise();
       this.authenticated = true;
       this.store.setItem('login_status', true);

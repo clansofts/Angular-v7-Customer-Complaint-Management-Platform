@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TeamCreationComponent implements OnInit {
   teamCreationForm: any;
+  loading: boolean;
 
   constructor(
     private admin: AdminComponent,
@@ -32,17 +33,17 @@ export class TeamCreationComponent implements OnInit {
   }
 
   async submit(form: any): Promise<any> {
+    this.loading = true;
     const username: string = form.value.username;
     try {
       const User: any = await this.assignedService.createUser(username).toPromise()
         .then((response: any) => {
-          console.log(response);
+          this.loading = false;
           return this.toastr.success(`${response}`, 'Created!', { closeButton: true });
         })
-      console.log(User);
     } catch (err) {
       this.toastr.error(`${err}`, 'Error!', { closeButton: true });
+      this.loading = false;
     }
   }
-
 }
