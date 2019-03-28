@@ -150,8 +150,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
           // Warning
           this.toastr.error('An error occured while submiting', 'Error!', { closeButton: true });
           this.assignButton.loading = false;
-        }, error => {
-          this.toastr.error(error.message, 'Error!', { closeButton: true });
+        }).catch((error) => {
+          this.toastr.error(error, 'Error!', { closeButton: true });
           this.assignButton.loading = false;
         });
     }, 3000);

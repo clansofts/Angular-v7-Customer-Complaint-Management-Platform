@@ -244,7 +244,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       const fullName = `${firstName} ${lastName}`;
       return fullName;
     } catch (error) {
-      console.log(error);
+      this.toastr.error(`${error}`, 'Error!', { closeButton: true });
     }
   }
 
