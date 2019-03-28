@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-declare var feather;
+declare var feather: { replace: () => void; };
 
 @Component({
   selector: 'feather-icon',
@@ -7,7 +7,7 @@ declare var feather;
   styleUrls: ['./feather-icon.component.scss']
 })
 export class FeatherIconComponent implements OnInit {
-  @Input('name') public name;
+  @Input('name') public name: any;
 
   constructor() {}
 

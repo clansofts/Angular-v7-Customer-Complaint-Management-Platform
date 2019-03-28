@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CustomizerComponent } from './customizer.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CustomizerComponent', () => {
   let component: CustomizerComponent;
@@ -8,9 +10,11 @@ describe('CustomizerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomizerComponent ]
+      declarations: [CustomizerComponent],
+      imports: [NgbModule, RouterTestingModule],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
