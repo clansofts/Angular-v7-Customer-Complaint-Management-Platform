@@ -93,8 +93,4 @@ export class HeaderSidebarCompactComponent implements OnInit {
   signout() {
     this.auth.signout();
   }
-
-  test() {
-    console.log(this.roleUser);
-  }
 }

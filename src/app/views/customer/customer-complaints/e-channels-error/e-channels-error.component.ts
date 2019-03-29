@@ -373,9 +373,4 @@ export class EChannelsErrorComponent implements OnInit {
         this.ComplaintTypes = response;
       });
   }
-
-  test() {
-    console.log('Running Test');
-  }
-
 }

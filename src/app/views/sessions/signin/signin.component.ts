@@ -119,11 +119,4 @@ export class SigninComponent implements OnInit {
         this.errorService.onErrorObserver.pipe()
             .subscribe(e => this.errorDialog(e));
     }
-
-    test() {
-        setTimeout(() => {
-            console.log('Testing 1 2 3');
-        }, 1000);
-    }
-
 }

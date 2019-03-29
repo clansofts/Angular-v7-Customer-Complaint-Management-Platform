@@ -301,10 +301,4 @@ export class ServiceIssueComponent implements OnInit {
         this.ComplaintTypes = response;
       });
   }
-
-
-  test() {
-    console.log('Testing');
-  }
-
 }

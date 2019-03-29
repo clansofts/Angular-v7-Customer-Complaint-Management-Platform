@@ -62,9 +62,4 @@ export class IssuesTrackingComponent implements OnInit {
     this.toastr.warning(`Form is invalid`, 'Warning!', { closeButton: true });
     this.errorSubmit = true;
   }
-
-  test() {
-    console.log('Test');
-  }
-
 }

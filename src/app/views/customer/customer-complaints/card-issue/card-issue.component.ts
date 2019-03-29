@@ -302,10 +302,4 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       console.log(error);
     }
   }
-
-
-
-  test() {
-    console.log('Testing');
-  }
 }

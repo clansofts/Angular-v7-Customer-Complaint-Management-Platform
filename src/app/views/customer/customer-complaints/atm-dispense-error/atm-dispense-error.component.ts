@@ -328,9 +328,4 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
         this.ComplaintTypes = response;
       });
   }
-
-  test() {
-    console.log('Running Test');
-  }
-
 }

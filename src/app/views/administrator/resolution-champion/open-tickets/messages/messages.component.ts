@@ -173,7 +173,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
           this.Filter();
         }
       }, error => {
-        this.toastr.error(error.message, 'An error occured while fetching issues', { closeButton: true });
+        this.toastr.error(error, 'An error occured while fetching issues', { closeButton: true });
       });
   }
 
@@ -315,15 +315,11 @@ export class MessagesComponent implements OnInit, AfterContentInit {
             this.ngOnInit();
             this.modalService.dismissAll();
           }, error => {
-            this.toastr.error(error.message, 'Error!', { closeButton: true });
+            this.toastr.error(error, 'Error!', { closeButton: true });
           });
         return;
       }
     }
-  }
-
-  test() {
-    console.log(this.Issues$);
   }
 
 }

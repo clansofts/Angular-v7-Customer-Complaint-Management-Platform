@@ -115,7 +115,7 @@ export class MessagesRTComponent implements OnInit {
           this.assignedService.initAssignments();
         })
         .catch(error => {
-          this.toastr.error(error.message, 'Error Occured!', { closeButton: true });
+          this.toastr.error(error, 'Error Occured!', { closeButton: true });
           this.assignButton.loading = false;
         });
     }, 500);
@@ -233,12 +233,8 @@ export class MessagesRTComponent implements OnInit {
         }
       })
       .catch(error => {
-        this.toastr.error(error.message, 'Error!', { closeButton: true });
+        this.toastr.error(error, 'Error!', { closeButton: true });
       });
-  }
-
-  test() {
-    console.log(this.flavor);
   }
 
 }
