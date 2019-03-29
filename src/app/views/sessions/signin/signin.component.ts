@@ -100,7 +100,6 @@ export class SigninComponent implements OnInit {
                 this.ngOnInit();
             })
             .catch((error) => {
-                console.log(error);
                 this.toastr.error(`Invalid User Type`, 'Error!');
             });
     }

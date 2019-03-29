@@ -203,7 +203,6 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   fetchResolvedIssues() {
     this.issuesService.fetchResolved().toPromise()
       .then((response: ComplaintsModel) => {
-        console.log(response);
         this.Issues$ = response;
       });
   }

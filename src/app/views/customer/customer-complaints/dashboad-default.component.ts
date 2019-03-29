@@ -21,7 +21,6 @@ export class DashboadDefaultComponent implements OnInit {
 
     // Read local storage
     currentUserRole() {
-        console.log('Getting user');
         const user = Promise.resolve(this.localstoreService.getItem('currentUser'));
         user.then((u) => {
             this.roleBasedRouting(u);
@@ -30,7 +29,6 @@ export class DashboadDefaultComponent implements OnInit {
 
     // Control side-menu for each user type
     roleBasedRouting(user: any) {
-        console.log(`setting user: ${user}`);
         if (user) {
             if (user.Role === 'RC') {
                 this.navigationMenu('admin1');
@@ -45,12 +43,10 @@ export class DashboadDefaultComponent implements OnInit {
             return;
         }
         // If not an admin user, default to customer
-        console.log('Cannot find user');
         this.navigationMenu(null);
     }
 
     navigationMenu(usertype: string) {
-        console.log(usertype);
         this.navigationService.publishNavigationChange(usertype);
     }
 

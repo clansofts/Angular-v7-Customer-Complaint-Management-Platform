@@ -127,7 +127,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
           this.card_Variants = response;
         });
     } catch (error) {
-      console.log('Cannot Fetch Card Variant', error);
+      throw (error);
     }
   }
 
@@ -254,7 +254,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       const email = this.cardIssueForm.controls.emailAddress.value;
       return email;
     } catch (error) {
-      console.log(error);
+      throw (error);
     }
   }
 
@@ -266,7 +266,6 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    console.log(data);
     Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
@@ -287,7 +286,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
           this.complaintCategoryHolder = response;
         });
     } catch (error) {
-      console.log(error);
+      throw (error);
     }
   }
 
@@ -299,7 +298,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
           this.cardComplaintTypes = response;
         });
     } catch (error) {
-      console.log(error);
+      throw (error);
     }
   }
 }

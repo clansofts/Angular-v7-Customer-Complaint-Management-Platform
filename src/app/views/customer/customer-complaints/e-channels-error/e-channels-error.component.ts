@@ -132,7 +132,7 @@ export class EChannelsErrorComponent implements OnInit {
     try {
       this.eChannelsForm.controls.eChannels.setValue(this.serviceType[0].id);
     } catch (error) {
-      console.log(error);
+      throw (error);
     }
   }
 
@@ -170,7 +170,7 @@ export class EChannelsErrorComponent implements OnInit {
     try {
       return this.eChannelsForm.controls.errorCategory.value.id;
     } catch (error) {
-      console.log(error);
+      throw (error);
     }
   }
 

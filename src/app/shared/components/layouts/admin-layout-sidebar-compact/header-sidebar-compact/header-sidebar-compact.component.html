@@ -64,8 +64,8 @@
 
     <div style="margin: auto"></div>
 
-    <!-- <div class="header-part-right">
-        <i class="i-Magnifi-Glass1 header-icon" role="button" (click)="searchService.searchOpen = true"></i>
+    <div class="header-part-right">
+        <!--    <i class="i-Magnifi-Glass1 header-icon" role="button" (click)="searchService.searchOpen = true"></i>
         <i fullScreenWindow class="i-Full-Screen header-icon d-none d-sm-inline-block" role="button"></i>
         <div ngbDropdown [placement]="'bottom-right'" class="d-none d-sm-inline-block">
                 <i ngbDropdownToggle class="i-Gear text-muted header-icon" role="button"></i>
@@ -115,7 +115,7 @@
                     <button class="dropdown-item">Billing history</button>
                     <button class="dropdown-item" (click)="signout()">Sign out</button>
                 </div>
-            </div>
+            </div> -->
 
         <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end">
             <img src="./assets/images/faces/f3.jpg" id="userDropdown" ngbDropdownToggle alt="">
@@ -125,14 +125,14 @@
                     <i class="i-Lock-User mr-1"></i> Admin Log In
                 </div>
                 <ng-container *ngIf="roleUser == 'RT'">
-                    <button class="dropdown-item">Account settings</button>
+                    <!-- <button class="dropdown-item">Account settings</button>
                     <button class="dropdown-item">User Management</button>
-                    <button class="dropdown-item">Complaint history</button>
+                    <button class="dropdown-item">Complaint history</button> -->
                 </ng-container>
                 <ng-container *ngIf="roleUser == 'RC'">
-                    <button class="dropdown-item">Account settings</button>
+                    <!-- <button class="dropdown-item">Account settings</button>
                     <button class="dropdown-item">User Management</button>
-                    <button class="dropdown-item">Complaint history</button>
+                    <button class="dropdown-item">Complaint history</button> -->
                 </ng-container>
 
                 <button *ngIf="!authStatus" class="dropdown-item" (click)="signout()">Sign In</button>
@@ -140,6 +140,6 @@
             </div>
         </div>
 
-    </div> -->
+    </div>
 
 </div>

@@ -87,7 +87,7 @@ export class MessagesRTComponent implements OnInit {
           this.Filter();
         }
       }, error => {
-        console.log(error);
+        throw (error);
       });
   }
 
