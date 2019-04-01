@@ -18,7 +18,6 @@ import { RemoveUserComponent } from './resolution-team/team-management/remove-us
 import { LaddaModule } from 'angular2-ladda';
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

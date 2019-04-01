@@ -71,6 +71,7 @@ export class SigninComponent implements OnInit {
             }
         });
         this.createSignInForm();
+        this.loading = false;
     }
 
     createSignInForm() {
@@ -85,7 +86,7 @@ export class SigninComponent implements OnInit {
         this.loadingText = 'Sigining in...';
         this.auth.signin(this.signinForm.value)
             .then(async (response: AuthUserModel) => {
-                if (response) {
+                if ((response.Role)) {
                     // Store the current user object in the browser
                     Promise.resolve(this.localstoreService.setItem('currentUser', response))
                         .then(() => {
@@ -95,12 +96,12 @@ export class SigninComponent implements OnInit {
                     return;
                 }
                 // Handle form error
-                this.toastr.error('Error!', 'Network Error');
+                throw new Error('Unable to log in this user, Please confirm you have a valid role');
+            })
+            .catch(async (error) => {
+                await this.toastr.error(error, 'Error!');
                 // Reset form
                 this.ngOnInit();
-            })
-            .catch((error) => {
-                this.toastr.error(`Invalid User Type`, 'Error!');
             });
     }
 
