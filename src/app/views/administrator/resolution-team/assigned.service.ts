@@ -46,61 +46,87 @@ export class AssignedService {
 
   // Initialize the observable with new values everyone 5 mins
   async initAssignments() {
-    await Promise.resolve(this.issues)
-      .then(() => {
-        return interval(300000);
-      });
-
+    try {
+      await Promise.resolve(this.issues)
+        .then(() => {
+          return interval(300000);
+        });
+    } catch (err) {
+      throw err;
+    }
   }
   // Fetch all assigned issues
   get issues() {
-    return this.fetchAssignments()
-      .pipe(distinctUntilChanged())
-      .subscribe((issues: AssignedIssuesModel) => {
-        this.assignmentSource.next(issues);
-      });
+    try {
+      return this.fetchAssignments()
+        .pipe(distinctUntilChanged())
+        .subscribe((issues: AssignedIssuesModel) => {
+          this.assignmentSource.next(issues);
+        });
+    } catch (err) {
+      throw err;
+    }
   }
 
   // Get team members
   get teams() {
-    const Path = this.baseURL + 'teams';
-    return this.http.get<Teams>(Path, httpOptions);
+    try {
+      const Path = this.baseURL + 'teams';
+      return this.http.get<Teams>(Path, httpOptions);
+    } catch (err) {
+    }
   }
 
   // Assign an issue to a team member
   assignTo(form?: any) {
-    const Path = this.baseURL + 'teams/assign';
-    const payload: any = {
-      tId: form.teamId.id, // teamId
-      assignId: form.assignId, // assigned issue id
-      message: form.comment,
-    };
-    return this.http.post<any>(Path, payload, httpOptions);
+    try {
+      const Path = this.baseURL + 'teams/assign';
+      const payload: any = {
+        tId: form.teamId.id, // teamId
+        assignId: form.assignId, // assigned issue id
+        message: form.comment,
+      };
+      return this.http.post<any>(Path, payload, httpOptions);
+    } catch (err) {
+      throw err
+    }
   }
 
   // Mark as resolved
   resolved(i: any) {
-    const Path = this.baseURL + 'assigned/resolved/' + i;
-    const payload: any = {};
-    return this.http.post<any>(Path, payload, httpOptions);
+    try {
+      const Path = this.baseURL + 'assigned/resolved/' + i;
+      const payload: any = {};
+      return this.http.post<any>(Path, payload, httpOptions);
+    } catch (err) {
+      throw err;
+    }
   }
 
   // Reject an issue
   reject(i: any, comment: string) {
-    const Path = this.baseURL + 'assigned/rejected';
-    const payload: any = {
-      asId: i,
-      comment: comment
-    };
-    return this.http.post<any>(Path, payload, httpOptions);
+    try {
+      const Path = this.baseURL + 'assigned/rejected';
+      const payload: any = {
+        asId: i,
+        comment: comment
+      };
+      return this.http.post<any>(Path, payload, httpOptions);
+    } catch (err) {
+      throw err
+    }
   }
 
   // Create a new Team member
   createUser(username: any) {
-    const Path = this.baseURL + 'teams';
-    const payload: any = {
-      username: username
-    };
-    return this.http.post<any>(Path, payload, httpOptions);
+    try {
+      const Path = this.baseURL + 'teams';
+      const payload: any = {
+        username: username
+      };
+      return this.http.post<any>(Path, payload, httpOptions);
+    } catch (err) {
+      throw err
+    }
   }
 }

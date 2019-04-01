@@ -11,6 +11,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
 import { LaddaModule } from 'angular2-ladda';
 import { TicketsManagementRoutingModule } from './ticket-management-routing.module';
 import { MessagesRTComponent } from './messages/messages.component';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { MessagesRTComponent } from './messages/messages.component';
     SharedDirectivesModule,
     TicketsManagementRoutingModule,
     LaddaModule.forRoot({ style: 'expand-left' }),
+    TagInputModule
   ],
   declarations: [MessagesRTComponent, ComposeDialogComponent],
   entryComponents: [ComposeDialogComponent]

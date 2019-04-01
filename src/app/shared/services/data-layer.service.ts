@@ -35,6 +35,9 @@ export class DataLayerService {
     getCountries() {
         return this.http.get<any[]>('/api/countries');
     }
+    getIssuesTagDemo() {
+        return this.http.get<any[]>('/api/issuestag');
+    }
     getProducts() {
         return this.http.get<any[]>('api/products');
     }

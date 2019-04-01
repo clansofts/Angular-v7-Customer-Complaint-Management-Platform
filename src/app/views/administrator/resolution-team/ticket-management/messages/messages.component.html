@@ -301,7 +301,7 @@
                         <!-- For In Progress -->
                         <ng-container *ngSwitchCase="4">
                           <button type="button" Class="btn btn-outline-primary btn-rounded m-1"
-                            (click)="isResolved(selected)">Mark as Resolved</button>
+                            (click)="open(modalLong)">Mark as Resolved</button>
                         </ng-container>
                         <!-- For Reassigned -->
                         <ng-container *ngSwitchCase="7">
@@ -443,5 +443,61 @@
       (click)="modal.dismiss('cancel')">Cancel</button>
     <button type="button" ngbAutofocus class="btn btn-danger btn-rounded"
       (click)="modal.close('Ok');  reject(rejectMessage?.value)">Ok</button>
+  </div>
+</ng-template>
+
+<!-- Modal large -->
+<ng-template #modalLong let-modal>
+  <div class="modal-header modal-header-custom">
+    <h4 class="modal-title modal-title-custom" id="modal-basic-title">Issue Resolution Form</h4>
+    <button type="button" class="close close-custom " aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Please describe the nature of the problem and the steps you took to resolve it</p>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="card-title">Tags</div>
+        <tag-input [formControl]="tagsCtrl2" (onSelect)="onSelect($event)" theme='primary' placeholder="Tag Issue">
+          <tag-input-dropdown [focusFirstElement]="true" [autocompleteItems]="autocompletes$ | async">
+          </tag-input-dropdown>
+        </tag-input>
+        <div class="card-title"></div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">RT</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Your Name" aria-label="Name"
+            aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Issue Description</span>
+          </div>
+          <textarea class="form-control" aria-label="With textarea"
+            placeholder="Please Describe the issues experienced by the complainant"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Root cause of the problem" aria-label=""
+            aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">Root Cause</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Resolution Steps</span>
+          </div>
+          <textarea class="form-control" aria-label="With textarea"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer modal-footer-custom">
+    <button type="button" class="btn btn-custom btn-outline-success btn-rounded" (click)="modal.close('ok')">Ok</button>
   </div>
 </ng-template>

@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.service';
 import { distinctUntilChanged, catchError, concatAll, filter, delay } from 'rxjs/operators';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Emoji } from './Emoji';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
@@ -29,6 +29,12 @@ export class MessagesRTComponent implements OnInit {
   Assignmentform: any;
   teams: Teams;
   Count: any = {};
+
+  items = ['Javascript', 'Typescript'];
+  autocompletes$: Observable<any[]>;
+  tagsCtrl1 = new FormControl(this.items);
+  tagsCtrl2 = new FormControl([{ display: 'Bangladesh', value: 'BD' }]);
+
 
   @Emoji()
   flavor = 'valhala';
@@ -55,6 +61,7 @@ export class MessagesRTComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     this.admin.currentUserRole();
+    this.autocompletes$ = this.dl.getIssuesTagDemo();
   }
 
   async ngOnInit() {
@@ -96,6 +103,9 @@ export class MessagesRTComponent implements OnInit {
     this.assignedService.teams.toPromise()
       .then((result: Teams) => {
         this.teams = result;
+      })
+      .catch(err => {
+        throw err;
       });
   }
 
@@ -135,9 +145,12 @@ export class MessagesRTComponent implements OnInit {
           return (issue.status.stId === code);
         }),
       );
-    await inProgress.pipe().subscribe(val => {
-      values.push(val);
-    });
+    await inProgress.pipe()
+      .subscribe(val => {
+        values.push(val);
+      }, err => {
+        throw err;
+      });
     this.assignedIssues$ = values;
     // Count number of items to display
     this.addCount(code, this.assignedIssues$);
@@ -145,25 +158,33 @@ export class MessagesRTComponent implements OnInit {
 
   // Filter automatically
   Filter() {
-    const self = this;
-    const types = [2, 7, 4];
-    types.forEach(function (value) {
-      self.filterBy(value);
-    });
-    // Default
-    this.filterBy(2);
+    try {
+      const self = this;
+      const types = [2, 7, 4];
+      types.forEach(function (value) {
+        self.filterBy(value);
+      });
+      // Default
+      this.filterBy(2);
+    } catch (err) {
+
+    }
   }
 
   // Filter the respective Counts
   addCount(code: any, arr: { length: any; }) {
-    const length = arr.length;
-    switch (code) {
-      case 2:
-        return this.Count.pending = length;
-      case 7:
-        return this.Count.reassigned = length;
-      case 4:
-        return this.Count.progress = length;
+    try {
+      const length = arr.length;
+      switch (code) {
+        case 2:
+          return this.Count.pending = length;
+        case 7:
+          return this.Count.reassigned = length;
+        case 4:
+          return this.Count.progress = length;
+      }
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -180,8 +201,12 @@ export class MessagesRTComponent implements OnInit {
 
   // For styling the selected element
   set setActive(val: number) {
-    this.Active = val;
-    this.selected = null;
+    try {
+      this.Active = val;
+      this.selected = null;
+    } catch (err) {
+      throw err;
+    }
   }
 
   createAssignmentForm() {
@@ -235,6 +260,19 @@ export class MessagesRTComponent implements OnInit {
       .catch(error => {
         this.toastr.error(error, 'Error!', { closeButton: true });
       });
+  }
+
+  openlarge(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then((result) => {
+        console.log(result);
+      }, (reason) => {
+        console.log('Err!', reason);
+      });
+  }
+
+  public onSelect(item: string) {
+    console.log('tag selected: value is ' + item);
   }
 
 }
