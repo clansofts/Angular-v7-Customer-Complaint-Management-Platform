@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserProfileComponent } from './user-profile.component';
+import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PagesRoutingModule } from '../pages-routing.module';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -8,7 +11,12 @@ describe('UserProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfileComponent ]
+      declarations: [ UserProfileComponent ],
+      imports: [
+        CommonModule,
+        NgbModule,
+        PagesRoutingModule
+      ]
     })
     .compileComponents();
   }));

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MessageComponent } from './message.component';
+import { AdminComponent } from '../../admin.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MessageComponent', () => {
   let component: MessageComponent;
@@ -8,9 +10,15 @@ describe('MessageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MessageComponent ]
+      declarations: [
+        MessageComponent,
+      ],
+      imports: [
+        RouterTestingModule
+      ],
+      providers: [AdminComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

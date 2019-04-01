@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { LocalStoreService } from './local-store.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 

@@ -162,13 +162,13 @@ export class UtilitiesService {
 
   // Fetch the categories for each complaint
   fetch_Category(code: number) {
-    const Path = `http://10.65.0.86/api/issuecategories?ctid=${code}`;
+    const Path = this.baseURL + `issuecategories?ctid=${code}`;
     return this.http.get<Array<ComplaintCategory>>(Path, httpOptions);
   }
 
   // Fetch the error type for each category
   fetch_ErrorType(code: number) {
-    const Path = `http://10.65.0.86/api/issuecategories/sub?ctid=${code}`;
+    const Path = this.baseURL + `issuecategories/sub?ctid=${code}`;
     return this.http.get<Array<ErrorTypes>>(Path, httpOptions);
   }
 
@@ -184,8 +184,8 @@ export class UtilitiesService {
     return invalid;
   }
 
-   // Call sort method
-   sortBy(arr: any, field: string) {
+  // Call sort method
+  sortBy(arr: any, field: string) {
     arr.sort(this.dynamicSort(field));
   }
 

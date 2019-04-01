@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 .modal-footer-custom {
-background-color: #00aeef !important;
+    background-color: #00aeef !important;
 }
+
 .close-custom {
     color: white !important;
 }
@@ -10,61 +11,78 @@ background-color: #00aeef !important;
 .modal-header-custom {
     background-color: #00aeef !important;
 }
+
 .modal-title-custom {
     color: white !important;
 }
+
 .btn-custom {
     border-color: white !important;
     color: white !important;
 }
+
 .btn-custom:hover {
     border-color: #4CAF50 !important;
     color: white !important;
 }
+
 .badge-info-custom1 {
     background-color: #00aeef !important;
 }
+
 .badge-info-custom2 {
     background-color: green !important;
 }
+
 .badge-info-custom3 {
     background-color: orange !important;
 }
+
 .badge-info-custom4 {
     background-color: rgb(196, 63, 185) !important;
 }
+
 .inbox-main-sidebar-container {
     background-color: #f6f6f6 !important;
     border-radius: 8px !important;
 }
+
 .inbox-topbar {
     background-color: white !important;
 }
+
 .card-custom {
-    overflow-y: scroll !important; 
+    overflow-y: scroll !important;
     max-height: 500px !important;
 }
+
 .inbox-main-nav li {
-    cursor: pointer !important;  
+    cursor: pointer !important;
 }
+
 .sidebar-left-secondary {
     background-color: #00aeef !important;
     color: white;
     box-shadow: 0 15px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08) !important;
 }
+
 .nav-icon {
     color: white !important;
 }
+
 .item-name {
     color: white !important;
 }
+
 /* Sidebar item color */
 .a-custom.open {
     background: #049eea !important;
 }
+
 .a-custom:hover {
     background: #1b8fe4 !important;
 }
+
 .error {
     border-color: red !important;
 }

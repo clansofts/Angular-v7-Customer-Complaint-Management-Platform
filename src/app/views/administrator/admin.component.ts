@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';

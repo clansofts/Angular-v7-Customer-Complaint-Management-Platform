@@ -1,8 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DashboardResolutionChampionComponent } from './dashboard-resolution-champion.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { AdminRoutingModule } from '../../admin-routing.module';
+import { MessageComponent } from '../message/message.component';
+import { TeamDashboardComponent } from '../../resolution-team/team-dashboard/team-dashboard.component';
+import { MessageRTComponent } from '../../resolution-team/message/message.component';
+import { TeamCreationComponent } from '../../resolution-team/team-management/team-creation/team-creation.component';
+import { RemoveUserComponent } from '../../resolution-team/team-management/remove-user/remove-user.component';
+import { AdminComponent } from '../../admin.component';
 
 describe('DashboardResolutionChampionComponent', () => {
   let component: DashboardResolutionChampionComponent;
@@ -10,9 +16,16 @@ describe('DashboardResolutionChampionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardResolutionChampionComponent],
-      imports: [NgbModule,
-        NgxDatatableModule,]
+      declarations: [
+        DashboardResolutionChampionComponent,
+      ],
+      imports: [
+        RouterTestingModule,
+      ],
+      providers: [AdminComponent],
+      schemas: [
+        NO_ERRORS_SCHEMA
+      ]
     })
       .compileComponents();
   }));
