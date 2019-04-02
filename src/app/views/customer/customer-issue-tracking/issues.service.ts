@@ -9,7 +9,7 @@ export interface CustomerIssuesModel {
   errortype: string;
   status: string;
   fullname: string;
-  date: string;
+  transactionDate: string;
 }
 
 @Injectable({

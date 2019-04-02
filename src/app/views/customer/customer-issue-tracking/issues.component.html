@@ -19,7 +19,8 @@
             <div class="row">
               <div class="col-md-6 form-group mb-3">
                 <label>Email address</label>
-                <input formControlName="emailAddress" [ngClass]="{'error':issuesTrackingForm.controls.emailAddress.status === 'INVALID' && errorSubmit === true 
+                <input formControlName="emailAddress" [ngClass]="{'error':issuesTrackingForm.controls.emailAddress.status === 'INVALID' 
+                && errorSubmit === true 
                 || issuesTrackingForm.controls.emailAddress.status === 'INVALID'
                  && issuesTrackingForm.controls.emailAddress.dirty}" type="email" class="form-control"
                   aria-describedby="emailHelp" placeholder="Enter email">
@@ -46,7 +47,7 @@
   <ng-container *ngIf="complaints$">
     <div class="col-md-12">
       <div class="card o-hidden mb-4">
-        <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none" class="material fullscreen"
+        <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none;" class="material fullscreen"
           [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true"
           [scrollbarH]="true" [limit]="15" [rows]="complaints$">
 

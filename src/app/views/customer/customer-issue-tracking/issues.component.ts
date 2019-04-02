@@ -50,13 +50,21 @@ export class IssuesTrackingComponent implements OnInit {
       try {
         await this.issuesService.trackIssue(body).toPromise()
           .then((response: CustomerIssuesModel) => {
-            this.complaints$ = response;
-            form.reset();
+            if (response[0].status) {
+              this.complaints$ = response;
+              form.reset();
+              return;
+            }
+          })
+          .catch((err) => {
+            this.toastr.error(`${err}`, 'Error!', { closeButton: true });
+            this.loading = false;
           });
         this.loading = false;
         return;
       } catch (err) {
         this.toastr.error(`${err}`, 'Error!', { closeButton: true });
+        this.loading = false;
       }
     }
     this.toastr.warning(`Form is invalid`, 'Warning!', { closeButton: true });
