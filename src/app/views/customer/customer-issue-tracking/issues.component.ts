@@ -34,7 +34,7 @@ export class IssuesTrackingComponent implements OnInit {
     this.issuesFn();
   }
 
-  // Reactive form control
+  // Create Reactive form control
   issuesFn(): void {
     this.issuesTrackingForm = this.fb.group({
       emailAddress: ['', [Validators.required, Validators.email]],

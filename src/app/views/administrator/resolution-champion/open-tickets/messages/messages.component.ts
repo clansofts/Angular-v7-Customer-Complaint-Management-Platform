@@ -82,10 +82,14 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   }
 
   select(issue: any) {
-    this.selected = issue;
-    this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
-    // Get comment from selectedIssue by checking the assigned table if comment exist
-    this.AssignedIssuesTable(this.selected.issueid);
+    try {
+      this.selected = issue;
+      this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
+      // Get comment from selectedIssue by checking the assigned table if comment exist
+      this.AssignedIssuesTable(this.selected.issueid);
+    } catch (err) {
+
+    }
   }
 
   // Function to get comment from selectedIssue from the assigned issues table
@@ -99,6 +103,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
         }))
       .subscribe((response: any) => {
         return this.Comment = (response.comment);
+      }, err => {
+        console.log(err);
       })
   }
 
@@ -129,6 +135,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
         this.Roles = res;
       }).then(() => {
         this.issuesAssignmentform.controls.roles.setValue(this.Roles[0]); // DevOps by default
+      }).catch((err) => {
+        console.log(err);
       });
   }
 
@@ -204,6 +212,8 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     this.issuesService.fetchResolved().toPromise()
       .then((response: ComplaintsModel) => {
         this.Issues$ = response;
+      }).catch((err) => {
+        console.log(err);
       });
   }
 
@@ -217,53 +227,66 @@ export class MessagesComponent implements OnInit, AfterContentInit {
 
   // Filter by status
   async filterBy(code?: number) {
-    this.setActive = code;
-    const values = [];
-    const inProgress = await this.issuesService.issues$
-      .pipe(
-        distinctUntilChanged(),
-        concatAll(),
-        filter((issue?: ComplaintsModel) => {
-          return (issue.status !== null);
-        }),
-        filter((issue?: ComplaintsModel) => {
-          return (issue.status.stId === code);
-        }),
-      );
-    await inProgress.pipe().subscribe(val => {
-      values.push(val);
-    });
-    this.Issues$ = values;
-    // Count number of items to display
-    this.addCount(code, this.Issues$);
+    try {
+      this.setActive = code;
+      const values = [];
+      const inProgress = await this.issuesService.issues$
+        .pipe(
+          distinctUntilChanged(),
+          concatAll(),
+          filter((issue?: ComplaintsModel) => {
+            return (issue.status !== null);
+          }),
+          filter((issue?: ComplaintsModel) => {
+            return (issue.status.stId === code);
+          }),
+        );
+      await inProgress.pipe().subscribe(val => {
+        values.push(val);
+      });
+      this.Issues$ = values;
+      // Count number of items to display
+      this.addCount(code, this.Issues$);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // Filter automatically
   Filter() {
-    const self = this;
-    const types = [1, 2, 3, 4, 5, 6];
-    types.forEach(function (value) {
-      self.filterBy(value);
-    });
-    // Default
-    this.filterBy(1);
+    try {
+      const self = this;
+      const types = [1, 2, 3, 4, 5, 6];
+      types.forEach(function (value) {
+        self.filterBy(value);
+      });
+      // Default
+      this.filterBy(1);
+    } catch (err) {
+
+    }
   }
 
   addCount(code: any, arr: { length: any; }) {
-    const length = arr.length;
-    switch (code) {
-      case 1:
-        return this.Count.open = length;
-      case 2:
-        return this.Count.assigned = length;
-      case 3:
-        return this.Count.closed = length;
-      case 4:
-        return this.Count.progress = length;
-      case 5:
-        return this.Count.resolved = length;
-      case 6:
-        return this.Count.rejected = length;
+    try {
+      const length = arr.length;
+      switch (code) {
+        case 1:
+          return this.Count.open = length;
+        case 2:
+          return this.Count.assigned = length;
+        case 3:
+          return this.Count.closed = length;
+        case 4:
+          return this.Count.progress = length;
+        case 5:
+          return this.Count.resolved = length;
+        case 6:
+          return this.Count.rejected = length;
+      }
+    } catch (err) {
+      // Handle if error
+      console.log(err);
     }
   }
 
@@ -291,6 +314,9 @@ export class MessagesComponent implements OnInit, AfterContentInit {
           const resolvedIssues = response;
           const selectedIssue = this.selected;
           this.reassign(resolvedIssues, selectedIssue, form);
+        }, err => {
+          // Handle error
+          throw err;
         });
         return;
       }
@@ -299,25 +325,35 @@ export class MessagesComponent implements OnInit, AfterContentInit {
         const selectedIssue = this.selected;
         // Check if the 'selected issueId' exist in 'resolved issues array'
         this.reassign(resolvedIssues, selectedIssue, form);
+      }, err => {
+        throw err;
       });
     }, 1000);
   }
 
   async reassign(arr: any, selected: any, forms: any) {
-    for (const i in arr) {
-      if ((this.selected) && (arr[i].issues.issueId === selected.issueid)) {
-        await this.issuesService.reassignIssue(arr[i], forms)
-          .toPromise().then((resp: any) => {
-            this.assignButton.loading = false;
-            this.toastr.success(`Re-Assigned to ${this.issuesAssignmentform.value.roles.description}
+    try {
+      for (const i in arr) {
+        if ((this.selected) && (arr[i].issues.issueId === selected.issueid)) {
+          await this.issuesService.reassignIssue(arr[i], forms)
+            .toPromise()
+            .then((resp: any) => {
+              this.assignButton.loading = false;
+              this.toastr.success(`Re-Assigned to ${this.issuesAssignmentform.value.roles.description}
          team.`, 'Success!');
-            this.ngOnInit();
-            this.modalService.dismissAll();
-          }, error => {
-            this.toastr.error(error, 'Error!', { closeButton: true });
-          });
-        return;
+              this.ngOnInit();
+              this.modalService.dismissAll();
+            }, error => {
+              this.toastr.error(error, 'Error!', { closeButton: true });
+            }).catch((err) => {
+              // Handle error
+              console.log(err);
+            });
+          return;
+        }
       }
+    } catch (err) {
+      throw err;
     }
   }
 

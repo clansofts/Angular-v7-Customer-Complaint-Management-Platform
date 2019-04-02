@@ -132,28 +132,33 @@ export class MessagesRTComponent implements OnInit {
   }
 
   async filterBy(code: number) {
-    this.setActive = code;
-    const values = [];
-    const inProgress = await this.assignedService.assignments$
-      .pipe(
-        distinctUntilChanged(),
-        concatAll(),
-        filter((issue?: AssignedIssuesModel) => {
-          return (issue.status !== null);
-        }),
-        filter((issue?: AssignedIssuesModel) => {
-          return (issue.status.stId === code);
-        }),
-      );
-    await inProgress.pipe()
-      .subscribe(val => {
-        values.push(val);
-      }, err => {
-        throw err;
-      });
-    this.assignedIssues$ = values;
-    // Count number of items to display
-    this.addCount(code, this.assignedIssues$);
+    try {
+      this.setActive = code;
+      const values = [];
+      const inProgress = await this.assignedService.assignments$
+        .pipe(
+          distinctUntilChanged(),
+          concatAll(),
+          filter((issue?: AssignedIssuesModel) => {
+            return (issue.status !== null);
+          }),
+          filter((issue?: AssignedIssuesModel) => {
+            return (issue.status.stId === code);
+          }),
+        );
+      await inProgress.pipe()
+        .subscribe(val => {
+          values.push(val);
+        }, err => {
+          throw err;
+        });
+      this.assignedIssues$ = values;
+      // Count number of items to display
+      this.addCount(code, this.assignedIssues$);
+    } catch (err) {
+      // Handle exception
+      console.log(err);
+    }
   }
 
   // Filter automatically
@@ -188,6 +193,7 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
+  // For selected issue
   select(i: { issue: any; issueId: any; comment: string; id: any; }) {
     this.selected = i.issue;
     this.selected.id = i.id;
@@ -209,6 +215,7 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
+  // Create Reacgtive Form
   createAssignmentForm() {
     this.Assignmentform = this.fb.group({
       assignId: ['', [Validators.required]],
