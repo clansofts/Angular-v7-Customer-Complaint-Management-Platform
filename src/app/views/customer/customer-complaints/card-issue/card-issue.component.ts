@@ -6,7 +6,7 @@ import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs/internal/Subject';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, take } from 'rxjs/operators';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { DashboadDefaultComponent } from '../dashboad-default.component';
 
@@ -246,7 +246,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       const fullName = `${firstName} ${lastName}`;
       return fullName;
     } catch (error) {
-      this.toastr.error(`${error}`, 'Error!', { closeButton: true });
+      console.log(error);
     }
   }
 
@@ -268,7 +268,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
+    Promise.resolve(this.toastr.error(data, 'Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));
@@ -276,7 +276,9 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.pipe()
+    this.errorService.onErrorObserver.pipe(
+      distinctUntilChanged(),
+      take(1))
       .subscribe(e => this.errorDialog(e));
   }
 

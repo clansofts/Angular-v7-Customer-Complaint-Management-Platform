@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { map, filter, distinctUntilChanged } from 'rxjs/operators';
+import { map, filter, distinctUntilChanged, take } from 'rxjs/operators';
 import {
   UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel,
   ComplaintCategory, ErrorTypes
@@ -327,7 +327,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
+    Promise.resolve(this.toastr.error(data, 'Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000))
@@ -338,7 +338,9 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.pipe()
+    this.errorService.onErrorObserver.pipe(
+      distinctUntilChanged(),
+      take(1))
       .subscribe(e => this.errorDialog(e));
   }
 

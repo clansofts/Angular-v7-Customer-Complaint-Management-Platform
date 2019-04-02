@@ -13,6 +13,7 @@ import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { filter } from 'rxjs/internal/operators/filter';
 import { DashboadDefaultComponent } from '../dashboad-default.component';
+import { take } from 'rxjs/internal/operators/take';
 
 // Observable to track ticket status
 const modalState = new Subject<any>();
@@ -279,7 +280,7 @@ export class ServiceIssueComponent implements OnInit {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
+    Promise.resolve(this.toastr.error(data, 'Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));
@@ -292,7 +293,9 @@ export class ServiceIssueComponent implements OnInit {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.pipe()
+    this.errorService.onErrorObserver.pipe(
+      distinctUntilChanged(),
+      take(1))
       .subscribe(e => this.errorDialog(e));
   }
 

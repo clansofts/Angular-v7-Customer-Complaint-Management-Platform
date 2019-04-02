@@ -10,7 +10,7 @@ import { ComplaintsModel, ComplaintsService } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, from } from 'rxjs';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, take } from 'rxjs/operators';
 import { DashboadDefaultComponent } from '../dashboad-default.component';
 
 // Observable to track ticket status
@@ -353,7 +353,7 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Open toast dialog
   errorDialog(data: string): void {
-    Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
+    Promise.resolve(this.toastr.error(data, 'Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
       }, 1000));
@@ -361,7 +361,9 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Hangle error
   handleErrorFn() {
-    this.errorService.onErrorObserver.pipe()
+    this.errorService.onErrorObserver.pipe(
+      distinctUntilChanged(),
+      take(1))
       .subscribe(e => this.errorDialog(e));
   }
 
