@@ -119,6 +119,8 @@ export class ServiceIssueComponent implements OnInit {
       .toPromise()
       .then((response: FeedBackModel) => {
         return response.id;
+      }).catch((err: any) => {
+        console.log(err);
       })
   }
 
@@ -141,6 +143,8 @@ export class ServiceIssueComponent implements OnInit {
       .toPromise().then((response: BranchModel[]) => {
         this.branch_of_Issue = response;
         return this.branch_of_Issue;
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -217,6 +221,8 @@ export class ServiceIssueComponent implements OnInit {
       .result.then(() => {
         this.resetForm();
         this.alert = ALERTS[0];
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -249,10 +255,14 @@ export class ServiceIssueComponent implements OnInit {
 
   // Accessor for form variables
   get formatName() {
-    const firstName = this.serviceComplaintForm.controls.firstName.value;
-    const lastName = this.serviceComplaintForm.controls.lastName.value;
-    const fullName = `${firstName} ${lastName}`;
-    return fullName;
+    try {
+      const firstName = this.serviceComplaintForm.controls.firstName.value;
+      const lastName = this.serviceComplaintForm.controls.lastName.value;
+      const fullName = `${firstName} ${lastName}`;
+      return fullName;
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   // Accessor for form variables
@@ -291,6 +301,8 @@ export class ServiceIssueComponent implements OnInit {
     this.utilities.fetch_Category(4).toPromise()
       .then(response => {
         this.complaintCategoryHolder = response;
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -299,6 +311,8 @@ export class ServiceIssueComponent implements OnInit {
     this.utilities.fetch_ErrorType(category.id).toPromise()
       .then((response: ErrorTypes[]) => {
         this.ComplaintTypes = response;
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 }

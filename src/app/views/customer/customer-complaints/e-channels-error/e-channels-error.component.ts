@@ -202,11 +202,15 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Fetch card variants
   set fetchCurrencyType(path: string) {
-    this.utilities.fetch(path)
-      .pipe(map((response: any) => {
-        this.currencyType = response;
-      }))
-      .toPromise();
+    try {
+      this.utilities.fetch(path)
+        .pipe(map((response: any) => {
+          this.currencyType = response;
+        }))
+        .toPromise();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // Populate service providers
@@ -214,6 +218,9 @@ export class EChannelsErrorComponent implements OnInit {
     return this.utilities.serviceProviders.toPromise()
       .then((response: Promise<ServiceProvider>) => {
         this.serviceList = response;
+      })
+      .catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -322,10 +329,14 @@ export class EChannelsErrorComponent implements OnInit {
 
   // Accessor for form variables
   get formatName() {
-    const firstName = this.eChannelsForm.controls.firstName.value;
-    const lastName = this.eChannelsForm.controls.lastName.value;
-    const fullName = `${firstName} ${lastName}`;
-    return fullName;
+    try {
+      const firstName = this.eChannelsForm.controls.firstName.value;
+      const lastName = this.eChannelsForm.controls.lastName.value;
+      const fullName = `${firstName} ${lastName}`;
+      return fullName
+    } catch (err) {
+      console.log(err)
+    };
   }
 
   // Accessor for form variables
@@ -371,6 +382,9 @@ export class EChannelsErrorComponent implements OnInit {
     this.utilities.fetch_ErrorType(category.id).toPromise()
       .then((response: ErrorTypes[]) => {
         this.ComplaintTypes = response;
+      })
+      .catch((err: any) => {
+        console.log(err);
       });
   }
 }

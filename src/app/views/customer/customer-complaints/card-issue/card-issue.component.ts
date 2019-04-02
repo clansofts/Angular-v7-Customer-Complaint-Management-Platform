@@ -115,6 +115,8 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       .toPromise()
       .then((response: FeedBackModel) => {
         return response.id;
+      }).catch((err: any) => {
+        console.log(err);
       })
   }
 
@@ -291,14 +293,13 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   fetchErrorType(): void {
-    try {
-      const category: ComplaintCategory = this.cardIssueForm.controls.errorCategory.value;
-      this.utilities.fetch_ErrorType(category.id).toPromise()
-        .then((response: ErrorTypes[]) => {
-          this.cardComplaintTypes = response;
-        });
-    } catch (error) {
-      throw (error);
-    }
+    const category: ComplaintCategory = this.cardIssueForm.controls.errorCategory.value;
+    this.utilities.fetch_ErrorType(category.id).toPromise()
+      .then((response: ErrorTypes[]) => {
+        this.cardComplaintTypes = response;
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
 }

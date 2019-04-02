@@ -102,11 +102,12 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       this.atmLocations,
       this.fetch_BankList(),
       this.complaintCategory()
-    ]).then(function () {
-      console.log('application loaded successfully');
-    }).catch(function () {
-      console.log('An error occured while fetching resources');
-    });
+    ])
+      .then(function () {
+        console.log('application loaded successfully');
+      }).catch(function () {
+        console.log('An error occured while fetching resources');
+      });
   }
 
   ngOnDestroy() {
@@ -126,41 +127,61 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       .then((response: FeedBackModel) => {
         return response.id;
       })
+      .catch((err: any) => {
+        console.log(err);
+      })
   }
 
   // Fetch card variants
   set fetchCardVariants(path: string) {
     this.utilities.card_VariantsInit = path;
     this.utilities.card_Variants$
-      .toPromise().then(response => {
+      .toPromise()
+      .then(response => {
         this.card_Variants = response;
+      })
+      .catch((err: any) => {
+        console.log(err);
       });
   }
 
   // Fetch card variants
   set fetchCurrencyType(path: string) {
-    this.utilities.fetch(path)
-      .pipe(map((response: any) => {
-        this.currencyType = response;
-      }))
-      .toPromise();
+    try {
+      this.utilities.fetch(path)
+        .pipe(map((response: any) => {
+          this.currencyType = response;
+        }))
+        .toPromise();
+    }
+    catch (err) {
+
+    }
+
   }
 
   // Application Resource
   get atmLocations(): ATMModel {
     return this.utilities.atmList()
-      .toPromise().then((response: any) => {
+      .toPromise()
+      .then((response: any) => {
         this.ATM_location = response;
         return this.ATM_location;
+      })
+      .catch((err: any) => {
+        console.log(err);
       });
   }
 
   // Fetch bank list
   fetch_BankList(): BankModel {
     return this.utilities.banksList()
-      .toPromise().then((response: BankModel[]) => {
+      .toPromise()
+      .then((response: BankModel[]) => {
         this.Bank_used = response;
         return this.Bank_used;
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -281,10 +302,15 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Accessor for form variables
   get formatName() {
-    const firstName = this.atmDispenseErrorForm.controls.firstName.value;
-    const lastName = this.atmDispenseErrorForm.controls.lastName.value;
-    const fullName = `${firstName} ${lastName}`;
-    return fullName;
+    try {
+      const firstName = this.atmDispenseErrorForm.controls.firstName.value;
+      const lastName = this.atmDispenseErrorForm.controls.lastName.value;
+      const fullName = `${firstName} ${lastName}`;
+      return fullName;
+    }
+    catch (err) {
+
+    }
   }
 
   // Accessor for form variables
@@ -304,7 +330,10 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     Promise.resolve(this.toastr.error(data, 'Service Error', { closeButton: true }))
       .then(() => setTimeout(() => {
         this.loading = false;
-      }, 1000));
+      }, 1000))
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
 
   // Hangle error
@@ -318,6 +347,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     this.utilities.fetch_Category(1).toPromise()
       .then(response => {
         this.complaintCategoryHolder = response;
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -326,6 +357,8 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     this.utilities.fetch_ErrorType(category.id).toPromise()
       .then((response: ErrorTypes[]) => {
         this.ComplaintTypes = response;
+      }).catch((err: any) => {
+        console.log(err);
       });
   }
 }
