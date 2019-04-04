@@ -227,6 +227,9 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
             this.loading = false;
             this.ticketID = response.uid;
             modalState.next(true);
+          })
+          .catch((err) => {
+            console.log(err);
           });
       } catch (err) {
         this.toastr.error(err, 'Error!', { closeButton: true });

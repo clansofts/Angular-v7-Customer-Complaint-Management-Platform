@@ -282,16 +282,20 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       this.errorSubmit = false;
       try {
         // Register category feedback id at the backend
-        const feedbackid = await this.fetch_feedbackID()
+        const feedbackid = await this.fetch_feedbackID();
         await this.atmDispenseErrorForm.controls.feedbackId.setValue(feedbackid);
         const payloadObject = new ComplaintsModel(form.value, this.utilities);
         await this.complaintsService.submitComplaint(payloadObject).toPromise()
           .then((response: any) => {
             this.loading = false;
             this.ticketID = response.uid;
+            modalState.next(true);
+          })
+          .catch((err) => {
+            console.log(err);
           });
       } catch (err) {
-        this.toastr.error(err, 'Error!', { closeButton: true });
+        console.log(err);
       }
       return;
     }
@@ -336,7 +340,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Hangle error
+  // Subscribe to errorService
   handleErrorFn() {
     this.errorService.onErrorObserver.pipe(
       distinctUntilChanged(),

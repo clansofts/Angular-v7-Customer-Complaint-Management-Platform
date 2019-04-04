@@ -12,7 +12,6 @@ import { UserService } from 'src/app/shared/services/user-service.service';
 })
 export class HeaderSidebarCompactComponent implements OnInit {
   notifications: any[];
-
   constructor(
     private navService: NavigationService,
     public searchService: SearchService,
@@ -70,6 +69,7 @@ export class HeaderSidebarCompactComponent implements OnInit {
   ngOnInit() {
     // tslint:disable-next-line:no-unused-expression
     this.authStatus;
+    this.Team;
   }
 
   toggelSidebar() {
@@ -88,6 +88,12 @@ export class HeaderSidebarCompactComponent implements OnInit {
   get roleUser() {
     const role = this.userService.loggedInUser;
     return role;
+  }
+
+  // Get user team
+  get Team(): String {
+    const team = this.userService.loggedInUserTeam;
+    return team;
   }
 
   signout() {

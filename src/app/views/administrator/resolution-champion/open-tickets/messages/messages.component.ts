@@ -343,11 +343,10 @@ export class MessagesComponent implements OnInit, AfterContentInit {
          team.`, 'Success!');
               this.ngOnInit();
               this.modalService.dismissAll();
-            }, error => {
-              this.toastr.error(error, 'Error!', { closeButton: true });
             }).catch((err) => {
               // Handle error
               console.log(err);
+              this.toastr.error(err, 'Error!', { closeButton: true });
             });
           return;
         }

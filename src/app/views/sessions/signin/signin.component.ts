@@ -7,6 +7,7 @@ import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service
 import { ToastrService } from 'ngx-toastr';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
 import { UserService } from 'src/app/shared/services/user-service.service';
+import { distinctUntilChanged, take } from 'rxjs/operators';
 
 export interface AuthUserModel {
     access_token: string;
@@ -61,8 +62,9 @@ export class SigninComponent implements OnInit {
 
     ngOnInit() {
         this.router.events.subscribe(event => {
+            console.log(event);
             if (event instanceof RouteConfigLoadStart || event instanceof ResolveStart) {
-                this.loadingText = 'Loading Dashboard Module...';
+                this.loadingText = 'Loading CCMP Dashboard...';
 
                 this.loading = true;
             }
@@ -84,39 +86,55 @@ export class SigninComponent implements OnInit {
     signin() {
         this.loading = true;
         this.loadingText = 'Sigining in...';
-        this.auth.signin(this.signinForm.value)
-            .then(async (response: AuthUserModel) => {
-                if ((response.Role)) {
-                    // Store the current user object in the browser
-                    Promise.resolve(this.localstoreService.setItem('currentUser', response))
-                        .then(() => {
-                            // role based routing
-                            this.userService.userRole(response);
-                        });
-                    return;
-                }
-                // Handle form error
-                throw new Error('Unable to log in this user, Please confirm you have a valid role');
-            })
-            .catch(async (error) => {
-                await this.toastr.error(error, 'Error!');
-                // Reset form
-                this.ngOnInit();
-            });
+        try {
+            this.auth.signin(this.signinForm.value)
+                .then(async (response: AuthUserModel) => {
+                    if (response.Role) {
+                        // Store the current user object in the browser
+                        Promise.resolve(this.localstoreService.setItem('currentUser', response))
+                            .then(() => {
+                                // role based routing
+                                this.userService.userRole(response);
+                            });
+                        return;
+                    }
+                    // Handle form error
+                    this.loading = false
+                    throw new Error('Unable to log in this user, Please confirm you have a valid role');
+                })
+                .catch(async (error) => {
+                    console.log(error);
+                    // Reset form
+                    this.ngOnInit();
+                });
+        } catch (err) {
+            console.log(err);
+            // Reset form
+            this.ngOnInit();
+        }
     }
 
     // Http network error
     errorDialog(data: any): void {
-        Promise.resolve(this.toastr.error(data, 'Login Error'))
+        Promise.resolve(this.toastr.error(data, 'Error'))
             .then(() => setTimeout(() => {
                 this.loading = false;
                 this.ngOnInit();
-            }, 1000));
+            }, 1000)).
+            catch(err => {
+                // Handle exception
+            });
     }
 
     // Hangle error
     handleErrorFn() {
-        this.errorService.onErrorObserver.pipe()
-            .subscribe(e => this.errorDialog(e));
+        this.errorService.onErrorObserver.pipe(
+            distinctUntilChanged(),
+            take(1)).subscribe(e =>
+                this.errorDialog(e),
+                err => {
+                    // Handle exception
+                    console.log(err);
+                });
     }
 }

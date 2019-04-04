@@ -34,14 +34,19 @@ export class TeamCreationComponent implements OnInit {
 
   async submit(form: any): Promise<any> {
     this.loading = true;
-    const username: string = form.value.username;
     try {
+      const username: string = form.value.username;
       const User: any = await this.assignedService.createUser(username).toPromise()
-        .then((response: any) => {
+      User.then((response: any) => {
+        this.loading = false;
+        return this.toastr.success(`${response}`, 'Created!', { closeButton: true });
+      }).
+        catch((err: any) => {
+          this.toastr.error(`${err}`, 'Error!', { closeButton: true });
           this.loading = false;
-          return this.toastr.success(`${response}`, 'Created!', { closeButton: true });
         })
     } catch (err) {
+      console.log(err);
       this.toastr.error(`${err}`, 'Error!', { closeButton: true });
       this.loading = false;
     }

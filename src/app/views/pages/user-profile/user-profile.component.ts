@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminComponent } from '../../administrator/admin.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private admin: AdminComponent) {
+    this.admin.currentUserRole();
+   }
 
   ngOnInit() {
   }

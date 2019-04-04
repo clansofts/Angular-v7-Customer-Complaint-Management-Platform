@@ -30,10 +30,8 @@ export class MessagesRTComponent implements OnInit {
   teams: Teams;
   Count: any = {};
 
-  items = ['Javascript', 'Typescript'];
   autocompletes$: Observable<any[]>;
-  tagsCtrl1 = new FormControl(this.items);
-  tagsCtrl2 = new FormControl([{ display: 'Bangladesh', value: 'BD' }]);
+  tagsCtrl2 = new FormControl([{ display: 'Test', value: 'BD' }]);
 
 
   @Emoji()
@@ -255,7 +253,7 @@ export class MessagesRTComponent implements OnInit {
   }
 
   // Mark an issue as resolved
-  isResolved(i: any) {
+  isResolved() {
     this.assignedService.resolved(this.selected.id)
       .toPromise()
       .then(res => {

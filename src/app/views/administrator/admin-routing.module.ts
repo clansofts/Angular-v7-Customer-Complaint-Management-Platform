@@ -7,6 +7,8 @@ import { TeamDashboardComponent } from './resolution-team/team-dashboard/team-da
 import { MessageRTComponent } from './resolution-team/message/message.component';
 import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
+import { PagesModule } from '../pages/pages.module';
+
 // Resolution Champion
 const routes: Routes = [
   {
@@ -62,6 +64,11 @@ const routes_rt: Routes = [
     path: 'remove-user',
     component: RemoveUserComponent,
   },
+  {
+    // Profle Management
+    path: 'user-profile',
+    loadChildren: '../pages/pages.module#PagesModule'
+  }
 ];
 @NgModule({
   imports: [

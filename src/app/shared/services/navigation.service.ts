@@ -106,8 +106,7 @@ export class NavigationService {
                 /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
                 { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' } */
             ]
-        }
-        ,
+        },
         {
             name: 'Team Management',
             description: 'Add or remove team members',
@@ -115,9 +114,18 @@ export class NavigationService {
             icon: 'i-Conference',
             sub: [
                 { icon: 'i-Add-User', name: 'Add Team Member', state: '/admin-rt/add-user', type: 'link' },
-               /*  { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' }, */
+                /*  { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' }, */
             ]
-        }
+        },
+        /* {
+            name: 'Profile & Account Setting',
+            description: 'Manage Account Setting and Profile',
+            type: 'dropDown',
+            icon: 'i-Gear-2',
+            sub: [
+                { icon: 'i-Male', name: 'Profile Setting', state: '/admin-rt/user-profile', type: 'link' },
+            ]
+        } */
     ];
 
     admin3: IMenuItem[] = [

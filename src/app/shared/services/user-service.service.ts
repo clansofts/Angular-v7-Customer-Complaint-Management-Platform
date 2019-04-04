@@ -33,4 +33,12 @@ export class UserService {
     }
     return null;
   }
+
+  get loggedInUserTeam() {
+    const user: any = this.localStorage.getItem('currentUser');
+    if (user) {
+      return user.Team;
+    }
+    return null;
+  }
 }

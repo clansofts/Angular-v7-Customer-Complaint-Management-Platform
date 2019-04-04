@@ -125,14 +125,19 @@
                     <i class="i-Lock-User mr-1"></i> Admin Log In
                 </div>
                 <ng-container *ngIf="roleUser == 'RT'">
-                    <!-- <button class="dropdown-item">Account settings</button>
-                    <button class="dropdown-item">User Management</button>
-                    <button class="dropdown-item">Complaint history</button> -->
+                    <div class="dropdown-header dropdown-header-custom">
+                        <i class="i-Business-Man mr-1"></i> Resolution Team
+                    </div>
+                    <div class="dropdown-header dropdown-header-custom">
+                        <i class="i-University1 mr-1"></i> {{Team | titlecase}}
+                    </div>
+                    <!-- <button class="dropdown-item">Profile setting</button> -->
                 </ng-container>
                 <ng-container *ngIf="roleUser == 'RC'">
-                    <!-- <button class="dropdown-item">Account settings</button>
-                    <button class="dropdown-item">User Management</button>
-                    <button class="dropdown-item">Complaint history</button> -->
+                    <div class="dropdown-header dropdown-header-custom">
+                        <i class="i-Business-Mens mr-1"></i> Resolution Champion
+                    </div>
+                    <!-- <button class="dropdown-item">Profile setting</button> -->
                 </ng-container>
 
                 <button *ngIf="!authStatus" class="dropdown-item" (click)="signout()">Sign In</button>

@@ -11,11 +11,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { MessageComponent } from './resolution-champion/message/message.component';
 import { AdminComponent } from './admin.component';
 import { TeamDashboardComponent } from './resolution-team/team-dashboard/team-dashboard.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageRTComponent } from './resolution-team/message/message.component';
 import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
 import { LaddaModule } from 'angular2-ladda';
+
 @NgModule({
   imports: [
     CommonModule,

@@ -51,11 +51,6 @@
     background-color: white !important;
 }
 
-.card-custom {
-    overflow-y: scroll !important;
-    max-height: 500px !important;
-}
-
 .inbox-main-nav li {
     cursor: pointer !important;
 }
@@ -74,7 +69,6 @@
     color: white !important;
 }
 
-/* Sidebar item color */
 .a-custom.open {
     background: #049eea !important;
 }
@@ -85,4 +79,13 @@
 
 .error {
     border-color: red !important;
+}
+
+.dropdown-header-custom:hover {
+    
+}
+
+.dropdown-header-custom:hover {
+    background-color: #00aeef !important;
+    color: white !important;
 }
