@@ -142,27 +142,25 @@ export class MessagesComponent implements OnInit, AfterContentInit {
 
   submit() {
     const form = this.issuesAssignmentform.value;
-    this.assignButton.loading = true;
-    setTimeout(() => {
+    try {
+      this.assignButton.loading = true;
       this.issuesService.assignIssue(form)
         .toPromise()
         .then(async (res: Assign) => {
           this.assignButton.loading = false;
-          if (res) {
-            await this.toastr.success(`Assigned to ${this.issuesAssignmentform.value.roles.description}
+          await this.toastr.success(`Assigned to ${this.issuesAssignmentform.value.roles.description}
              team.`, 'Success!');
-            this.ngOnInit();
-            this.modalService.dismissAll();
-            return;
-          }
-          // Warning
-          this.toastr.error('An error occured while submiting', 'Error!', { closeButton: true });
-          this.assignButton.loading = false;
-        }).catch((error) => {
+          this.ngOnInit();
+          this.modalService.dismissAll();
+        })
+        .catch((error) => {
           this.toastr.error(error, 'Error!', { closeButton: true });
           this.assignButton.loading = false;
         });
-    }, 3000);
+    } catch (err) {
+      this.assignButton.loading = false;
+      console.log(err);
+    }
   }
 
   // get issues from observable

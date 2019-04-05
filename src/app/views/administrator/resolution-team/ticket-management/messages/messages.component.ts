@@ -11,6 +11,7 @@ import { distinctUntilChanged, catchError, concatAll, filter, delay } from 'rxjs
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Emoji } from './Emoji';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
+import { LocalStoreService } from 'src/app/shared/services/local-store.service';
 
 @Component({
   selector: 'app-messages',
@@ -29,10 +30,6 @@ export class MessagesRTComponent implements OnInit {
   Assignmentform: any;
   teams: Teams;
   Count: any = {};
-
-  autocompletes$: Observable<any[]>;
-  tagsCtrl2 = new FormControl([{ display: 'Test', value: 'BD' }]);
-
 
   @Emoji()
   flavor = 'valhala';
@@ -57,9 +54,9 @@ export class MessagesRTComponent implements OnInit {
     private assignedService: AssignedService,
     private utilityService: UtilitiesService,
     private fb: FormBuilder,
+    private localStorageService: LocalStoreService
   ) {
     this.admin.currentUserRole();
-    this.autocompletes$ = this.dl.getIssuesTagDemo();
   }
 
   async ngOnInit() {
@@ -174,6 +171,45 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
+  // Get current user from local storage
+  get currentUser() {
+    const user: any = this.localStorageService.getItem('currentUser');
+    if (user) {
+      return user;
+    }
+  }
+
+  // Filter by the assigned user
+  async filterByAssigned() {
+    try {
+      const code = this.currentUser;
+      const values = [];
+      const inProgress = await this.assignedService.assignments$
+        .pipe(
+          distinctUntilChanged(),
+          concatAll(),
+          filter((issue?: AssignedIssuesModel) => {
+            return (issue.assignedTo !== null);
+          }),
+          filter((issue?: AssignedIssuesModel) => {
+            return (issue.assignedTo === code.MemberId);
+          }),
+        );
+      await inProgress.pipe()
+        .subscribe(val => {
+          values.push(val);
+        }, err => {
+          throw err;
+        });
+      this.assignedIssues$ = values;
+      // Count number of items to display
+      this.addCount(code.MemberId, this.assignedIssues$);
+    } catch (err) {
+      // Handle exception
+      console.log(err);
+    }
+  }
+
   // Filter the respective Counts
   addCount(code: any, arr: { length: any; }) {
     try {
@@ -254,6 +290,7 @@ export class MessagesRTComponent implements OnInit {
 
   // Mark an issue as resolved
   isResolved() {
+    console.log(this.selected.id);
     this.assignedService.resolved(this.selected.id)
       .toPromise()
       .then(res => {
@@ -278,6 +315,10 @@ export class MessagesRTComponent implements OnInit {
 
   public onSelect(item: string) {
     console.log('tag selected: value is ' + item);
+  }
+
+  test() {
+    console.log(this.assignedIssues$);
   }
 
 }

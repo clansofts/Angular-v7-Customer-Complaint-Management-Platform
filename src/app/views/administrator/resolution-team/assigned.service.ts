@@ -21,6 +21,7 @@ export interface AssignedIssuesModel {
   errortype: string;
   errorDescription: string;
   teamAssigned: string;
+  assignedTo: number;
   issue: ComplaintsModel;
   comment: string;
   status: any;

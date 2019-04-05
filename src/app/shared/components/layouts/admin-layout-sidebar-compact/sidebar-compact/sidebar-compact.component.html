@@ -1,6 +1,6 @@
 <div [ngClass]="{open: navService.sidebarState.sidenavOpen}" class="sidebar-left" perfectScrollbar>
   <div class="logo">
-    <img src="assets/images/unionlogo.png" alt="">
+    <img src="" alt="">
   </div>
   <ul class="navigation-left">
     <li [ngClass]="{active: item.active}" (click)="onClickChangeActiveFlag(item)" class="nav-item lvl1 nav-item--custom"
@@ -28,7 +28,7 @@
 <div [ngClass]="{open: navService.sidebarState.childnavOpen}" class="sidebar-left-secondary" perfectScrollbar>
   <i class="sidebar-close i-Close" (click)="toggelSidebar()"></i>
   <header>
-    <div class="logo">
+    <div class="logo logo-custom">
       <img id="horsey-logo" src="assets/images/unionlogo.png" alt="">
     </div>
     <h6 class="text-custom">{{selectedItem.name}}</h6>

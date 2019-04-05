@@ -8,6 +8,7 @@ import { MessageRTComponent } from './resolution-team/message/message.component'
 import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
 import { PagesModule } from '../pages/pages.module';
+import { AssignedIssuesModule } from './resolution-team/assigned-Issues/assigned-issues.module';
 
 // Resolution Champion
 const routes: Routes = [
@@ -50,9 +51,14 @@ const routes_rt: Routes = [
     loadChildren: './resolution-team/ticket-management/ticket-management.module#TicketManagementModule',
   },
   {
+    // Assigned tickets
+    path: 'my-issues',
+    loadChildren: './resolution-team/assigned-Issues/assigned-issues.module#AssignedIssuesModule',
+  },
+  {
     // Messages
     path: 'complaint-messages',
-    component: MessageRTComponent
+    component: MessageRTComponent,
   },
   {
     // Team Management

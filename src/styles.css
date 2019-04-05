@@ -81,9 +81,7 @@
     border-color: red !important;
 }
 
-.dropdown-header-custom:hover {
-    
-}
+.dropdown-header-custom:hover {}
 
 .dropdown-header-custom:hover {
     background-color: #00aeef !important;

@@ -62,7 +62,6 @@ export class SigninComponent implements OnInit {
 
     ngOnInit() {
         this.router.events.subscribe(event => {
-            console.log(event);
             if (event instanceof RouteConfigLoadStart || event instanceof ResolveStart) {
                 this.loadingText = 'Loading CCMP Dashboard...';
 
@@ -73,7 +72,6 @@ export class SigninComponent implements OnInit {
             }
         });
         this.createSignInForm();
-        this.loading = false;
     }
 
     createSignInForm() {
@@ -105,12 +103,12 @@ export class SigninComponent implements OnInit {
                 .catch(async (error) => {
                     console.log(error);
                     // Reset form
-                    this.ngOnInit();
+                    this.loading = false;
                 });
         } catch (err) {
             console.log(err);
             // Reset form
-            this.ngOnInit();
+            this.loading = false;
         }
     }
 
@@ -119,7 +117,6 @@ export class SigninComponent implements OnInit {
         Promise.resolve(this.toastr.error(data, 'Error'))
             .then(() => setTimeout(() => {
                 this.loading = false;
-                this.ngOnInit();
             }, 1000)).
             catch(err => {
                 // Handle exception

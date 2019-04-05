@@ -49,8 +49,6 @@ export class NavigationService {
 
     defaultMenu: IMenuItem[] = [
         {
-            name: 'Self Service',
-            description: 'Make a complaint or track an issue.',
             type: 'dropDown',
             icon: 'i-Business-Mens',
             sub: [
@@ -62,8 +60,6 @@ export class NavigationService {
 
     admin1: IMenuItem[] = [
         {
-            name: 'Admin Service',
-            description: 'Report a complaint or track an issue.',
             type: 'dropDown',
             icon: 'i-Male-21',
             sub: [
@@ -72,8 +68,6 @@ export class NavigationService {
             ]
         },
         {
-            name: 'Resolution Champion',
-            description: 'Assign issues to resolution team.',
             type: 'dropDown',
             icon: 'i-Consulting',
             sub: [
@@ -86,8 +80,6 @@ export class NavigationService {
 
     admin2: IMenuItem[] = [
         {
-            name: 'Admin Service',
-            description: 'Report a complaint or track an issue.',
             type: 'dropDown',
             icon: 'i-Male-21',
             sub: [
@@ -96,20 +88,16 @@ export class NavigationService {
             ]
         },
         {
-            name: 'Resolution Team',
-            description: 'Resolve issues and monitor customer complaints',
             type: 'dropDown',
             icon: 'i-Check',
             sub: [
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
-                { icon: 'i-Clock-4', name: 'Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
-                /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Archive', state: '/archive', type: 'link' } */
+                { icon: 'i-Business-Mens', name: 'Team Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
+                /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },*/
+                { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' }
             ]
         },
         {
-            name: 'Team Management',
-            description: 'Add or remove team members',
             type: 'dropDown',
             icon: 'i-Conference',
             sub: [
@@ -118,8 +106,6 @@ export class NavigationService {
             ]
         },
         /* {
-            name: 'Profile & Account Setting',
-            description: 'Manage Account Setting and Profile',
             type: 'dropDown',
             icon: 'i-Gear-2',
             sub: [
@@ -130,8 +116,6 @@ export class NavigationService {
 
     admin3: IMenuItem[] = [
         {
-            name: 'Customer Service',
-            description: 'Make complaints and track issues',
             type: 'dropDown',
             icon: 'i-Consulting',
             sub: [
