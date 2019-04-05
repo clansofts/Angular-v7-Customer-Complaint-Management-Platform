@@ -11,12 +11,13 @@
 .nav-center-custom {
     background-color: white;
     color: #00aeefa3 !important;
-}
-
-.tab-content {
-    padding: 0rem !important;
+    min-height: 250px !important;
 }
 
 .card-body-custom {
     padding: 0rem !important;
+}
+
+.text-box-inbox {
+    color: darkslategray !important;
 }

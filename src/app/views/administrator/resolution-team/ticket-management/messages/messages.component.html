@@ -26,22 +26,27 @@
               [perfectScrollbar]="{suppressScrollX: true}">
               <div class="row no-gutters">
                 <div class="mr-2" style="width: 36px">
-                  <img class="rounded-circle" src="./assets/images/faces/f3.jpg" alt="">
+                  <img class="rounded-circle" src="./assets/images/faces/user1.svg" alt="">
                 </div>
                 <div class="col-xs-12" (click)="test()">
                   <p class="m-0">{{selected?.firstName | titlecase}} {{selected?.lastName | titlecase}}</p>
                   <p class="text-10 text-muted mb-0">Nuban: {{selected?.accountNumber}}</p>
                   <p class="text-10 text-muted mb-0">{{selected?.created_On}}</p>
-                  <p class="text-10 text-muted">{{selected?.email}}</p>
+                  <p class="text-10 text-muted mb-0">{{selected?.email}}</p>
+                  <p class="text-10 text-muted">{{selected?.phoneNumber}}</p>
                 </div>
               </div>
-              <div *ngIf="comment" [innerHTML]="comment | titlecase"></div>
 
               <h4 class="mb-3">{{selected?.subject}}</h4>
               <div>
               </div>
               <div class="card card-custom mb-4">
                 <ngb-tabset class="nav-center nav-center-custom">
+                  <ngb-tab title="Messages">
+                    <ng-template ngbTabContent>
+                      <div class="text-box-inbox" *ngIf="comment" [innerHTML]="comment"></div>
+                    </ng-template>
+                  </ngb-tab>
                   <ngb-tab title="Complaint details">
                     <ng-template ngbTabContent>
                       <div class="card-body card-body-custom">
@@ -75,7 +80,7 @@
                             <div class="col-md-6 form-group mb-3">
                               <label for="phone">Phone</label>
                               <input disabled class="form-control form-control-rounded" id="phone"
-                                placeholder="Customer phone" value="{{selected?.phoneno}}">
+                                placeholder="Customer phone" value="{{selected?.phoneNumber}}">
                             </div>
 
                             <div *ngIf="selected?.alternateno" class="col-md-6 form-group mb-3">
@@ -316,9 +321,6 @@
                       </div>
                     </ng-template>
                   </ngb-tab>
-                  <ngb-tab title="Resolution Champion Feedback">
-
-                  </ngb-tab>
                   <ngb-tab title="Resolution">
                   </ngb-tab>
                 </ngb-tabset>
@@ -345,7 +347,7 @@
 
           <div class="mail-item" *ngFor="let i of assignedIssues$" (click)="select(i)">
             <div class="avatar">
-              <img src="./assets/images/faces/f3.jpg" alt="">
+              <img src="./assets/images/faces/user.svg" alt="">
             </div>
             <div class="col-xs-6 details">
               <span class="name text-muted">{{i?.customer | titlecase}}</span>
