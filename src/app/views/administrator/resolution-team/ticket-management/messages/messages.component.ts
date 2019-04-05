@@ -156,11 +156,11 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
-  // Filter automatically
+  // Filter automatically on init
   Filter() {
     try {
       const self = this;
-      const types = [2, 7, 4];
+      const types = [2, 7, 4, 3];
       types.forEach(function (value) {
         self.filterBy(value);
       });
@@ -180,8 +180,9 @@ export class MessagesRTComponent implements OnInit {
   }
 
   // Filter by the assigned user
-  async filterByAssigned() {
+  async filterByAssigned(x: number) {
     try {
+      this.setActive = x;
       const code = this.currentUser;
       const values = [];
       const inProgress = await this.assignedService.assignments$
@@ -203,7 +204,7 @@ export class MessagesRTComponent implements OnInit {
         });
       this.assignedIssues$ = values;
       // Count number of items to display
-      this.addCount(code.MemberId, this.assignedIssues$);
+      this.addCount(x, this.assignedIssues$);
     } catch (err) {
       // Handle exception
       console.log(err);
@@ -221,6 +222,8 @@ export class MessagesRTComponent implements OnInit {
           return this.Count.reassigned = length;
         case 4:
           return this.Count.progress = length;
+        case 3:
+          return this.Count.myassigned = length;
       }
     } catch (err) {
       throw err;

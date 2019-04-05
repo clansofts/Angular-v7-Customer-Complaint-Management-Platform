@@ -381,9 +381,9 @@
               ({{Count?.reassigned}})</a></li>
           <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Sand-watch-2">
               </i> In Progress ({{Count?.progress}})</a></li>
-          <li (click)="filterByAssigned()"><a [ngClass]="{'active': Active == 2}"><i
+          <li (click)="filterByAssigned(3)"><a [ngClass]="{'active': Active == 3}"><i
                 class="icon-regular i-Sand-watch-2">
-              </i>Assigned To You</a></li>
+              </i>Assigned To You ({{Count?.myassigned}})</a></li>
         </ul>
       </div>
     </div>
