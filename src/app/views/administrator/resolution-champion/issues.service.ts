@@ -102,6 +102,12 @@ export class IssuesResolutionService {
     return this.http.get<ComplaintsModel>(Path, httpOptions);
   }
 
+  // Get the resolved issues log
+  fetchLog(id: number) {
+    const Path = this.baseURL + `resolvedissuelog?issId=` + id;
+    return this.http.get<any>(Path, httpOptions);
+  }
+
   // For setting a default role
   get roles() {
     const Path = this.baseURL + 'roles';
@@ -114,4 +120,6 @@ export class IssuesResolutionService {
     const payload: any = {};
     return this.http.post<any>(Path, payload, httpOptions);
   }
+
+  // Get an issue by issueID
 }

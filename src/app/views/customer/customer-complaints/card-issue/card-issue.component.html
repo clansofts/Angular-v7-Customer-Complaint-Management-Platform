@@ -44,10 +44,13 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="phone">Phone</label>
-                                <input type="number" formControlName="phone" [ngClass]="{'error':cardIssueForm.controls.phone.status === 'INVALID' 
+                                <input formControlName="phone" [ngClass]="{'error':cardIssueForm.controls.phone.status === 'INVALID' 
                                     && errorSubmit === true || cardIssueForm.controls.phone.status === 'INVALID' 
                                     && cardIssueForm.controls.phone.dirty}" class="form-control" id="phone"
                                     placeholder="Enter phone">
+                                    <small
+                                    *ngIf="cardIssueForm.controls.phone.invalid  && cardIssueForm.controls.phone.touched"
+                                    id="errorMessage" class="form-text text-danger mt-2">Invalid phone number</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">

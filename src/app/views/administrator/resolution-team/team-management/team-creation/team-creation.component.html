@@ -17,12 +17,9 @@
       <div class="card mb-5">
         <div class="card-body">
           <div class="row row-xs">
-            <div class="col-md-4">
+            <div class="col-md-8">
               <input type="text" autocomplete="username" formControlName="username" class="form-control"
                 placeholder="Enter your username">
-            </div>
-            <div class="col-md-4 mt-3 mt-md-0">
-              <input type="email" autocomplete="email" class="form-control" placeholder="Optional: Enter user email">
             </div>
             <div class="col-md-4 mt-3 mt-md-0">
               <button class="btn btn-primary ladda-button m-1" [ladda]="loading" (click)="submit(teamCreationForm)">

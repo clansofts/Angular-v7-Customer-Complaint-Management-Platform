@@ -30,9 +30,9 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input formControlName="emailAddress" type="email" class="form-control"
-                                    [ngClass]="{'error':eChannelsForm.controls.lastName.status === 'INVALID' && errorSubmit === true || eChannelsForm.controls.lastName.status === 'INVALID' && eChannelsForm.controls.emailAddress.dirty}"
-                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <input formControlName="emailAddress" type="email" class="form-control" [ngClass]="{'error':eChannelsForm.controls.emailAddress.status === 'INVALID' && errorSubmit === true || eChannelsForm.controls.emailAddress.status === 'INVALID' 
+                                    && eChannelsForm.controls.emailAddress.dirty}" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="Enter email">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                     anyone else.</small>
                                 <small
@@ -42,13 +42,18 @@
 
                             <div class="col-md-6 form-group mb-3">
                                 <label>Phone</label>
-                                <input type="number" formControlName="phone" class="form-control" id="phone"
-                                    placeholder="Enter phone">
+                                <input formControlName="phone"
+                                    [ngClass]="{'error':eChannelsForm.controls.phone.status === 'INVALID' && errorSubmit === true || 
+                                eChannelsForm.controls.phone.status === 'INVALID' && eChannelsForm.controls.phone.dirty}" class="form-control"
+                                    id="phone" placeholder="Enter phone">
+                                    <small
+                                    *ngIf="eChannelsForm.controls.phone.invalid  && eChannelsForm.controls.phone.touched"
+                                    id="errorMessage" class="form-text text-danger mt-2">Invalid phone number</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label>Alternate Phone number</label>
-                                <input type="number" formControlName="altphone" class="form-control" id="phone"
+                                <input formControlName="altphone" class="form-control" id="phone"
                                     placeholder="Enter phone">
                             </div>
 

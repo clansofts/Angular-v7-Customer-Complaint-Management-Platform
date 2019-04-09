@@ -87,13 +87,15 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
       // Get comment from selectedIssue by checking the assigned table if comment exist
       this.AssignedIssuesTable(this.selected.issueid);
+      console.log(this.selected.issueid);
+      this.fetchlog(this.selected.issueid);
     } catch (err) {
 
     }
   }
 
   // Function to get comment from selectedIssue from the assigned issues table
-  AssignedIssuesTable(id: number): void {
+  async AssignedIssuesTable(id: number)/* : void */ {
     this.comment = null;
     this.assignedService.assignments$
       .pipe(
@@ -106,6 +108,14 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       }, err => {
         console.log(err);
       })
+  }
+
+  // Functional function to get selectedIssue from the assigned issues table
+  fetchlog(id: number) {
+    this.issuesService.fetchLog(id)
+      .subscribe(response => {
+        console.log(response)
+      });
   }
 
   // Set Comment

@@ -209,7 +209,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       acctNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.maxLength(15), Validators.pattern(new RegExp(/^[0-9\+]*$/))]],
-      altphone: [''],
+      altphone: ['', [Validators.maxLength(15), Validators.pattern(new RegExp(/^[0-9\+]*$/))]],
       cardNumber: ['', [Validators.required, Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
       amount: this.fb.group({
@@ -255,7 +255,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Open modal to show ticket
   open(content: string): void {
-    modalState.pipe(filter(val => val === true), distinctUntilChanged()).
+    modalState.pipe(filter(val => val === true), distinctUntilChanged(), take(1)).
       subscribe(async state => {
         if (state === true) {
           await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });

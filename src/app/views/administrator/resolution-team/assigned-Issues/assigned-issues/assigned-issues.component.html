@@ -51,19 +51,24 @@
           [perfectScrollbar]="{suppressScrollX: true}">
           <i class="sidebar-close i-Close" appSidebarToggler="inbox-secondary-sidebar"></i>
 
-          <div class="mail-item" *ngFor="let m of mails$ | async" (click)="select(m)">
+          <div class="mail-item" *ngFor="let i of myassignedIssues$" (click)="select(i)">
             <div class="avatar">
-              <img src="./assets/images/faces/f3.jpg" alt="">
+              <img src="./assets/images/faces/user.svg" alt="">
             </div>
             <div class="col-xs-6 details">
-              <span class="name text-muted">{{m.sender.name}}</span>
-              <p class="m-0">{{m.subject}}</p>
+              <span class="name text-muted">{{i?.customer | titlecase}}</span>
+              <span
+                [ngClass]="{'badge-danger mr-1': i?.priority?.name === 'Critical','badge-info-custom2 mr-1': i?.priority?.name === 'Normal'}"
+                class="badge badge-info mr-1">{{i?.priority?.name | titlecase}}</span>
+              <p class="m-0">{{i?.errorType | titlecase}}</p>
+              <p _ngcontent-c5="" class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
+                  _ngcontent-c5="" class="badge badge-outline-info">{{i?.issue?.status?.name}}</span></p>
             </div>
             <div class="col-xs-3 date">
-              <span class="text-muted">{{m.date | date}}</span>
+              <span class="text-muted">{{i?.created_On | date}}</span>
+              <span class="text-danger">Issue ID: {{i?.issue?.issueId}}</span>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -72,14 +77,12 @@
     <div appSidebar="inbox-main-sidebar" class="inbox-main-sidebar">
       <div class="pt-3 pr-3 pb-3">
         <i class="sidebar-close i-Close" appSidebarToggler="inbox-main-sidebar"></i>
-        <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button>
-        <p class="text-muted mb-2">Browse</p>
+        <!-- <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button> -->
+        <p class="text-muted mb-2" (click)="test()">Browse</p>
         <ul class="inbox-main-nav">
-          <li><a href="" class="active"><i class="icon-regular i-Mail-2"></i> Inbox (2)</a></li>
-          <li><a href=""><i class="icon-regular i-Mail-Outbox"></i> Sent</a></li>
-          <li><a href=""><i class="icon-regular i-Mail-Favorite"></i> Starred</a></li>
-          <li><a href=""><i class="icon-regular i-Folder-Trash"></i> Trash</a></li>
-          <li><a href=""><i class="icon-regular i-Spam-Mail"></i> Spam</a></li>
+          <li (click)="myAssignedIssues()"><a [ngClass]="{'active': Active == 3}"><i
+                class="icon-regular i-Checked-User">
+              </i>Assigned To You ({{Count?.myassigned}})</a></li>
         </ul>
       </div>
     </div>

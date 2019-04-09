@@ -75,7 +75,14 @@ export class NavigationService {
                 { icon: 'i-Movie-Ticket', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
                 /* { icon: 'i-Mail-Add-', name: 'Messages', state: '/admin-rc/messages', type: 'link' } */
             ]
-        }
+        },
+        /* {
+            type: 'dropDown',
+            icon: 'i-Gear-2',
+            sub: [
+                { icon: 'i-Male', name: 'Profile Setting', state: '/admin-rt/user-profile', type: 'link' },
+            ]
+        } */
     ];
 
     admin2: IMenuItem[] = [

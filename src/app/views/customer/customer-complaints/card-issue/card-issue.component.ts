@@ -194,7 +194,8 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   open(content: string): void {
     modalState.pipe(
       filter(val => val === true),
-      distinctUntilChanged())
+      distinctUntilChanged(),
+      take(1))
       .subscribe(async state => {
         if (state === true) {
           await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });

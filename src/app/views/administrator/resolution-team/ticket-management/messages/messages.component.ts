@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.service';
 import { distinctUntilChanged, catchError, concatAll, filter, delay } from 'rxjs/operators';
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormControl, NgForm } from '@angular/forms';
 import { Emoji } from './Emoji';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
@@ -31,6 +31,9 @@ export class MessagesRTComponent implements OnInit {
   teams: Teams;
   Count: any = {};
 
+  // Model for Actions taken
+  actionsModel: any = {};
+
   @Emoji()
   flavor = 'valhala';
 
@@ -47,20 +50,18 @@ export class MessagesRTComponent implements OnInit {
   ];
 
   constructor(
-    private admin: AdminComponent,
-    private dl: DataLayerService,
-    private modalService: NgbModal,
-    private toastr: ToastrService,
-    private assignedService: AssignedService,
-    private utilityService: UtilitiesService,
-    private fb: FormBuilder,
-    private localStorageService: LocalStoreService
+    public admin: AdminComponent,
+    public modalService: NgbModal,
+    public toastr: ToastrService,
+    public assignedService: AssignedService,
+    public utilityService: UtilitiesService,
+    public fb: FormBuilder,
+    public localStorageService: LocalStoreService
   ) {
     this.admin.currentUserRole();
   }
 
   async ngOnInit() {
-    this.mails$ = this.dl.getMails();
     // Init the form
     this.createAssignmentForm();
 
@@ -157,7 +158,7 @@ export class MessagesRTComponent implements OnInit {
   }
 
   // Filter automatically on init
-  Filter() {
+  Filter(): void {
     try {
       const self = this;
       const types = [2, 7, 4, 3];
@@ -165,6 +166,7 @@ export class MessagesRTComponent implements OnInit {
         self.filterBy(value);
       });
       // Default
+      this.filterByAssigned(3);
       this.filterBy(2);
     } catch (err) {
 
@@ -223,10 +225,12 @@ export class MessagesRTComponent implements OnInit {
         case 4:
           return this.Count.progress = length;
         case 3:
+          return this.Count.completed = length;
+        case 8:
           return this.Count.myassigned = length;
       }
     } catch (err) {
-      throw err;
+      console.error(err);
     }
   }
 
@@ -252,7 +256,7 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
-  // Create Reacgtive Form
+  // Create Reactive Form
   createAssignmentForm() {
     this.Assignmentform = this.fb.group({
       assignId: ['', [Validators.required]],
@@ -293,8 +297,8 @@ export class MessagesRTComponent implements OnInit {
 
   // Mark an issue as resolved
   isResolved() {
-    console.log(this.selected.id);
-    this.assignedService.resolved(this.selected.id)
+    const id = this.selected.id
+    this.assignedService.resolved(id, this.actionsModel)
       .toPromise()
       .then(res => {
         if (res) {

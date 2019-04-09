@@ -52,6 +52,9 @@
                                     [ngClass]="{'error':atmDispenseErrorForm.controls.phone.status === 'INVALID' && errorSubmit === true 
                                     || atmDispenseErrorForm.controls.phone.status === 'INVALID' && atmDispenseErrorForm.controls.phone.touched}"
                                     class="form-control" id="phone" placeholder="Enter phone">
+                                    <small
+                                    *ngIf="atmDispenseErrorForm.controls.phone.invalid  && atmDispenseErrorForm.controls.phone.touched"
+                                    id="errorMessage" class="form-text text-danger mt-2">Invalid phone number</small>
                             </div>
 
                             <div class="col-md-6 form-group mb-3">

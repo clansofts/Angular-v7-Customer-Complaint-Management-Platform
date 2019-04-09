@@ -233,7 +233,7 @@ export class EChannelsErrorComponent implements OnInit {
       acctNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.pattern(new RegExp(/^[0-9\+]*$/))],
-      altphone: [''],
+      altphone: ['', [Validators.maxLength(15), Validators.pattern(new RegExp(/^[0-9\+]*$/))]],
       cardNumber: ['', [Validators.maxLength(4), Validators.pattern('^[0-9]*$')]],
       transCount: [''],
       amount: this.fb.group({
@@ -281,7 +281,8 @@ export class EChannelsErrorComponent implements OnInit {
   open(content: any) {
     modalState.pipe(
       filter(val => val === true),
-      distinctUntilChanged())
+      distinctUntilChanged(),
+      take(1))
       .subscribe(async state => {
         if (state === true) {
           await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 3000, closeButton: true, progressBar: true });

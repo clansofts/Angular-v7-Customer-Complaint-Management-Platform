@@ -7,6 +7,7 @@ import { SharedDirectivesModule } from "src/app/shared/directives/shared-directi
 import { AssignedIssuesRoutingModule } from "./assigned-issues-routing.module";
 import { AssignedIssuesComponent } from "./assigned-issues/assigned-issues.component";
 import { ComposeDialogComponent } from "./assigned-issues/compose-dialog/compose-dialog.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { ComposeDialogComponent } from "./assigned-issues/compose-dialog/compose
     PerfectScrollbarModule,
     QuillModule,
     SharedDirectivesModule,
-    AssignedIssuesRoutingModule
+    AssignedIssuesRoutingModule,
   ],
   declarations: [AssignedIssuesComponent, ComposeDialogComponent],
   entryComponents: [ComposeDialogComponent]

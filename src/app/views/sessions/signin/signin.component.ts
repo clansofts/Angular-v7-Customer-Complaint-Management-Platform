@@ -14,6 +14,8 @@ export interface AuthUserModel {
     token_type: string;
     expires_in: number;
     Role: string;
+    MemberId: number;
+    Team: string;
 }
 
 // Local form alert interface

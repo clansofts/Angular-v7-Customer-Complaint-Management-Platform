@@ -30,10 +30,15 @@
                 </div>
                 <div class="col-xs-12" (click)="test()">
                   <p class="m-0">{{selected?.firstName | titlecase}} {{selected?.lastName | titlecase}}</p>
-                  <p class="text-10 text-muted mb-0">Nuban: {{selected?.accountNumber}}</p>
-                  <p class="text-10 text-muted mb-0">{{selected?.created_On}}</p>
-                  <p class="text-10 text-muted mb-0">{{selected?.email}}</p>
-                  <p class="text-10 text-muted">{{selected?.phoneNumber}}</p>
+                  <p class="text-10 text-muted mb-0"><i class="icon-small i-User"></i>Nuban:
+                    {{selected?.accountNumber}}</p>
+                  <p class="text-10 text-muted mb-0"><i class="icon-small i-Calendar-4"></i>
+                    {{selected?.created_On}}
+                  </p>
+                  <p class="text-10 text-muted mb-0"><i class="icon-small i-Email"></i>
+                    {{selected?.email}}</p>
+                  <p class="text-10 text-muted"><i class="icon-small i-Telephone"></i>
+                    {{selected?.phoneNumber}}</p>
                 </div>
               </div>
 
@@ -42,7 +47,7 @@
               </div>
               <div class="card card-custom mb-4">
                 <ngb-tabset class="nav-center nav-center-custom">
-                  <ngb-tab title="Messages">
+                  <ngb-tab title="Comments">
                     <ng-template ngbTabContent>
                       <div class="text-box-inbox" *ngIf="comment" [innerHTML]="comment"></div>
                     </ng-template>
@@ -299,7 +304,7 @@
                               <!-- For Pending Issues -->
                               <ng-container *ngSwitchCase="2">
                                 <button type="button" Class="btn btn-primary btn-rounded m-1"
-                                  (click)="open(modalBasic)">Accept</button>
+                                  (click)="open(modalBasic)">Assign</button>
                                 <button type="button" Class="btn btn-danger btn-rounded m-1"
                                   (click)="confirm(modalConfirm)">Reject</button>
                               </ng-container>
@@ -311,7 +316,7 @@
                               <!-- For Reassigned -->
                               <ng-container *ngSwitchCase="7">
                                 <button type="button" Class="btn btn-primary btn-rounded m-1"
-                                  (click)="open(modalBasic)">Accept</button>
+                                  (click)="open(modalBasic)">Assign</button>
                                 <button type="button" Class="btn btn-danger btn-rounded m-1"
                                   (click)="confirm(modalConfirm)">Reject</button>
                               </ng-container>
@@ -321,7 +326,38 @@
                       </div>
                     </ng-template>
                   </ngb-tab>
-                  <ngb-tab title="Resolution">
+                  <ngb-tab *ngIf="(selected?.status?.stId !== 2)" title="Actions Taken">
+                    <ng-template ngbTabContent>
+                      <div class="">
+                        <div class="mb-0">
+                          <div class="">
+                            <div class=""></div>
+                            <div class="form-group mb-3">
+                              <label>Resolver</label>
+                              <input readonly type="text" class="form-control" placeholder="Your Name" aria-label="Name"
+                                aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group mb-3">
+                              <label>Issue Description</label>
+                              <textarea readonly class="form-control" aria-label="With textarea"
+                                placeholder="Please Describe the issues experienced by the complainant"></textarea>
+                            </div>
+
+                            <div class="form-group mb-3">
+                              <label>Root Cause</label>
+                              <input type="text" readonly class="form-control" placeholder="Root cause of the problem"
+                                aria-label="" aria-describedby="basic-addon2">
+                            </div>
+
+                            <div class="form-group">
+                              <label>Actions Taken</label>
+                              <textarea readonly class="form-control" aria-label="With textarea"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
                   </ngb-tab>
                 </ngb-tabset>
 
@@ -374,15 +410,17 @@
         <!-- <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button> -->
         <p class="text-muted mb-2" (click)="test()">Browse</p>
         <ul class="inbox-main-nav">
-          <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 0}"><i class="icon-regular i-Over-Time"></i>
+          <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Over-Time"></i>
               Pending ({{Count?.pending}})</a></li>
-          <li (click)="filterBy(7)"><a [ngClass]="{'active': Active == 1}"><i class="icon-regular i-Right"></i>
+          <li (click)="filterBy(7)"><a [ngClass]="{'active': Active == 7}"><i class="icon-regular i-Right"></i>
               Re-Assigned
               ({{Count?.reassigned}})</a></li>
-          <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Sand-watch-2">
+          <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i class="icon-regular i-Sand-watch-2">
               </i> In Progress ({{Count?.progress}})</a></li>
-          <li (click)="filterByAssigned(3)"><a [ngClass]="{'active': Active == 3}"><i
-                class="icon-regular i-Sand-watch-2">
+          <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i class="icon-regular i-Checked-User">
+              </i>Closed ({{Count?.completed}})</a></li>
+          <li (click)="filterByAssigned(8)"><a [ngClass]="{'active': Active == 8}"><i
+                class="icon-regular i-Checked-User">
               </i>Assigned To You ({{Count?.myassigned}})</a></li>
         </ul>
       </div>
@@ -468,46 +506,50 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <p>Please describe the nature of the problem and the steps you took to resolve it</p>
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="card-title"></div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">RT</span>
-          </div>
-          <input type="text" class="form-control" placeholder="Your Name" aria-label="Name"
-            aria-describedby="basic-addon1">
-        </div>
+  <form name="form" (ngSubmit)="isResolved()" #f="ngForm" novalidate>
+    <div class="modal-body">
+      <p>Please describe the nature of the problem and the steps you took to resolve it</p>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Issue Description</span>
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">RT</span>
+            </div>
+            <input type="text" name="resolverName" [(ngModel)]="actionsModel.resolverName" #resolverName="ngModel"
+              required class="form-control" placeholder="Your Name" aria-label="Name" aria-describedby="basic-addon1">
           </div>
-          <textarea class="form-control" aria-label="With textarea"
-            placeholder="Please Describe the issues experienced by the complainant"></textarea>
-        </div>
 
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Root cause of the problem" aria-label=""
-            aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <span class="input-group-text" id="basic-addon2">Root Cause</span>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Issue Description</span>
+            </div>
+            <textarea name="issue" [(ngModel)]="actionsModel.issue" issue="ngModel" required class="form-control"
+              aria-label="With textarea"
+              placeholder="Please Describe the issues experienced by the complainant"></textarea>
           </div>
-        </div>
 
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Resolution Steps</span>
+          <div class="input-group mb-3">
+            <input type="text" name="cause" [(ngModel)]="actionsModel.cause" cause="ngModel" required
+              class="form-control" placeholder="Root cause of the problem" aria-label=""
+              aria-describedby="basic-addon2">
           </div>
-          <textarea class="form-control" aria-label="With textarea"></textarea>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Action Steps</span>
+            </div>
+            <textarea name="actionTaken" [(ngModel)]="actionsModel.actionTaken" #actionTaken="ngModel" required
+              class="form-control" aria-label="With textarea"></textarea>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer modal-footer-custom">
-    <button type="button" class="btn btn-custom btn-outline-success btn-rounded"
-      (click)="isResolved(); modal.close('ok')">Submit</button>
-  </div>
+    <div class="modal-footer modal-footer-custom">
+      <button type="submit" [disabled]="!f.form.valid"
+        class="btn btn-custom btn-outline-success btn-rounded">Submit</button>
+      <!-- (click)="modal.close('ok')" -->
+    </div>
+  </form>
 </ng-template>

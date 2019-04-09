@@ -2,6 +2,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStoreService } from './local-store.service';
 
+export interface User {
+  MemberId: number
+  Role: string
+  Team: string
+  access_token: string
+  expires_in: number
+  token_type: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +22,7 @@ export class UserService {
     this.router.navigateByUrl(url);
   }
   // Route the user to the appropriate dashboard
-  async userRole(user?: any) {
+  async userRole(user?: User) {
     if (user.Role) {
       if (user.Role === 'RC') {
         // If resolution champion
@@ -26,18 +35,26 @@ export class UserService {
   }
 
   // Get logged in user role
-  get loggedInUser() {
-    const user: any = this.localStorage.getItem('currentUser');
+  get loggedInUser(): string {
+    const user: User = this.localStorage.getItem('currentUser');
     if (user) {
       return user.Role;
     }
     return null;
   }
 
-  get loggedInUserTeam() {
-    const user: any = this.localStorage.getItem('currentUser');
+  get loggedInUserTeam(): string {
+    const user: User = this.localStorage.getItem('currentUser');
     if (user) {
       return user.Team;
+    }
+    return null;
+  }
+
+  get currentUserID(): number {
+    const user: User = this.localStorage.getItem('currentUser');
+    if (user) {
+      return user.MemberId;
     }
     return null;
   }
