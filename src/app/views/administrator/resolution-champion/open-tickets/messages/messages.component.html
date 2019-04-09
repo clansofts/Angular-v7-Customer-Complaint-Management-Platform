@@ -1,12 +1,18 @@
 <div>
-    <!-- MAIN SIDEBAR CONTAINER -->
-    <div appSidebarContainer class="inbox-main-sidebar-container">
-        <div appSidebarContent class="inbox-main-content">
-            <!-- SECONDARY SIDEBAR CONTAINER -->
-            <div appSidebarContainer class="inbox-secondary-sidebar-container box-shadow-1">
-                <div appSidebarContent>
-                    <div class="inbox-secondary-sidebar-content position-relative" style="min-height: 500px">
-                        <!-- <div class="inbox-topbar box-shadow-1 pl-3" [perfectScrollbar]="{suppressScrollY: true}">
+  <!-- MAIN SIDEBAR CONTAINER -->
+  <div appSidebarContainer class="inbox-main-sidebar-container">
+    <div appSidebarContent class="inbox-main-content">
+      <!-- SECONDARY SIDEBAR CONTAINER -->
+      <div
+        appSidebarContainer
+        class="inbox-secondary-sidebar-container box-shadow-1"
+      >
+        <div appSidebarContent>
+          <div
+            class="inbox-secondary-sidebar-content position-relative"
+            style="min-height: 500px"
+          >
+            <!-- <div class="inbox-topbar box-shadow-1 pl-3" [perfectScrollbar]="{suppressScrollY: true}">
                             <a appSidebarToggler="inbox-main-sidebar" class="link-icon d-md-none">
                                 <i class="icon-regular i-Arrow-Turn-Left"></i>
                             </a>
@@ -26,393 +32,725 @@
                                     Delete</a>
                             </div>
                         </div> -->
-                        <!-- EMAIL DETAILS -->
-                        <div class="inbox-details inbox-details--custom" *ngIf="selected"
-                            [perfectScrollbar]="{suppressScrollX: true}">
-                            <div class="row no-gutters">
-                                <div class="mr-2" style="width: 36px">
-                                    <img class="rounded-circle" src="./assets/images/faces/user1.svg" alt="">
-                                </div>
-                                <div class="col-xs-12">
-                                    <p class="m-0"><i class="icon-small i-User"></i>
-                                        {{selected?.firstName | titlecase}}
-                                        {{selected?.lastName | titlecase}}</p>
-                                    <p class="text-12 text-muted mb-0"><i class="icon-small i-Calendar-4"></i>
-                                        {{selected?.transactionDate | date: 'dd/MM/yyyy'}}</p>
-                                    <p class="text-10 text-muted mb-0"><i class="icon-small i-Email"></i>
-                                        {{selected?.email}}</p>
-                                    <p class="text-10 text-muted"><i class="icon-small i-Telephone"></i>
-                                        {{selected?.phoneno}}</p>
-                                </div>
+            <!-- EMAIL DETAILS -->
+            <div
+              class="inbox-details inbox-details--custom"
+              *ngIf="selected"
+              [perfectScrollbar]="{ suppressScrollX: true }"
+            >
+              <div class="row no-gutters">
+                <div class="mr-2" style="width: 36px">
+                  <img
+                    class="rounded-circle"
+                    src="./assets/images/faces/user1.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-xs-12">
+                  <p class="m-0">
+                    <i class="icon-small i-User"></i>
+                    {{ selected?.firstName | titlecase }}
+                    {{ selected?.lastName | titlecase }}
+                  </p>
+                  <p class="text-12 text-muted mb-0">
+                    <i class="icon-small i-Calendar-4"></i>
+                    {{ selected?.transactionDate | date: "dd/MM/yyyy" }}
+                  </p>
+                  <p class="text-10 text-muted mb-0">
+                    <i class="icon-small i-Email"></i> {{ selected?.email }}
+                  </p>
+                  <p class="text-10 text-muted">
+                    <i class="icon-small i-Telephone"></i>
+                    {{ selected?.phoneno }}
+                  </p>
+                </div>
+              </div>
+              <h4 class="mb-3">{{ selected?.subject }}</h4>
+              <div class="card mb-4">
+                <ngb-tabset class="nav-center nav-center-custom">
+                 
+                  <ngb-tab title="Comments">
+                    <ng-template ngbTabContent>
+                      <div
+                        class="text-box-inbox"
+                        *ngIf="comment"
+                        [innerHTML]="comment"
+                      ></div>
+                    </ng-template>
+                  </ngb-tab>
+                  <ngb-tab title="Actions Log">
+                    <ng-template ngbTabContent>
+                      <div class="" *ngIf="ActionsTaken">
+                        <div class="mb-0">
+                          <div class="">
+                            <div class=""></div>
+                            <div class="form-group mb-3">
+                              <label>Resolver</label>
+                              <input
+                                readonly
+                                type="text"
+                                class="form-control"
+                                placeholder="Your Name"
+                                value="{{ ActionsTaken?.rtName }}"/>
                             </div>
-                            <h4 class="mb-3">{{selected?.subject}}</h4>
-                            <div class="card mb-4">
-                                <ngb-tabset class="nav-center nav-center-custom">
-                                    <ngb-tab title="Customer Complaint">
-                                        <ng-template ngbTabContent>
-                                            <div class="card-body card-body-custom">
-                                                <div class="card-title mb-3">
-                                                    <span>Complaint Category:</span>
-                                                    {{ selected?.channelType.channelType | titlecase}}
-                                                </div>
-                                                <form>
-                                                    <div class="row">
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="firstName">First name</label>
-                                                            <input type="text" disabled
-                                                                class="form-control form-control-rounded" id="firstName"
-                                                                placeholder="Customer first name"
-                                                                value="{{selected?.firstName | titlecase}}">
-                                                        </div>
 
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="lastName">Last name</label>
-                                                            <input type="text" disabled
-                                                                class="form-control form-control-rounded" id="lastName"
-                                                                placeholder="Customer last name"
-                                                                value="{{selected?.lastName | titlecase}}">
-                                                        </div>
+                            <div class="form-group mb-3">
+                              <label>Issue Description</label>
+                              <textarea
+                                readonly
+                                class="form-control"
+                                aria-label="With textarea"
+                                placeholder="Please Describe the issues experienced by the complainant"
+                                value="{{ ActionsTaken?.issueDescription }}"
+                              >
+                              </textarea>
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="exampleInputEmail1">Email address</label>
-                                                            <div class="input-group">
-                                                                <input type="email" disabled
-                                                                    class="form-control form-control-rounded"
-                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                                    placeholder="Customer email"
-                                                                    value="{{selected?.email}}">
-                                                            </div>
-                                                        </div>
+                            <div class="form-group mb-3">
+                              <label>Root Cause</label>
+                              <input
+                                type="text"
+                                readonly
+                                class="form-control"
+                                placeholder="Root cause of the problem"
+                                aria-label=""
+                                aria-describedby="basic-addon2"
+                                value="{{ ActionsTaken?.causeOfIssue }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="phone">Phone</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="phone" placeholder="Customer phone"
-                                                                value="{{selected?.phoneno}}">
-                                                        </div>
+                            <div class="form-group">
+                              <label>Actions Taken</label>
+                              <textarea
+                                readonly
+                                class="form-control"
+                                aria-label="With textarea"
+                                value="{{ ActionsTaken?.actionTaken }}"
+                              >
+                              </textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngb-tab>
+                  <ngb-tab title="Customer Complaint">
+                    <ng-template ngbTabContent>
+                      <div class="card-body card-body-custom">
+                        <div class="card-title mb-3">
+                          <span>Complaint Category:</span>
+                          {{ selected?.channelType.channelType | titlecase }}
+                        </div>
+                        <form>
+                          <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                              <label for="firstName">First name</label>
+                              <input
+                                type="text"
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="firstName"
+                                placeholder="Customer first name"
+                                value="{{ selected?.firstName | titlecase }}"
+                              />
+                            </div>
 
-                                                        <div *ngIf="selected?.alternateno"
-                                                            class="col-md-6 form-group mb-3">
-                                                            <label for="phone">Alternate Phone number</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="phone" placeholder="Customer phone"
-                                                                value="{{selected?.alternateno}}">
-                                                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                              <label for="lastName">Last name</label>
+                              <input
+                                type="text"
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="lastName"
+                                placeholder="Customer last name"
+                                value="{{ selected?.lastName | titlecase }}"
+                              />
+                            </div>
 
-                                                        <div *ngIf="selected?.lastFourDigits"
-                                                            class="col-md-6 form-group mb-3">
-                                                            <label for="credit">Card number: last four digits</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Card"
-                                                                value="{{selected?.lastFourDigits}}">
-                                                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                              <label for="exampleInputEmail1"
+                                >Email address</label
+                              >
+                              <div class="input-group">
+                                <input
+                                  type="email"
+                                  disabled
+                                  class="form-control form-control-rounded"
+                                  id="exampleInputEmail1"
+                                  aria-describedby="emailHelp"
+                                  placeholder="Customer email"
+                                  value="{{ selected?.email }}"
+                                />
+                              </div>
+                            </div>
 
-                                                        <div *ngIf="selected?.recipientAccountNo"
-                                                            class="col-md-6 form-group mb-3">
-                                                            <label for="credit">Account number</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="" placeholder="Account number"
-                                                                value="{{selected?.recipientAccountNo}}">
-                                                        </div>
+                            <div class="col-md-6 form-group mb-3">
+                              <label for="phone">Phone</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="phone"
+                                placeholder="Customer phone"
+                                value="{{ selected?.phoneno }}"
+                              />
+                            </div>
 
-                                                        <div *ngIf="selected?.isCustomer"
-                                                            class="col-md-6 form-group mb-3">
-                                                            <label for="picker1">Are you a Union Bank customer?</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="" placeholder="Is Union Bank Customer?"
-                                                                value="{{selected?.isCustomer}}">
-                                                        </div>
+                            <div
+                              *ngIf="selected?.alternateno"
+                              class="col-md-6 form-group mb-3"
+                            >
+                              <label for="phone">Alternate Phone number</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="phone"
+                                placeholder="Customer phone"
+                                value="{{ selected?.alternateno }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.disappointedService">
-                                                            <label for="picker1">Which of our services dissapointed
-                                                                you?</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id=""
-                                                                placeholder="Which of our services dissapointed you?"
-                                                                value="{{selected?.disappointedService}}">
-                                                        </div>
+                            <div
+                              *ngIf="selected?.lastFourDigits"
+                              class="col-md-6 form-group mb-3"
+                            >
+                              <label for="credit"
+                                >Card number: last four digits</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Card"
+                                value="{{ selected?.lastFourDigits }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.branchIncident">
-                                                            <label for="picker1">Was it a Branch indident</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="" placeholder="Branch of incident"
-                                                                value="{{selected?.branchIncident}}">
-                                                        </div>
+                            <div
+                              *ngIf="selected?.recipientAccountNo"
+                              class="col-md-6 form-group mb-3"
+                            >
+                              <label for="credit">Account number</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id=""
+                                placeholder="Account number"
+                                value="{{ selected?.recipientAccountNo }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.eChannelMedium">
-                                                            <label for="picker1">E-Channel</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="" placeholder="-Channel"
-                                                                value="{{selected?.eChannelMedium}}">
-                                                        </div>
+                            <div
+                              *ngIf="selected?.isCustomer"
+                              class="col-md-6 form-group mb-3"
+                            >
+                              <label for="picker1"
+                                >Are you a Union Bank customer?</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id=""
+                                placeholder="Is Union Bank Customer?"
+                                value="{{ selected?.isCustomer }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.cardVariant">
-                                                            <label for="picker1">Card Variant</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="" placeholder="-Channel"
-                                                                value="{{selected?.cardVariant}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.disappointedService"
+                            >
+                              <label for="picker1"
+                                >Which of our services dissapointed you?</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id=""
+                                placeholder="Which of our services dissapointed you?"
+                                value="{{ selected?.disappointedService }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.cardComplaintType">
-                                                            <label for="credit">Card Complaint Type</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Card Complaint Type"
-                                                                value="{{selected?.cardComplaintType}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.branchIncident"
+                            >
+                              <label for="picker1"
+                                >Was it a Branch indident</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id=""
+                                placeholder="Branch of incident"
+                                value="{{ selected?.branchIncident }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.posMerchantName">
-                                                            <label for="firstName">POS Merchant name</label>
-                                                            <input type="text" disabled
-                                                                class="form-control form-control-rounded" id="firstName"
-                                                                placeholder="Customer merchant name e.g xyz business limited"
-                                                                value="{{selected?.posMerchantName}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.eChannelMedium"
+                            >
+                              <label for="picker1">E-Channel</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id=""
+                                placeholder="-Channel"
+                                value="{{ selected?.eChannelMedium }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.merchantCode">
-                                                            <label for="phone">POS Merchant code</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="merchantCode" placeholder="Customer Merchant code"
-                                                                value="{{selected?.merchantCode}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.cardVariant"
+                            >
+                              <label for="picker1">Card Variant</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id=""
+                                placeholder="-Channel"
+                                value="{{ selected?.cardVariant }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.websiteUsed">
-                                                            <label for="firstName">Website where card was used</label>
-                                                            <input type="text" disabled
-                                                                class="form-control form-control-rounded" id="firstName"
-                                                                placeholder="Customer Website URL e.g www.xyz.com"
-                                                                value="{{selected?.websiteUsed}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.cardComplaintType"
+                            >
+                              <label for="credit">Card Complaint Type</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Card Complaint Type"
+                                value="{{ selected?.cardComplaintType }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3" *ngIf="selected?.atmUsed">
-                                                            <label for="picker1">ATM used</label>
-                                                            <div class="input-group">
-                                                                <input id="picker1" disabled
-                                                                    class="form-control form-control-rounded"
-                                                                    placeholder="ATM used"
-                                                                    value="{{selected?.atmUsed}}">
-                                                            </div>
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.posMerchantName"
+                            >
+                              <label for="firstName">POS Merchant name</label>
+                              <input
+                                type="text"
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="firstName"
+                                placeholder="Customer merchant name e.g xyz business limited"
+                                value="{{ selected?.posMerchantName }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.bankName">
-                                                            <label for="credit">Bank Used</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Bank Used"
-                                                                value="{{selected?.bankName}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.merchantCode"
+                            >
+                              <label for="phone">POS Merchant code</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="merchantCode"
+                                placeholder="Customer Merchant code"
+                                value="{{ selected?.merchantCode }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.unionATMList">
-                                                            <label for="credit">Location</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Location"
-                                                                value="{{selected?.unionATMList}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.websiteUsed"
+                            >
+                              <label for="firstName"
+                                >Website where card was used</label
+                              >
+                              <input
+                                type="text"
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="firstName"
+                                placeholder="Customer Website URL e.g www.xyz.com"
+                                value="{{ selected?.websiteUsed }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.serviceType">
-                                                            <label for="credit">Service Type</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Service Type"
-                                                                value="{{selected?.serviceType}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.atmUsed"
+                            >
+                              <label for="picker1">ATM used</label>
+                              <div class="input-group">
+                                <input
+                                  id="picker1"
+                                  disabled
+                                  class="form-control form-control-rounded"
+                                  placeholder="ATM used"
+                                  value="{{ selected?.atmUsed }}"
+                                />
+                              </div>
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.serviceProvider">
-                                                            <label for="credit">Service Provider</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Service Provider Used"
-                                                                value="{{selected?.serviceProvider}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.bankName"
+                            >
+                              <label for="credit">Bank Used</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Bank Used"
+                                value="{{ selected?.bankName }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.ussdPhoneNo">
-                                                            <label for="phone">USSD registed phone</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="phone"
-                                                                placeholder="Customer registered phone number"
-                                                                value="{{selected?.ussdPhoneNo}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.unionATMList"
+                            >
+                              <label for="credit">Location</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Location"
+                                value="{{ selected?.unionATMList }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.beneficiaryPhoneNo">
-                                                            <label for="phone">Airtime Beneficiary number</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="phone" placeholder="phone number"
-                                                                value="{{selected?.beneficiaryPhoneNo}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.serviceType"
+                            >
+                              <label for="credit">Service Type</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Service Type"
+                                value="{{ selected?.serviceType }}"
+                              />
+                            </div>
 
-                                                        <!-- <div class="col-md-6 form-group mb-3" *ngIf="selected?.billType.name">
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.serviceProvider"
+                            >
+                              <label for="credit">Service Provider</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Service Provider Used"
+                                value="{{ selected?.serviceProvider }}"
+                              />
+                            </div>
+
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.ussdPhoneNo"
+                            >
+                              <label for="phone">USSD registed phone</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="phone"
+                                placeholder="Customer registered phone number"
+                                value="{{ selected?.ussdPhoneNo }}"
+                              />
+                            </div>
+
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.beneficiaryPhoneNo"
+                            >
+                              <label for="phone"
+                                >Airtime Beneficiary number</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="phone"
+                                placeholder="phone number"
+                                value="{{ selected?.beneficiaryPhoneNo }}"
+                              />
+                            </div>
+
+                            <!-- <div class="col-md-6 form-group mb-3" *ngIf="selected?.billType.name">
                                                                     <label for="picker1">Airtime billers</label>
                                                                     <input disabled class="form-control form-control-rounded" id="phone"
                                                                         placeholder="Airtime billers" value="{{selected?.billType.name}}">
                                                                 </div> -->
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.unionMobile">
-                                                            <label for="phone">Union Mobile number</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="phone" placeholder="Union mobile ID"
-                                                                value="{{selected?.unionMobile}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.unionMobile"
+                            >
+                              <label for="phone">Union Mobile number</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="phone"
+                                placeholder="Union mobile ID"
+                                value="{{ selected?.unionMobile }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.recipientAccountNo">
-                                                            <label for="phone">Recipients Account number</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="smartcardnumber"
-                                                                placeholder="Recipients phone number"
-                                                                value="{{selected?.recipientAccountNo}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.recipientAccountNo"
+                            >
+                              <label for="phone"
+                                >Recipients Account number</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="smartcardnumber"
+                                placeholder="Recipients phone number"
+                                value="{{ selected?.recipientAccountNo }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.recipientName">
-                                                            <label for="firstName">Recipients name</label>
-                                                            <input type="text" disabled
-                                                                class="form-control form-control-rounded" id="firstName"
-                                                                placeholder="Customer recipients name"
-                                                                value="{{selected?.recipientName}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.recipientName"
+                            >
+                              <label for="firstName">Recipients name</label>
+                              <input
+                                type="text"
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="firstName"
+                                placeholder="Customer recipients name"
+                                value="{{ selected?.recipientName }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.currencyType">
-                                                            <label for="credit">Currency Type</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Bank Used"
-                                                                value="{{selected?.currencyType}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.currencyType"
+                            >
+                              <label for="credit">Currency Type</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Bank Used"
+                                value="{{ selected?.currencyType }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.transactionDate">
-                                                            <label for="picker1">Transaction Date</label>
-                                                            <div class="input-group">
-                                                                <input id="picker1" disabled
-                                                                    class="form-control form-control-rounded"
-                                                                    placeholder="yyyy-mm-dd"
-                                                                    value="{{selected?.transactionDate | date: 'dd/MM/yyyy'}}">
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-secondary" type="button">
-                                                                        <i class="icon-regular i-Calendar-4"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.transactionDate"
+                            >
+                              <label for="picker1">Transaction Date</label>
+                              <div class="input-group">
+                                <input
+                                  id="picker1"
+                                  disabled
+                                  class="form-control form-control-rounded"
+                                  placeholder="yyyy-mm-dd"
+                                  value="{{
+                                    selected?.transactionDate
+                                      | date: 'dd/MM/yyyy'
+                                  }}"
+                                />
+                                <div class="input-group-append">
+                                  <button
+                                    class="btn btn-secondary"
+                                    type="button"
+                                  >
+                                    <i class="icon-regular i-Calendar-4"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.transactiontype">
-                                                            <label for="credit">Transaction Count: Single or
-                                                                Multiple</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Transaction Count"
-                                                                value="{{selected?.transactiontype}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.transactiontype"
+                            >
+                              <label for="credit"
+                                >Transaction Count: Single or Multiple</label
+                              >
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Transaction Count"
+                                value="{{ selected?.transactiontype }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.transactionAmountOne">
-                                                            <label for="credit">Transaction Amount</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Transaction Count"
-                                                                value="{{selected?.transactionAmountOne}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.transactionAmountOne"
+                            >
+                              <label for="credit">Transaction Amount</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Transaction Count"
+                                value="{{ selected?.transactionAmountOne }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.transactionAmountTwo">
-                                                            <label for="credit">Transaction Amount 2</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Transaction Count"
-                                                                value="{{selected?.transactionAmountTwo}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.transactionAmountTwo"
+                            >
+                              <label for="credit">Transaction Amount 2</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Transaction Count"
+                                value="{{ selected?.transactionAmountTwo }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-6 form-group mb-3"
-                                                            *ngIf="selected?.transactionAmountThree">
-                                                            <label for="credit">Transaction Amount 3</label>
-                                                            <input disabled class="form-control form-control-rounded"
-                                                                id="credit" placeholder="Transaction Count"
-                                                                value="{{selected?.transactionAmountThree}}">
-                                                        </div>
+                            <div
+                              class="col-md-6 form-group mb-3"
+                              *ngIf="selected?.transactionAmountThree"
+                            >
+                              <label for="credit">Transaction Amount 3</label>
+                              <input
+                                disabled
+                                class="form-control form-control-rounded"
+                                id="credit"
+                                placeholder="Transaction Count"
+                                value="{{ selected?.transactionAmountThree }}"
+                              />
+                            </div>
 
-                                                        <div class="col-md-12 form-group mb-3"
-                                                            *ngIf="selected?.complaintDescription">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">Please describe the
-                                                                        issue
-                                                                        encountered:</span>
-                                                                </div>
-                                                                <textarea disabled
-                                                                    value="{{selected?.complaintDescription}}"
-                                                                    class="form-control" aria-label="With textarea">
-                                                                            </textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 form-group mb-3"
-                                                            *ngIf="selected?.suggestionBox">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">What would you like
-                                                                        us to
-                                                                        do?</span>
-                                                                </div>
-                                                                <textarea disabled value="{{selected?.suggestionBox}}"
-                                                                    class="form-control" aria-label="With textarea">
-                                                                        </textarea>
-                                                            </div>
-                                                        </div>
+                            <div
+                              class="col-md-12 form-group mb-3"
+                              *ngIf="selected?.complaintDescription"
+                            >
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"
+                                    >Please describe the issue
+                                    encountered:</span
+                                  >
+                                </div>
+                                <textarea
+                                  disabled
+                                  value="{{ selected?.complaintDescription }}"
+                                  class="form-control"
+                                  aria-label="With textarea"
+                                >
+                                </textarea>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-12 form-group mb-3"
+                              *ngIf="selected?.suggestionBox"
+                            >
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"
+                                    >What would you like us to do?</span
+                                  >
+                                </div>
+                                <textarea
+                                  disabled
+                                  value="{{ selected?.suggestionBox }}"
+                                  class="form-control"
+                                  aria-label="With textarea"
+                                >
+                                </textarea>
+                              </div>
+                            </div>
 
-                                                        <div class="col-md-12 form-group mb-3"
-                                                            *ngIf="selected?.complaintDescription">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">Complaint
-                                                                        Description</span>
-                                                                </div>
-                                                                <textarea disabled
-                                                                    value="{{selected?.complaintDescription}}"
-                                                                    class="form-control"
-                                                                    aria-label="With textarea"></textarea>
-                                                            </div>
-                                                        </div>
+                            <div
+                              class="col-md-12 form-group mb-3"
+                              *ngIf="selected?.complaintDescription"
+                            >
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"
+                                    >Complaint Description</span
+                                  >
+                                </div>
+                                <textarea
+                                  disabled
+                                  value="{{ selected?.complaintDescription }}"
+                                  class="form-control"
+                                  aria-label="With textarea"
+                                ></textarea>
+                              </div>
+                            </div>
 
-                                                        <div class="col-md-12" [ngSwitch]="selected?.status?.stId">
-                                                            <!-- Open Tickets -->
-                                                            <ng-container
-                                                                *ngIf="(selected?.status) && (selected?.status.stId == 1)">
-                                                                <button type="button"
-                                                                    Class="btn btn-primary btn-rounded m-1"
-                                                                    (click)="open(modalBasic)">Assign Issue</button>
-                                                                <button type="button"
-                                                                    Class="btn btn-warning btn-rounded m-1"
-                                                                    (click)="confirm(modalConfirm)">Close Issue</button>
-                                                            </ng-container>
-                                                            <!-- Assigned -->
-                                                            <ng-container
-                                                                *ngIf="(selected?.status) && (selected?.status.stId == 1)">
-                                                            </ng-container>
-                                                            <!-- In Progress -->
-                                                            <ng-container
-                                                                *ngIf="(selected?.status) && (selected?.status.stId == 4)">
-                                                            </ng-container>
-                                                            <!-- If Resolved or Rejected Issue -->
-                                                            <ng-container
-                                                                *ngIf="(selected?.status) && (selected?.status.stId == 5) || (selected?.status.stId == 6)">
-                                                                <button type="button"
-                                                                    Class="btn btn-primary btn-rounded m-1"
-                                                                    (click)="open(modalBasic)">Re-Assign Issue</button>
+                            <div
+                              class="col-md-12"
+                              [ngSwitch]="selected?.status?.stId"
+                            >
+                              <!-- Open Tickets -->
+                              <ng-container
+                                *ngIf="
+                                  selected?.status && selected?.status.stId == 1
+                                "
+                              >
+                                <button
+                                  type="button"
+                                  Class="btn btn-primary btn-rounded m-1"
+                                  (click)="open(modalBasic)"
+                                >
+                                  Assign Issue
+                                </button>
+                                <button
+                                  type="button"
+                                  Class="btn btn-warning btn-rounded m-1"
+                                  (click)="confirm(modalConfirm)"
+                                >
+                                  Close Issue
+                                </button>
+                              </ng-container>
+                              <!-- Assigned -->
+                              <ng-container
+                                *ngIf="
+                                  selected?.status && selected?.status.stId == 1
+                                "
+                              >
+                              </ng-container>
+                              <!-- In Progress -->
+                              <ng-container
+                                *ngIf="
+                                  selected?.status && selected?.status.stId == 4
+                                "
+                              >
+                              </ng-container>
+                              <!-- If Resolved or Rejected Issue -->
+                              <ng-container
+                                *ngIf="
+                                  (selected?.status &&
+                                    selected?.status.stId == 5) ||
+                                  selected?.status.stId == 6
+                                "
+                              >
+                                <button
+                                  type="button"
+                                  Class="btn btn-primary btn-rounded m-1"
+                                  (click)="open(modalBasic)"
+                                >
+                                  Re-Assign Issue
+                                </button>
 
-                                                                <button type="button"
-                                                                    Class="btn btn-success btn-rounded m-1"
-                                                                    (click)="confirm(modalConfirm)">Close Issue</button>
-                                                            </ng-container>
-                                                            <!-- Closed Issues -->
-                                                            <!-- <ng-container
+                                <button
+                                  type="button"
+                                  Class="btn btn-success btn-rounded m-1"
+                                  (click)="confirm(modalConfirm)"
+                                >
+                                  Close Issue
+                                </button>
+                              </ng-container>
+                              <!-- Closed Issues -->
+                              <!-- <ng-container
                                                                         *ngIf="(selected?.status) && (selected?.status.stId == 3)">
                                                                         <button type="button" Class="btn btn-primary btn-rounded m-1"
                                                                             (click)="open(modalBasic)">Re-Open Issue</button>
@@ -420,190 +758,259 @@
                                                                         <button type="button" Class="btn btn-warning btn-rounded m-1"
                                                                             (click)="confirm(modalConfirm)">Move To Archive</button>
                                                                     </ng-container> -->
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab title="Comments">
-                                        <ng-template ngbTabContent>
-                                            <div class="text-box-inbox" *ngIf="comment" [innerHTML]="comment"></div>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab title="Actions Log">
-                                        <ng-template ngbTabContent>
-                                            <div class="">
-                                                <div class="mb-0">
-                                                    <div class="">
-                                                        <div class=""></div>
-                                                        <div class="form-group mb-3">
-                                                            <label>Resolver</label>
-                                                            <input readonly type="text" class="form-control"
-                                                                placeholder="Your Name" aria-label="Name"
-                                                                aria-describedby="basic-addon1">
-                                                        </div>
-
-                                                        <div class="form-group mb-3">
-                                                            <label>Issue Description</label>
-                                                            <textarea readonly class="form-control"
-                                                                aria-label="With textarea"
-                                                                placeholder="Please Describe the issues experienced by the complainant"></textarea>
-                                                        </div>
-
-                                                        <div class="form-group mb-3">
-                                                            <label>Root Cause</label>
-                                                            <input type="text" readonly class="form-control"
-                                                                placeholder="Root cause of the problem" aria-label=""
-                                                                aria-describedby="basic-addon2">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label>Actions Taken</label>
-                                                            <textarea readonly class="form-control"
-                                                                aria-label="With textarea"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </ngb-tab>
-                                </ngb-tabset>
-
                             </div>
-                        </div>
-                        <!-- Intro screen -->
-                        <div class="app-inro-circle inbox-intro" *ngIf="!selected">
-                            <div class="border rounded-circle big-bubble"
-                                [@animate]="{value:'*',params:{scale:'.2',delay:'400ms', duration: '400ms'}}">
-                                <i class="i-Email"></i>
-                            </div>
-                            <p class="text-16"
-                                [@animate]="{value:'*',params:{y:'120px',delay:'600ms', duration: '400ms'}}">Complaint
-                                Inbox</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Side Inbox Bar -->
-                <div appSidebar="inbox-secondary-sidebar" class="inbox-secondary-sidebar"
-                    [perfectScrollbar]="{suppressScrollX: true}">
-                    <i class="sidebar-close i-Close" appSidebarToggler="inbox-secondary-sidebar"></i>
-
-                    <div class="mail-item" *ngFor="let i of Issues$" (click)="select(i)">
-                        <div class="avatar">
-                            <img src="./assets/images/faces/user.svg" alt="">
-                        </div>
-                        <div class="col-xs-6 details">
-                            <span class="name text-muted">{{i?.firstName | titlecase}}
-                                {{i?.lastName | titlecase}}</span>
-                            <span [ngClass]="
-                                {'badge-info-custom1 mr-1': i?.channelType.channelType == 'E-Channel', 
-                                'badge-info-custom2 mr-1': i?.channelType.channelType == 'Card Issue', 
-                                'badge-info-custom3 mr-1': i?.channelType.channelType == 'Service',
-                                'badge-info-custom4 mr-1': i?.channelType.channelType == 'ATM Dispense Error'}"
-                                class="badge badge-info mr-1">{{i?.channelType.channelType | titlecase}}</span>
-                            <ng-container [ngSwitch]="i?.source">
-                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Web'">
-                                    <p class="m-0">Channel:</p>
-                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
-                                        class="icon-regular i-Internet"></i>
-                                </div>
-                            </ng-container>
-                            <ng-container [ngSwitch]="i?.source">
-                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Mobile'">
-                                    <p class="m-0">Channel:</p>
-                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
-                                        class="icon-regular i-Telephone"></i>
-                                </div>
-                            </ng-container>
-                            <ng-container [ngSwitch]="i?.source">
-                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'USSD'">
-                                    <p class="m-0">Channel:</p>
-                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
-                                        class="icon-regular i-Router-2"></i>
-                                </div>
-                            </ng-container>
-                            <ng-container [ngSwitch]="i?.source">
-                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Mail'">
-                                    <p class="m-0">Channel:</p>
-                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
-                                        class="icon-regular i-Email"></i>
-                                </div>
-                            </ng-container>
-                            <ng-container [ngSwitch]="i?.source">
-                                <div style="display: flex; padding-top: 2px;" *ngSwitchCase="'Walk-In'">
-                                    <p class="m-0">Channel:</p>
-                                    <i style="margin-left: 5px;" title="{{i?.source | titlecase}}"
-                                        class="icon-regular i-Door"></i>
-                                </div>
-                            </ng-container>
-
-                            <p _ngcontent-c5=""
-                                class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span
-                                    _ngcontent-c5="" class="badge badge-outline-info">{{i?.status?.name}}</span></p>
-                        </div>
-                        <div class="col-xs-3 date">
-                            <span class="text-muted">{{i?.created_On | date: 'dd/MM/yyyy'}}</span>
-                        </div>
-                    </div>
-
-                </div>
+                          </div>
+                        </form>
+                      </div>
+                    </ng-template>
+                  </ngb-tab>
+                </ngb-tabset>
+              </div>
             </div>
-        </div>
-        <!-- MAIN SIDEBAR -->
-        <div appSidebar="inbox-main-sidebar" class="inbox-main-sidebar">
-            <div class="pt-3 pr-3 pb-3">
-                <i class="sidebar-close i-Close" appSidebarToggler="inbox-main-sidebar"></i>
-                <!-- <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button> -->
-                <p class="text-muted mb-2">Browse</p>
-                <ul class="inbox-main-nav">
-                    <li (click)="filterBy(1)"><a [ngClass]="{'active': Active == 1}"><i
-                                class="icon-regular i-Ticket"></i> New Tickets ({{Count.open}})</a></li>
-                    <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i
-                                class="icon-regular i-Right"></i> Assigned ({{Count.assigned}})</a></li>
-                    <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i
-                                class="icon-regular i-Sand-watch-2"></i> In Progress ({{Count.progress}})</a></li>
-                    <li (click)="filterBy(5)"><a [ngClass]="{'active': Active == 5}"><i
-                                class="icon-regular i-Support"></i> RT Resolved ({{Count.resolved}})</a></li>
-                    <li (click)="filterBy(6)"><a [ngClass]="{'active': Active == 6}"><i
-                                class="icon-regular i-Pointer"></i> RT Rejected ({{Count.rejected}})</a></li>
-                    <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}">
-                            <i class="icon-regular i-Folder-Zip"></i> Closed Tickets ({{Count.closed}})</a></li>
-                </ul>
+            <!-- Intro screen -->
+            <div class="app-inro-circle inbox-intro" *ngIf="!selected">
+              <div
+                class="border rounded-circle big-bubble"
+                [@animate]="{
+                  value: '*',
+                  params: { scale: '.2', delay: '400ms', duration: '400ms' }
+                }"
+              >
+                <i class="i-Email"></i>
+              </div>
+              <p
+                class="text-16"
+                [@animate]="{
+                  value: '*',
+                  params: { y: '120px', delay: '600ms', duration: '400ms' }
+                }"
+              >
+                Complaint Inbox
+              </p>
             </div>
+          </div>
         </div>
+        <!-- Side Inbox Bar -->
+        <div
+          appSidebar="inbox-secondary-sidebar"
+          class="inbox-secondary-sidebar"
+          [perfectScrollbar]="{ suppressScrollX: true }"
+        >
+          <i
+            class="sidebar-close i-Close"
+            appSidebarToggler="inbox-secondary-sidebar"
+          ></i>
+
+          <div class="mail-item" *ngFor="let i of Issues$" (click)="select(i)">
+            <div class="avatar">
+              <img src="./assets/images/faces/user.svg" alt="" />
+            </div>
+            <div class="col-xs-6 details">
+              <span class="name text-muted"
+                >{{ i?.firstName | titlecase }}
+                {{ i?.lastName | titlecase }}</span
+              >
+              <span
+                [ngClass]="{
+                  'badge-info-custom1 mr-1':
+                    i?.channelType.channelType == 'E-Channel',
+                  'badge-info-custom2 mr-1':
+                    i?.channelType.channelType == 'Card Issue',
+                  'badge-info-custom3 mr-1':
+                    i?.channelType.channelType == 'Service',
+                  'badge-info-custom4 mr-1':
+                    i?.channelType.channelType == 'ATM Dispense Error'
+                }"
+                class="badge badge-info mr-1"
+                >{{ i?.channelType.channelType | titlecase }}</span
+              >
+              <ng-container [ngSwitch]="i?.source">
+                <div
+                  style="display: flex; padding-top: 2px;"
+                  *ngSwitchCase="'Web'"
+                >
+                  <p class="m-0">Channel:</p>
+                  <i
+                    style="margin-left: 5px;"
+                    title="{{ i?.source | titlecase }}"
+                    class="icon-regular i-Internet"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container [ngSwitch]="i?.source">
+                <div
+                  style="display: flex; padding-top: 2px;"
+                  *ngSwitchCase="'Mobile'"
+                >
+                  <p class="m-0">Channel:</p>
+                  <i
+                    style="margin-left: 5px;"
+                    title="{{ i?.source | titlecase }}"
+                    class="icon-regular i-Telephone"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container [ngSwitch]="i?.source">
+                <div
+                  style="display: flex; padding-top: 2px;"
+                  *ngSwitchCase="'USSD'"
+                >
+                  <p class="m-0">Channel:</p>
+                  <i
+                    style="margin-left: 5px;"
+                    title="{{ i?.source | titlecase }}"
+                    class="icon-regular i-Router-2"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container [ngSwitch]="i?.source">
+                <div
+                  style="display: flex; padding-top: 2px;"
+                  *ngSwitchCase="'Mail'"
+                >
+                  <p class="m-0">Channel:</p>
+                  <i
+                    style="margin-left: 5px;"
+                    title="{{ i?.source | titlecase }}"
+                    class="icon-regular i-Email"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container [ngSwitch]="i?.source">
+                <div
+                  style="display: flex; padding-top: 2px;"
+                  *ngSwitchCase="'Walk-In'"
+                >
+                  <p class="m-0">Channel:</p>
+                  <i
+                    style="margin-left: 5px;"
+                    title="{{ i?.source | titlecase }}"
+                    class="icon-regular i-Door"
+                  ></i>
+                </div>
+              </ng-container>
+
+              <p
+                _ngcontent-c5=""
+                class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"
+              >
+                <span _ngcontent-c5="" class="badge badge-outline-info">{{
+                  i?.status?.name
+                }}</span>
+              </p>
+            </div>
+            <div class="col-xs-3 date">
+              <span class="text-muted">{{
+                i?.created_On | date: "dd/MM/yyyy"
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- MAIN SIDEBAR -->
+    <div appSidebar="inbox-main-sidebar" class="inbox-main-sidebar">
+      <div class="pt-3 pr-3 pb-3">
+        <i
+          class="sidebar-close i-Close"
+          appSidebarToggler="inbox-main-sidebar"
+        ></i>
+        <!-- <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button> -->
+        <p class="text-muted mb-2">Browse</p>
+        <ul class="inbox-main-nav">
+          <li (click)="filterBy(1)">
+            <a [ngClass]="{ active: Active == 1 }"
+              ><i class="icon-regular i-Ticket"></i> New Tickets ({{
+                Count.open
+              }})</a
+            >
+          </li>
+          <li (click)="filterBy(2)">
+            <a [ngClass]="{ active: Active == 2 }"
+              ><i class="icon-regular i-Right"></i> Assigned ({{
+                Count.assigned
+              }})</a
+            >
+          </li>
+          <li (click)="filterBy(4)">
+            <a [ngClass]="{ active: Active == 4 }"
+              ><i class="icon-regular i-Sand-watch-2"></i> In Progress ({{
+                Count.progress
+              }})</a
+            >
+          </li>
+          <li (click)="filterBy(5)">
+            <a [ngClass]="{ active: Active == 5 }"
+              ><i class="icon-regular i-Support"></i> RT Resolved ({{
+                Count.resolved
+              }})</a
+            >
+          </li>
+          <li (click)="filterBy(6)">
+            <a [ngClass]="{ active: Active == 6 }"
+              ><i class="icon-regular i-Pointer"></i> RT Rejected ({{
+                Count.rejected
+              }})</a
+            >
+          </li>
+          <li (click)="filterBy(3)">
+            <a [ngClass]="{ active: Active == 3 }">
+              <i class="icon-regular i-Folder-Zip"></i> Closed Tickets ({{
+                Count.closed
+              }})</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
-
 <ng-template #modalBasic let-modal>
-    <div class="modal-header modal-header-custom">
-        <h4 class="modal-title modal-title-custom" id="modal-basic-title">Assign to Resolution Team</h4>
-        <button type="button" class="close close-custom " aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form>
-            <div class="card mb-0">
-                <div class="card-body">
-                    <form [formGroup]="issuesAssignmentform">
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Select Team</label>
-                            <div class="col-sm-10">
-                                <select formControlName="roles" class="form-control">
-                                    <option *ngFor="let r of Roles" [ngValue]='r'>{{r?.description}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Comment</label>
-                            <div class="col-sm-10">
-                                <textarea formControlName="comment" class="form-control" aria-label="With textarea">
-                                </textarea>
-                            </div>
-                        </div>
-                        <!-- <fieldset class="form-group">
+  <div class="modal-header modal-header-custom">
+    <h4 class="modal-title modal-title-custom" id="modal-basic-title">
+      Assign to Resolution Team
+    </h4>
+    <button
+      type="button"
+      class="close close-custom "
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="card mb-0">
+        <div class="card-body">
+          <form [formGroup]="issuesAssignmentform">
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label"
+                >Select Team</label
+              >
+              <div class="col-sm-10">
+                <select formControlName="roles" class="form-control">
+                  <option *ngFor="let r of Roles" [ngValue]="r">{{
+                    r?.description
+                  }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label"
+                >Comment</label
+              >
+              <div class="col-sm-10">
+                <textarea
+                  formControlName="comment"
+                  class="form-control"
+                  aria-label="With textarea"
+                >
+                </textarea>
+              </div>
+            </div>
+            <!-- <fieldset class="form-group">
                             <div class="row">
                                 <legend class="col-form-label col-sm-2 pt-0">Re-Assign Category</legend>
                                 <div class="col-sm-10">
@@ -666,50 +1073,102 @@
                                 </button>
                             </div>
                         </div> -->
-                    </form>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer modal-footer-custom">
-        <ng-container *ngIf="selected.status.stId == 1">
-            <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
-                [loading]="assignButton.loading" loadingText="Loading..." (click)="submit()">
-                Assign To Team
-            </btn-loading>
-            <button type="button" (click)="modal.close('Save click')"
-                class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
-        </ng-container>
-        <ng-container *ngIf="(selected.status.stId == 5) || (selected.status.stId == 6)">
-            <btn-loading btnClass="btn-{{assignButton.name}} btn-custom btn-outline-success btn-rounded m-1"
-                [loading]="assignButton.loading" loadingText="Loading..." (click)="reAssignIssue()">
-                Re-Assign To Team
-            </btn-loading>
-            <button type="button" (click)="modal.close('Save click')"
-                class="btn btn-outline-success btn-custom btn-rounded">Cancel</button>
-        </ng-container>
-    </div>
+          </form>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer modal-footer-custom">
+    <ng-container *ngIf="selected.status.stId == 1">
+      <btn-loading
+        btnClass="btn-{{
+          assignButton.name
+        }} btn-custom btn-outline-success btn-rounded m-1"
+        [loading]="assignButton.loading"
+        loadingText="Loading..."
+        (click)="submit()"
+      >
+        Assign To Team
+      </btn-loading>
+      <button
+        type="button"
+        (click)="modal.close('Save click')"
+        class="btn btn-outline-success btn-custom btn-rounded"
+      >
+        Cancel
+      </button>
+    </ng-container>
+    <ng-container
+      *ngIf="selected.status.stId == 5 || selected.status.stId == 6"
+    >
+      <btn-loading
+        btnClass="btn-{{
+          assignButton.name
+        }} btn-custom btn-outline-success btn-rounded m-1"
+        [loading]="assignButton.loading"
+        loadingText="Loading..."
+        (click)="reAssignIssue()"
+      >
+        Re-Assign To Team
+      </btn-loading>
+      <button
+        type="button"
+        (click)="modal.close('Save click')"
+        class="btn btn-outline-success btn-custom btn-rounded"
+      >
+        Cancel
+      </button>
+    </ng-container>
+  </div>
 </ng-template>
 
 <ng-template #modalConfirm let-modal>
-    <div class="modal-header modal-header-custom">
-        <h4 class="modal-title" id="modal-title">Close Issue</h4>
-        <button type="button" class="close close-custom " aria-label="Close button" aria-describedby="modal-title"
-            (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <p><strong>Are you sure you want to close <span class="text-primary">{{selected?.firstName | titlecase}}
-                    {{selected?.lastName | titlecase}}'s</span> issue?</strong></p>
-        <p>An email will automatically be sent to this user profile to inform them of the closing.
-            <span class="text-info">This operation can not be undone unless reopened by the user.</span>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary btn-rounded"
-            (click)="modal.dismiss('cancel')">Cancel</button>
-        <button type="button" ngbAutofocus class="btn btn-danger btn-rounded"
-            (click)="modal.close('Ok'); closeIssue()">Ok</button>
-    </div>
+  <div class="modal-header modal-header-custom">
+    <h4 class="modal-title" id="modal-title">Close Issue</h4>
+    <button
+      type="button"
+      class="close close-custom "
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong
+        >Are you sure you want to close
+        <span class="text-primary"
+          >{{ selected?.firstName | titlecase }}
+          {{ selected?.lastName | titlecase }}'s</span
+        >
+        issue?</strong
+      >
+    </p>
+    <p>
+      An email will automatically be sent to this user profile to inform them of
+      the closing.
+      <span class="text-info"
+        >This operation can not be undone unless reopened by the user.</span
+      >
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded"
+      (click)="modal.dismiss('cancel')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-danger btn-rounded"
+      (click)="modal.close('Ok'); closeIssue()"
+    >
+      Ok
+    </button>
+  </div>
 </ng-template>

@@ -28,6 +28,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   Active: number;
   Count: any = {};
   comment: string;
+  ActionsTaken: any;
 
   assignButton =
     {
@@ -87,10 +88,10 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
       // Get comment from selectedIssue by checking the assigned table if comment exist
       this.AssignedIssuesTable(this.selected.issueid);
-      console.log(this.selected.issueid);
-      this.fetchlog(this.selected.issueid);
+      console.log(this.selected);
+      this.fetchLog(this.selected, this.ActionsTaken);
     } catch (err) {
-
+      console.error(err);
     }
   }
 
@@ -107,20 +108,31 @@ export class MessagesComponent implements OnInit, AfterContentInit {
         return this.Comment = (response.comment);
       }, err => {
         console.log(err);
-      })
+      });
   }
 
   // Functional function to get selectedIssue from the assigned issues table
-  fetchlog(id: number) {
-    this.issuesService.fetchLog(id)
-      .subscribe(response => {
-        console.log(response)
-      });
+  fetchLog(selectedissue: any, _variable: any) {
+    try {
+      if (selectedissue && selectedissue.status.stId === 5) {
+        const id: number = selectedissue.issueid;
+        this.issuesService.fetchLog(id)
+          .subscribe(response => {
+            this.ActionsTaken = response;
+            console.log(this.ActionsTaken);
+          }, err => {
+            console.log(err);
+          });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    console.log(this.ActionsTaken);
   }
 
   // Set Comment
   set Comment(comment: any) {
-    if (comment) this.comment = comment;
+    if (comment) { this.comment = comment; }
   }
 
   // For styling the selected element

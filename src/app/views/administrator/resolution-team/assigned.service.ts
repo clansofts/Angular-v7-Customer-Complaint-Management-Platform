@@ -96,12 +96,13 @@ export class AssignedService {
   // Mark as resolved
   resolved(i: any, form: any) {
     try {
-      const Path = this.baseURL + 'assigned/resolved/' + i;
+      const Path = this.baseURL + 'assigned/resolved/' + i.id;
       const payload: any = {
         rtName: form.resolverName,
         issueDescription: form.issue,
         causeOfIssue: form.cause,
         actionTaken: form.actionTaken,
+        issueId: i.issueId,
         tag: ''
       };
       return this.http.post<any>(Path, payload, httpOptions);

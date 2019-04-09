@@ -104,7 +104,7 @@ export class IssuesResolutionService {
 
   // Get the resolved issues log
   fetchLog(id: number) {
-    const Path = this.baseURL + `resolvedissuelog?issId=` + id;
+    const Path = this.baseURL + `resolvedIssueLog?issId=` + id;
     return this.http.get<any>(Path, httpOptions);
   }
 

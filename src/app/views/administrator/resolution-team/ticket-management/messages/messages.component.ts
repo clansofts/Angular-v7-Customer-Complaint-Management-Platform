@@ -239,6 +239,7 @@ export class MessagesRTComponent implements OnInit {
     this.selected = i.issue;
     this.selected.id = i.id;
     this.comment = i.comment;
+    console.log(this.selected);
     this.Assignmentform.setValue({
       comment: '',
       assignId: i.id,
@@ -297,12 +298,14 @@ export class MessagesRTComponent implements OnInit {
 
   // Mark an issue as resolved
   isResolved() {
-    const id = this.selected.id
-    this.assignedService.resolved(id, this.actionsModel)
+    const i = this.selected
+    debugger
+    this.assignedService.resolved(i, this.actionsModel)
       .toPromise()
       .then(res => {
         if (res) {
           this.toastr.info(res, 'Info!', { closeButton: true });
+          this.modalService.dismissAll();
           this.ngOnInit();
         }
       })
