@@ -129,7 +129,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       })
       .catch((err: any) => {
         console.log(err);
-      })
+      });
   }
 
   // Fetch card variants
@@ -153,8 +153,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
           this.currencyType = response;
         }))
         .toPromise();
-    }
-    catch (err) {
+    } catch (err) {
 
     }
 
@@ -165,8 +164,10 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     return this.utilities.atmList()
       .toPromise()
       .then((response: any) => {
-        this.ATM_location = response;
-        return this.ATM_location;
+        if (response) {
+          this.ATM_location = response;
+          return this.ATM_location;
+        }
       })
       .catch((err: any) => {
         console.log(err);
@@ -178,8 +179,11 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     return this.utilities.banksList()
       .toPromise()
       .then((response: BankModel[]) => {
-        this.Bank_used = response;
-        return this.Bank_used;
+        if (response) {
+          this.Bank_used = response;
+          this.utilities.sortBy(this.Bank_used, 'bankName', 1);
+          return this.Bank_used;
+        }
       }).catch((err: any) => {
         console.log(err);
       });
@@ -311,8 +315,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
       const lastName = this.atmDispenseErrorForm.controls.lastName.value;
       const fullName = `${firstName} ${lastName}`;
       return fullName;
-    }
-    catch (err) {
+    } catch (err) {
 
     }
   }

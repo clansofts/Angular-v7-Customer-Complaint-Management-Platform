@@ -85,7 +85,7 @@ export class MessagesRTComponent implements OnInit {
         if (res) {
           this.assignedIssues$ = res;
           // Dynamic sorting
-          this.utilityService.sortBy(this.assignedIssues$, 'created_On');
+          this.utilityService.sortBy(this.assignedIssues$, 'created_On', -1);
           delay(1000);
           this.Filter();
         }

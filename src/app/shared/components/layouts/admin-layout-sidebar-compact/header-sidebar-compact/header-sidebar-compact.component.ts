@@ -67,9 +67,10 @@ export class HeaderSidebarCompactComponent implements OnInit {
   }
 
   ngOnInit() {
-    // tslint:disable-next-line:no-unused-expression
-    this.authStatus;
-    this.Team;
+    Promise.all([
+      this.authStatus,
+      this.Team
+    ]);
   }
 
   toggelSidebar() {

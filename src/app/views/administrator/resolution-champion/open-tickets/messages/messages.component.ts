@@ -191,11 +191,10 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     await this.issuesService.issues$
       .pipe(distinctUntilChanged())
       .subscribe((result: ComplaintsModel) => {
-        console.log(result);
         if (result) {
           this.Issues$ = result;
           // Dynamic sorting
-          this.utilityService.sortBy(this.Issues$, 'created_On');
+          this.utilityService.sortBy(this.Issues$, 'created_On', -1);
           // Total number of issues
           this.Count.all = this.Issues$.length;
           // Filter by type

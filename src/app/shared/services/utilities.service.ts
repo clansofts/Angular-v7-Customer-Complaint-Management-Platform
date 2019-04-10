@@ -185,13 +185,13 @@ export class UtilitiesService {
   }
 
   // Call sort method
-  sortBy(arr: any, field: string) {
-    arr.sort(this.dynamicSort(field));
+  sortBy(arr: any, field: string, order: number) {
+    arr.sort(this.dynamicSort(field, order));
   }
 
   // Sorts objects by their value  passed
-  dynamicSort(property: string) {
-    let sortOrder = -1;
+  dynamicSort(property: string, order: number) {
+    let sortOrder = order;
     if (property[0] === '-') {
       sortOrder = -1;
       property = property.substr(1);

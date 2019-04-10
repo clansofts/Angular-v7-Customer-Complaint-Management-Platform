@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { LocalStoreService } from './local-store.service';
 
 export interface User {
-  MemberId: number
-  Role: string
-  Team: string
-  access_token: string
-  expires_in: number
-  token_type: string
+  MemberId: number;
+  Role: string;
+  Team: string;
+  access_token: string;
+  expires_in: number;
+  token_type: string;
 }
 
 @Injectable({
