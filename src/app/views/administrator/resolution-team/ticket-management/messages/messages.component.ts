@@ -7,11 +7,12 @@ import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.service';
-import { distinctUntilChanged, catchError, concatAll, filter, delay } from 'rxjs/operators';
+import { distinctUntilChanged, catchError, concatAll, filter, delay, debounceTime } from 'rxjs/operators';
 import { Validators, FormBuilder, FormControl, NgForm } from '@angular/forms';
 import { Emoji } from './Emoji';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -66,15 +67,19 @@ export class MessagesRTComponent implements OnInit {
     this.createAssignmentForm();
 
     // Fetch assigned issued
-    this.assignedService.initAssignments();
+    await this.assignedService.initAssignments();
 
     // store all issues in assignedIssues$ variable
-    this.fetchIssues();
+    await this.fetchIssues();
 
     // get the resolution team members
     this.fetchTeamMembers();
 
+    // Set selected issue to null
     this.selected = null;
+
+    // Watch for search
+    this.handleSearchFilter();
   }
 
   // get issues from observable
@@ -325,8 +330,50 @@ export class MessagesRTComponent implements OnInit {
       });
   }
 
-  public onSelect(item: string) {
-    console.log('tag selected: value is ' + item);
+  // Filter for the term, Currently is case sensitive
+  handleSearchFilter() {
+    this.utilityService.searchTerms.pipe(
+      debounceTime(500),
+      distinctUntilChanged())
+      .subscribe((term: string) => {
+        // Call external function
+        this.sortList(term, this.assignedIssues$);
+      }, err => {
+        // Call external function
+        this.fetchIssues();
+        console.error(err);
+      });
+  }
+
+  // Create filtered list
+  sortList(term: string, arr: any) {
+    const state = arr;
+    const searchresults: any = [];
+    try {
+      if (!term) {
+        return;
+      }
+      const source = from(arr);
+      source.pipe(filter((i: any) => {
+        return (i.customer.toLowerCase().indexOf(term.toLowerCase()) > -1 ||
+          i.customer.toLowerCase().includes(term));
+      }))
+        .subscribe((response: any) => {
+          if (response) {
+            searchresults.push(response);
+            // Global variable
+            this.assignedIssues$ = searchresults;
+          }
+        }, err => {
+          console.error(err);
+          // Global variable
+          this.assignedIssues$ = state;
+        });
+    } catch (error) {
+      console.error(error);
+      // Global variable
+      this.assignedIssues$ = state;
+    }
   }
 
   test() {

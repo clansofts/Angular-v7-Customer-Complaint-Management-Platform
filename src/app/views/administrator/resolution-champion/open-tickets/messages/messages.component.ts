@@ -71,7 +71,11 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       }).catch(function () {
         console.log('An error occured while fetching resources');
       });
+
+    // Set selected issue to null
     this.selected = null;
+
+    // Watch for search
     this.handleSearchFilter();
   }
 
@@ -384,31 +388,43 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       debounceTime(500),
       distinctUntilChanged())
       .subscribe((term: string) => {
-        this.sortList(term);
+        // Call external function
+        this.sortList(term, this.Issues$);
       }, err => {
+        // Call external function
         this.allIssues();
         console.error(err);
       });
   }
 
   // Create filtered list
-  sortList(term: string) {
+  sortList(term: string, arr: any) {
+    const state = arr;
     const searchresults: any = [];
     try {
       if (!term) {
-        this.allIssues();
         return;
       }
-      const source = from(this.Issues$);
+      const source = from(arr);
       source.pipe(filter((i: any) => {
         return (i.firstName.toLowerCase().indexOf(term.toLowerCase()) > -1 ||
           i.firstName.toLowerCase().includes(term));
-      })).subscribe(response => {
-        searchresults.push(response);
-        this.Issues$ = searchresults;
-      });
+      }))
+        .subscribe((response: any) => {
+          if (response) {
+            searchresults.push(response);
+            // Global variable
+            this.Issues$ = searchresults;
+          }
+        }, err => {
+          console.error(err);
+          // Global variable
+          this.Issues$ = state;
+        });
     } catch (error) {
       console.error(error);
+      // Global variable
+      this.Issues$ = state;
     }
   }
 }
