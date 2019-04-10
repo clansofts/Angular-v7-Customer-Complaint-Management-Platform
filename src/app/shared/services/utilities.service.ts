@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { Subject } from 'rxjs';
 
 const httpOptions = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
@@ -75,6 +76,9 @@ export interface ErrorTypes {
 })
 export class UtilitiesService {
   private baseURL = environment.API.BaseURL;
+
+  // Search
+  public searchTerms = new Subject<string>();
 
   // Shared Card Variants
   card_Variants$: Observable<ResourceModel[]>;

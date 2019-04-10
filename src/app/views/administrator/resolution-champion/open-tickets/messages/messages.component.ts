@@ -4,13 +4,14 @@ import { ComposeDialogComponent } from '../compose-dialog/compose-dialog.compone
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { IssuesResolutionService, Roles, Assign } from '../../issues.service';
 import { ComplaintsModel } from 'src/app/views/customer/customer-complaints/complaints.service';
-import { distinctUntilChanged, filter, concatAll, timeout, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, concatAll, debounceTime } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
 import { AssignedService, AssignedIssuesModel } from '../../../resolution-team/assigned.service';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
+import { from } from 'rxjs/internal/observable/from';
 
 @Component({
   selector: 'app-messages',
@@ -63,7 +64,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       // store all issues in Issues$ variable
       this.allIssues(),
       this.fetchRoles(),
-      this.issuesService.resolved
+      this.issuesService.resolved,
     ])
       .then(function () {
         console.log('application loaded successfully');
@@ -71,6 +72,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
         console.log('An error occured while fetching resources');
       });
     this.selected = null;
+    this.handleSearchFilter();
   }
 
   // Component lifecycle management
@@ -373,6 +375,40 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       }
     } catch (err) {
       throw err;
+    }
+  }
+
+  // Filter for the term, Currently is case sensitive
+  handleSearchFilter() {
+    this.utilityService.searchTerms.pipe(
+      debounceTime(500),
+      distinctUntilChanged())
+      .subscribe((term: string) => {
+        this.sortList(term);
+      }, err => {
+        this.allIssues();
+        console.error(err);
+      });
+  }
+
+  // Create filtered list
+  sortList(term: string) {
+    const searchresults: any = [];
+    try {
+      if (!term) {
+        this.allIssues();
+        return;
+      }
+      const source = from(this.Issues$);
+      source.pipe(filter((i: any) => {
+        return (i.firstName.toLowerCase().indexOf(term.toLowerCase()) > -1 ||
+          i.firstName.toLowerCase().includes(term));
+      })).subscribe(response => {
+        searchresults.push(response);
+        this.Issues$ = searchresults;
+      });
+    } catch (error) {
+      console.error(error);
     }
   }
 }

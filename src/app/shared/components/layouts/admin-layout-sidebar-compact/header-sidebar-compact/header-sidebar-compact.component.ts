@@ -4,6 +4,7 @@ import { SearchService } from 'src/app/shared/services/search.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
 import { UserService } from 'src/app/shared/services/user-service.service';
+import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 
 @Component({
   selector: 'app-header-sidebar-compact',
@@ -17,7 +18,8 @@ export class HeaderSidebarCompactComponent implements OnInit {
     public searchService: SearchService,
     private auth: AuthService,
     private localStorage: LocalStoreService,
-    private userService: UserService
+    private userService: UserService,
+    private utilityService: UtilitiesService
   ) {
     this.notifications = [
       {
@@ -99,5 +101,10 @@ export class HeaderSidebarCompactComponent implements OnInit {
 
   signout() {
     this.auth.signout();
+  }
+
+  // Push a search term into the observable stream.
+  search(term: string): void {
+    this.utilityService.searchTerms.next(term);
   }
 }
