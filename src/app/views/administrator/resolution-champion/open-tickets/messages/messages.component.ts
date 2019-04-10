@@ -82,13 +82,32 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     }
   }
 
+  // Functional function to get selectedIssue from the assigned issues table
+  fetchLog(selectedissue: any, _variable: any) {
+    if (selectedissue && selectedissue.status.stId === 5) {
+      try {
+        const id: number = selectedissue.issueid;
+        return this.issuesService.fetchLog(id)
+          .subscribe((response: any) => {
+            return this.ActionsTaken = response;
+          }, err => {
+            console.log(err);
+          }, () => {
+            console.log('done');
+          });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+
   select(issue: any) {
     try {
+      this.ActionsTaken = null;
       this.selected = issue;
       this.issuesAssignmentform.controls.issueId.setValue(issue.issueid);
       // Get comment from selectedIssue by checking the assigned table if comment exist
       this.AssignedIssuesTable(this.selected.issueid);
-      console.log(this.selected);
       this.fetchLog(this.selected, this.ActionsTaken);
     } catch (err) {
       console.error(err);
@@ -109,25 +128,6 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       }, err => {
         console.log(err);
       });
-  }
-
-  // Functional function to get selectedIssue from the assigned issues table
-  fetchLog(selectedissue: any, _variable: any) {
-    try {
-      if (selectedissue && selectedissue.status.stId === 5) {
-        const id: number = selectedissue.issueid;
-        this.issuesService.fetchLog(id)
-          .subscribe(response => {
-            this.ActionsTaken = response;
-            console.log(this.ActionsTaken);
-          }, err => {
-            console.log(err);
-          });
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    console.log(this.ActionsTaken);
   }
 
   // Set Comment
@@ -191,6 +191,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     await this.issuesService.issues$
       .pipe(distinctUntilChanged())
       .subscribe((result: ComplaintsModel) => {
+        console.log(result);
         if (result) {
           this.Issues$ = result;
           // Dynamic sorting
@@ -375,5 +376,4 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       throw err;
     }
   }
-
 }

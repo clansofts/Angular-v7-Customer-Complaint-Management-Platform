@@ -166,7 +166,7 @@ export class MessagesRTComponent implements OnInit {
         self.filterBy(value);
       });
       // Default
-      this.filterByAssigned(3);
+      this.filterByAssigned(8);
       this.filterBy(2);
     } catch (err) {
 
@@ -298,19 +298,21 @@ export class MessagesRTComponent implements OnInit {
 
   // Mark an issue as resolved
   isResolved() {
-    const i = this.selected
-    debugger
+    this.loading = true;
+    const i = this.selected;
     this.assignedService.resolved(i, this.actionsModel)
       .toPromise()
       .then(res => {
         if (res) {
+          this.loading = false;
           this.toastr.info(res, 'Info!', { closeButton: true });
           this.modalService.dismissAll();
-          this.ngOnInit();
+          this.actionsModel = {};
         }
       })
       .catch(error => {
         this.toastr.error(error, 'Error!', { closeButton: true });
+        this.loading = false;
       });
   }
 

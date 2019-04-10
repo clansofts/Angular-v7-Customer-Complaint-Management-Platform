@@ -17,9 +17,9 @@
               </a>
 
               <div class="d-flex" *ngIf="selected">
-                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply"></i> Reply</a>
+                <!-- <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply"></i> Reply</a>
                 <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Forward</a>
-                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Delete</a>
+                <a href="" class="link-icon mr-3"><i class="icon-regular i-Mail-Reply-All"></i> Delete</a> -->
               </div>
             </div>
             <!-- EMAIL DETAILS -->
@@ -78,7 +78,7 @@
       <div class="pt-3 pr-3 pb-3">
         <i class="sidebar-close i-Close" appSidebarToggler="inbox-main-sidebar"></i>
         <!-- <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button> -->
-        <p class="text-muted mb-2" (click)="test()">Browse</p>
+        <p class="text-muted mb-2">Browse</p>
         <ul class="inbox-main-nav">
           <li (click)="myAssignedIssues()"><a [ngClass]="{'active': Active == 3}"><i
                 class="icon-regular i-Checked-User">

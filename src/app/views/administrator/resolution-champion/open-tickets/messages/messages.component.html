@@ -68,72 +68,6 @@
               <h4 class="mb-3">{{ selected?.subject }}</h4>
               <div class="card mb-4">
                 <ngb-tabset class="nav-center nav-center-custom">
-                 
-                  <ngb-tab title="Comments">
-                    <ng-template ngbTabContent>
-                      <div
-                        class="text-box-inbox"
-                        *ngIf="comment"
-                        [innerHTML]="comment"
-                      ></div>
-                    </ng-template>
-                  </ngb-tab>
-                  <ngb-tab title="Actions Log">
-                    <ng-template ngbTabContent>
-                      <div class="" *ngIf="ActionsTaken">
-                        <div class="mb-0">
-                          <div class="">
-                            <div class=""></div>
-                            <div class="form-group mb-3">
-                              <label>Resolver</label>
-                              <input
-                                readonly
-                                type="text"
-                                class="form-control"
-                                placeholder="Your Name"
-                                value="{{ ActionsTaken?.rtName }}"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                              <label>Issue Description</label>
-                              <textarea
-                                readonly
-                                class="form-control"
-                                aria-label="With textarea"
-                                placeholder="Please Describe the issues experienced by the complainant"
-                                value="{{ ActionsTaken?.issueDescription }}"
-                              >
-                              </textarea>
-                            </div>
-
-                            <div class="form-group mb-3">
-                              <label>Root Cause</label>
-                              <input
-                                type="text"
-                                readonly
-                                class="form-control"
-                                placeholder="Root cause of the problem"
-                                aria-label=""
-                                aria-describedby="basic-addon2"
-                                value="{{ ActionsTaken?.causeOfIssue }}"
-                              />
-                            </div>
-
-                            <div class="form-group">
-                              <label>Actions Taken</label>
-                              <textarea
-                                readonly
-                                class="form-control"
-                                aria-label="With textarea"
-                                value="{{ ActionsTaken?.actionTaken }}"
-                              >
-                              </textarea>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </ngb-tab>
                   <ngb-tab title="Customer Complaint">
                     <ng-template ngbTabContent>
                       <div class="card-body card-body-custom">
@@ -764,6 +698,72 @@
                       </div>
                     </ng-template>
                   </ngb-tab>
+                  <ngb-tab title="Comments" *ngIf="selected?.status?.stId !== 1">
+                    <ng-template ngbTabContent>
+                      <div
+                        class="text-box-inbox"
+                        *ngIf="comment"
+                        [innerHTML]="comment"
+                      ></div>
+                    </ng-template>
+                  </ngb-tab>
+                  <ngb-tab title="Actions Taken" *ngIf="selected?.status?.stId == 5">
+                    <ng-template ngbTabContent>
+                      <div class="" *ngIf="ActionsTaken">
+                        <div class="mb-0">
+                          <div class="">
+                            <div class=""></div>
+                            <div class="form-group mb-3">
+                              <label>Resolver</label>
+                              <input
+                                readonly
+                                type="text"
+                                class="form-control"
+                                placeholder="Your Name"
+                                value="{{ ActionsTaken?.rtName }}"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                              <label>Issue Description</label>
+                              <textarea
+                                readonly
+                                class="form-control"
+                                aria-label="With textarea"
+                                placeholder="Please Describe the issues experienced by the complainant"
+                                value="{{ ActionsTaken?.issueDescription }}"
+                              >
+                              </textarea>
+                            </div>
+
+                            <div class="form-group mb-3">
+                              <label>Root Cause</label>
+                              <input
+                                type="text"
+                                readonly
+                                class="form-control"
+                                placeholder="Root cause of the problem"
+                                aria-label=""
+                                aria-describedby="basic-addon2"
+                                value="{{ ActionsTaken?.causeOfIssue }}"
+                              />
+                            </div>
+
+                            <div class="form-group">
+                              <label>Actions Taken</label>
+                              <textarea
+                                readonly
+                                class="form-control"
+                                aria-label="With textarea"
+                                value="{{ ActionsTaken?.actionTaken }}"
+                              >
+                              </textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngb-tab>
+                  
                 </ngb-tabset>
               </div>
             </div>

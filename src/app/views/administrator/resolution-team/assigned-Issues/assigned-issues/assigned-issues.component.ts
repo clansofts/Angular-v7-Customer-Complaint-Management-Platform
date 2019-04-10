@@ -34,7 +34,7 @@ export class AssignedIssuesComponent extends MessagesRTComponent implements OnIn
     public utilityService: UtilitiesService,
     public fb: FormBuilder,
     public localStorageService: LocalStoreService,
-    private UserService: UserService
+    private userService: UserService
 
   ) {
     super(admin, modalService, toastr, assignedService,
@@ -52,7 +52,7 @@ export class AssignedIssuesComponent extends MessagesRTComponent implements OnIn
       this.myAssignedIssues()
     ]).catch((error) => {
       console.error(error);
-    })
+    });
   }
 
   ngAfterContentInit() {
@@ -91,7 +91,7 @@ export class AssignedIssuesComponent extends MessagesRTComponent implements OnIn
   // Get all issues assigned to a user
   async myAssignedIssues(): Promise<void> {
     try {
-      let userId: number = this.UserService.currentUserID;
+      const userId: number = this.userService.currentUserID;
       if (userId) {
         await this.filterByAssignedToMe(userId);
         // Count number of items to display
@@ -101,10 +101,6 @@ export class AssignedIssuesComponent extends MessagesRTComponent implements OnIn
     } catch (err) {
       console.error(err);
     }
-  }
-
-  async test() {
-
   }
 
 }
