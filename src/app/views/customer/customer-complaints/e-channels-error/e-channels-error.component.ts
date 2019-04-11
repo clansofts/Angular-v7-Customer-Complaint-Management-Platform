@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import {
@@ -49,7 +49,7 @@ const ALERTS: Alert[] = [{
   templateUrl: './e-channels-error.component.html',
   styleUrls: ['./e-channels-error.component.scss']
 })
-export class EChannelsErrorComponent implements OnInit {
+export class EChannelsErrorComponent implements OnInit, OnDestroy {
   private feedbackId = 1; // feedback
   private categoryId = 1; // channel:1, service:2, staff: 3
   private channelId = 3; // E-channels
@@ -136,6 +136,10 @@ export class EChannelsErrorComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    // prevent memory leak
+  }
+
   // Alert controls
   closeAlert(alert: Alert) {
     this.alert = null;
@@ -162,7 +166,7 @@ export class EChannelsErrorComponent implements OnInit {
       .toPromise()
       .then((response: FeedBackModel) => {
         return response.id;
-      })
+      });
   }
 
   // Main mechnism for controlling the channel type toggle
@@ -307,7 +311,7 @@ export class EChannelsErrorComponent implements OnInit {
       this.errorSubmit = false;
       try {
         // Register category feedback id at the backend
-        const feedbackid = await this.fetch_feedbackID()
+        const feedbackid = await this.fetch_feedbackID();
         await this.eChannelsForm.controls.feedbackId.setValue(feedbackid);
         const payloadObject = new ComplaintsModel(form.value, this.utilities);
         await this.complaintsService.submitComplaint(payloadObject).toPromise()
@@ -317,7 +321,7 @@ export class EChannelsErrorComponent implements OnInit {
               this.ticketID = response.uid;
               modalState.next(true);
             }
-          })
+          });
       } catch (err) {
         this.toastr.error(err, 'Error!', { closeButton: true });
       }
@@ -334,10 +338,10 @@ export class EChannelsErrorComponent implements OnInit {
       const firstName = this.eChannelsForm.controls.firstName.value;
       const lastName = this.eChannelsForm.controls.lastName.value;
       const fullName = `${firstName} ${lastName}`;
-      return fullName
+      return fullName;
     } catch (err) {
-      console.log(err)
-    };
+      console.log(err);
+    }
   }
 
   // Accessor for form variables

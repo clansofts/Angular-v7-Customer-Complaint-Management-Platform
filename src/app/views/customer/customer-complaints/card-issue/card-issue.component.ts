@@ -51,9 +51,10 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   private categoryId = 1; // channel:1, service:2, staff: 3
   private channelId = 2; // Card issue
   private _card_Variants = 'cardvariants'; // Endpoint.
-  private complaintCategoryHolder: Array<ComplaintCategory>; // Holds the various complaint types/categories
+  public complaintCategoryHolder: Array<ComplaintCategory>; // Holds the various complaint types/categories
   public personalDetails: boolean; // Display complaints form as default.
 
+  // UI resources
   cardIssueForm: FormGroup;
   loading: boolean;
   card_Variants: Array<ResourceModel>;
@@ -100,7 +101,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // subscribtions?
+    // prevent memory leak
   }
 
   // Alert controls
@@ -117,7 +118,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
         return response.id;
       }).catch((err: any) => {
         console.log(err);
-      })
+      });
   }
 
   // Fetch card variants

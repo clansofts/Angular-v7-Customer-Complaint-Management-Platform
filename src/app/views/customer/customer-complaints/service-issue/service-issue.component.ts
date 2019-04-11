@@ -122,7 +122,7 @@ export class ServiceIssueComponent implements OnInit {
         return response.id;
       }).catch((err: any) => {
         console.log(err);
-      })
+      });
   }
 
   // Used to toggle between views
@@ -234,7 +234,7 @@ export class ServiceIssueComponent implements OnInit {
       this.loading = true;
       try {
         // Register category feedback id at the backend
-        const feedbackid = await this.fetch_feedbackID()
+        const feedbackid = await this.fetch_feedbackID();
         await this.serviceComplaintForm.controls.feedbackId.setValue(feedbackid);
 
         // Handle form submition
@@ -244,7 +244,7 @@ export class ServiceIssueComponent implements OnInit {
             this.loading = false;
             this.ticketID = response.uid;
             modalState.next(true);
-          })
+          });
       } catch (err) {
         this.toastr.error(err, 'Error!', { closeButton: true });
       }
@@ -263,7 +263,7 @@ export class ServiceIssueComponent implements OnInit {
       const fullName = `${firstName} ${lastName}`;
       return fullName;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 

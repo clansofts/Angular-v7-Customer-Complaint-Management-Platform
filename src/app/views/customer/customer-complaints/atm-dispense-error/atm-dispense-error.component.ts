@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { map, filter, distinctUntilChanged, take } from 'rxjs/operators';
+import { map, filter, distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
 import {
   UtilitiesService, FeedBackModel, ResourceModel, ATMModel, BankModel,
   ComplaintCategory, ErrorTypes
 } from 'src/app/shared/services/utilities.service';
 import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { Subject, Observable, timer, Subscription } from 'rxjs';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { DashboadDefaultComponent } from '../dashboad-default.component';
 
@@ -72,6 +72,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   // Alert and ticket id variables
   ticketID: any;
   alert: Alert;
+
   ComplaintTypes: ErrorTypes[];
   complaintCategoryHolder: ComplaintCategory[];
   errorSubmit: boolean;
@@ -111,7 +112,7 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // subscribtions?
+    // prevent memory leak
   }
 
   // Alert controls
@@ -259,16 +260,19 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
 
   // Open modal to show ticket
   open(content: string): void {
-    modalState.pipe(filter(val => val === true), distinctUntilChanged(), take(1)).
-      subscribe(async state => {
-        if (state === true) {
-          await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });
-          setTimeout(() => {
-            this.successModal(content);
-          }, 2500);
-        }
-        return;
-      });
+    const modalState$ = modalState.pipe(
+      filter(val => val === true),
+      distinctUntilChanged(),
+      take(1));
+    modalState$.subscribe(async state => {
+      if (state === true) {
+        await this.toastr.success('Generating ticket', 'Please wait!', { timeOut: 2000, closeButton: true, progressBar: true });
+        setTimeout(() => {
+          this.successModal(content);
+        }, 2500);
+      }
+      return;
+    });
   }
 
   successModal(content: string): void {
@@ -297,15 +301,18 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
           })
           .catch((err) => {
             console.log(err);
+            this.loading = false;
           });
       } catch (err) {
         console.log(err);
+        this.loading = false;
       }
       return;
     }
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
     this.errorSubmit = true;
+    this.loading = false;
   }
 
   // Accessor for form variables
@@ -336,7 +343,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
   errorDialog(data: string): void {
     Promise.resolve(this.toastr.error(data, 'Error', { closeButton: true }))
       .then(() => setTimeout(() => {
-        this.loading = false;
       }, 1000))
       .catch((err: any) => {
         console.log(err);
