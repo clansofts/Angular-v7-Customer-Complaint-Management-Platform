@@ -47,25 +47,20 @@ export class IssuesTrackingComponent implements OnInit {
       this.loading = true;
       this.errorSubmit = false;
       const body = { email: form.value.emailAddress, uid: form.value.uid };
-      try {
-        await this.issuesService.trackIssue(body).toPromise()
-          .then((response: CustomerIssuesModel) => {
-            if (response[0].status) {
-              this.complaints$ = response;
-              form.reset();
-              return;
-            }
-          })
-          .catch((err) => {
-            this.toastr.error(`${err}`, 'Error!', { closeButton: true });
+      await this.issuesService.trackIssue(body).toPromise()
+        .then((response: CustomerIssuesModel) => {
+          if (response[0].status) {
+            this.complaints$ = response;
+            form.reset();
             this.loading = false;
-          });
-        this.loading = false;
-        return;
-      } catch (err) {
-        this.toastr.error(`${err}`, 'Error!', { closeButton: true });
-        this.loading = false;
-      }
+            return;
+          }
+        })
+        .catch((err) => {
+          this.toastr.error(`${err}`, 'Error!', { closeButton: true });
+          this.loading = false;
+        });
+      return;
     }
     this.toastr.warning(`Form is invalid`, 'Warning!', { closeButton: true });
     this.errorSubmit = true;

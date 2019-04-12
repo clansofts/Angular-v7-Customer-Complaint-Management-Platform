@@ -238,7 +238,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
             this.loading = false;
           });
       } catch (err) {
-        this.toastr.error(err, 'Error!', { closeButton: true });
+        this.loading = false;
       }
       return;
     }

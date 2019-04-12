@@ -101,7 +101,7 @@ export class NavigationService {
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Business-Mens', name: 'Team Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
                 /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },*/
-                { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' }
+                /*  { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' } */
             ]
         },
         {

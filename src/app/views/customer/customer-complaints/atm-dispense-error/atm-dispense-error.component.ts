@@ -307,7 +307,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
             this.loading = false;
           });
       } catch (err) {
-        console.log(err);
         this.loading = false;
       }
       return;
@@ -315,7 +314,6 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
     this.toastr.error('Form is invalid', 'Error!', { closeButton: true });
     this.alert = ALERTS[2];
     this.errorSubmit = true;
-    this.loading = false;
   }
 
   // Accessor for form variables

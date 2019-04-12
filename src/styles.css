@@ -87,3 +87,6 @@
     background-color: #00aeef !important;
     color: white !important;
 }
+.card:focus:active {
+    background-color: #00aeef !important;
+}

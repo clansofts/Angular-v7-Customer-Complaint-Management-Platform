@@ -89,7 +89,7 @@ export class AssignedService {
       };
       return this.http.post<any>(Path, payload, httpOptions);
     } catch (err) {
-      throw err
+      throw err;
     }
   }
 
@@ -121,7 +121,7 @@ export class AssignedService {
       };
       return this.http.post<any>(Path, payload, httpOptions);
     } catch (err) {
-      throw err
+      throw err;
     }
   }
 
@@ -134,7 +134,7 @@ export class AssignedService {
       };
       return this.http.post<any>(Path, payload, httpOptions);
     } catch (err) {
-      throw err
+      throw err;
     }
   }
 }

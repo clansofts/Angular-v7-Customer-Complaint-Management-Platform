@@ -56,6 +56,8 @@ export class AssignedIssuesComponent extends MessagesRTComponent implements OnIn
   }
 
   ngAfterContentInit() {
+    // Get all issues assigned to a user
+    this.myAssignedIssues();
   }
 
   select(i) {
@@ -75,7 +77,7 @@ export class AssignedIssuesComponent extends MessagesRTComponent implements OnIn
           return (issue.assignedTo === id);
         }),
       );
-      Assigned.pipe()
+      Assigned.pipe( distinctUntilChanged())
         .subscribe(val => {
           values.push(val);
         }, err => {
