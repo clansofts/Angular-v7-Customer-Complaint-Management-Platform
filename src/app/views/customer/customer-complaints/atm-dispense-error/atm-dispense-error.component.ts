@@ -300,7 +300,10 @@ export class AtmDispenseErrorComponent implements OnInit, OnDestroy {
             modalState.next(true);
           })
           .catch((err) => {
-            console.log(err);
+            this.alert = ALERTS[3] = {
+              type: 'warning',
+              message: err,
+            };
             this.loading = false;
           });
       } catch (err) {

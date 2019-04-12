@@ -246,7 +246,11 @@ export class ServiceIssueComponent implements OnInit {
             modalState.next(true);
           });
       } catch (err) {
-        this.toastr.error(err, 'Error!', { closeButton: true });
+        this.alert = ALERTS[3] = {
+          type: 'warning',
+          message: err,
+        };
+        this.loading = false;
       }
       return;
     }
