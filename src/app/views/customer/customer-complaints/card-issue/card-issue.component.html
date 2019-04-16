@@ -48,7 +48,7 @@
                                     && errorSubmit === true || cardIssueForm.controls.phone.status === 'INVALID' 
                                     && cardIssueForm.controls.phone.dirty}" class="form-control" id="phone"
                                     placeholder="Enter phone">
-                                    <small
+                                <small
                                     *ngIf="cardIssueForm.controls.phone.invalid  && cardIssueForm.controls.phone.touched"
                                     id="errorMessage" class="form-text text-danger mt-2">Invalid phone number</small>
                             </div>
@@ -135,6 +135,54 @@
                                 </select>
                             </div>
 
+
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="picker1">Single or Multiple Transactions:</label>
+                                <select formControlName="transCount" class="form-control">
+                                    <option *ngFor="let i of transCount" [ngValue]='i'>{{i?.name}}</option>
+                                </select>
+                            </div>
+
+                            <ng-container *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)"
+                                formGroupName="amount">
+
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="credit">Amount</label>
+                                    <input type="number" formControlName="amount1" class="form-control" id="credit"
+                                        placeholder="Transaction Amount">
+                                </div>
+
+                                <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                    <label for="credit">Amount 2</label>
+                                    <input type="number" formControlName="amount2" class="form-control" id="credit"
+                                        placeholder="Transaction Amount">
+                                </div>
+
+                                <div *ngIf="selectedTransCount == 2" class="col-md-6 form-group mb-3">
+                                    <label for="credit">Amount 3</label>
+                                    <input type="number" formControlName="amount3" class="form-control" id="credit"
+                                        placeholder="Transaction Amount">
+                                </div>
+
+                            </ng-container>
+
+                            <div class="col-md-6 form-group mb-3"
+                                *ngIf="(selectedTransCount == 1 || selectedTransCount == 2)">
+                                <label for="picker1">Currency Type</label>
+                                <select formControlName="currencyType" [ngClass]="{'error':cardIssueForm.controls.currencyType.status === 'INVALID' && errorSubmit === true 
+                                    || cardIssueForm.controls.currencyType.status === 'INVALID' 
+                                    && cardIssueForm.controls.currencyType.touched}" class="form-control">
+                                    <option [value]="" disabled selected>Select currency</option>
+                                    <option *ngFor="let currency of currencyType" [value]='currency?.id'>
+                                        {{currency?.name}}</option>
+                                </select>
+                                <small id=""
+                                    *ngIf="cardIssueForm.controls.currencyType.status === 'INVALID' && errorSubmit === true"
+                                    class="form-text text-muted">Please select a currency type
+                                    Bank.</small>
+                            </div>
+
                             <div class="col-md-12 form-group mb-3">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -163,9 +211,10 @@
                             </div>
 
                             <div class="col-md-12">
-                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
                                 <button type="button" Class="btn btn-secondary btn-rounded m-1"
                                     (click)="toggleNavigation = true">Previous</button>
+                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+
                             </div>
                         </ng-template>
                         <!-- Token Modal -->

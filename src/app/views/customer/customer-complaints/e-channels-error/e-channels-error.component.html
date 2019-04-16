@@ -46,7 +46,7 @@
                                     [ngClass]="{'error':eChannelsForm.controls.phone.status === 'INVALID' && errorSubmit === true || 
                                 eChannelsForm.controls.phone.status === 'INVALID' && eChannelsForm.controls.phone.dirty}" class="form-control"
                                     id="phone" placeholder="Enter phone">
-                                    <small
+                                <small
                                     *ngIf="eChannelsForm.controls.phone.invalid  && eChannelsForm.controls.phone.touched"
                                     id="errorMessage" class="form-text text-danger mt-2">Invalid phone number</small>
                             </div>
@@ -1213,9 +1213,10 @@
                             </ng-container>
 
                             <div class="col-md-12">
-                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
                                 <button type="button" Class="btn btn-secondary btn-rounded m-1"
                                     (click)="toggleNavigation = true">Previous</button>
+                                <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+
                             </div>
                         </ng-template>
                         <!-- Token Modal -->

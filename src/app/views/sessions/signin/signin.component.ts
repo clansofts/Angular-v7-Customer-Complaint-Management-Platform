@@ -99,7 +99,7 @@ export class SigninComponent implements OnInit {
                         return;
                     }
                     // Handle form error
-                    this.loading = false
+                    this.loading = false;
                     throw new Error('Unable to log in this user, Please confirm you have a valid role');
                 })
                 .catch(async (error) => {

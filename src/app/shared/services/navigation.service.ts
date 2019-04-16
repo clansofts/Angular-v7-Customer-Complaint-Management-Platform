@@ -57,7 +57,7 @@ export class NavigationService {
             ]
         }
     ];
-
+    // RC
     admin1: IMenuItem[] = [
         {
             type: 'dropDown',
@@ -69,11 +69,10 @@ export class NavigationService {
         },
         {
             type: 'dropDown',
-            icon: 'i-Consulting',
+            icon: 'i-Support',
             sub: [
                 /* { icon: 'i-Statistic', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' }, */
                 { icon: 'i-Movie-Ticket', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
-                /* { icon: 'i-Mail-Add-', name: 'Messages', state: '/admin-rc/messages', type: 'link' } */
             ]
         },
         /* {
@@ -84,7 +83,7 @@ export class NavigationService {
             ]
         } */
     ];
-
+    // RT
     admin2: IMenuItem[] = [
         {
             type: 'dropDown',
@@ -101,7 +100,7 @@ export class NavigationService {
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Business-Mens', name: 'Team Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
                 /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },*/
-                /*  { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' } */
+                { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' }
             ]
         },
         {
@@ -112,13 +111,13 @@ export class NavigationService {
                 /*  { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' }, */
             ]
         },
-        /* {
+        {
             type: 'dropDown',
             icon: 'i-Gear-2',
             sub: [
                 { icon: 'i-Male', name: 'Profile Setting', state: '/admin-rt/user-profile', type: 'link' },
             ]
-        } */
+        }
     ];
 
     admin3: IMenuItem[] = [

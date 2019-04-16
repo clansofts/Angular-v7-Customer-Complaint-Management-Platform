@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminComponent } from '../../../admin.component';
-import { DataLayerService } from 'src/app/shared/services/data-layer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/internal/Observable';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AssignedService, AssignedIssuesModel, Teams } from '../../assigned.service';
-import { distinctUntilChanged, catchError, concatAll, filter, delay, debounceTime } from 'rxjs/operators';
-import { Validators, FormBuilder, FormControl, NgForm } from '@angular/forms';
+import { distinctUntilChanged, concatAll, filter, delay, debounceTime, takeUntil } from 'rxjs/operators';
+import { Validators, FormBuilder } from '@angular/forms';
 import { Emoji } from './Emoji';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 import { LocalStoreService } from 'src/app/shared/services/local-store.service';
-import { from } from 'rxjs';
+import { from, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -20,7 +19,8 @@ import { from } from 'rxjs';
   styleUrls: ['./messages.component.scss'],
   animations: [SharedAnimations]
 })
-export class MessagesRTComponent implements OnInit {
+export class MessagesRTComponent implements OnInit, OnDestroy {
+
   mails$: Observable<any>;
   selected: any = {};
   assignedIssues$: any;
@@ -31,6 +31,9 @@ export class MessagesRTComponent implements OnInit {
   Assignmentform: any;
   teams: Teams;
   Count: any = {};
+
+  //
+  private unsubscription$ = new Subject<void>();
 
   // Model for Actions taken
   actionsModel: any = {};
@@ -82,10 +85,16 @@ export class MessagesRTComponent implements OnInit {
     this.handleSearchFilter();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscription$.next();
+    this.unsubscription$.complete();
+  }
+
   // get issues from observable
   async fetchIssues() {
     await this.assignedService.assignments$
-      .pipe(distinctUntilChanged())
+      .pipe(distinctUntilChanged(),
+        takeUntil(this.unsubscription$))
       .subscribe((res?: AssignedIssuesModel) => {
         if (res) {
           this.assignedIssues$ = res;
@@ -147,7 +156,7 @@ export class MessagesRTComponent implements OnInit {
             return (issue.status.stId === code);
           }),
         );
-      await inProgress.pipe()
+      await inProgress.pipe(takeUntil(this.unsubscription$))
         .subscribe(val => {
           values.push(val);
         }, err => {
@@ -203,7 +212,7 @@ export class MessagesRTComponent implements OnInit {
             return (issue.assignedTo === code.MemberId);
           }),
         );
-      await inProgress.pipe()
+      await inProgress.pipe(takeUntil(this.unsubscription$))
         .subscribe(val => {
           values.push(val);
         }, err => {
@@ -244,7 +253,6 @@ export class MessagesRTComponent implements OnInit {
     this.selected = i.issue;
     this.selected.id = i.id;
     this.comment = i.comment;
-    console.log(this.selected);
     this.Assignmentform.setValue({
       comment: '',
       assignId: i.id,
@@ -313,6 +321,7 @@ export class MessagesRTComponent implements OnInit {
           this.toastr.info(res, 'Info!', { closeButton: true });
           this.modalService.dismissAll();
           this.actionsModel = {};
+          this.ngOnInit();
         }
       })
       .catch(error => {
@@ -334,7 +343,8 @@ export class MessagesRTComponent implements OnInit {
   handleSearchFilter() {
     this.utilityService.searchTerms.pipe(
       debounceTime(500),
-      distinctUntilChanged())
+      distinctUntilChanged(),
+      takeUntil(this.unsubscription$))
       .subscribe((term: string) => {
         // Call external function
         this.sortList(term, this.assignedIssues$);
@@ -357,7 +367,7 @@ export class MessagesRTComponent implements OnInit {
       source.pipe(filter((i: any) => {
         return (i.customer.toLowerCase().indexOf(term.toLowerCase()) > -1 ||
           i.customer.toLowerCase().includes(term));
-      }))
+      }), takeUntil(this.unsubscription$))
         .subscribe((response: any) => {
           if (response) {
             searchresults.push(response);
@@ -376,8 +386,8 @@ export class MessagesRTComponent implements OnInit {
     }
   }
 
-  test() {
-    console.log(this.assignedIssues$);
+  test(value) {
+    console.log(value);
   }
 
 }

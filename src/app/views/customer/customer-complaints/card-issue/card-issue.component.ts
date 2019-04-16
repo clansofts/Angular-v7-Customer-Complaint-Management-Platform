@@ -6,7 +6,7 @@ import { ComplaintsService, ComplaintsModel } from '../complaints.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs/internal/Subject';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
-import { filter, distinctUntilChanged, take } from 'rxjs/operators';
+import { filter, distinctUntilChanged, take, map } from 'rxjs/operators';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { DashboadDefaultComponent } from '../dashboad-default.component';
 
@@ -51,8 +51,13 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   private categoryId = 1; // channel:1, service:2, staff: 3
   private channelId = 2; // Card issue
   private _card_Variants = 'cardvariants'; // Endpoint.
+  private _currencyType = 'currencyTypes';  // Endpoint
   public complaintCategoryHolder: Array<ComplaintCategory>; // Holds the various complaint types/categories
   public personalDetails: boolean; // Display complaints form as default.
+
+  // Form objects
+  transCount: Array<ResourceModel> = [{ name: 'Single', id: 1 }, { name: 'Multiple', id: 2 }];
+  currencyType: Array<ResourceModel>;
 
   // UI resources
   cardIssueForm: FormGroup;
@@ -89,6 +94,7 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
       this.personalDetails = true;
     return Promise.all([
       this.fetchCardVariants = this._card_Variants,
+      this.fetchCurrencyType = this._currencyType,
       this.complaintCategory()
     ]).then(function () {
       console.log('application loaded successfully');
@@ -122,6 +128,20 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   // Fetch card variants
+  set fetchCurrencyType(path: string) {
+    try {
+      this.utilities.fetch(path)
+        .pipe(map((response: any) => {
+          this.currencyType = response;
+        }))
+        .toPromise();
+    } catch (err) {
+
+    }
+
+  }
+
+  // Fetch card variants
   set fetchCardVariants(path: string) {
     try {
       this.utilities.card_VariantsInit = path;
@@ -137,6 +157,11 @@ export class CardIssueComponent implements OnInit, AfterContentInit, OnDestroy {
   // Used to toggle between views
   set toggleNavigation(n: boolean) {
     this.personalDetails = n;
+  }
+
+  // Use to toggle single or multiple
+  get selectedTransCount() {
+    return this.cardIssueForm.controls.transCount.value.id;
   }
 
   // Reactive form control
