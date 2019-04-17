@@ -114,13 +114,13 @@ export class NavigationService {
                 /*  { icon: 'i-Remove-User', name: 'Remove Team Member', state: '/admin-rt/remove-user', type: 'link' }, */
             ]
         },
-        {
+        /* {
             type: 'dropDown',
             icon: 'i-Gear-2',
             sub: [
                 { icon: 'i-Male', name: 'Profile Setting', state: '/admin-rt/user-profile', type: 'link' },
             ]
-        }
+        } */
     ];
 
     admin3: IMenuItem[] = [
