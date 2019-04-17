@@ -50,7 +50,8 @@ export class AssignedService {
     try {
       await Promise.resolve(this.issues)
         .then(() => {
-          return interval(300000);
+          console.log('ran');
+          return interval(1000);
         });
     } catch (err) {
       throw err;

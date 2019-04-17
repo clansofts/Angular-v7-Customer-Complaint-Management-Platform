@@ -115,9 +115,11 @@ export class IssuesResolutionService {
   }
 
   // Mark issue as completed and Close an issue
-  closeIssue(id: number) {
+  closeIssue(id: number, rccomment: string) {
     const Path = this.baseURL + 'assigned/closeissue/' + id;
-    const payload: any = {};
+    const payload: any = {
+      rcCauseOfIssue: rccomment
+    };
     return this.http.post<any>(Path, payload, httpOptions);
   }
 

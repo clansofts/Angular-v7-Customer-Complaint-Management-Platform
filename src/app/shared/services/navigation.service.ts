@@ -90,7 +90,7 @@ export class NavigationService {
             icon: 'i-Male-21',
             sub: [
                 { icon: 'i-Support', name: 'Make Complaints', state: '/customer/complaints', type: 'link' },
-                { icon: 'i-File-Search', name: 'Track Issue', state: '/customer/issuestracking', type: 'link' },
+                { icon: 'i-File-Search', name: 'Track Complaint', state: '/customer/issuestracking', type: 'link' },
             ]
         },
         {
@@ -99,8 +99,10 @@ export class NavigationService {
             sub: [
                 /* { icon: 'i-Support', name: 'Team Dashboard', state: '/admin-rt/team-dashboard', type: 'link' }, */
                 { icon: 'i-Business-Mens', name: 'Team Issues Assigned', state: '/admin-rt/ticket-resolution', type: 'link' },
+                { icon: 'i-Posterous', name: 'Issues Table', state: '/admin-rt/issues_table', type: 'link' },
+                { icon: 'i-File-Search', name: 'Track Issue', state: '/admin-rt/issue_tracking_internal', type: 'link' },
                 /* { icon: 'i-Clock-3', name: 'Message', state: '/admin-rt/complaint-messages', type: 'link' },*/
-                { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' }
+                /* { icon: 'i-Male', name: 'My Assigned Issues', state: '/admin-rt/my-issues', type: 'link' } */
             ]
         },
         {

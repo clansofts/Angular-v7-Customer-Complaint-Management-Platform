@@ -15,6 +15,8 @@ import { MessageRTComponent } from './resolution-team/message/message.component'
 import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
 import { LaddaModule } from 'angular2-ladda';
+import { AssignedIssuesTableComponent } from './resolution-team/issues-table/filter-table.component';
+import { TicketTrackingInternalComponent } from './ticket-tracking-internal/ticket-tracking-internal';
 
 @NgModule({
   imports: [
@@ -31,12 +33,14 @@ import { LaddaModule } from 'angular2-ladda';
   ],
   declarations: [
     DashboardResolutionChampionComponent,
+    AssignedIssuesTableComponent,
     MessageComponent,
     AdminComponent,
     TeamDashboardComponent,
     MessageRTComponent,
     TeamCreationComponent,
     RemoveUserComponent,
+    TicketTrackingInternalComponent
   ]
 })
 export class AdminModule { }

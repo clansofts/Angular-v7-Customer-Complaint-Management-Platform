@@ -355,6 +355,8 @@
                               <label>Actions Taken</label>
                               <textarea readonly class="form-control" aria-label="With textarea"></textarea>
                             </div>
+                            <button type="button" Class="btn btn-outline-primary m-1" (click)="open(modalLong)">Mark
+                                as Resolved</button>
                           </div>
                         </div>
                       </div>
@@ -412,17 +414,41 @@
         <p class="text-muted mb-2" (click)="test()">Browse</p>
         <ul class="inbox-main-nav">
           <li (click)="filterBy(2)"><a [ngClass]="{'active': Active == 2}"><i class="icon-regular i-Over-Time"></i>
-              Pending ({{Count?.pending}})</a></li>
+              Pending
+              <ng-container *ngIf="Count?.pending">
+                ({{Count?.pending}})
+              </ng-container>
+            </a>
+          </li>
           <li (click)="filterBy(7)"><a [ngClass]="{'active': Active == 7}"><i class="icon-regular i-Right"></i>
               Re-Assigned
-              ({{Count?.reassigned}})</a></li>
+              <ng-container *ngIf="Count?.reassigned">
+                ({{Count?.reassigned}})
+              </ng-container>
+            </a>
+          </li>
           <li (click)="filterBy(4)"><a [ngClass]="{'active': Active == 4}"><i class="icon-regular i-Sand-watch-2">
-              </i> In Progress ({{Count?.progress}})</a></li>
+              </i> In Progress
+              <ng-container *ngIf="Count?.progress">
+                ({{Count?.progress}})
+              </ng-container>
+            </a>
+          </li>
           <li (click)="filterBy(3)"><a [ngClass]="{'active': Active == 3}"><i class="icon-regular i-Checked-User">
-              </i>Closed ({{Count?.completed}})</a></li>
-          <li (click)="filterByAssigned(8)"><a [ngClass]="{'active': Active == 8}"><i
-                class="icon-regular i-Checked-User">
-              </i>Assigned To You ({{Count?.myassigned}})</a></li>
+              </i>Closed
+              <ng-container *ngIf="Count?.completed">
+                ({{Count?.completed}})
+              </ng-container>
+            </a>
+          </li>
+          <li (click)="filterByAssigned(8)">
+            <a [ngClass]="{'active': Active == 8}"><i class="icon-regular i-Checked-User">
+              </i>Assigned To You
+              <ng-container *ngIf="Count?.myassigned">
+                ({{Count?.myassigned}})
+              </ng-container>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

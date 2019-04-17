@@ -47,6 +47,7 @@
             </div>
           </div>
         </div>
+
         <div appSidebar="inbox-secondary-sidebar" class="inbox-secondary-sidebar"
           [perfectScrollbar]="{suppressScrollX: true}">
           <i class="sidebar-close i-Close" appSidebarToggler="inbox-secondary-sidebar"></i>
@@ -73,19 +74,18 @@
       </div>
     </div>
 
-    <!-- MAIN SIDEBAR -->
+    <!-- MAIN INBOX SIDEBAR -->
     <div appSidebar="inbox-main-sidebar" class="inbox-main-sidebar">
       <div class="pt-3 pr-3 pb-3">
         <i class="sidebar-close i-Close" appSidebarToggler="inbox-main-sidebar"></i>
-        <!-- <button class="btn btn-rounded btn-primary btn-block mb-4" (click)="openComposeModal()">Compose</button> -->
         <p class="text-muted mb-2">Browse</p>
         <ul class="inbox-main-nav">
           <li (click)="myAssignedIssues()"><a [ngClass]="{'active': Active == 3}"><i
                 class="icon-regular i-Checked-User">
-              </i>Assigned To You ({{Count?.myassigned}})</a></li>
+              </i>Assigned To You ({{Count?.myassigned}})</a>
+          </li>
         </ul>
       </div>
     </div>
-
   </div>
 </div>

@@ -16,6 +16,7 @@ export interface AuthUserModel {
     Role: string;
     MemberId: number;
     Team: string;
+    FirstName: string;
 }
 
 // Local form alert interface

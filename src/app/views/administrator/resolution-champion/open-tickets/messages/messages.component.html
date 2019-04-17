@@ -281,35 +281,29 @@
                             </div>
 
                             <div class="col-md-12 form-group mb-3" *ngIf="selected?.complaintDescription">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text">Please describe the issue
-                                    encountered:</span>
-                                </div>
-                                <textarea disabled value="{{ selected?.complaintDescription }}" class="form-control"
-                                  aria-label="With textarea">
+                              <label>
+                                Please describe the issue
+                                encountered
+                              </label>
+                              <textarea disabled value="{{ selected?.complaintDescription }}" class="form-control"
+                                aria-label="With textarea">
                                 </textarea>
-                              </div>
                             </div>
                             <div class="col-md-12 form-group mb-3" *ngIf="selected?.suggestionBox">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text">What would you like us to do?</span>
-                                </div>
-                                <textarea disabled value="{{ selected?.suggestionBox }}" class="form-control"
-                                  aria-label="With textarea">
+                              <label>
+                                What would you like us to do?
+                              </label>
+                              <textarea disabled value="{{ selected?.suggestionBox }}" class="form-control"
+                                aria-label="With textarea">
                                 </textarea>
-                              </div>
                             </div>
 
                             <div class="col-md-12 form-group mb-3" *ngIf="selected?.complaintDescription">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text">Complaint Description</span>
-                                </div>
-                                <textarea disabled value="{{ selected?.complaintDescription }}" class="form-control"
-                                  aria-label="With textarea"></textarea>
-                              </div>
+                              <label>
+                                Complaint Description
+                              </label>
+                              <textarea disabled value="{{ selected?.complaintDescription }}" class="form-control"
+                                aria-label="With textarea"></textarea>
                             </div>
 
                             <div class="col-md-12" [ngSwitch]="selected?.status?.stId">
@@ -510,35 +504,48 @@
         <p class="text-muted mb-2">Browse</p>
         <ul class="inbox-main-nav">
           <li (click)="filterBy(1)">
-            <a [ngClass]="{ active: Active == 1 }"><i class="icon-regular i-Ticket"></i> New Tickets ({{
-                Count.open
-              }})</a>
+            <a [ngClass]="{ active: Active == 1 }"><i class="icon-regular i-Ticket"></i>
+              New Tickets
+              <ng-container *ngIf="Count.open">
+                ({{ Count.open }})
+              </ng-container>
+            </a>
           </li>
           <li (click)="filterBy(2)">
-            <a [ngClass]="{ active: Active == 2 }"><i class="icon-regular i-Right"></i> Assigned ({{
-                Count.assigned
-              }})</a>
+            <a [ngClass]="{ active: Active == 2 }"><i class="icon-regular i-Right"></i> Assigned
+              <ng-container *ngIf="Count.assigned">
+                ({{ Count.assigned }})
+              </ng-container>
+            </a>
           </li>
           <li (click)="filterBy(4)">
-            <a [ngClass]="{ active: Active == 4 }"><i class="icon-regular i-Sand-watch-2"></i> In Progress ({{
-                Count.progress
-              }})</a>
+            <a [ngClass]="{ active: Active == 4 }"><i class="icon-regular i-Sand-watch-2"></i> In Progress
+              <ng-container *ngIf="Count.progress">
+                ({{ Count.progress }})
+              </ng-container>
+            </a>
           </li>
           <li (click)="filterBy(5)">
-            <a [ngClass]="{ active: Active == 5 }"><i class="icon-regular i-Support"></i> RT Resolved ({{
-                Count.resolved
-              }})</a>
+            <a [ngClass]="{ active: Active == 5 }"><i class="icon-regular i-Support"></i> RT Resolved
+              <ng-container *ngIf="Count.resolved">
+                ({{ Count.resolved }})
+              </ng-container>
+            </a>
           </li>
           <li (click)="filterBy(6)">
-            <a [ngClass]="{ active: Active == 6 }"><i class="icon-regular i-Pointer"></i> RT Rejected ({{
-                Count.rejected
-              }})</a>
+            <a [ngClass]="{ active: Active == 6 }"><i class="icon-regular i-Pointer"></i> RT Rejected
+              <ng-container *ngIf="Count.rejected">
+                ({{ Count.rejected }})
+              </ng-container>
+            </a>
           </li>
           <li (click)="filterBy(3)">
             <a [ngClass]="{ active: Active == 3 }">
-              <i class="icon-regular i-Folder-Zip"></i> Closed Tickets ({{
-                Count.closed
-              }})</a>
+              <i class="icon-regular i-Folder-Zip"></i> Closed Tickets
+              <ng-container *ngIf="Count.closed">
+                ({{ Count.closed }})
+              </ng-container>
+            </a>
           </li>
         </ul>
       </div>
@@ -695,37 +702,37 @@
       <div class="mb-0">
         <div class="">
           <div class=""></div>
-          <div class="form-group mb-3">
-            <label>Resolver</label>
-            <input type="text" readonly class="form-control" placeholder="Your Name"
-              value="{{ ActionsTaken?.rtName }}" />
-          </div>
-
-          <div class="form-group mb-3">
-            <label>Issue Description</label>
-            <textarea class="form-control" aria-label="With textarea"
-              placeholder="Please Describe the issues experienced by the complainant"
-              value="{{ ActionsTaken?.issueDescription }}">
+          <ng-container *ngIf="ActionsTaken">
+            <div class="form-group mb-3">
+              <label>Resolver</label>
+              <input type="text" readonly class="form-control" placeholder="Your Name"
+                value="{{ ActionsTaken?.rtName }}" />
+            </div>
+            <div class="form-group mb-3">
+              <label>Issue Description</label>
+              <textarea readonly class="form-control" aria-label="With textarea"
+                placeholder="Please Describe the issues experienced by the complainant"
+                value="{{ ActionsTaken?.issueDescription }}">
             </textarea>
-          </div>
-
-          <div class="form-group mb-3">
-            <label>Root Cause</label>
-            <input type="text" class="form-control" placeholder="Root cause of the problem" aria-label=""
-              aria-describedby="basic-addon2" value="{{ ActionsTaken?.causeOfIssue }}" />
-          </div>
-
-          <div class="form-group">
-            <label>Actions Taken</label>
-            <textarea class="form-control" aria-label="With textarea" value="{{ ActionsTaken?.actionTaken }}">
+            </div>
+            <div class="form-group mb-3">
+              <label>Root Cause</label>
+              <input type="text" readonly class="form-control" placeholder="Root cause of the problem" aria-label=""
+                aria-describedby="basic-addon2" value="{{ ActionsTaken?.causeOfIssue }}" />
+            </div>
+            <div class="form-group">
+              <label>Resolution Team: Actions Taken</label>
+              <textarea readonly class="form-control" aria-label="With textarea"
+                value="{{ ActionsTaken?.actionTaken }}">
             </textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Resolution Closing comments</label>
-            <textarea class="form-control" aria-label="With textarea" value="{{ ActionsTaken?.actionTaken }}">
+            </div>
+            <div class="form-group">
+              <label>Resolution Champion: Actions Taken</label>
+              <textarea class="form-control" #rcComment aria-label="With textarea"
+                value="{{ ActionsTaken?.actionTaken }}">
             </textarea>
-          </div>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -734,7 +741,7 @@
     <button type="button" class="btn btn-outline-secondary btn-rounded" (click)="modal.dismiss('cancel')">
       Cancel
     </button>
-    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok'); closeIssue()">
+    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="closeIssue(rcComment.value)">
       Ok
     </button>
   </div>

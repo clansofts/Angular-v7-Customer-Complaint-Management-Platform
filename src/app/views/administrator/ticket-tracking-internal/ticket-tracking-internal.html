@@ -1,0 +1,38 @@
+<div class="breadcrumb">
+    <ul>
+        <li><a href="">Ticket Management</a></li>
+        <li>Track Issue</li>
+    </ul>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <h4>Track an Issue</h4>
+        <p>Enter customer issue id, email, and account number.</p>
+        <div class="card mb-5" (click)="test()">
+            <div class="card-body">
+                <div class="row row-xs">
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input formControlName="issueId" class="form-control" placeholder="Enter the issue ID">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="email" formControlName="email" class="form-control"
+                            placeholder="Enter Customer Email">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <input formControlName="accountNumber" class="form-control"
+                            placeholder="Customer Account Number">
+                    </div>
+                    <div class="col-md-3 mt-3 mt-md-0">
+                        <button class="btn btn-primary btn-block">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="border-top mb-5"></div>
+<div class="row">
+</div>

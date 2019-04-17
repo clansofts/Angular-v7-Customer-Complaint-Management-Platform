@@ -20,8 +20,6 @@ import { from, Subject } from 'rxjs';
   animations: [SharedAnimations]
 })
 export class MessagesRTComponent implements OnInit, OnDestroy {
-
-  mails$: Observable<any>;
   selected: any = {};
   assignedIssues$: any;
   loading: boolean;

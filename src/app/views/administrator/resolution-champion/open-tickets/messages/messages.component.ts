@@ -317,18 +317,25 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   }
 
   // Close an issue
-  closeIssue() {
-    try {
-      this.issuesService.closeIssue(this.selected.issueid)
-        .toPromise().then(res => {
-          this.toastr.success(`${res}`, 'Issue Closed!');
-          this.ngOnInit();
-        });
-      this.selected = null;
-    } catch (err) {
-      this.toastr.error(err, 'Error!', { closeButton: true });
+  closeIssue(comment: string) {
+    console.log(comment);
+    if (comment) {
+      try {
+        this.issuesService.closeIssue(this.selected.issueid, comment)
+          .toPromise().then(res => {
+            this.toastr.success(`${res}`, 'Issue Closed!');
+            this.modalService.dismissAll('Complete');
+            this.ngOnInit();
+          });
+        this.selected = null;
+      } catch (err) {
+        this.toastr.error(err, 'Error!', { closeButton: true });
+      }
+      return;
     }
+    alert('Please enter a comment');
   }
+
 
   // Reassignment method, This works for resolved and rejected issues
   reAssignIssue() {

@@ -7,8 +7,8 @@ import { TeamDashboardComponent } from './resolution-team/team-dashboard/team-da
 import { MessageRTComponent } from './resolution-team/message/message.component';
 import { TeamCreationComponent } from './resolution-team/team-management/team-creation/team-creation.component';
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
-import { PagesModule } from '../pages/pages.module';
-import { AssignedIssuesModule } from './resolution-team/assigned-Issues/assigned-issues.module';
+import { AssignedIssuesTableComponent } from './resolution-team/issues-table/filter-table.component';
+import { TicketTrackingInternalComponent } from 'src/app/views/administrator/ticket-tracking-internal/ticket-tracking-internal';
 
 // Resolution Champion
 const routes: Routes = [
@@ -28,6 +28,11 @@ const routes: Routes = [
     loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
   },
   {
+    // Issues Table
+    path: 'issues_Table',
+    loadChildren: ''
+  },
+  {
     // Messages
     path: 'messages',
     component: MessageComponent
@@ -43,7 +48,7 @@ const routes_rt: Routes = [
   {
     // RT Dashboard
     path: 'team-dashboard',
-    component: TeamDashboardComponent,
+    component: TeamDashboardComponent
   },
   {
     // Assigned tickets
@@ -56,19 +61,29 @@ const routes_rt: Routes = [
     loadChildren: './resolution-team/assigned-Issues/assigned-issues.module#AssignedIssuesModule',
   },
   {
+    // Issues table
+    path: 'issues_table',
+    component: AssignedIssuesTableComponent
+  },
+  // Issues tracking
+  {
+    path: 'issue_tracking_internal',
+    component: TicketTrackingInternalComponent
+  },
+  {
     // Messages
     path: 'complaint-messages',
-    component: MessageRTComponent,
+    component: MessageRTComponent
   },
   {
     // Team Management
     path: 'add-user',
-    component: TeamCreationComponent,
+    component: TeamCreationComponent
   },
   {
     // Team Management
     path: 'remove-user',
-    component: RemoveUserComponent,
+    component: RemoveUserComponent
   },
   {
     // Profle Management
