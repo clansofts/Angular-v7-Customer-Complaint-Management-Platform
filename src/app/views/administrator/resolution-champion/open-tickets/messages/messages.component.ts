@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorDialogService } from 'src/app/shared/services/error-dialog.service';
 import { AdminComponent } from '../../../admin.component';
-import { AssignedService, AssignedIssuesModel } from '../../../resolution-team/assigned.service';
+import { AssignedService } from '../../../resolution-team/assigned.service';
 import { UtilitiesService } from 'src/app/shared/services/utilities.service';
 import { from } from 'rxjs/internal/observable/from';
 
@@ -29,6 +29,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
   Active: number;
   Count: any = {};
   comment: string;
+  rcCommentForm: FormGroup;
   ActionsTaken: any;
 
   assignButton =
@@ -77,6 +78,9 @@ export class MessagesComponent implements OnInit, AfterContentInit {
 
     // Watch for search
     this.handleSearchFilter();
+
+    // load comment form
+    this.rcComment();
   }
 
   // Component lifecycle management
@@ -147,7 +151,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     this.selected = null;
   }
 
-  /* Build the reactive form */
+  // Build the reactive form
   buildForm() {
     this.issuesAssignmentform = this.fb.group({
       roles: ['', [Validators.required]],
@@ -168,6 +172,7 @@ export class MessagesComponent implements OnInit, AfterContentInit {
       });
   }
 
+  // Final Submit
   submit() {
     const form = this.issuesAssignmentform.value;
     try {
@@ -316,9 +321,15 @@ export class MessagesComponent implements OnInit, AfterContentInit {
     }
   }
 
+  // Create Reactive Form
+  rcComment() {
+    this.rcCommentForm = this.fb.group({
+      rcComment: ''
+    });
+  }
+
   // Close an issue
   closeIssue(comment: string) {
-    console.log(comment);
     if (comment) {
       try {
         this.issuesService.closeIssue(this.selected.issueid, comment)

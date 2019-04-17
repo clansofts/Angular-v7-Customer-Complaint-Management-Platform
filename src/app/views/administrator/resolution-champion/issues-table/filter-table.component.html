@@ -1,0 +1,68 @@
+<div class="">
+  <div class="breadcrumb">
+    <ul>
+      <li><a href="#">Issues Data Table</a></li>
+      <li>All Issues</li>
+    </ul>
+  </div>
+
+  <div class="separator-breadcrumb border-top"></div>
+  <div class="row" (click)="test()">
+    <div class="col-md-4">
+      <div class="form-group">
+        <input id="email" placeholder="Filter" [formControl]="searchControl" class="form-control form-control-rounded"
+          type="email">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card  o-hidden">
+        <ngx-datatable style="height: 500px; box-shadow: none" class="material fullscreen" [columnMode]="'force'"
+          [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true" [rows]="filteredIssues$">
+          <ngx-datatable-column name="photo" [maxWidth]="120">
+            <ng-template ngx-datatable-header-template>
+              Thumbnail
+            </ng-template>
+            <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+              <img height="32px" width="32px" style="border-radius: 4px" src="./assets/images/faces/user1.svg" alt="">
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="firstname" [width]="240">
+            <ng-template ngx-datatable-header-template>
+              Customer First Name
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="lastname" [width]="240">
+            <ng-template ngx-datatable-header-template>
+              Customer Last Name
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="category">
+            <ng-template ngx-datatable-header-template>
+              Category
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="source">
+            <ng-template ngx-datatable-header-template>
+              Team Assigned
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="status">
+            <ng-template ngx-datatable-header-template>
+              Status
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="issueId">
+            <ng-template ngx-datatable-header-template>
+              Issue ID
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="datecreated">
+            <ng-template ngx-datatable-header-template>
+              Date Created
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</div>

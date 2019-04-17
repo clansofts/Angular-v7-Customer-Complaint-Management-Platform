@@ -17,6 +17,8 @@ import { RemoveUserComponent } from './resolution-team/team-management/remove-us
 import { LaddaModule } from 'angular2-ladda';
 import { AssignedIssuesTableComponent } from './resolution-team/issues-table/filter-table.component';
 import { TicketTrackingInternalComponent } from './ticket-tracking-internal/ticket-tracking-internal';
+import { IssuesTableComponent } from './resolution-champion/issues-table/filter-table.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -27,6 +29,7 @@ import { TicketTrackingInternalComponent } from './ticket-tracking-internal/tick
     SharedComponentsModule,
     NgxEchartsModule,
     NgxDatatableModule,
+    NgxPaginationModule,
     NgbModule,
     AdminRoutingModule,
     LaddaModule
@@ -34,6 +37,7 @@ import { TicketTrackingInternalComponent } from './ticket-tracking-internal/tick
   declarations: [
     DashboardResolutionChampionComponent,
     AssignedIssuesTableComponent,
+    IssuesTableComponent,
     MessageComponent,
     AdminComponent,
     TeamDashboardComponent,

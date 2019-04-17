@@ -506,35 +506,35 @@
           <li (click)="filterBy(1)">
             <a [ngClass]="{ active: Active == 1 }"><i class="icon-regular i-Ticket"></i>
               New Tickets
-              <ng-container *ngIf="Count.open">
+              <ng-container *ngIf="(Count.open || Count?.open == 0)">
                 ({{ Count.open }})
               </ng-container>
             </a>
           </li>
           <li (click)="filterBy(2)">
             <a [ngClass]="{ active: Active == 2 }"><i class="icon-regular i-Right"></i> Assigned
-              <ng-container *ngIf="Count.assigned">
+              <ng-container *ngIf="(Count.assigned || Count?.assigned  == 0)">
                 ({{ Count.assigned }})
               </ng-container>
             </a>
           </li>
           <li (click)="filterBy(4)">
             <a [ngClass]="{ active: Active == 4 }"><i class="icon-regular i-Sand-watch-2"></i> In Progress
-              <ng-container *ngIf="Count.progress">
+              <ng-container *ngIf="(Count.progress || Count?.progress == 0)">
                 ({{ Count.progress }})
               </ng-container>
             </a>
           </li>
           <li (click)="filterBy(5)">
             <a [ngClass]="{ active: Active == 5 }"><i class="icon-regular i-Support"></i> RT Resolved
-              <ng-container *ngIf="Count.resolved">
+              <ng-container *ngIf="(Count.resolved || Count?.resolved == 0)">
                 ({{ Count.resolved }})
               </ng-container>
             </a>
           </li>
           <li (click)="filterBy(6)">
             <a [ngClass]="{ active: Active == 6 }"><i class="icon-regular i-Pointer"></i> RT Rejected
-              <ng-container *ngIf="Count.rejected">
+              <ng-container *ngIf="(Count.rejected || Count?.rejected == 0)">
                 ({{ Count.rejected }})
               </ng-container>
             </a>
@@ -542,7 +542,7 @@
           <li (click)="filterBy(3)">
             <a [ngClass]="{ active: Active == 3 }">
               <i class="icon-regular i-Folder-Zip"></i> Closed Tickets
-              <ng-container *ngIf="Count.closed">
+              <ng-container *ngIf="(Count.closed || Count?.closed == 0)">
                 ({{ Count.closed }})
               </ng-container>
             </a>
@@ -700,7 +700,7 @@
     </p>
     <div class="">
       <div class="mb-0">
-        <div class="">
+        <form  class="" [formGroup]="rcCommentForm">
           <div class=""></div>
           <ng-container *ngIf="ActionsTaken">
             <div class="form-group mb-3">
@@ -728,12 +728,12 @@
             </div>
             <div class="form-group">
               <label>Resolution Champion: Actions Taken</label>
-              <textarea class="form-control" #rcComment aria-label="With textarea"
+              <textarea formControlName="rcComment" class="form-control"  aria-label="With textarea"
                 value="{{ ActionsTaken?.actionTaken }}">
             </textarea>
             </div>
           </ng-container>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -741,7 +741,7 @@
     <button type="button" class="btn btn-outline-secondary btn-rounded" (click)="modal.dismiss('cancel')">
       Cancel
     </button>
-    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="closeIssue(rcComment.value)">
+    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="closeIssue(rcCommentForm.controls.rcComment.value)">
       Ok
     </button>
   </div>

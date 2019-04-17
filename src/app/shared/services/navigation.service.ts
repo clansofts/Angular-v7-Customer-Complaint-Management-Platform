@@ -73,6 +73,7 @@ export class NavigationService {
             sub: [
                 /* { icon: 'i-Statistic', name: 'Dashboard', state: '/admin-rc/complaints-dashboard', type: 'link' }, */
                 { icon: 'i-Movie-Ticket', name: 'Ticket Management', state: '/admin-rc/opentickets', type: 'link' },
+                { icon: 'i-Posterous', name: 'Issues Table', state: '/admin-rc/rc_issues_table', type: 'link' },
             ]
         },
         /* {

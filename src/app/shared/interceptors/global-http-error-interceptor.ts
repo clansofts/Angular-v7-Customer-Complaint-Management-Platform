@@ -23,7 +23,7 @@ export class GlobalHttpErrorInterceptor {
         }
 
         // For Testing purposes
-        // console.log(request);
+        console.log(request);
 
         // Then handle error
         return next.handle(request)

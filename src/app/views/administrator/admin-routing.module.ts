@@ -9,6 +9,7 @@ import { TeamCreationComponent } from './resolution-team/team-management/team-cr
 import { RemoveUserComponent } from './resolution-team/team-management/remove-user/remove-user.component';
 import { AssignedIssuesTableComponent } from './resolution-team/issues-table/filter-table.component';
 import { TicketTrackingInternalComponent } from 'src/app/views/administrator/ticket-tracking-internal/ticket-tracking-internal';
+import { IssuesTableComponent } from './resolution-champion/issues-table/filter-table.component';
 
 // Resolution Champion
 const routes: Routes = [
@@ -26,6 +27,11 @@ const routes: Routes = [
     // Open tickets
     path: 'opentickets',
     loadChildren: './resolution-champion/open-tickets/tickets.module#TicketsModule',
+  },
+  {
+    // Issues table
+    path: 'rc_issues_table',
+    component: IssuesTableComponent
   },
   {
     // Issues Table
