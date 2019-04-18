@@ -19,6 +19,7 @@ import { AssignedIssuesTableComponent } from './resolution-team/issues-table/fil
 import { TicketTrackingInternalComponent } from './ticket-tracking-internal/ticket-tracking-internal';
 import { IssuesTableComponent } from './resolution-champion/issues-table/filter-table.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule,
     NgbModule,
     AdminRoutingModule,
-    LaddaModule
+    LaddaModule,
+    PerfectScrollbarModule,
   ],
   declarations: [
     DashboardResolutionChampionComponent,

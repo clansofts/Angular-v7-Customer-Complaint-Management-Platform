@@ -87,6 +87,16 @@
     background-color: #00aeef !important;
     color: white !important;
 }
+
 .card:focus:active {
     background-color: #00aeef !important;
+}
+
+.tracking-details {
+    background-color: #f6f6f6;
+    border-radius: 10px !important;
+}
+
+.tracking-details-inner {
+    padding-top: 20px;
 }
